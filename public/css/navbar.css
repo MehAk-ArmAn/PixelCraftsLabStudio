@@ -1,0 +1,38 @@
+/* ================= Navbar ================= */
+#navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 25px;    /* navbar will be at least 50px tall */
+    height: auto;         /* grows if content needs more space */
+    background: rgba(20, 20, 50, 0.95); /* darker purple-y vibe */
+    padding: 10px;        /* enough space for links/text */
+    text-align: center;
+    z-index: 9999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+
+    overflow: hidden;       /* stops text from escaping */
+    white-space: normal;    /* allows multiple lines if needed */
+}
+
+body {
+    padding-top: 40px;
+}
+
+/* Navbar links styling */
+#navbar a {
+    color: #EAEAEA; /* softer white text */
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+/* Hover effect */
+#navbar a:hover {
+    background-color: #141B3F; /* dark purple hover */
+    transform: scale(1.1);
+}
+

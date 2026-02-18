@@ -1,0 +1,12 @@
+/* 
+|--------------------------------------------------------------------------
+| Global Layout Styles
+|--------------------------------------------------------------------------
+| These styles apply to the entire website.
+| Keep only general styles here (reset, fonts, background, etc.)
+*/
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
