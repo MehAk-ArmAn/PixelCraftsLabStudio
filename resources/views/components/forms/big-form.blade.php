@@ -13,7 +13,7 @@
         <h1>...</h1>
 
         {{-- Main Project Form --}}
-        <form action="#" method="POST">
+        <form action="{{ route('contact.store') }}" method="POST">
 
             {{-- CSRF token for security (required in Laravel forms) --}}
             @csrf
@@ -32,7 +32,7 @@
             </select>
 
             {{-- Description Field --}}
-            <textarea name="description" placeholder="..."></textarea>
+            <textarea name="message" placeholder="..."></textarea>
 
             {{-- Submit Button --}}
             <button type="submit">...</button>
