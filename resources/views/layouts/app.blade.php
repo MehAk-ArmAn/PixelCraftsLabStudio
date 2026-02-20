@@ -12,8 +12,14 @@
 </head>
 <body>
 
+    <!-- Navbar -->
+    @include('partials.navbar')
+    
     @yield('content')
 
+    <!-- Footer -->
+    @include('partials.footer')
+    
 </body>
 </html>
 

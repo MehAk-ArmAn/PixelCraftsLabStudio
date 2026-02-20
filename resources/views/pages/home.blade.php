@@ -1,7 +1,4 @@
 @extends('layouts.app')
-
-    <!-- Navbar -->
-    @include('partials.navbar')
     
 {{-- Page specific CSS --}}
 @section('styles')
@@ -13,5 +10,13 @@
 @section('content')
 
     @include('components.forms.big-form')
+    <div class="page-wrapper">
+        @include('components.sections.about-preview')
+        @include('components.sections.cta')
+        @include('components.sections.hero')
+        @include('components.sections.portfolio-preview')
+        @include('components.sections.services-preview')
+        @include('components.sections.testimonials')
+    </div>
 
 @endsection

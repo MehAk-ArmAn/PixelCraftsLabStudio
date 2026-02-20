@@ -105,5 +105,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // Spawn tools less frequently
     setInterval(createToolParticle, 500);
 
+        /* =========================================================
+       SECTION 3 — SMART SHRINKING NAVBAR
+       ========================================================= */
+
+    const navbar = document.getElementById("navbar");
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > lastScroll && currentScroll > 10) {
+            // scrolling DOWN
+            navbar.classList.add("shrink");
+        } else {
+            // scrolling UP
+            navbar.classList.remove("shrink");
+        }
+
+        lastScroll = currentScroll;
+    });
+
 });
 
