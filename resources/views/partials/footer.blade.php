@@ -6,7 +6,7 @@
 
         <!-- Brand Section -->
         <div class="footer-brand">
-            <img src="/images/logo.png" alt="PixelCraftsLab Studio Logo" class="footer-logo">
+            <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio's Logo" class="footer-logo">
             <p>
                 Crafting digital experiences that actually convert.
                 Design. Code. Create.
@@ -39,13 +39,14 @@
         <!-- Contact -->
         <div class="footer-contact">
             <h4>Contact</h4>
-            <p>Email: hello@pixelcraftslab.com</p>
-            <p>Location: Your City, Country</p>
+            <p>Email: {{ $adminEmail }}</p>
+            <p>Location: {{ $location }}</p>
+            <p>Phone: {{ $phone }}</p>
 
             <div class="footer-socials">
-                <a href="#">Instagram</a>
-                <a href="#">LinkedIn</a>
-                <a href="#">Twitter</a>
+                <a href="{{ $instagram }}">Instagram</a>
+                <a href="{{ $linkedIn }}">LinkedIn</a>
+                <a href="{{ $twitter }}">Twitter</a>
             </div>
         </div>
 

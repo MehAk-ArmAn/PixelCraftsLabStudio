@@ -58,3 +58,12 @@
     font-size: 14px;
     color: #888;
 }
+
+.footer-logo {
+    width: 150px;
+    height: auto;
+
+    margin: auto;
+    margin-right: 70px;
+    display: flex;
+}
