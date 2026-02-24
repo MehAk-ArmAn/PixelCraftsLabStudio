@@ -62,48 +62,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =========================================================
-       SECTION 2 — TOOL PARTICLES (Also flowing outward)
-       ========================================================= */
+        SECTION 2 — PNG IMAGE PARTICLES
+        ========================================================= */
 
-    const tools = ["🔨","🛠️","🖌️","✏️","🎨","1️⃣","🎨","💻","📰","✨","✨","🛠️","🔨",];
+            // PNG images , conneccted to the DB
+            const images = Array.isArray(window.dbImages) ? window.dbImages : [];
 
-    function createToolParticle() {
+            function createImageParticle() {
 
-        const div = document.createElement("div");
+                // Stop if no images exist in DB
+                if (!images.length) return;
 
-        // Separate class for emoji styling
-        div.classList.add("tool-particle");
+                const img = document.createElement("img"); // create image element
 
-        // Set random emoji
-        div.textContent = tools[Math.floor(Math.random() * tools.length)];
+                img.classList.add("image-particle"); // apply styling class
 
-        // Start from center (behind form)
-        div.style.left = "50%";
-        div.style.top = "50%";
+                // Pick a random image safely
+                const randomImage = images[Math.floor(Math.random() * images.length)];
 
-        // Random emoji size
-        div.style.fontSize = (Math.random() * 20 + 16) + "px";
+                if (!randomImage) return; // extra protection
 
-        // Random outward direction
-        const angle = Math.random() * 2 * Math.PI;
-        const distance = Math.random() * 400 + 300;
+                img.src = randomImage; // assign image source
 
-        const x = Math.cos(angle) * distance + "px";
-        const y = Math.sin(angle) * distance + "px";
+                // Start from center
+                img.style.left = "50%";
+                img.style.top = "50%";
 
-        div.style.setProperty("--x", x);
-        div.style.setProperty("--y", y);
+                // Random size
+                const size = Math.random() * 40 + 20;
+                img.style.width = size + "px";
 
-        // Slightly shorter animation so tools don't dominate
-        div.style.animationDuration = (Math.random() * 5 + 4) + "s";
+                // Random direction
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = Math.random() * 500 + 300;
 
-        container.appendChild(div);
+                const x = Math.cos(angle) * distance + "px";
+                const y = Math.sin(angle) * distance + "px";
 
-        setTimeout(() => div.remove(), 8000);
-    }
+                img.style.setProperty("--x", x);
+                img.style.setProperty("--y", y);
 
-    // Spawn tools less frequently
-    setInterval(createToolParticle, 500);
+                img.style.animationDuration = (Math.random() * 6 + 4) + "s";
+
+                container.appendChild(img);
+
+                setTimeout(() => img.remove(), 9000);
+            }
+
+            // Spawn images
+            setInterval(createImageParticle, 600);
+
 
         /* =========================================================
        SECTION 3 — SMART SHRINKING NAVBAR

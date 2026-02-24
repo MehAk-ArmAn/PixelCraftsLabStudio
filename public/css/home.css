@@ -37,13 +37,24 @@ body {
 }
 
 /* PARTICLES LAYER - BEHIND FORM */
-.particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
+.image-particle {
+    position: absolute; /* required for movement */
+    transform: translate(-50%, -50%); /* center origin */
+    animation: flyOut linear forwards; /* uses CSS animation */
+    pointer-events: none; /* don’t block clicks */
+    z-index: 0;
+}
+
+/* Movement animation */
+@keyframes flyOut {
+    from {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.5);
+        opacity: 0;
+    }
 }
 
 /* FORM CONTAINER */
