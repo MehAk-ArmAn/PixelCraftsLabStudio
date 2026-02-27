@@ -1,0 +1,58 @@
+/* Center the logo container */
+.main-img-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px; /* Space from top */
+    margin-bottom: -20px; /* Pulls content below closer to the fade */
+}
+
+.main-img {
+    width: 350px; /* Adjust size as needed */
+    height: auto;
+    
+    /* The Fix: Solid at top, fades out starting at 60% */
+    -webkit-mask-image: linear-gradient(to bottom, black 1%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 1%, transparent 100%);
+}
+
+.marquee-wrapper {
+    overflow: hidden;
+    padding: 40px 0;
+    width: 100%;
+}
+
+.marquee-row {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 50px; /* Space between logos */
+    white-space: nowrap;
+}
+
+.marquee-track img {
+    height: 50px; /* Size of the scrolling logos */
+    opacity: 0.3;  /* Makes them transparent */
+    filter: grayscale(100%); /* Optional: makes them look pro */
+}
+
+/* The Animations */
+.scroll-right .marquee-track {
+    animation: marquee-right 20s linear infinite;
+}
+
+.scroll-left .marquee-track {
+    animation: marquee-left 20s linear infinite;
+}
+
+@keyframes marquee-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); } /* Only move half because of duplicates */
+}
+
+@keyframes marquee-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}

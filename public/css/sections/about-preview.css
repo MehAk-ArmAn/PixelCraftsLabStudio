@@ -1,0 +1,46 @@
+.about-section {
+    padding: 100px 20px;
+    background: radial-gradient(
+        circle, 
+        #2E005D 0%, 
+        #2E005D 70%, 
+        transparent 100%
+    );
+    color: white;
+    margin: 10px 15px;
+    border-radius: 20px;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* text bigger than image */
+    align-items: center;
+    gap: 60px;
+}
+
+.about-text h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    line-height: 1.7;
+    color: #dddddd;
+}
+
+.about-image {
+    display: flex;
+    justify-content: flex-end; /* THIS pushes image right */
+    margin: auto;
+}
+
+.about-image img {
+    max-width: 350px;
+    width: 100%;
+    border-radius: 30px;
+}

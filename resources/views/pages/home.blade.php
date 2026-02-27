@@ -2,7 +2,9 @@
     
 {{-- Page specific CSS --}}
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections/about-preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections/portfolio-preview.css') }}">
 
     {{-- Inject DB images BEFORE JS loads --}}
     <script>
