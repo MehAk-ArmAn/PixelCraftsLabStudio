@@ -19,10 +19,7 @@
 
     @include('components.forms.big-form')
     <div class="page-wrapper">
-        <div id="particles"></div>
-        @foreach($images as $image)
-            <img src="{{ asset('imgs/random/' . $image->image_path) }}" alt="Particle Image">
-        @endforeach
+    
         @include('components.sections.about-preview')
         @include('components.sections.cta')
         @include('components.sections.hero')

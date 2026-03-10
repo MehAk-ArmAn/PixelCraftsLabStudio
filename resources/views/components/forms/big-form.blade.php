@@ -4,11 +4,13 @@
     All text is placeholder ("...") and can be replaced later.
 --}}
 
-<section class="form-section">
-
+<section class="form-section" style="position: relative;">
+    
+    {{-- Particles container, confined to this section --}}
     <div class="particles" id="particles"></div>
     
-    <div class="form-container">
+    {{-- Form container sits above the particles --}}
+    <div class="form-container" style="position: relative; z-index: 1;">
 
         <h1>Get in touch with us</h1>
 
@@ -35,7 +37,7 @@
             <textarea name="message" placeholder="Description"></textarea>
 
             {{-- Submit Button --}}
-            <button type="submit">submit</button>
+            <button type="submit">Submit</button>
 
         </form>
 

@@ -171,11 +171,11 @@ body {
     }
 }
 #particles {
-    position: absolute;        /* confined to parent section */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    z-index: 0;                /* behind the form */
+    z-index: 0;
 }
