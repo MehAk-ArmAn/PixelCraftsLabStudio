@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!randomImage) return; // extra protection
 
-                img.src = randomImage; // assign image source
+                img.src = "/imgs/random/" + randomImage.image_path; // assign image source
 
                 // Start from center
                 img.style.left = "50%";
