@@ -1,50 +1,27 @@
-    <section class="about-section">
+<section class="services-preview">
 
-        <div class="about-container">
+<div class="services-container">
 
-            <!-- Header Block -->
-            <div class="about-header">
-                <h1>About PixelCraftsLab Studio</h1>
-                <p class="subtitle">Where creativity meets precision.</p>
-            </div>
+<h2 class="section-title">Our Services</h2>
 
-            <!-- Main Grid -->
-            <div class="about-grid">
+<div class="services-grid">
 
-                <!-- Left Column -->
-                <div class="about-left">
+<div class="service-card">
+<h3>Web Development</h3>
+<p>Modern, fast and scalable websites built for real business growth.</p>
+</div>
 
-                    <div class="about-block">
-                        <h2>Who We Are</h2>
-                        <p>...</p>
-                    </div>
+<div class="service-card">
+<h3>App Development</h3>
+<p>Powerful mobile and web applications designed for performance.</p>
+</div>
 
-                    <div class="about-block">
-                        <h2>Our Mission</h2>
-                        <p>...</p>
-                    </div>
+<div class="service-card">
+<h3>Brand Identity</h3>
+<p>Logos, colors and visual systems that make brands unforgettable.</p>
+</div>
 
-                    <div class="about-block">
-                        <h2>What We Do</h2>
-                        <ul class="about-list">
-                            <li>Web Design & Development</li>
-                            <li>UI/UX Strategy</li>
-                            <li>Brand Identity</li>
-                            <li>Digital Optimization</li>
-                        </ul>
-                    </div>
+</div>
 
-                </div>
-
-                <!-- Right Column -->
-                <div class="about-right">
-                    <div class="about-image-wrapper">
-                        <img src="{{ asset('favicons/logo.png') }}" alt="PixelCraftsLab Studio Logo">
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
+</div>
+</section>

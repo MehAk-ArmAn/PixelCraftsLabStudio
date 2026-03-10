@@ -5,6 +5,10 @@
     <link rel="stylesheet" href="{{ asset('css/pages/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sections/about-preview.css') }}">
     <link rel="stylesheet" href="{{ asset('css/sections/portfolio-preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections/cta.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections/hero.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections/services-preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sections/testimonials.css') }}">
 
     {{-- Inject DB images BEFORE JS loads --}}
     <script>
@@ -21,11 +25,10 @@
     <div class="page-wrapper">
     
         @include('components.sections.about-preview')
-        @include('components.sections.cta')
-        @include('components.sections.hero')
         @include('components.sections.portfolio-preview')
         @include('components.sections.services-preview')
         @include('components.sections.testimonials')
     </div>
+    @include('components.sections.cta')
 
 @endsection

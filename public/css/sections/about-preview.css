@@ -1,14 +1,22 @@
+/* ===============================
+   ABOUT PREVIEW SECTION
+   =============================== */
+
 .about-section {
-    padding: 100px 20px;
+    padding: 120px 30px; /* big breathing space */
+    margin: 40px 20px;
+    border-radius: 24px;
+
+    /* brand purple glow background */
     background: radial-gradient(
-        circle, 
-        #2E005D 0%, 
-        #2E005D 70%, 
-        transparent 100%
+        circle at center,
+        rgba(46, 0, 93, 0.9) 0%,
+        rgba(46, 0, 93, 0.7) 50%,
+        rgba(0,0,0,0) 100%
     );
+
+    backdrop-filter: blur(6px); /* glass feel */
     color: white;
-    margin: 10px 15px;
-    border-radius: 20px;
 }
 
 .about-container {
@@ -18,29 +26,42 @@
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1.2fr 1fr; /* text bigger than image */
+    grid-template-columns: 1.2fr 1fr; /* text larger */
     align-items: center;
-    gap: 60px;
+    gap: 80px;
 }
 
 .about-text h2 {
-    font-size: 2rem;
+    font-size: 2.3rem;
     margin-bottom: 20px;
+    letter-spacing: 1px;
 }
 
 .about-text p {
-    line-height: 1.7;
-    color: #dddddd;
+    line-height: 1.8;
+    color: #dcdcdc;
+    font-size: 1.05rem;
 }
 
 .about-image {
     display: flex;
-    justify-content: flex-end; /* THIS pushes image right */
-    margin: auto;
+    justify-content: flex-end;
 }
 
 .about-image img {
-    max-width: 350px;
+    max-width: 360px;
     width: 100%;
-    border-radius: 30px;
+
+    border-radius: 24px;
+
+    /* soft glow */
+    box-shadow:
+        0 0 40px rgba(138, 43, 226, 0.3);
+
+    transition: transform .35s ease;
+}
+
+/* subtle hover movement */
+.about-image img:hover {
+    transform: scale(1.05);
 }

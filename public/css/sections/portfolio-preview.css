@@ -1,55 +1,74 @@
-/* Center the logo container */
+/* ===============================
+   PORTFOLIO PREVIEW SECTION
+   =============================== */
+
+.preview-section {
+    padding: 100px 0;
+    text-align: center;
+}
+
+/* Center main logo */
 .main-img-container {
     display: flex;
     justify-content: center;
-    padding-top: 50px; /* Space from top */
-    margin-bottom: -20px; /* Pulls content below closer to the fade */
+    margin-bottom: 10px;
 }
 
 .main-img {
-    width: 350px; /* Adjust size as needed */
-    height: auto;
-    
-    /* The Fix: Solid at top, fades out starting at 60% */
-    -webkit-mask-image: linear-gradient(to bottom, black 1%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 1%, transparent 100%);
+    width: 360px;
+
+    /* fade bottom */
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+
+    opacity: 0.9;
 }
 
+/* scrolling wrapper */
 .marquee-wrapper {
     overflow: hidden;
-    padding: 40px 0;
-    width: 100%;
+    padding: 60px 0;
 }
 
 .marquee-row {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .marquee-track {
     display: flex;
-    gap: 50px; /* Space between logos */
-    white-space: nowrap;
+    gap: 60px;
 }
 
+/* logos */
 .marquee-track img {
-    height: 50px; /* Size of the scrolling logos */
-    opacity: 0.3;  /* Makes them transparent */
-    filter: grayscale(100%); /* Optional: makes them look pro */
+    height: 50px;
+
+    opacity: 0.25;
+    filter: grayscale(100%);
+
+    transition: all .3s ease;
 }
 
-/* The Animations */
+/* hover highlight */
+.marquee-track img:hover {
+    opacity: 0.8;
+    filter: none;
+    transform: scale(1.1);
+}
+
+/* animation */
 .scroll-right .marquee-track {
-    animation: marquee-right 20s linear infinite;
+    animation: marquee-right 25s linear infinite;
 }
 
 .scroll-left .marquee-track {
-    animation: marquee-left 20s linear infinite;
+    animation: marquee-left 25s linear infinite;
 }
 
 @keyframes marquee-left {
     from { transform: translateX(0); }
-    to { transform: translateX(-50%); } /* Only move half because of duplicates */
+    to { transform: translateX(-50%); }
 }
 
 @keyframes marquee-right {

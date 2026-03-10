@@ -5,27 +5,6 @@
 | Styles only related to home.blade.php
 */
 
-/* BODY + BACKGROUND */
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-
-    /* moving gradient setup */
-    background: linear-gradient( 135deg, #130325, #230541, #1b0431, #130325 );
-    background-size: 200% 200%;  /* double size for smooth movement */
-    animation: gradientMove 10s ease infinite; /* infinite loop */
-
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* makes it smooth on scroll */
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 /* FORM SECTION WRAPPER */
 .form-section {
     position: relative;
@@ -151,10 +130,10 @@ body {
     top: 0;
     left: 50%;
     width: 90%;               /* not full width */
-    min-height: 25px;    /* navbar will be at least 50px tall */
+    min-height: 25px;    
     height: auto;         /* grows if content needs more space */
-    padding: 10px;        /* enough space for links/text */
-    border-radius: 50px;      /* rounded pill shape */
+    padding: 10px;        /* enough space for content */
+    border-radius: 50px;      /* rounded shape */
     background: #1303259d; /* darker purple-y vibe */
     box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }

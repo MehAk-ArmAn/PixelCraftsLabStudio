@@ -1,46 +1,47 @@
-.about-section {
-    padding: 100px 20px;
-    background: radial-gradient(
-        circle, 
-        #2E005D 0%, 
-        #2E005D 70%, 
-        transparent 100%
-    );
-    color: white;
-    margin: 10px 15px;
-    border-radius: 20px;
+/* =========================================
+   CTA SECTION
+   ========================================= */
+
+.cta-section{
+    padding:120px 20px;
+    text-align:center;
+
+    background:
+    radial-gradient(circle,#3b0a6b 0%, transparent 70%);
 }
 
-.about-container {
-    max-width: 1200px;
-    margin: auto;
+.cta-container{
+    max-width:700px;
+    margin:auto;
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr; /* text bigger than image */
-    align-items: center;
-    gap: 60px;
+.cta-container h2{
+    font-size:2.4rem;
+    margin-bottom:20px;
 }
 
-.about-text h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+.cta-container p{
+    color:#ccc;
+    margin-bottom:40px;
 }
 
-.about-text p {
-    line-height: 1.7;
-    color: #dddddd;
+.cta-button{
+    display:inline-block;
+
+    padding:14px 30px;
+    border-radius:40px;
+
+    background:#7b2cff;
+
+    color:white;
+    text-decoration:none;
+
+    transition:all .3s ease;
 }
 
-.about-image {
-    display: flex;
-    justify-content: flex-end; /* THIS pushes image right */
-    margin: auto;
-}
+.cta-button:hover{
+    transform:translateY(-3px);
 
-.about-image img {
-    max-width: 350px;
-    width: 100%;
-    border-radius: 30px;
+    box-shadow:
+        0 10px 30px rgba(123,44,255,.5);
 }

@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>PixelCraftsLabStudio</title>
+    <head>
+        <title>PixelCraftsLabStudio</title>
 
-    {{-- Global layout styles --}}
-    <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+        {{-- Base Layout Styles (global reset, colors, spacing) --}}
+        <link rel="stylesheet" href="{{ asset('css/layouts/layout.css') }}">
 
-    {{-- Page specific styles --}}
-    @yield('styles')
+        {{-- Navbar Styles --}}
+        <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 
-</head>
-<body>
+        {{-- Footer Styles --}}
+        <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 
-    <!-- Navbar -->
-    @include('partials.navbar')
-    
-    @yield('content')
+        {{-- Page Specific Styles --}}
+        @yield('styles')
+    </head>
+    <body>
 
-    <!-- Footer -->
-    @include('partials.footer')
-    
-</body>
+        <!-- Navbar -->
+        @include('partials.navbar')
+        
+        @yield('content')
+
+        <!-- Footer -->
+        @include('partials.footer')
+        
+    </body>
 </html>
 
