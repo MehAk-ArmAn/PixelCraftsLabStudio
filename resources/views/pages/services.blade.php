@@ -6,7 +6,7 @@
 {{-- Page Specific CSS & JS --}}
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/pages/services.css') }}">
-<script src="{{ asset('js/services.js') }}" defer></script>
+<script src="{{ asset('js/pages/services.js') }}" defer></script>
 @endsection
 
 
@@ -15,13 +15,14 @@
     {{-- Navbar --}}
     @include('partials.navbar')
 
+<section class="services-hero">
+    <div class="services-header">
+        <h1>Our Services</h1>
+        <p>Explore what PixelCraftsLabStudio can build for you.</p>
+    </div>
+</section>
+
 <div class="services-container">
-
-<div class="services-header">
-<h1>Our Services</h1>
-<p>Explore what PixelCraftsLabStudio can build for you.</p>
-</div>
-
 
 <div class="services-grid">
 

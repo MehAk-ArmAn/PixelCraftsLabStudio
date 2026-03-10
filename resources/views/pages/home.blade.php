@@ -15,7 +15,7 @@
         window.dbImages = @json($images ?? []);
     </script>
 
-    <script src="{{ asset('js/home.js') }}" defer></script>
+    <script src="{{ asset('js/pages/home.js') }}" defer></script>
     <link rel="shortcut icon" href="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" type="image/x-icon">
 @endsection
 

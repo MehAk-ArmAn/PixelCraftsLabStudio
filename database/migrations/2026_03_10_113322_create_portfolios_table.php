@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id();
+            $table->string('title');       
+            $table->text('description');   
+            $table->string('image');        // path in storage/app/public
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }
