@@ -27,9 +27,12 @@
     font-style:italic;
 }
 
+.testimonial p{
+    color:#aaa;
+}
+
 .testimonial span{
     display:block;
     margin-top:15px;
     font-size:.9rem;
-    color:#aaa;
 }

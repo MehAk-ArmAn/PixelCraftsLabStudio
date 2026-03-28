@@ -5,13 +5,10 @@
 <div class="testimonials-grid">
 
 <div class="testimonial">
-<p>"Amazing work and extremely professional."</p>
-<span>— Client Name</span>
+<p>Be the first to leave a review :)</p>
+<span>— Your Name</span>
 </div>
 
-<div class="testimonial">
-<p>"PixelCraftsLab transformed our digital presence."</p>
-<span>— Client Name</span>
 </div>
 
 </div>
