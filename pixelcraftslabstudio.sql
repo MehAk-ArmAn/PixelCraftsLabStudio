@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2026 at 12:54 PM
+-- Generation Time: Mar 28, 2026 at 01:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,8 +54,22 @@ CREATE TABLE `cache_locks` (
 CREATE TABLE `contacts` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `created_at`, `updated_at`, `name`, `email`, `subject`, `message`) VALUES
+(1, '2026-03-28 08:41:09', '2026-03-28 08:41:09', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', '!H'),
+(2, '2026-03-28 08:41:28', '2026-03-28 08:41:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', '!H'),
+(3, '2026-03-28 08:41:56', '2026-03-28 08:41:56', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', '!H'),
+(4, '2026-03-28 08:47:28', '2026-03-28 08:47:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', 'HIIIIIIIIIIIIIIIIII');
 
 -- --------------------------------------------------------
 
@@ -144,7 +158,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2026_02_18_183628_create_contacts_table', 1),
 (6, '2026_02_18_183629_create_orders_table', 1),
 (7, '2026_02_19_192837_create_portfolios_table', 2),
-(8, '2026_02_19_192844_create_messages_table', 2);
+(8, '2026_02_19_192844_create_messages_table', 2),
+(9, '2026_02_23_214851_create_particles_table', 3),
+(11, '2026_03_10_113322_create_portfolios_table', 4),
+(12, '2026_03_28_123932_update_contacts_table', 5);
 
 -- --------------------------------------------------------
 
@@ -157,6 +174,28 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `particles`
+--
+
+CREATE TABLE `particles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `particles`
+--
+
+INSERT INTO `particles` (`id`, `image_path`, `active`, `created_at`, `updated_at`) VALUES
+(1, '/imgs/random/1.png', 1, '2026-02-23 18:59:00', '2026-02-23 18:59:00'),
+(2, '/imgs/random/1.png', 1, '2026-02-23 19:32:04', '2026-02-23 19:32:04');
 
 -- --------------------------------------------------------
 
@@ -178,9 +217,21 @@ CREATE TABLE `password_reset_tokens` (
 
 CREATE TABLE `portfolios` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `link` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `portfolios`
+--
+
+INSERT INTO `portfolios` (`id`, `title`, `description`, `image`, `link`, `created_at`, `updated_at`) VALUES
+(1, 'Test Project 2', 'Another test project for styling.', 'sample2.jpg', '#', '2026-03-10 07:42:40', '2026-03-10 07:42:40'),
+(2, 'Test Project 1', 'This is a cool test project.', 'sample.jpg', '#', '2026-03-10 07:42:40', '2026-03-10 07:42:40');
 
 -- --------------------------------------------------------
 
@@ -226,11 +277,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('9wjmbgLP5lRO3E16AYbVsfusUst6hM8snGUXPwDq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWXVVUGlROVNidlZ2V2ExeGl0emJzbzdYQUJLajQzZWEwQVdnM0ZaUSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1771760143),
-('hGZTrH2h6PtDL8qM3UxBGnexHVN3HYxenBgA1YGw', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicHRoTkRUdjdXNk1kUXRCN05MbTcwenJsaTl4Zm5XR2syYnFBV3J3aCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1771532785),
-('hPlJRTo0WmMPadOKLSvjdzvR0bSb8a41SVo9tABz', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoidEg4dEZ2TW9uY01lNW43YW5OVVlia295Y0RLUUJRMEZHSWV1NTFRSyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1771760166),
-('K7GmmWUHU2R7QTq1Vzg6SY4I3SY5zHp52szwUmlN', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiOTE3S0JEQWdqSVkzQ2plNGxKVmhRQnppcUE2NUhZVERqS0RDZ0NRdSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1771631099),
-('nObSWGBxi3yADyCwVEDFF3b8hTUpGz3LqAwf6e1u', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoicU5QR1FJaTFlZXJjdnNxSmpTNTRhMDlDZGZuWnBXa2xYeHpldjFGbCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1771508544);
+('gYafOsDKyPnV9qFs9wZ5igauvXZSuAm3ou6RR3Cq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibmR1dmZoZ0NnMFVRZEdjTjV0Rzg3V21INGd1ODQ3bVlNS3VUOFNlTSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1774694797),
+('KY5dNKWoNbvwgsl5VMEqSbJgwPtiv58rPehNs2Vd', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWWxzaDlPU2tqdnJmbTRYVVNoRVRnaEVTdzBuWWZMSE5pRmZwRHVObiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1774702090);
 
 -- --------------------------------------------------------
 
@@ -319,6 +367,12 @@ ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `particles`
+--
+ALTER TABLE `particles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
@@ -359,7 +413,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -383,7 +437,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -392,10 +446,16 @@ ALTER TABLE `orders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `particles`
+--
+ALTER TABLE `particles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `portfolios`
 --
 ALTER TABLE `portfolios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `services`
