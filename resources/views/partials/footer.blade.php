@@ -44,9 +44,16 @@
             <p>Phone: {{ $phone }}</p>
 
             <div class="footer-socials">
-                <a href="{{ $instagram }}">Instagram</a>
-                <a href="{{ $linkedIn }}">LinkedIn</a>
-                <a href="{{ $twitter }}">Twitter</a>
+                <ul>
+                    <li><a href="{{ $instagram }}">Instagram</a></li>
+                    <li><a href="{{ $linkedIn }}">LinkedIn</a></li>
+                    <li><a href="{{ $X }}">X / Twitter</a></li>
+                    <li><a href="{{ $tiktok }}">Tik Tok</a></li>
+                    <li><a href="{{ $pinterest }}">Pinterest</a></li>
+                    <li><a href="{{ $facebook }}">Facebook</a></li>
+                    <li><a href="{{ $youtube }}">Youtube</a></li>
+                    <li><a href="{{ $whatsapp }}">Whatsapp</a></li>
+                </ul>
             </div>
         </div>
 
