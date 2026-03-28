@@ -9,16 +9,15 @@ class ContactController extends Controller
 {
     public function store(Request $request)
     {
-        // Validate form input
+        // validate form
         $validated = $request->validate([
             'name' => 'required',
-            'surname' => 'required',
-            'contact_number' => 'required',
             'email' => 'required|email',
-            'description' => 'required'
+            'subject' => 'nullable',
+            'message' => 'required'
         ]);
 
-        // Store data in DB
+        // store in DB
         Contact::create($validated);
 
         return back()->with('success', 'Message sent successfully!');

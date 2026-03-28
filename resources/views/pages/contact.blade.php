@@ -4,9 +4,9 @@
 @section('title', 'Contact Us | PixelCraftsLabStudio')
 
 {{-- Page Specific CSS --}}
-@push('styles')
+@section('styles')
 <link rel="stylesheet" href="{{ asset('css/pages/contact.css') }}">
-@endpush
+@endsection
 
 @section('content')
 
@@ -26,7 +26,13 @@
 
                 {{-- Contact Form --}}
                 <section id="contact-form" class="contact-form">
-                    <form action="#" method="post">
+                    @if(session('success'))
+                        <div class="success-message">
+                            ✅ Message sent successfully!
+                        </div>
+                    @endif
+                    <form action="{{ route('contact.store') }}" method="POST">
+                        @csrf {{-- protects form from 419 error --}}
 
                         <label for="name">Name:</label><br>
                         <input type="text" id="name" name="name" required><br><br>
@@ -40,7 +46,9 @@
                         <label for="message">Message:</label><br>
                         <textarea id="message" name="message" rows="5" required></textarea><br><br>
 
-                        <button type="submit">Send Message</button>
+                        <button type="submit" onclick="this.disabled=true; this.innerText='Sending...'; this.form.submit();">
+                            Send Message
+                        </button>
 
                     </form>
                 </section>
@@ -49,17 +57,22 @@
                 <section id="contact-info" class="contact-info">
                     <h2>Other Ways to Reach Us</h2>
 
-                    <p><strong>Email:</strong> pixelcraftslabstudio@gmail.com</p>
-                    <p><strong>Phone:</strong> +971 56 701 8403</p>
-                    <p><strong>Address:</strong> London, United Kingdom</p>
+                    <p><strong>Email:</strong> {{ $adminEmail }}</p>
+                    <p><strong>Phone:</strong> {{ $phone }}</p>
+                    <p><strong>Address:</strong> {{ $location }}</p>
 
                     <p>
-                        <strong>Follow us:</strong>
-                        <a href="#">LinkedIn</a> |
-                        <a href="#">Twitter</a> |
-                        <a href="#">Facebook</a>
+                        <strong>Follow us:</strong><br>
+                        <a href="{{ $instagram }}">Instagram</a> |
+                        <a href="{{ $linkedIn }}">LinkedIn</a> |
+                        <a href="{{ $X }}">Twitter</a> |
+                        <a href="{{ $tiktok }}">TikTok</a> |
+                        <a href="{{ $pinterest }}">Pinterest</a> |
+                        <a href="{{ $youtube }}">YouTube</a> |
+                        <a href="{{ $facebook }}">Facebook</a> |
+                        <a href="{{ $whatsapp }}">Whatsapp</a>
                     </p>
-
+                   
                 </section>
 
             </div>
