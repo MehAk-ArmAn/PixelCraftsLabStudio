@@ -1,4 +1,4 @@
-/* 
+/*
 |--------------------------------------------------------------------------
 | Global Layout Styles
 |--------------------------------------------------------------------------
@@ -6,23 +6,71 @@
 | Keep only general styles here (reset, fonts, background, etc.)
 */
 
-/* BODY + BACKGROUND */
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-
-    /* moving gradient setup */
-    background: linear-gradient( 135deg, #130325, #230541, #1b0431, #130325 );
-    background-size: 200% 200%;  /* double size for smooth movement */
-    animation: gradientMove 10s ease infinite; /* infinite loop */
-
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* makes it smooth on scroll */
+* {
+    box-sizing: border-box;
 }
 
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: #f8fafc;
+    background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.20), transparent 32%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.14), transparent 28%),
+        radial-gradient(circle at bottom center, rgba(236, 72, 153, 0.10), transparent 24%),
+        linear-gradient(180deg, #070b17 0%, #0a1020 48%, #070b17 100%);
+    overflow-x: hidden;
+    position: relative;
+}
+
+.site-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.10), transparent 20%),
+        radial-gradient(circle at 80% 15%, rgba(56, 189, 248, 0.08), transparent 20%),
+        radial-gradient(circle at 50% 85%, rgba(236, 72, 153, 0.06), transparent 18%);
+    filter: blur(10px);
+}
+
+.site-noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.03;
+    background-image: radial-gradient(#ffffff 0.7px, transparent 0.7px);
+    background-size: 24px 24px;
+}
+
+.site-main {
+    width: 100%;
+    padding-top: 100px;
+}
+
+section {
+    position: relative;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .site-main {
+        padding-top: 86px;
+    }
 }
