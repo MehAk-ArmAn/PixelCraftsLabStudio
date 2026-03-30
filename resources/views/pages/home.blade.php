@@ -17,10 +17,29 @@
 @endsection
 
 @section('content')
-    @include('components.forms.big-form')
-    @include('components.sections.about-preview')
-    @include('components.sections.portfolio-preview')
-    @include('components.sections.services-preview')
-    @include('components.sections.testimonials')
-    @include('components.sections.cta')
+    <div class="page-stack">
+        <section class="section-shell section-shell-hero">
+            @include('components.forms.big-form')
+        </section>
+
+        <section class="section-shell">
+            @include('components.sections.about-preview')
+        </section>
+
+        <section class="section-shell">
+            @include('components.sections.portfolio-preview')
+        </section>
+
+        <section class="section-shell">
+            @include('components.sections.services-preview')
+        </section>
+
+        <section class="section-shell">
+            @include('components.sections.testimonials')
+        </section>
+
+        <section class="section-shell section-shell-cta">
+            @include('components.sections.cta')
+        </section>
+    </div>
 @endsection

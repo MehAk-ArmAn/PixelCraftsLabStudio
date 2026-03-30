@@ -1,46 +1,54 @@
-{{-- 
+{{--
     BIG MAIN FORM
     This form is centered and designed as the main focus of the landing page.
     All text is placeholder ("...") and can be replaced later.
 --}}
 
-<section class="form-section" style="position: relative;">
-    
-    {{-- Particles container, confined to this section --}}
+<section class="form-section">
     <div class="particles" id="particles"></div>
-    
-    {{-- Form container sits above the particles --}}
-    <div class="form-container" style="position: relative; z-index: 1;">
 
-        <h1>Get in touch with us</h1>
+    <div class="form-hero-shell">
+        <div class="form-copy">
+            <span class="eyebrow">PixelCraftsLabStudio</span>
+            <h1>Get in touch with us</h1>
+            <p>
+                Tell us what you want to build and we’ll help shape it into something clean,
+                modern, and launch-ready.
+            </p>
+        </div>
 
-        {{-- Main Project Form --}}
-        <form action="{{ route('contact.store') }}" method="POST">
+        <div class="form-container">
+            <form action="{{ route('contact.store') }}" method="POST">
+                @csrf
 
-            {{-- CSRF token for security (required in Laravel forms) --}}
-            @csrf
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="name">Your Name</label>
+                        <input id="name" type="text" name="name" placeholder="Enter your name" required>
+                    </div>
 
-            {{-- Name Field --}}
-            <input type="text" name="name" placeholder="Enter your name" required>
+                    <div class="field">
+                        <label for="email">Your Email</label>
+                        <input id="email" type="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
 
-            {{-- Email Field --}}
-            <input type="email" name="email" placeholder="Enter your email" required>
+                <div class="field">
+                    <label for="service">Select Service</label>
+                    <select id="service" name="service">
+                        <option value="">Select Products</option>
+                        <option value="option1">...</option>
+                        <option value="option2">...</option>
+                    </select>
+                </div>
 
-            {{-- Select Service --}}
-            <select name="service">
-                <option value="">Select Products</option>
-                <option value="option1">...</option>
-                <option value="option2">...</option>
-            </select>
+                <div class="field">
+                    <label for="message">Project Description</label>
+                    <textarea id="message" name="message" placeholder="Tell us a bit about your idea..."></textarea>
+                </div>
 
-            {{-- Description Field --}}
-            <textarea name="message" placeholder="Description"></textarea>
-
-            {{-- Submit Button --}}
-            <button type="submit">Submit</button>
-
-        </form>
-
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
-
 </section>

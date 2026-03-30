@@ -1,24 +1,14 @@
-
-<footer class="footer premium-footer">
-    <div class="footer-glow"></div>
-
+<footer class="footer">
     <div class="footer-container">
-        <div class="footer-brand card-glass">
-            <div class="footer-brand-top">
-                <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio's Logo" class="footer-logo">
-                <div>
-                    <h3>PixelCraftsLab Studio</h3>
-                    <span class="footer-badge">Creative Digital Studio</span>
-                </div>
-            </div>
-
+        <div class="footer-brand">
+            <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio's Logo" class="footer-logo">
             <p>
                 Crafting digital experiences that actually convert.
                 Design. Code. Create.
             </p>
         </div>
 
-        <div class="footer-links card-glass">
+        <div class="footer-links">
             <h4>Quick Links</h4>
             <ul>
                 <li><a href="/">Home</a></li>
@@ -29,7 +19,7 @@
             </ul>
         </div>
 
-        <div class="footer-services card-glass">
+        <div class="footer-services">
             <h4>Services</h4>
             <ul>
                 <li>Web Development</li>
@@ -39,11 +29,11 @@
             </ul>
         </div>
 
-        <div class="footer-contact card-glass">
+        <div class="footer-contact">
             <h4>Contact</h4>
-            <p><strong>Email:</strong> {{ $adminEmail }}</p>
-            <p><strong>Location:</strong> {{ $location }}</p>
-            <p><strong>Phone:</strong> {{ $phone }}</p>
+            <p>Email: {{ $adminEmail }}</p>
+            <p>Location: {{ $location }}</p>
+            <p>Phone: {{ $phone }}</p>
 
             <div class="footer-socials">
                 <ul>
@@ -58,9 +48,5 @@
                 </ul>
             </div>
         </div>
-    </div>
-
-    <div class="footer-bottom">
-        <p>© 2026 PixelCraftsLab Studio. All rights reserved.</p>
     </div>
 </footer>

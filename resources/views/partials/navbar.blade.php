@@ -1,8 +1,14 @@
 <nav id="navbar">
     <div class="nav-container">
         <a href="/" class="brand">
-            <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio Logo">
-            <span>PixelCraftsLab Studio</span>
+            <span class="brand-icon">
+                <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio Logo">
+            </span>
+
+            <span class="brand-text">
+                <strong>PixelCraftsLabStudio</strong>
+                <small>Ideas . Build . Launch</small>
+            </span>
         </a>
 
         <div class="nav-links">

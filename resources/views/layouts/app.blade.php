@@ -9,7 +9,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/layouts/layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -17,9 +17,19 @@
 
     @yield('styles')
 </head>
-<body>
-    <div class="site-bg"></div>
-    <div class="site-noise"></div>
+<body class="premium-space">
+    <div class="space-bg">
+        <div class="stars stars-1"></div>
+        <div class="stars stars-2"></div>
+        <div class="stars stars-3"></div>
+
+        <span class="nebula nebula-1"></span>
+        <span class="nebula nebula-2"></span>
+        <span class="nebula nebula-3"></span>
+
+        <span class="grid-glow"></span>
+        <span class="space-noise"></span>
+    </div>
 
     @include('partials.navbar')
 

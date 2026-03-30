@@ -1,30 +1,75 @@
-/* 
+/*
 |--------------------------------------------------------------------------
 | Landing page Styles
 |--------------------------------------------------------------------------
 | Styles only related to home.blade.php
 */
 
-/* FORM SECTION WRAPPER */
+/* Landing page styles */
+
+/* HERO FORM SECTION */
 .form-section {
     position: relative;
-    height: 100vh;
+    min-height: calc(100vh - 130px);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     overflow: hidden;
+    padding: 40px 0 20px;
 }
 
-/* PARTICLES LAYER - BEHIND FORM */
+.form-hero-shell {
+    position: relative;
+    z-index: 5;
+    width: min(1180px, calc(100% - 32px));
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 28px;
+    align-items: center;
+}
+
+.form-copy {
+    padding: 20px 8px 20px 6px;
+}
+
+.form-copy .eyebrow {
+    display: inline-flex;
+    margin-bottom: 16px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #dbe7ff;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.form-copy h1 {
+    margin: 0 0 14px;
+    font-size: clamp(2.2rem, 4vw, 4.2rem);
+    line-height: 1.02;
+    color: #ffffff;
+}
+
+.form-copy p {
+    margin: 0;
+    max-width: 560px;
+    color: #b7c3e3;
+    font-size: 1.03rem;
+    line-height: 1.85;
+}
+
+/* PARTICLES */
 .image-particle {
-    position: absolute; /* required for movement */
-    transform: translate(-50%, -50%); /* center origin */
-    animation: flyOut linear forwards; /* uses CSS animation */
-    pointer-events: none; /* don’t block clicks */
+    position: absolute;
+    transform: translate(-50%, -50%);
+    animation: flyOut linear forwards;
+    pointer-events: none;
     z-index: 0;
 }
 
-/* Movement animation */
 @keyframes flyOut {
     from {
         transform: translate(-50%, -50%) scale(1);
@@ -36,81 +81,152 @@
     }
 }
 
-/* FORM CONTAINER */
+#particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* FORM CARD */
 .form-container {
     position: relative;
     z-index: 5;
-    background: rgba(11, 13, 31, 0.95); /* dark form base */
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6); /* subtle shadow for depth */
-    width: 250px;  /* you can change width freely */
-    height: auto;  /* auto height fixes glitching */
-    min-height: 200px; /* ensures small forms don’t collapse */
-    text-align: center;
+    width: 100%;
+    max-width: 640px;
+    margin-left: auto;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        rgba(8, 12, 28, 0.78);
+    border: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow:
+        0 24px 70px rgba(0,0,0,0.42),
+        0 0 30px rgba(139, 92, 246, 0.10);
     animation: popIn 0.8s ease-out forwards;
-    transform: scale(0);
+    transform: scale(0.92);
+    opacity: 0;
+    overflow: hidden;
 }
 
-/* POP-IN ANIMATION */
+.form-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.6), rgba(34,211,238,0.24), rgba(255,255,255,0.05));
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+}
+
 @keyframes popIn {
-    to { transform: scale(1); }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-/* FORM ELEMENTS - INPUTS, SELECT, TEXTAREA, BUTTON */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.field {
+    margin-bottom: 16px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: #e9eeff;
+    letter-spacing: 0.04em;
+}
+
 .form-container input,
 .form-container select,
 .form-container textarea,
 .form-container button {
-    width: 100%;               /* always fill container width */
-    max-width: 100%;           /* never overflow */
-    box-sizing: border-box;    /* include padding in width */
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-/* INPUT, SELECT, TEXTAREA STYLING */
 .form-container input,
 .form-container select,
 .form-container textarea {
-    background: #1C1A3F; /* darker purple input */
-    color: #EAEAEA;       /* readable text */
-    box-shadow: inset 0 0 3px rgba(0,0,0,0.5); /* subtle inner shadow */
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(28, 26, 63, 0.60);
+    color: #EAEAEA;
+    outline: none;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.20);
 }
 
-/* BUTTON STYLING */
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+    color: #9eabd1;
+}
+
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    border-color: rgba(34, 211, 238, 0.45);
+    transform: translateY(-1px);
+    box-shadow:
+        0 0 0 4px rgba(34, 211, 238, 0.08),
+        inset 0 0 6px rgba(0,0,0,0.18);
+}
+
+.form-container textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
 .form-container button {
-    background: #FF7F50; /* bold orange button for contrast */
+    margin-top: 8px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(135deg, #8b5cf6, #22d3ee);
     color: #FFFFFF;
     cursor: pointer;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.4); /* subtle shadow for depth */
-    transition: transform 0.15s, box-shadow 0.2s;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+    transition: transform 0.18s ease, box-shadow 0.22s ease, filter 0.22s ease;
 }
 
 .form-container button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* small pop effect on hover */
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 18px 32px rgba(0,0,0,0.32);
+    filter: brightness(1.04);
 }
 
-/* TOOL PARTICLE (emoji version) */
+/* TOOL PARTICLE / SHAPE PARTICLES */
 .tool-particle {
     position: absolute;
     pointer-events: none;
     animation: drift linear forwards;
     opacity: 0.9;
-
-    /* Important for emojis */
     font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
-    background: none;        /* remove background */
-    width: auto;             /* let emoji size itself */
+    background: none;
+    width: auto;
     height: auto;
 }
 
-
-/* PARTICLE STYLE */
 .particle {
     position: absolute;
     top: 50%;
@@ -121,24 +237,10 @@
     pointer-events: none;
     transform: translate(-50%, -50%) scale(0.5);
     animation: drift linear forwards;
-    background: #6C5CE7; /* subtle purple particle */
+    background: #6C5CE7;
     border-radius: 50%;
 }
 
-.page-wrapper {
-    margin: auto;
-    top: 0;
-    left: 50%;
-    width: 90%;               /* not full width */
-    min-height: 25px;    
-    height: auto;         /* grows if content needs more space */
-    padding: 10px;        /* enough space for content */
-    border-radius: 50px;      /* rounded shape */
-    background: #1303259d; /* darker purple-y vibe */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-/* PARTICLE DRIFT ANIMATION */
 @keyframes drift {
     0% {
         transform: translate(-50%, -50%) scale(0.5);
@@ -149,12 +251,50 @@
         opacity: 0;
     }
 }
-#particles {
-    position: absolute;        /* confined to parent section */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;                /* behind the form */
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+    .form-hero-shell {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-copy {
+        text-align: center;
+        padding: 10px 6px 0;
+    }
+
+    .form-copy p {
+        margin: 0 auto;
+    }
+
+    .form-container {
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-section {
+        min-height: auto;
+        padding: 24px 0 10px;
+    }
+
+    .form-hero-shell {
+        width: calc(100% - 18px);
+    }
+
+    .form-container {
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .form-copy h1 {
+        font-size: 2rem;
+    }
 }
