@@ -1,0 +1,38 @@
+/* =========================================
+   TESTIMONIALS
+   ========================================= */
+
+.testimonials-preview{
+    padding:120px 30px;
+}
+
+.testimonials-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:40px;
+
+    max-width:900px;
+    margin:auto;
+}
+
+.testimonial{
+    padding:30px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,0.04);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    font-style:italic;
+}
+
+.testimonial p{
+    color:#aaa;
+}
+
+.testimonial span{
+    display:block;
+    margin-top:15px;
+    font-size:.9rem;
+}
