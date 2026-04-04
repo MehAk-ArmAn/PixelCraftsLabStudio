@@ -1,11 +1,13 @@
 /* 
 |--------------------------------------------------------------------------
-| Landing page Styles
+| Landing page Styles (FINAL - UNIFIED SYSTEM)
 |--------------------------------------------------------------------------
-| Styles only related to home.blade.php
 */
 
-/* FORM SECTION WRAPPER */
+/* ===============================
+   FORM SECTION WRAPPER
+================================= */
+
 .form-section {
     position: relative;
     height: 100vh;
@@ -15,16 +17,18 @@
     overflow: hidden;
 }
 
-/* PARTICLES LAYER - BEHIND FORM */
+/* ===============================
+   PARTICLES LAYER
+================================= */
+
 .image-particle {
-    position: absolute; /* required for movement */
-    transform: translate(-50%, -50%); /* center origin */
-    animation: flyOut linear forwards; /* uses CSS animation */
-    pointer-events: none; /* don’t block clicks */
+    position: absolute;
+    transform: translate(-50%, -50%);
+    animation: flyOut linear forwards;
+    pointer-events: none;
     z-index: 0;
 }
 
-/* Movement animation */
 @keyframes flyOut {
     from {
         transform: translate(-50%, -50%) scale(1);
@@ -36,109 +40,198 @@
     }
 }
 
-/* FORM CONTAINER */
+/* ===============================
+   FORM CONTAINER (GLASS CARD)
+================================= */
+
 .form-container {
     position: relative;
     z-index: 5;
-    background: rgba(11, 13, 31, 0.95); /* dark form base */
+
+    background: rgba(1, 13, 31, 0.95);
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6); /* subtle shadow for depth */
-    width: 250px;  /* you can change width freely */
-    height: auto;  /* auto height fixes glitching */
-    min-height: 200px; /* ensures small forms don’t collapse */
+
+    width: 250px;
+    min-height: 200px;
+
     text-align: center;
+
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    border: 1px solid rgba(168,85,247,0.15);
+
     animation: popIn 0.8s ease-out forwards;
     transform: scale(0);
+
+    transition: all .3s ease;
 }
 
-/* POP-IN ANIMATION */
+/* ORANGE HOVER (CARD) */
+.form-container:hover {
+    border: 1px solid rgba(255,154,60,0.6);
+    box-shadow: 0 0 25px rgba(255,154,60,0.25);
+}
+
 @keyframes popIn {
     to { transform: scale(1); }
 }
 
-/* FORM ELEMENTS - INPUTS, SELECT, TEXTAREA, BUTTON */
+/* ===============================
+   TEXT SYSTEM
+================================= */
+
+.form-container h1,
+.form-container h2,
+.form-container h3 {
+    color: #d7b6ff;
+    transition: all .3s ease;
+}
+
+.form-container h1:hover,
+.form-container h2:hover,
+.form-container h3:hover {
+    color: #ff9a3c;
+    text-shadow: 0 0 20px rgba(255,154,60,0.4);
+}
+
+.form-container p,
+.form-container label {
+    color: #cbb6ff;
+    transition: color .3s ease;
+}
+
+.form-container p:hover,
+.form-container label:hover {
+    color: #ffcc9a;
+}
+
+/* ===============================
+   FORM ELEMENTS BASE
+================================= */
+
 .form-container input,
 .form-container select,
 .form-container textarea,
 .form-container button {
-    width: 100%;               /* always fill container width */
-    max-width: 100%;           /* never overflow */
-    box-sizing: border-box;    /* include padding in width */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
     padding: 10px;
     margin: 10px 0;
+
     border-radius: 8px;
-    border: none;
 }
 
-/* INPUT, SELECT, TEXTAREA STYLING */
+/* ===============================
+   INPUTS / SELECT / TEXTAREA
+================================= */
+
 .form-container input,
 .form-container select,
 .form-container textarea {
-    background: #1C1A3F; /* darker purple input */
-    color: #EAEAEA;       /* readable text */
-    box-shadow: inset 0 0 3px rgba(0,0,0,0.5); /* subtle inner shadow */
+    background: #1C1A3F;
+    color: #EAEAEA;
+
+    border: 1px solid rgba(168,85,247,0.2);
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+
+    transition: all .3s ease;
 }
 
-/* BUTTON STYLING */
+/* INPUT HOVER */
+.form-container input:hover,
+.form-container select:hover,
+.form-container textarea:hover {
+    border: 1px solid rgba(255,154,60,0.6);
+    box-shadow: 0 0 10px rgba(255,154,60,0.25);
+}
+
+/* INPUT FOCUS */
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    outline: none;
+    border: 1px solid #ff9a3c;
+    box-shadow: 0 0 15px rgba(255,154,60,0.3);
+}
+
+/* ===============================
+   BUTTON
+================================= */
+
 .form-container button {
-    background: #FF7F50; /* bold orange button for contrast */
-    color: #FFFFFF;
+    background: linear-gradient(90deg, #a855f7, #6366f1);
+    color: #fff;
+
+    border: none;
     cursor: pointer;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.4); /* subtle shadow for depth */
-    transition: transform 0.15s, box-shadow 0.2s;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+
+    transition: all .3s ease;
 }
 
+/* BUTTON HOVER */
 .form-container button:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5); /* small pop effect on hover */
+    background: linear-gradient(90deg, #ff9a3c, #ff6a00);
+    box-shadow: 0 5px 25px rgba(255,154,60,0.4);
 }
 
-/* TOOL PARTICLE (emoji version) */
+/* ===============================
+   WRAPPER
+================================= */
+
+.page-wrapper {
+    margin: auto;
+    width: 90%;
+    min-height: 25px;
+    padding: 10px;
+
+    border-radius: 50px;
+    background: #1303259d;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+
+    transition: all .3s ease;
+}
+
+.page-wrapper:hover {
+    box-shadow: 0 0 20px rgba(255,154,60,0.25);
+}
+
+/* ===============================
+   PARTICLES
+================================= */
+
 .tool-particle {
     position: absolute;
     pointer-events: none;
     animation: drift linear forwards;
     opacity: 0.9;
 
-    /* Important for emojis */
     font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
-    background: none;        /* remove background */
-    width: auto;             /* let emoji size itself */
-    height: auto;
 }
 
-
-/* PARTICLE STYLE */
 .particle {
     position: absolute;
     top: 50%;
     left: 50%;
+
     width: 10px;
     height: 10px;
+
     opacity: 0.7;
     pointer-events: none;
+
     transform: translate(-50%, -50%) scale(0.5);
     animation: drift linear forwards;
-    background: #6C5CE7; /* subtle purple particle */
+
+    background: #6C5CE7;
     border-radius: 50%;
 }
 
-.page-wrapper {
-    margin: auto;
-    top: 0;
-    left: 50%;
-    width: 90%;               /* not full width */
-    min-height: 25px;    
-    height: auto;         /* grows if content needs more space */
-    padding: 10px;        /* enough space for content */
-    border-radius: 50px;      /* rounded shape */
-    background: #1303259d; /* darker purple-y vibe */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-/* PARTICLE DRIFT ANIMATION */
 @keyframes drift {
     0% {
         transform: translate(-50%, -50%) scale(0.5);
@@ -149,12 +242,69 @@
         opacity: 0;
     }
 }
+
 #particles {
-    position: absolute;        /* confined to parent section */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
     overflow: hidden;
-    z-index: 0;                /* behind the form */
+    z-index: 0;
+}
+/* ===============================
+   GLOBAL ORANGE HOVER FORCE FIX
+================================= */
+
+/* TEXT ELEMENTS */
+h1:hover,
+h2:hover,
+h3:hover,
+p:hover,
+label:hover,
+span:hover {
+    color: #ff9a3c !important;
+    text-shadow: 0 0 15px rgba(255,154,60,0.4);
+}
+
+/* BUTTONS */
+button:hover {
+    background: linear-gradient(90deg, #ff9a3c, #ff6a00) !important;
+    box-shadow: 0 5px 25px rgba(255,154,60,0.4) !important;
+    transform: scale(1.05);
+}
+
+/* INPUTS */
+input:hover,
+textarea:hover,
+select:hover {
+    border: 1px solid #ff9a3c !important;
+    box-shadow: 0 0 10px rgba(255,154,60,0.3);
+}
+
+/* INPUT FOCUS */
+input:focus,
+textarea:focus,
+select:focus {
+    border: 1px solid #ff9a3c !important;
+    box-shadow: 0 0 15px rgba(255,154,60,0.4);
+}
+
+/* CARDS / DIVS (IMPORTANT) */
+.form-container:hover,
+.service-card:hover,
+.contact-form:hover,
+.contact-info:hover,
+.about-card:hover,
+.team-card:hover,
+.page-wrapper:hover {
+    border: 1px solid rgba(255,154,60,0.6) !important;
+    box-shadow: 0 0 30px rgba(255,154,60,0.25) !important;
+}
+
+/* LINKS */
+a:hover {
+    color: #ff9a3c !important;
+    text-shadow: 0 0 10px rgba(255,154,60,0.4);
 }

@@ -1,11 +1,12 @@
 /* ===============================
    About Page Styles
-   PixelCraftsLab Studio
+   Purple Base + Orange Hover Accent
 ================================= */
 
 .about-section{
 padding:120px 20px;
 color:white;
+background: linear-gradient(135deg, #130325, #1b0431, #130325);
 }
 
 .about-container{
@@ -23,11 +24,23 @@ margin-bottom:80px;
 .about-hero h1{
 font-size:48px;
 margin-bottom:10px;
+color:#d7b6ff;
+transition: color .3s, text-shadow .3s;
+}
+
+.about-hero h1:hover{
+color:#ff9a3c;
+text-shadow:0 0 25px rgba(255,154,60,0.5);
 }
 
 .about-hero p{
 color:#cbb6ff;
 font-size:18px;
+transition: color .3s;
+}
+
+.about-hero p:hover{
+color:#ffcc9a;
 }
 
 
@@ -42,11 +55,13 @@ margin-bottom:40px;
 backdrop-filter: blur(10px);
 border:1px solid rgba(255,255,255,0.05);
 
-transition:transform .3s;
+transition: transform .3s, box-shadow .3s, border .3s;
 }
 
 .about-card:hover{
 transform:translateY(-6px);
+border:1px solid rgba(255,154,60,0.6);
+box-shadow:0 0 25px rgba(255,154,60,0.25);
 }
 
 
@@ -66,6 +81,13 @@ margin-bottom:60px;
 text-align:center;
 font-size:32px;
 margin-bottom:50px;
+color:#d7b6ff;
+transition: color .3s, text-shadow .3s;
+}
+
+.team-title:hover{
+color:#ff9a3c;
+text-shadow:0 0 20px rgba(255,154,60,0.4);
 }
 
 .team-grid{
@@ -79,11 +101,14 @@ background:rgba(19,3,37,0.7);
 padding:25px;
 border-radius:20px;
 text-align:center;
-transition:transform .3s;
+transition: transform .3s, box-shadow .3s, border .3s;
+border:1px solid rgba(255,255,255,0.05);
 }
 
 .team-card:hover{
 transform:scale(1.05);
+border:1px solid rgba(255,154,60,0.6);
+box-shadow:0 0 30px rgba(255,154,60,0.3);
 }
 
 .team-card img{
@@ -91,15 +116,33 @@ width:90px;
 height:90px;
 border-radius:50%;
 margin-bottom:15px;
+border:2px solid rgba(203,182,255,0.4);
+transition: border .3s, box-shadow .3s;
+}
+
+.team-card:hover img{
+border:2px solid rgba(255,154,60,0.7);
+box-shadow:0 0 15px rgba(255,154,60,0.3);
 }
 
 .team-card h3{
 margin-bottom:5px;
+color:#cbb6ff;
+transition: color .3s;
+}
+
+.team-card:hover h3{
+color:#ffb066;
 }
 
 .team-card p{
 color:#cbb6ff;
 font-size:14px;
+transition: color .3s;
+}
+
+.team-card:hover p{
+color:#ffcc9a;
 }
 
 

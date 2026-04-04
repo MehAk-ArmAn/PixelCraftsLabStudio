@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ContactController;
+ use App\Http\Controllers\TestimonialController;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
@@ -47,5 +48,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Messages CRUD
     Route::resource('messages', AdminMessageController::class);
 
+Route::post('/testimonial', [TestimonialController::class, 'store']);
 });
 

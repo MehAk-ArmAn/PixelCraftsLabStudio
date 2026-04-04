@@ -22,20 +22,24 @@
 @section('content')
 
     @include('components.forms.big-form')
-    
+
     <div class="page-wrapper">
         @include('components.sections.about-preview')
     </div>
+
     <div class="page-wrapper">
         @include('components.sections.portfolio-preview')
     </div>
+
     <div class="page-wrapper">
         @include('components.sections.services-preview')
     </div>
+
     <div class="page-wrapper">
-        @include('components.sections.testimonials')
+        <x-sections.testimonials :testimonials="$testimonials" />
     </div>
-        @include('components.sections.cta')
-    
+
+    @include('components.sections.cta')
 
 @endsection
+

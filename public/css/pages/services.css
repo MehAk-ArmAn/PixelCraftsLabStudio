@@ -1,71 +1,77 @@
-/* SERVICES PAGE */
+/* ===============================
+   SERVICES PAGE (FULL UNIFIED CSS)
+   Purple Base + Orange Hover System
+================================= */
 
-.services-section{
-padding:120px 20px;
-color:white;
+/* GLOBAL PAGE */
+.services-section {
+    padding: 120px 20px;
+    color: white;
+    background: linear-gradient(135deg, #0f0f1a, #130325, #0f0f1a);
 }
 
-/* add gap between hero and service cards */
+/* CONTAINER */
 .services-container {
     max-width: 1200px;
-    margin: 60px auto 0 auto; /* 60px top margin pushes cards down */
-    padding: 0 20px; /* horizontal breathing room */
+    margin: 60px auto 0 auto;
+    padding: 0 20px;
 }
 
-/* HEADER */
+/* ===============================
+   HERO SECTION
+================================= */
 
-/* FULL BANNER HERO */
 .services-hero {
-    width: 100%; /* full width */
-    height: 100vh; /* full viewport height */
+    width: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a1a28, #7f00ff); /* deep dark to purple */
+
+    background: linear-gradient(135deg, #1a1a28, #130325);
     color: #fff;
     text-align: center;
+
     position: relative;
     overflow: hidden;
-    padding: 0 80px; /* horizontal breathing room on desktop */
+    padding: 0 80px;
     box-sizing: border-box;
 }
 
 .services-hero .services-header {
-    max-width: 1200px; /* like portfolio banner */
+    max-width: 1200px;
     animation: fadeInUp 1s ease forwards;
 }
 
 .services-hero h1 {
-    font-size: clamp(3rem, 6vw, 5rem); /* big cinematic headline */
+    font-size: clamp(3rem, 6vw, 5rem);
     margin-bottom: 20px;
     letter-spacing: 1px;
+
+    color: #d7b6ff;
+    transition: all .3s ease;
+}
+
+.services-hero h1:hover {
+    color: #ff9a3c;
+    text-shadow: 0 0 25px rgba(255,154,60,0.4);
 }
 
 .services-hero p {
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-    color: #ddd;
+    color: #cbb6ff;
     margin: 0 auto;
     line-height: 1.6;
     max-width: 800px;
+
+    transition: all .3s ease;
 }
 
-/* Mobile tweaks */
-@media (max-width: 768px) {
-    .services-hero {
-        padding: 0 30px;
-        height: 80vh; /* still full-ish on mobile */
-    }
-
-    .services-hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .services-hero p {
-        font-size: 1.2rem;
-    }
+.services-hero p:hover {
+    color: #ffcc9a;
 }
 
-/* subtle bottom overlay */
+/* HERO EFFECT LAYER */
 .services-hero::after {
     content: '';
     position: absolute;
@@ -78,144 +84,170 @@ color:white;
     pointer-events: none;
 }
 
+/* ===============================
+   GRID SYSTEM
+================================= */
 
-/* GRID */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px; /* more spacing between cards */
-    justify-items: center; /* center the cards nicely */
+    gap: 40px;
+    justify-items: center;
 }
 
-
-/* FLOATING CARD */
+/* ===============================
+   SERVICE CARDS (UNIFIED STYLE)
+================================= */
 
 .service-card {
-    background: rgba(19,3,37,0.8);
+    background: rgba(19,3,37,0.75);
     border-radius: 20px;
     padding: 50px 20px;
     text-align: center;
     cursor: pointer;
-    border: 1px solid rgba(108,92,231,0.3);
-    transition: all .25s ease;
+
+    border: 1px solid rgba(168,85,247,0.2);
     backdrop-filter: blur(10px);
-    animation: float 4s ease-in-out infinite; /* smooth infinite float */
 
-    transition:all .25s ease;
+    animation: float 4s ease-in-out infinite;
 
+    transition: all .3s ease;
 }
 
-/* hover boost */
+/* ORANGE HOVER SYSTEM */
 .service-card:hover {
     transform: translateY(-12px) scale(1.05);
-    border-color: #6C5CE7;
-    box-shadow: 0 0 25px rgba(108,92,231,0.5);
-    animation: none; /* stop float while hovering for smooth effect */
+    border: 1px solid rgba(255,154,60,0.6);
+    box-shadow: 0 0 30px rgba(255,154,60,0.25);
+
+    animation: none;
 }
 
-.service-card h2{
-font-size:22px;
-color:white;
+/* CARD TITLE */
+.service-card h2 {
+    font-size: 22px;
+    color: #d7b6ff;
+    transition: all .3s ease;
 }
 
-/* subtle floating motion for all cards */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); } /* float up slightly */
-    100% { transform: translateY(0px); }
+.service-card h2:hover {
+    color: #ff9a3c;
+    text-shadow: 0 0 15px rgba(255,154,60,0.4);
 }
 
+/* ===============================
+   MODAL SYSTEM
+================================= */
 
-/* MODAL */
+.service-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 
-.service-modal{
+    background: rgba(0,0,0,0.7);
+    display: none;
 
-transition:opacity .2s ease;
+    align-items: center;
+    justify-content: center;
 
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-background:rgba(0,0,0,0.7);
-
-display:none;
-
-align-items:center;
-justify-content:center;
-
-z-index:999;
+    z-index: 999;
 }
 
+/* MODAL CONTENT */
+.modal-content {
+    background: #130325;
+    padding: 50px;
+    border-radius: 25px;
+    max-width: 600px;
+    text-align: center;
 
-.modal-content{
+    border: 1px solid rgba(168,85,247,0.2);
 
-background:#130325;
+    animation: zoomIn .3s ease;
 
-padding:50px;
-
-border-radius:25px;
-
-max-width:600px;
-
-text-align:center;
-
-border:1px solid rgba(108,92,231,0.3);
-
-animation:zoomIn .3s ease;
+    transition: all .3s ease;
 }
 
-.modal-content h2{
-margin-bottom:15px;
+/* MODAL HOVER (ORANGE TOUCH) */
+.modal-content:hover {
+    border: 1px solid rgba(255,154,60,0.5);
+    box-shadow: 0 0 25px rgba(255,154,60,0.2);
 }
 
-.modal-content p{
-color:#ddd;
-line-height:1.6;
+.modal-content h2 {
+    margin-bottom: 15px;
+    color: #d7b6ff;
 }
 
+.modal-content p {
+    color: #cbb6ff;
+    line-height: 1.6;
+}
 
 /* CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
 
-.close-btn{
+    font-size: 20px;
+    background: none;
+    border: none;
 
-position:absolute;
+    color: white;
+    cursor: pointer;
 
-top:20px;
-right:30px;
-
-font-size:20px;
-
-background:none;
-
-border:none;
-
-color:white;
-
-cursor:pointer;
+    transition: all .2s ease;
 }
 
-/* Animations */
+.close-btn:hover {
+    color: #ff9a3c;
+    text-shadow: 0 0 10px rgba(255,154,60,0.4);
+}
+
+/* ===============================
+   ANIMATIONS
+================================= */
+
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
-/* ZOOM ANIMATION */
-
-@keyframes zoomIn{
-
-from{
-transform:scale(.7);
-opacity:0;
+@keyframes zoomIn {
+    from {
+        transform: scale(0.7);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
-to{
-transform:scale(1);
-opacity:1;
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
 }
 
+/* ===============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+    .services-hero {
+        padding: 0 30px;
+        height: 80vh;
+    }
+
+    .services-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .services-hero p {
+        font-size: 1.2rem;
+    }
 }

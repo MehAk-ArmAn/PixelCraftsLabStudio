@@ -1,28 +1,54 @@
-/* Hero Section */
+/* ===============================
+   PORTFOLIO PAGE (UNIFIED HOVER SYSTEM)
+   Purple Base + Orange Accent Hover
+================================= */
+
+/* HERO (keep same look, just unify hover behavior) */
 .portfolio-hero {
     height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a1a28, #7f00ff); /* deep dark into brand purple */
+
+    background: linear-gradient(135deg, #1a1a28, #130325);
     color: #fff;
+
     text-align: center;
     position: relative;
     overflow: hidden;
 }
 
+/* HERO TEXT */
 .portfolio-hero h1 {
     font-size: 4rem;
     animation: fadeInUp 1s ease forwards;
+
+    color: #d7b6ff;
+    transition: all .3s ease;
+}
+
+.portfolio-hero h1:hover {
+    color: #ff9a3c;
+    text-shadow: 0 0 25px rgba(255,154,60,0.4);
 }
 
 .portfolio-hero p {
     font-size: 1.5rem;
     margin-top: 1rem;
     animation: fadeInUp 1.5s ease forwards;
+
+    color: #cbb6ff;
+    transition: all .3s ease;
 }
 
-/* Portfolio Grid */
+.portfolio-hero p:hover {
+    color: #ffcc9a;
+}
+
+/* ===============================
+   PORTFOLIO GRID (UNCHANGED STRUCTURE)
+================================= */
+
 .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -30,18 +56,28 @@
     padding: 4rem 2rem;
 }
 
+/* ===============================
+   PORTFOLIO CARD (UNIFIED STYLE)
+================================= */
+
 .portfolio-card {
     position: relative;
     overflow: hidden;
     cursor: pointer;
     border-radius: 1rem;
-    transition: transform 0.3s ease;
+
+    border: 1px solid rgba(168,85,247,0.2);
+    transition: all 0.3s ease;
 }
 
+/* CARD HOVER → ORANGE SYSTEM */
 .portfolio-card:hover {
     transform: scale(1.05);
+    border: 1px solid rgba(255,154,60,0.6);
+    box-shadow: 0 0 30px rgba(255,154,60,0.25);
 }
 
+/* IMAGE */
 .card-img img {
     width: 100%;
     display: block;
@@ -53,16 +89,23 @@
     transform: scale(1.1);
 }
 
+/* ===============================
+   OVERLAY (PURPLE BASE → ORANGE HOVER SHIFT)
+================================= */
+
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(127,0,255,0.7); /* brand purple overlay */
+
+    background: rgba(19,3,37,0.7);
     color: #fff;
+
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,26 +114,58 @@
     padding: 1rem;
 }
 
+/* OVERLAY ON HOVER */
 .portfolio-card:hover .overlay {
     opacity: 1;
 }
 
+/* OVERLAY TEXT */
+.overlay h2,
+.overlay p {
+    transition: all .3s ease;
+    color: #d7b6ff;
+}
+
+/* TEXT HOVER INSIDE CARD */
+.portfolio-card:hover .overlay h2 {
+    color: #ff9a3c;
+    text-shadow: 0 0 20px rgba(255,154,60,0.4);
+}
+
+.portfolio-card:hover .overlay p {
+    color: #ffcc9a;
+}
+
+/* ===============================
+   BUTTON (UNIFIED SYSTEM)
+================================= */
+
 .view-btn {
     margin-top: 1rem;
     padding: 0.5rem 1.5rem;
-    border: 2px solid #fff;
+
+    border: 2px solid rgba(168,85,247,0.4);
     border-radius: 2rem;
+
     color: #fff;
     text-decoration: none;
+
     transition: all 0.3s ease;
 }
 
+/* BUTTON HOVER → ORANGE SHIFT */
 .view-btn:hover {
-    background: #fff;
-    color: #6c5ce7;
+    background: linear-gradient(90deg, #ff9a3c, #ff6a00);
+    border-color: #ff9a3c;
+    color: #fff;
+
+    box-shadow: 0 0 20px rgba(255,154,60,0.4);
 }
 
-/* Animations */
+/* ===============================
+   ANIMATIONS (UNCHANGED)
+================================= */
+
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
