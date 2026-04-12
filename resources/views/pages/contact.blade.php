@@ -10,9 +10,6 @@
 
 @section('content')
 
-    {{-- Navbar --}}
-    @include('partials.navbar')
-
     <section class="contact-section">
         <div class="contact-container">
 
@@ -72,7 +69,7 @@
                         <a href="{{ $facebook }}">Facebook</a> |
                         <a href="{{ $whatsapp }}">Whatsapp</a>
                     </p>
-                   
+
                 </section>
 
             </div>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelCraftsLabStudio</title>
+    <title>@yield('title', ($setting->site_name ?? 'PixelCraftsLabStudio'))</title>
 
-    <link rel="shortcut icon" href="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset($setting->favicon_path ?? 'favicon/1/Profile_pic/Transparent.gif') }}" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,4 +40,3 @@
     @include('partials.footer')
 </body>
 </html>
-

@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class TeamMember extends Model
 {
     protected $fillable = [
         'name',
-        'email',
-        'subject',
-        'message',
-        'is_read',
+        'role',
+        'bio',
+        'image',
+        'sort_order',
+        'is_active',
     ];
 
     protected $casts = [
-        'is_read' => 'boolean',
+        'is_active' => 'boolean',
     ];
 }

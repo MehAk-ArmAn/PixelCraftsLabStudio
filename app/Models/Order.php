@@ -9,6 +9,6 @@ class Order extends Model
     protected $fillable = [
         'client_name',
         'service_type',
-        'project_details'
+        'project_details',
     ];
 }

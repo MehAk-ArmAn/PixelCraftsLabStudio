@@ -6,7 +6,7 @@
             </span>
 
             <span class="brand-text">
-                <strong>PixelCraftsLabStudio</strong>
+                <strong>{{ $name ?? 'PixelCraftsLabStudio' }}</strong>
                 <small>Ideas . Build . Launch</small>
             </span>
         </a>

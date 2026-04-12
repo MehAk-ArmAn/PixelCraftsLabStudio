@@ -8,8 +8,14 @@ class Contact extends Model
 {
     protected $fillable = [
         'name',
-        'subject',
-        'message',
         'email',
+        'subject',
+        'service',
+        'message',
+        'is_read',
+    ];
+
+    protected $casts = [
+        'is_read' => 'boolean',
     ];
 }

@@ -9,8 +9,6 @@
 @endsection
 
 @section('content')
-{{-- Navbar --}}
-@include('partials.navbar')
 
 <section class="portfolio-hero">
     <div class="hero-content">

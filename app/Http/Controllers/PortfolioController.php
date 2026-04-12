@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Models\Portfolio; // make sure this is your model
+
+use App\Models\Page;
+use App\Models\Portfolio;
+use App\Models\Setting;
 
 class PortfolioController extends Controller
 {
     public function index()
     {
-        // Fetch all portfolio items
-        $projects = Portfolio::all(); // get from DB
-
-        // Send to the view
-        return view('pages.portfolio', compact('projects'));
+        return view('portfolio', [
+            'setting' => Setting::first(),
+            'page' => Page::where('page_key', 'portfolio')->first(),
+            'projects' => Portfolio::latest()->get(),
+        ]);
     }
 }

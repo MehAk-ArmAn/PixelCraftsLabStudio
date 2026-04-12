@@ -10,9 +10,6 @@
 
 @section('content')
 
-    {{-- Navbar --}}
-    @include('partials.navbar')
-
     <section class="about-section">
 
 <div class="about-container">
