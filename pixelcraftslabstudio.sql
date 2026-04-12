@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2026 at 03:19 PM
+-- Generation Time: Apr 12, 2026 at 04:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -341,8 +341,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('gYafOsDKyPnV9qFs9wZ5igauvXZSuAm3ou6RR3Cq', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibmR1dmZoZ0NnMFVRZEdjTjV0Rzg3V21INGd1ODQ3bVlNS3VUOFNlTSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1774694797),
-('KY5dNKWoNbvwgsl5VMEqSbJgwPtiv58rPehNs2Vd', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWWxzaDlPU2tqdnJmbTRYVVNoRVRnaEVTdzBuWWZMSE5pRmZwRHVObiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1774702090);
+('nTzJg3PE7KCeubVZmSQeT6hLEaAnCWUmO4U9BZZ9', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZ2llWFRJY08waExabXJZVUpYbGdXZDE3MkR0ZlFoYllCM3hGR0ZFWiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjt9', 1776002314),
+('zhBMnllDoC1vUmVvZOC7Cvfe5mhHeHtlBTbILK2J', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYkNzWEoyQUVYbHlueGJOeXU5cm5iUXN0SVBoMjFvM29mT3NzVGZCcCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1776000232);
 
 -- --------------------------------------------------------
 
@@ -431,7 +431,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Test User', 'test@example.com', '2026-02-18 14:51:29', '$2y$12$S1rGw7VF3MnX4QeKdEWiq.szHaBkpFGEwHn3o8qJ6I21GSh2xAdaK', 'user', '6MG9uFKlw9', '2026-02-18 14:51:29', '2026-02-18 14:51:29');
+(1, 'Test User', 'test@example.com', '2026-02-18 14:51:29', '$2y$12$S1rGw7VF3MnX4QeKdEWiq.szHaBkpFGEwHn3o8qJ6I21GSh2xAdaK', 'user', '6MG9uFKlw9', '2026-02-18 14:51:29', '2026-02-18 14:51:29'),
+(2, 'Admin', 'admin@pixelcraftslabstudio', NULL, '$2y$12$veqovoajJo2KOT5IunUHU.B6bw3Wk8wTU.wdLHSN5LoV0aVSNrctm', 'admin', NULL, '2026-04-12 09:43:12', '2026-04-12 09:43:12');
 
 --
 -- Indexes for dumped tables
@@ -669,7 +670,7 @@ ALTER TABLE `testimonials`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
