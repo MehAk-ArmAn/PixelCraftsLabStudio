@@ -1,82 +1,55 @@
-// service info database
-const services = {
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("service-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalText = document.getElementById("modal-text");
+    const closeButton = document.getElementById("modal-close");
+    const cards = document.querySelectorAll(".services-page__card");
 
-brandkits:{
-title:"Brand Kits & Visual Identity",
-text:"We create logos, color palettes, typography systems, and brand guidelines to give your business a strong and consistent identity."
-},
+    if (!modal || !modalTitle || !modalText || !cards.length) {
+        return;
+    }
 
-web:{
-title:"Web Development",
-text:"Responsive, fast, SEO-optimized websites built with modern technologies to power your digital presence."
-},
+    const openModal = (title, description) => {
+        modalTitle.textContent = title || "Service";
+        modalText.textContent = description || "More details coming soon.";
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+    };
 
-apps:{
-title:"App Development",
-text:"Mobile and web applications designed for performance, scalability, and smooth user experience."
-},
+    const closeModal = () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+    };
 
-software:{
-title:"Custom Software",
-text:"Tailored software solutions designed to automate processes and solve unique business challenges."
-},
+    cards.forEach((card) => {
+        const title = card.dataset.title || "Service";
+        const description = card.dataset.description || "More details coming soon.";
 
-support:{
-title:"App Maintenance & Support",
-text:"Ongoing updates, security improvements, and performance optimization."
-},
+        card.addEventListener("click", () => {
+            openModal(title, description);
+        });
 
-consult:{
-title:"Digital Consultation",
-text:"Strategic guidance on technology, product design, and digital growth."
-},
+        card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                openModal(title, description);
+            }
+        });
+    });
 
-api:{
-title:"API Development & Integration",
-text:"Secure APIs that connect platforms and services seamlessly."
-}
+    closeButton.addEventListener("click", closeModal);
 
-}
+    modal.addEventListener("click", (event) => {
+        if (event.target.dataset.close === "true") {
+            closeModal();
+        }
+    });
 
-
-// open modal
-function openService(id){
-
-const modal = document.getElementById("service-modal")
-
-document.getElementById("modal-title").innerText = services[id].title
-document.getElementById("modal-text").innerText = services[id].text
-
-modal.style.display="flex"
-
-}
-
-
-// close modal
-function closeService(){
-
-document.getElementById("service-modal").style.display="none"
-
-}
-
-
-// close if clicking background
-window.onclick = function(event){
-
-const modal = document.getElementById("service-modal")
-
-if(event.target === modal){
-closeService()
-}
-
-}
-
-
-// close with ESC key
-document.addEventListener("keydown", function(e){
-
-if(e.key === "Escape"){
-closeService()
-}
-
-})
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.classList.contains("is-open")) {
+            closeModal();
+        }
+    });
+});
