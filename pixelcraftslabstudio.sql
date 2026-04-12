@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2026 at 01:49 PM
+-- Generation Time: Apr 12, 2026 at 03:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -58,18 +58,20 @@ CREATE TABLE `contacts` (
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `subject` varchar(255) DEFAULT NULL,
-  `message` text NOT NULL
+  `service` varchar(255) DEFAULT NULL,
+  `message` text NOT NULL,
+  `is_read` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`id`, `created_at`, `updated_at`, `name`, `email`, `subject`, `message`) VALUES
-(1, '2026-03-28 08:41:09', '2026-03-28 08:41:09', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', '!H'),
-(2, '2026-03-28 08:41:28', '2026-03-28 08:41:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', '!H'),
-(3, '2026-03-28 08:41:56', '2026-03-28 08:41:56', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', '!H'),
-(4, '2026-03-28 08:47:28', '2026-03-28 08:47:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', 'HIIIIIIIIIIIIIIIIII');
+INSERT INTO `contacts` (`id`, `created_at`, `updated_at`, `name`, `email`, `subject`, `service`, `message`, `is_read`) VALUES
+(1, '2026-03-28 08:41:09', '2026-03-28 08:41:09', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
+(2, '2026-03-28 08:41:28', '2026-03-28 08:41:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
+(3, '2026-03-28 08:41:56', '2026-03-28 08:41:56', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
+(4, '2026-03-28 08:47:28', '2026-03-28 08:47:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', NULL, 'HIIIIIIIIIIIIIIIIII', 0);
 
 -- --------------------------------------------------------
 
@@ -85,6 +87,23 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `footer_links`
+--
+
+CREATE TABLE `footer_links` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `group_name` varchar(255) NOT NULL DEFAULT 'Quick Links',
+  `label` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -161,7 +180,34 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2026_02_19_192844_create_messages_table', 2),
 (9, '2026_02_23_214851_create_particles_table', 3),
 (11, '2026_03_10_113322_create_portfolios_table', 4),
-(12, '2026_03_28_123932_update_contacts_table', 5);
+(12, '2026_03_28_123932_update_contacts_table', 5),
+(13, '2026_04_12_103952_add_role_to_users_table', 6),
+(14, '2026_04_12_103953_create_settings_table', 6),
+(15, '2026_04_12_103953_update_contacts_table_for_admin', 6),
+(16, '2026_04_12_103954_create_footer_links_table', 6),
+(17, '2026_04_12_103954_create_nav_items_table', 6),
+(18, '2026_04_12_103954_create_pages_table', 6),
+(19, '2026_04_12_103955_create_sections_table', 6),
+(20, '2026_04_12_103955_create_testimonials_table', 6),
+(21, '2026_04_12_103957_create_team_members_table', 6),
+(22, '2026_04_12_105222_drop_particles_table', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nav_items`
+--
+
+CREATE TABLE `nav_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_button` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -178,24 +224,20 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `particles`
+-- Table structure for table `pages`
 --
 
-CREATE TABLE `particles` (
+CREATE TABLE `pages` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `image_path` varchar(255) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 1,
+  `page_key` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `subtitle` varchar(255) DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `particles`
---
-
-INSERT INTO `particles` (`id`, `image_path`, `active`, `created_at`, `updated_at`) VALUES
-(1, '/imgs/random/1.png', 1, '2026-02-23 18:59:00', '2026-02-23 18:59:00'),
-(2, '/imgs/random/1.png', 1, '2026-02-23 19:32:04', '2026-02-23 19:32:04');
 
 -- --------------------------------------------------------
 
@@ -232,6 +274,28 @@ CREATE TABLE `portfolios` (
 INSERT INTO `portfolios` (`id`, `title`, `description`, `image`, `link`, `created_at`, `updated_at`) VALUES
 (1, 'Test Project 2', 'Another test project for styling.', 'sample2.jpg', '#', '2026-03-10 07:42:40', '2026-03-10 07:42:40'),
 (2, 'Test Project 1', 'This is a cool test project.', 'sample.jpg', '#', '2026-03-10 07:42:40', '2026-03-10 07:42:40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sections`
+--
+
+CREATE TABLE `sections` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `page_key` varchar(255) NOT NULL,
+  `section_key` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `subtitle` varchar(255) DEFAULT NULL,
+  `content` longtext DEFAULT NULL,
+  `button_text` varchar(255) DEFAULT NULL,
+  `button_link` varchar(255) DEFAULT NULL,
+  `image_path` varchar(255) DEFAULT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -283,6 +347,70 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `site_name` varchar(255) NOT NULL DEFAULT 'PixelCraftsLabStudio',
+  `brand_tagline` varchar(255) DEFAULT NULL,
+  `logo_path` varchar(255) DEFAULT NULL,
+  `favicon_path` varchar(255) DEFAULT NULL,
+  `admin_email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `instagram` varchar(255) DEFAULT NULL,
+  `linked_in` varchar(255) DEFAULT NULL,
+  `x` varchar(255) DEFAULT NULL,
+  `tiktok` varchar(255) DEFAULT NULL,
+  `pinterest` varchar(255) DEFAULT NULL,
+  `youtube` varchar(255) DEFAULT NULL,
+  `facebook` varchar(255) DEFAULT NULL,
+  `whatsapp` varchar(255) DEFAULT NULL,
+  `footer_text` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `team_members`
+--
+
+CREATE TABLE `team_members` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `bio` text DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testimonials`
+--
+
+CREATE TABLE `testimonials` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `designation` varchar(255) DEFAULT NULL,
+  `quote` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `sort_order` int(11) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -292,6 +420,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL DEFAULT 'user',
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -301,8 +430,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Test User', 'test@example.com', '2026-02-18 14:51:29', '$2y$12$S1rGw7VF3MnX4QeKdEWiq.szHaBkpFGEwHn3o8qJ6I21GSh2xAdaK', '6MG9uFKlw9', '2026-02-18 14:51:29', '2026-02-18 14:51:29');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Test User', 'test@example.com', '2026-02-18 14:51:29', '$2y$12$S1rGw7VF3MnX4QeKdEWiq.szHaBkpFGEwHn3o8qJ6I21GSh2xAdaK', 'user', '6MG9uFKlw9', '2026-02-18 14:51:29', '2026-02-18 14:51:29');
 
 --
 -- Indexes for dumped tables
@@ -336,6 +465,12 @@ ALTER TABLE `failed_jobs`
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
+-- Indexes for table `footer_links`
+--
+ALTER TABLE `footer_links`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -361,16 +496,23 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `nav_items`
+--
+ALTER TABLE `nav_items`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `particles`
+-- Indexes for table `pages`
 --
-ALTER TABLE `particles`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `pages_page_key_unique` (`page_key`);
 
 --
 -- Indexes for table `password_reset_tokens`
@@ -382,6 +524,12 @@ ALTER TABLE `password_reset_tokens`
 -- Indexes for table `portfolios`
 --
 ALTER TABLE `portfolios`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sections`
+--
+ALTER TABLE `sections`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -397,6 +545,24 @@ ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sessions_user_id_index` (`user_id`),
   ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `team_members`
+--
+ALTER TABLE `team_members`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
@@ -422,6 +588,12 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `footer_links`
+--
+ALTER TABLE `footer_links`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -437,7 +609,13 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `nav_items`
+--
+ALTER TABLE `nav_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -446,10 +624,10 @@ ALTER TABLE `orders`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `particles`
+-- AUTO_INCREMENT for table `pages`
 --
-ALTER TABLE `particles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `pages`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `portfolios`
@@ -458,10 +636,34 @@ ALTER TABLE `portfolios`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `sections`
+--
+ALTER TABLE `sections`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `team_members`
+--
+ALTER TABLE `team_members`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `testimonials`
+--
+ALTER TABLE `testimonials`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
