@@ -31,12 +31,16 @@
         <span class="space-noise"></span>
     </div>
 
-    @include('partials.navbar')
+    @if (!request()->routeIs('admin.login'))
+        @include('partials.navbar')
+    @endif
 
     <main class="site-main">
         @yield('content')
     </main>
 
-    @include('partials.footer')
+    @if (!request()->routeIs('admin.login'))
+        @include('partials.footer')
+    @endif
 </body>
 </html>

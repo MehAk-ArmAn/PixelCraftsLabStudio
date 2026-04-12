@@ -34,11 +34,20 @@
                 </div>
 
                 <div class="field">
-                    <label for="service">Select Service</label>
-                    <select id="service" name="service">
-                        <option value="">Select Products</option>
-                        <option value="option1">...</option>
-                        <option value="option2">...</option>
+                    <!-- Subject / Inquiry Type Dropdown -->
+                    <label for="subject">Subject</label>
+
+                    <select id="subject" name="subject">
+                        <!-- Default empty option -->
+                        <option value="">Select a topic</option>
+
+                        <!-- Main service options -->
+                        <option value="web_design">Web Design</option>
+                        <option value="branding">Branding</option>
+                        <option value="ui_ux">UI/UX Design</option>
+                        <option value="logo_design">Logo Design</option>
+                        <option value="development">Web Development</option>
+                        <option value="other">Other</option>
                     </select>
                 </div>
 
