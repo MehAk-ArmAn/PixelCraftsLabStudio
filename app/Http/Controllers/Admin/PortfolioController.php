@@ -4,62 +4,66 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Portfolio;
 
 class PortfolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $projects = Portfolio::latest()->paginate(10); // list
+        return view('admin.portfolio.index', compact('projects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.portfolio.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'nullable|image',
+            'link' => 'nullable|url'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('portfolio', 'public');
+        }
+
+        Portfolio::create($data);
+
+        return redirect()->route('admin.portfolio.index')->with('success', 'Project added.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Portfolio $portfolio)
     {
-        //
+        return view('admin.portfolio.edit', compact('portfolio'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Portfolio $portfolio)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'nullable|image',
+            'link' => 'nullable|url'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('portfolio', 'public');
+        }
+
+        $portfolio->update($data);
+
+        return back()->with('success', 'Updated.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Portfolio $portfolio)
     {
-        //
-    }
+        $portfolio->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return back()->with('success', 'Deleted.');
     }
 }

@@ -20,4 +20,11 @@ class AboutController extends Controller
             'teamMembers' => TeamMember::where('is_active', true)->orderBy('sort_order')->get(),
         ]);
     }
+
+    public function about()
+    {
+        $team = TeamMember::all(); // fetch all members
+
+        return view('about', compact('team'));
+    }
 }

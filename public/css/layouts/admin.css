@@ -1,6 +1,156 @@
 /* ===============================
-   About Page Styles
-   PixelCraftsLab Studio
+   GLOBAL BASE
+================================= */
+
+:root {
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 14px;
+    --space-4: 18px;
+    --space-5: 24px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #020617;
+    color: #fff;
+}
+
+/* ===============================
+   ADMIN LAYOUT
+================================= */
+
+.admin-shell {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+    background: rgba(15, 23, 42, 0.9);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    padding: 20px;
+}
+
+.admin-logo {
+    font-family: 'Orbitron';
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: #8b5cf6;
+}
+
+.admin-nav a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #cbd5f5;
+    transition: 0.2s;
+}
+
+.admin-nav a:hover {
+    background: rgba(139,92,246,0.2);
+    color: #fff;
+}
+
+/* MAIN */
+.admin-main {
+    padding: 30px;
+}
+
+/* TOPBAR */
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.admin-topbar h1 {
+    font-size: 1.8rem;
+}
+
+/* CARD */
+.admin-card {
+    background: rgba(255,255,255,0.04);
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 20px;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn.primary { background: #7c3aed; color: #fff; }
+.btn.danger { background: #ef4444; color: #fff; }
+
+/* BUTTON GROUP FIX (CRAMMING ISSUE FIXED) */
+.btn-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-group .btn {
+    margin: 0;
+}
+
+/* TABLE */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* table actions */
+.table-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.admin-table td .btn,
+.admin-table td form {
+    display: inline-block;
+}
+
+/* FORM */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.admin-form input,
+.admin-form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    margin: 0;
+}
+
+/* ===============================
+   ABOUT PAGE
 ================================= */
 
 .about-section {
@@ -13,7 +163,7 @@
     margin: 0 auto;
 }
 
-/* Header */
+/* HEADER */
 .about-header {
     text-align: center;
     margin-bottom: 70px;
@@ -31,7 +181,7 @@
     letter-spacing: 1px;
 }
 
-/* Content Layout */
+/* CONTENT */
 .about-content {
     display: flex;
     align-items: center;
@@ -40,7 +190,7 @@
     flex-wrap: wrap;
 }
 
-/* Text Section */
+/* TEXT */
 .about-text {
     flex: 1;
     min-width: 300px;
@@ -69,7 +219,7 @@
     color: #dddddd;
 }
 
-/* Image Section */
+/* IMAGE */
 .about-visual {
     flex: 1;
     min-width: 300px;
@@ -83,12 +233,11 @@
     transition: transform 0.4s ease;
 }
 
-/* Subtle hover effect */
 .about-visual img:hover {
     transform: scale(1.05);
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .about-content {
         flex-direction: column;

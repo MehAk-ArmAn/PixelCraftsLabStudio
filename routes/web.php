@@ -24,6 +24,8 @@ use App\Http\Controllers\Admin\PortfolioController as AdminPortfolioController;
 use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\TeamMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +89,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
         Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
 
+        //testimonials & team routes
+        Route::resource('testimonials', TestimonialController::class);
+        Route::resource('team', TeamMemberController::class);
     });
 
 });

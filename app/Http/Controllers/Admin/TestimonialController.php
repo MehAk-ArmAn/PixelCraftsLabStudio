@@ -4,62 +4,65 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Testimonial;
 
 class TestimonialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $testimonials = Testimonial::latest()->paginate(10); // paginated list
+        return view('admin.testimonials.index', compact('testimonials'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.testimonials.create'); // form page
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'nullable|string|max:255',
+            'message' => 'required|string',
+            'image' => 'nullable|image'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('testimonials', 'public'); // upload img
+        }
+
+        Testimonial::create($data); // save
+
+        return redirect()->route('admin.testimonials.index')->with('success', 'Created.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Testimonial $testimonial)
     {
-        //
+        return view('admin.testimonials.edit', compact('testimonial')); // edit form
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Testimonial $testimonial)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'role' => 'nullable',
+            'message' => 'required',
+            'image' => 'nullable|image'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('testimonials', 'public'); // replace img
+        }
+
+        $testimonial->update($data); // update
+
+        return back()->with('success', 'Updated.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Testimonial $testimonial)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $testimonial->delete(); // delete
+        return back()->with('success', 'Deleted.');
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Portfolio;
 use App\Models\Testimonial;
 use App\Models\Section;
 use App\Models\Page;
+use App\Models\TeamMember;
 
 class PageController extends Controller
 {
@@ -38,9 +39,13 @@ class PageController extends Controller
     public function about()
     {
         $setting = Setting::first();
-        $page = Page::where('page_key', 'about')->first();
 
-        return view('pages.about', compact('setting', 'page'));
+        // 🔥 THIS is what you forgot
+        $team = TeamMember::where('is_active', 1)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('pages.about', compact('setting', 'team'));
     }
 
     public function contact()

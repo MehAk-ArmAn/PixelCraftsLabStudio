@@ -3,63 +3,66 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\TeamMember;
 use Illuminate\Http\Request;
 
 class TeamMemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $team = TeamMember::latest()->get(); // all members
+        return view('admin.team.index', compact('team'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.team.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'role' => 'required',
+            'bio' => 'nullable',
+            'image' => 'nullable|image'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('team', 'public');
+        }
+
+        TeamMember::create($data);
+
+        return redirect()->route('admin.team.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(TeamMember $team)
     {
-        //
+        return view('admin.team.edit', compact('team'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, TeamMember $team)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'role' => 'required',
+            'bio' => 'nullable',
+            'image' => 'nullable|image'
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('team', 'public');
+        }
+
+        $team->update($data);
+
+        return redirect()->route('admin.team.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(TeamMember $team)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $team->delete();
+        return back();
     }
 }

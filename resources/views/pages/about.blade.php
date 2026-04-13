@@ -61,29 +61,22 @@ specializing in web platforms, design systems, and digital innovation.
 
     <div class="team-grid">
 
-        <div class="team-card">
-        <img src="{{ asset('imgs/team/member1.png') }}">
-        <h3>Founder & Creative Director</h3>
-        <p>Leads brand strategy and design. Oversees creative direction, including logo design, color palette, UI/UX, and frontend development.</p>
-        </div>
+        @foreach($team as $member)
 
         <div class="team-card">
-        <img src="{{ asset('imgs/team/member2.png') }}">
-        <h3>Lead Backend Developer</h3>
-        <p>Responsible for backend architecture, coding, and error resolution. Ensures robust and scalable application performance.</p>
+
+            {{-- image comes from DB --}}
+            <img src="{{ asset('storage/' . $member->image) }}" alt="{{ $member->name }}">
+
+            {{-- role --}}
+            <h3>{{ $member->role }}</h3>
+
+            {{-- bio --}}
+            <p>{{ $member->bio }}</p>
+
         </div>
 
-        <div class="team-card">
-        <img src="{{ asset('imgs/team/member3.png') }}">
-        <h3>Games Developer</h3>
-        <p>Develops interactive games and applications using Unity. Focused on gameplay mechanics, optimization, and app integration.</p>
-        </div>
-
-        <div class="team-card">
-        <img src="{{ asset('imgs/team/member4.png') }}">
-        <h3>API & Application Developer</h3>
-        <p>Specializes in API development and integration. Supports games and app projects while enhancing backend functionality.</p>
-        </div>
+        @endforeach
 
     </div>
 
