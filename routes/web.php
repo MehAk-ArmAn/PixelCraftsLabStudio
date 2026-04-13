@@ -33,20 +33,22 @@ use App\Http\Controllers\Admin\TeamMemberController;
 |--------------------------------------------------------------------------
 */
 
-// pages
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
-
-// services + portfolio
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
-
-// contact page
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-
-// form submit
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+/*
+|--------------------------------------------------------------------------
+| GLOBAL LOGIN REDIRECT FOR AUTH MIDDLEWARE
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
 
 /*
 |--------------------------------------------------------------------------
@@ -56,42 +58,29 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-    // ================= LOGIN =================
+    // login
     Route::middleware('guest')->group(function () {
         Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
         Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
     });
 
-    // ================= PROTECTED =================
+    // protected admin
     Route::middleware(['auth', 'admin'])->group(function () {
-
-        // logout
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
-        // dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // settings (site control)
         Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
         Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
-        // services CRUD
         Route::resource('services', AdminServiceController::class);
-
-        // portfolio CRUD
         Route::resource('portfolio', AdminPortfolioController::class);
-
-        // messages (contact submissions)
         Route::resource('messages', AdminMessageController::class);
+        Route::resource('testimonials', TestimonialController::class);
+        Route::resource('team', TeamMemberController::class);
 
-        // contacts (optional separate)
         Route::get('/contacts', [AdminContactController::class, 'index'])->name('contacts.index');
         Route::get('/contacts/{contact}', [AdminContactController::class, 'show'])->name('contacts.show');
         Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy'])->name('contacts.destroy');
-
-        //testimonials & team routes
-        Route::resource('testimonials', TestimonialController::class);
-        Route::resource('team', TeamMemberController::class);
     });
-
 });

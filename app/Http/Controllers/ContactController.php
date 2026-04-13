@@ -3,37 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use App\Models\Page;
-use App\Models\Service;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    public function index()
-    {
-        $setting = Setting::first();
-        $page = Page::where('page_key', 'contact')->first();
-        $services = Service::orderBy('title')->get();
-
-        return view('contact', [
-            'setting' => $setting,
-            'page' => $page,
-            'services' => $services,
-        ]);
-    }
-
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'subject' => 'nullable|string|max:255',
-            'service' => 'nullable|string|max:255',
-            'message' => 'required|string',
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'subject' => ['nullable', 'string', 'max:255'],
+            'service' => ['required', 'string', 'max:255'],
+            'message' => ['required', 'string', 'min:3'],
+        ], [
+            'name.required' => 'Please enter your name.',
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+            'message.required' => 'Please write a message before submitting.',
+            'message.min' => 'Your message is too short.',
         ]);
 
-        Contact::create($data);
+        Contact::create([
+            'name' => trim($validated['name']),
+            'email' => strtolower(trim($validated['email'])),
+            'service' => $validated['service'],
+            'message' => trim($validated['message']),
+            'is_read' => false,
+        ]);
 
         return back()->with('success', 'Message sent successfully!');
     }

@@ -60,59 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Spawn shape particles
     setInterval(createShapeParticle, 250);
 
-
-    /* =========================================================
-        SECTION 2 — PNG IMAGE PARTICLES
-        ========================================================= */
-
-            // PNG images , conneccted to the DB
-            const images = Array.isArray(window.dbImages) ? window.dbImages : [];
-
-            function createImageParticle() {
-
-                // Stop if no images exist in DB
-                if (!images.length) return;
-
-                const img = document.createElement("img"); // create image element
-
-                img.classList.add("image-particle"); // apply styling class
-
-                // Pick a random image safely
-                const randomImage = images[Math.floor(Math.random() * images.length)];
-
-                if (!randomImage) return; // extra protection
-
-                img.src = "/imgs/random/" + randomImage.image_path; // assign image source
-
-                // Start from center
-                img.style.left = "50%";
-                img.style.top = "50%";
-
-                // Random size
-                const size = Math.random() * 40 + 20;
-                img.style.width = size + "px";
-
-                // Random direction
-                const angle = Math.random() * 2 * Math.PI;
-                const distance = Math.random() * 500 + 300;
-
-                const x = Math.cos(angle) * distance + "px";
-                const y = Math.sin(angle) * distance + "px";
-
-                img.style.setProperty("--x", x);
-                img.style.setProperty("--y", y);
-
-                img.style.animationDuration = (Math.random() * 6 + 4) + "s";
-
-                container.appendChild(img);
-
-                setTimeout(() => img.remove(), 9000);
-            }
-
-            // Spawn images
-            setInterval(createImageParticle, 600);
-
-
         /* =========================================================
        SECTION 3 — SMART SHRINKING NAVBAR
        ========================================================= */

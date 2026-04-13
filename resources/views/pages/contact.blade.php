@@ -1,80 +1,83 @@
 @extends('layouts.app')
 
-{{-- Page Title --}}
 @section('title', 'Contact Us | PixelCraftsLabStudio')
 
-{{-- Page Specific CSS --}}
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/pages/contact.css') }}">
 @endsection
 
 @section('content')
 
-    <section class="contact-section">
-        <div class="contact-container">
+<section class="contact-section">
+    <div class="contact-container">
 
-            {{-- Header --}}
-            <div class="contact-header">
-                <h1>Contact Us</h1>
-                <p>Have a project in mind? Get in touch with us!</p>
-            </div>
+        <div class="contact-header">
+            <h1>Contact Us</h1>
+            <p>Have a project in mind? Get in touch with us!</p>
+        </div>
 
-            <div class="contact-content">
+        <div class="contact-content">
 
-                {{-- Contact Form --}}
-                <section id="contact-form" class="contact-form">
-                    @if(session('success'))
-                        <div class="success-message">
-                            ✅ Message sent successfully!
-                        </div>
-                    @endif
-                    <form action="{{ route('contact.store') }}" method="POST">
-                        @csrf {{-- protects form from 419 error --}}
+            <section id="contact-form" class="contact-form">
+                @if(session('success'))
+                    <div class="success-message">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
-                        <label for="name">Name:</label><br>
-                        <input type="text" id="name" name="name" required><br><br>
+                @if($errors->any())
+                    <div style="margin-bottom: 20px; padding: 14px 16px; border-radius: 12px; background: rgba(239,68,68,0.10); border: 1px solid rgba(239,68,68,0.35); color: #fecaca;">
+                        <strong style="display:block; margin-bottom:8px;">Please fix these errors:</strong>
+                        <ul style="margin:0; padding-left:18px;">
+                            @foreach($errors->all() as $error)
+                                <li style="color:#fecaca;">{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-                        <label for="email">Email:</label><br>
-                        <input type="email" id="email" name="email" required><br><br>
+                <form action="{{ route('contact.store') }}" method="POST">
+                    @csrf
 
-                        <label for="subject">Subject:</label><br>
-                        <input type="text" id="subject" name="subject"><br><br>
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" required><br><br>
 
-                        <label for="message">Message:</label><br>
-                        <textarea id="message" name="message" rows="5" required></textarea><br><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" required><br><br>
 
-                        <button type="submit" onclick="this.disabled=true; this.innerText='Sending...'; this.form.submit();">
-                            Send Message
-                        </button>
+                    <label for="subject">Subject:</label><br>
+                    <input type="text" id="subject" name="subject" value="{{ old('subject') }}"><br><br>
 
-                    </form>
-                </section>
+                    <label for="message">Message:</label><br>
+                    <textarea id="message" name="message" rows="5" required>{{ old('message') }}</textarea><br><br>
 
-                {{-- Alternative Contact Info --}}
-                <section id="contact-info" class="contact-info">
-                    <h2>Other Ways to Reach Us</h2>
+                    <button type="submit">Send Message</button>
+                </form>
+            </section>
 
-                    <p><strong>Email:</strong> {{ $adminEmail }}</p>
-                    <p><strong>Phone:</strong> {{ $phone }}</p>
-                    <p><strong>Address:</strong> {{ $location }}</p>
+            <section id="contact-info" class="contact-info">
+                <h2>Other Ways to Reach Us</h2>
 
-                    <p>
-                        <strong>Follow us:</strong><br>
-                        <a href="{{ $instagram }}">Instagram</a> |
-                        <a href="{{ $linkedIn }}">LinkedIn</a> |
-                        <a href="{{ $X }}">Twitter</a> |
-                        <a href="{{ $tiktok }}">TikTok</a> |
-                        <a href="{{ $pinterest }}">Pinterest</a> |
-                        <a href="{{ $youtube }}">YouTube</a> |
-                        <a href="{{ $facebook }}">Facebook</a> |
-                        <a href="{{ $whatsapp }}">Whatsapp</a>
-                    </p>
+                <p><strong>Email:</strong> {{ $adminEmail }}</p>
+                <p><strong>Phone:</strong> {{ $phone }}</p>
+                <p><strong>Address:</strong> {{ $location }}</p>
 
-                </section>
-
-            </div>
+                <p>
+                    <strong>Follow us:</strong><br>
+                    <a href="{{ $instagram }}">Instagram</a> |
+                    <a href="{{ $linkedIn }}">LinkedIn</a> |
+                    <a href="{{ $X }}">Twitter</a> |
+                    <a href="{{ $tiktok }}">TikTok</a> |
+                    <a href="{{ $pinterest }}">Pinterest</a> |
+                    <a href="{{ $youtube }}">YouTube</a> |
+                    <a href="{{ $facebook }}">Facebook</a> |
+                    <a href="{{ $whatsapp }}">Whatsapp</a>
+                </p>
+            </section>
 
         </div>
-    </section>
+
+    </div>
+</section>
 
 @endsection

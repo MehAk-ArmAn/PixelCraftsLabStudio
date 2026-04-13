@@ -15,7 +15,7 @@
 }
 
 .main-img {
-    width: 360px;
+    width: 560px;
 
     /* fade bottom */
     -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);

@@ -16,13 +16,13 @@
                 <li><a href="/portfolio">Portfolio</a></li>
                 <li><a href="/about">About Us</a></li>
                 <li><a href="/contact">Contact</a></li>
-                <li>
-                    @auth
-                        @if(auth()->user()->is_admin)
-                            <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
-                        @endif
-                    @endauth
-                </li>
+                @auth
+                    @if(auth()->user()->role === 'admin')
+                        <li><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
+                    @endif
+                @else
+                    <li><a href="{{ route('admin.login') }}">Admin Login</a></li>
+                @endauth
             </ul>
         </div>
 
