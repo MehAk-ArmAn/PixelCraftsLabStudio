@@ -19,7 +19,9 @@ class PageController extends Controller
 
         $services = Service::all(); // services for home sections / forms
         $projects = Portfolio::latest()->get(); // portfolio preview if needed
-        $testimonials = Testimonial::where('is_active', true)->orderBy('sort_order')->get(); // active testimonials
+        $testimonials = \App\Models\Testimonial::where('is_active', true)
+        ->orderBy('sort_order')
+        ->get();
         $heroSection = Section::where('page_key', 'home')->where('section_key', 'hero')->first();
         $aboutPreview = Section::where('page_key', 'home')->where('section_key', 'about_preview')->first();
         $ctaSection = Section::where('page_key', 'home')->where('section_key', 'cta')->first();

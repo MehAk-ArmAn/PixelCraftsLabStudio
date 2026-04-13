@@ -15,13 +15,24 @@
 }
 
 .main-img {
-    width: 560px;
+    width: 850px;
 
-    /* fade bottom */
-    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    /* strong bottom fade + strong edge fade */
+    -webkit-mask-image:
+        linear-gradient(to bottom, black 45%, rgba(0,0,0,0.4) 65%, transparent 100%),
+        radial-gradient(ellipse at center, black 5%, transparent 70%);
 
-    opacity: 0.9;
+    mask-image:
+        linear-gradient(to bottom, black 45%, rgba(0,0,0,0.4) 65%, transparent 100%),
+        radial-gradient(ellipse at center, black 5%, transparent 70%);
+
+    -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+
+    opacity: 0.95;
+
+    /* optional glow (makes blend smoother) */
+    filter: drop-shadow(0 40px 80px rgba(127, 0, 255, 0.25));
 }
 
 /* scrolling wrapper */

@@ -20,15 +20,15 @@
             {{-- ADMIN ACCESS --}}
             @auth
                 @if(auth()->user()->role === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="nav-links">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
 
-                    <form action="{{ route('admin.logout') }}" method="POST" class="nav-inline-form">
+                    <form action="{{ route('admin.logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="nav-btn">Logout</button>
                     </form>
                 @endif
             @else
-                <a href="{{ route('admin.login') }}" class="nav-btn">Admin Login</a>
+                <a href="{{ route('admin.login') }}">Admin Login</a>
             @endauth
 
             <a href="/contact" class="nav-btn">Contact Us</a>

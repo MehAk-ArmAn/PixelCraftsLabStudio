@@ -3,66 +3,86 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Testimonial;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
     public function index()
     {
-        $testimonials = Testimonial::latest()->paginate(10); // paginated list
+        $testimonials = Testimonial::orderBy('sort_order')->latest()->paginate(10);
         return view('admin.testimonials.index', compact('testimonials'));
     }
 
     public function create()
     {
-        return view('admin.testimonials.create'); // form page
+        return view('admin.testimonials.create');
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'role' => 'nullable|string|max:255',
-            'message' => 'required|string',
-            'image' => 'nullable|image'
+            'designation' => 'nullable|string|max:255',
+            'quote' => 'required|string',
+            'image' => 'nullable|image|max:4096',
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
         ]);
 
+        $data['sort_order'] = $data['sort_order'] ?? 0;
+        $data['is_active'] = $request->boolean('is_active');
+
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('testimonials', 'public'); // upload img
+            $data['image'] = $request->file('image')->store('testimonials', 'public');
         }
 
-        Testimonial::create($data); // save
+        Testimonial::create($data);
 
-        return redirect()->route('admin.testimonials.index')->with('success', 'Created.');
+        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial created successfully.');
     }
 
     public function edit(Testimonial $testimonial)
     {
-        return view('admin.testimonials.edit', compact('testimonial')); // edit form
+        return view('admin.testimonials.edit', compact('testimonial'));
     }
 
     public function update(Request $request, Testimonial $testimonial)
     {
         $data = $request->validate([
-            'name' => 'required',
-            'role' => 'nullable',
-            'message' => 'required',
-            'image' => 'nullable|image'
+            'name' => 'required|string|max:255',
+            'designation' => 'nullable|string|max:255',
+            'quote' => 'required|string',
+            'image' => 'nullable|image|max:4096',
+            'sort_order' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
         ]);
 
+        $data['sort_order'] = $data['sort_order'] ?? 0;
+        $data['is_active'] = $request->boolean('is_active');
+
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('testimonials', 'public'); // replace img
+            if ($testimonial->image && Storage::disk('public')->exists($testimonial->image)) {
+                Storage::disk('public')->delete($testimonial->image);
+            }
+
+            $data['image'] = $request->file('image')->store('testimonials', 'public');
         }
 
-        $testimonial->update($data); // update
+        $testimonial->update($data);
 
-        return back()->with('success', 'Updated.');
+        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial updated successfully.');
     }
 
     public function destroy(Testimonial $testimonial)
     {
-        $testimonial->delete(); // delete
-        return back()->with('success', 'Deleted.');
+        if ($testimonial->image && Storage::disk('public')->exists($testimonial->image)) {
+            Storage::disk('public')->delete($testimonial->image);
+        }
+
+        $testimonial->delete();
+
+        return back()->with('success', 'Testimonial deleted successfully.');
     }
 }

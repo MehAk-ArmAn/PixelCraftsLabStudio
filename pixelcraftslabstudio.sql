@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2026 at 04:03 PM
+-- Generation Time: Apr 13, 2026 at 09:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,8 +70,8 @@ CREATE TABLE `contacts` (
 INSERT INTO `contacts` (`id`, `created_at`, `updated_at`, `name`, `email`, `subject`, `service`, `message`, `is_read`) VALUES
 (1, '2026-03-28 08:41:09', '2026-03-28 08:41:09', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
 (2, '2026-03-28 08:41:28', '2026-03-28 08:41:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
-(3, '2026-03-28 08:41:56', '2026-03-28 08:41:56', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
-(4, '2026-03-28 08:47:28', '2026-03-28 08:47:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', NULL, 'HIIIIIIIIIIIIIIIIII', 0);
+(3, '2026-03-28 08:41:56', '2026-04-13 14:36:58', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 1),
+(4, '2026-03-28 08:47:28', '2026-04-13 14:50:45', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', NULL, 'HIIIIIIIIIIIIIIIIII', 1);
 
 -- --------------------------------------------------------
 
@@ -105,6 +105,14 @@ CREATE TABLE `footer_links` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `footer_links`
+--
+
+INSERT INTO `footer_links` (`id`, `group_name`, `label`, `url`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Quick Links', 'Home', '/', 0, 1, NULL, NULL),
+(2, 'Quick Links', 'Contact', '/contact', 0, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -190,7 +198,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2026_04_12_103955_create_sections_table', 6),
 (20, '2026_04_12_103955_create_testimonials_table', 6),
 (21, '2026_04_12_103957_create_team_members_table', 6),
-(22, '2026_04_12_105222_drop_particles_table', 7);
+(22, '2026_04_12_105222_drop_particles_table', 7),
+(23, '2026_04_13_181556_add_icon_to_services_table', 8);
 
 -- --------------------------------------------------------
 
@@ -208,6 +217,16 @@ CREATE TABLE `nav_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `nav_items`
+--
+
+INSERT INTO `nav_items` (`id`, `label`, `url`, `sort_order`, `is_active`, `is_button`, `created_at`, `updated_at`) VALUES
+(1, 'Home', '/', 1, 1, 0, NULL, NULL),
+(2, 'About', '/about', 2, 1, 0, NULL, NULL),
+(3, 'Services', '/services', 3, 1, 0, NULL, NULL),
+(4, 'Portfolio', '/portfolio', 4, 1, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -272,8 +291,8 @@ CREATE TABLE `portfolios` (
 --
 
 INSERT INTO `portfolios` (`id`, `title`, `description`, `image`, `link`, `created_at`, `updated_at`) VALUES
-(1, 'Test Project 2', 'Another test project for styling.', 'sample2.jpg', '#', '2026-03-10 07:42:40', '2026-03-10 07:42:40'),
-(2, 'Test Project 1', 'This is a cool test project.', 'sample.jpg', '#', '2026-03-10 07:42:40', '2026-03-10 07:42:40');
+(1, 'Test Project 2', 'Another test project for styling.', 'portfolio/zHAXWRt0ii1DrsyMYIFRUi4X8L9ICPGBFWUhm6QC.png', 'https://pixelcraftslab.com/', '2026-03-10 07:42:40', '2026-04-13 15:08:37'),
+(3, 'Test Project 1', 'For styles testing...', 'portfolio/N6FWt7jVh38cWdAtoUkj7RrRtVb16PX4u3z4Ta4H.png', 'https://pixelcraftslab.com/', '2026-04-13 13:37:44', '2026-04-13 15:05:51');
 
 -- --------------------------------------------------------
 
@@ -308,18 +327,19 @@ CREATE TABLE `services` (
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`id`, `title`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Website Development', 'Modern responsive websites', '2026-02-18 14:51:29', '2026-02-18 14:51:29'),
-(2, 'UI/UX Design', 'Clean and user-friendly designs', '2026-02-18 14:51:29', '2026-02-18 14:51:29'),
-(3, 'Brand Identity', 'Logos and branding packages', '2026-02-18 14:51:30', '2026-02-18 14:51:30'),
-(4, 'Maintenance & Support', 'Ongoing updates and fixes', '2026-02-18 14:51:30', '2026-02-18 14:51:30');
+INSERT INTO `services` (`id`, `title`, `description`, `created_at`, `updated_at`, `icon`) VALUES
+(1, 'Website Development', 'Modern responsive websites', '2026-02-18 14:51:29', '2026-02-18 14:51:29', NULL),
+(2, 'UI/UX Design', 'Clean and user-friendly designs', '2026-02-18 14:51:29', '2026-02-18 14:51:29', NULL),
+(3, 'Brand Identity', 'Logos and branding packages', '2026-02-18 14:51:30', '2026-02-18 14:51:30', NULL),
+(4, 'Maintenance & Support', 'Ongoing updates and fixes', '2026-02-18 14:51:30', '2026-02-18 14:51:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -372,6 +392,13 @@ CREATE TABLE `settings` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `site_name`, `brand_tagline`, `logo_path`, `favicon_path`, `admin_email`, `phone`, `location`, `instagram`, `linked_in`, `x`, `tiktok`, `pinterest`, `youtube`, `facebook`, `whatsapp`, `footer_text`, `created_at`, `updated_at`) VALUES
+(1, 'PixelCraftsLabStudio', NULL, NULL, NULL, 'admin@pixelcraftslabstudio.com', '+971 56 701 8403', 'Dubai, UAE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-04-13 14:18:03', '2026-04-13 14:18:03');
+
 -- --------------------------------------------------------
 
 --
@@ -390,6 +417,16 @@ CREATE TABLE `team_members` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `team_members`
+--
+
+INSERT INTO `team_members` (`id`, `name`, `role`, `bio`, `image`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(1, 'Mehak Arman', 'Founder, Creative Director & Digital Marketing Lead', 'Leads the vision, branding, and overall direction of PixelCraftsLabStudio. Oversees creative strategy, digital presence, and audience growth while ensuring every project aligns with a strong, modern brand identity. Combines creativity with strategic thinking to deliver impactful digital experiences.', 'team/22RPejylwi0liOaJqP23dw8rlzLSKGokLYFJyHqv.png', 0, 1, '2026-04-13 14:37:58', '2026-04-13 14:46:15'),
+(2, 'Sahil Arman', 'Lead Backend Engineer', 'Heads backend architecture and system development for web and application projects. Specializes in building scalable, secure, and high-performance systems, ensuring every product is robust, efficient, and production-ready.', 'team/Q4e0fZV365WfYaJYIAEIzb9S48InXC1Pfvd3XoAe.png', 0, 1, '2026-04-13 14:38:23', '2026-04-13 14:45:54'),
+(3, 'Hamdan Arman', 'Game Developer', 'Designs and develops interactive gameplay systems and immersive experiences. Focuses on performance optimization, game mechanics, and delivering engaging, high-quality gaming solutions.', 'team/QvhfCoo6xE9yDpcCoQASeXG4fLOGk7niVbsfqfXs.png', 0, 1, '2026-04-13 14:38:45', '2026-04-13 14:46:02'),
+(4, 'Mobeen Bhalli', 'API & Integration Engineer', 'Handles API development and system integrations, enabling seamless communication between platforms. Ensures smooth data flow, reliable backend connectivity, and efficient integration across all digital products.', 'team/kSsegaCWHBpnOyx7W7eNWy1DGpJeBNpBd5Ax0PtD.png', 0, 1, '2026-04-13 14:39:08', '2026-04-13 14:45:23');
+
 -- --------------------------------------------------------
 
 --
@@ -407,6 +444,13 @@ CREATE TABLE `testimonials` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `testimonials`
+--
+
+INSERT INTO `testimonials` (`id`, `name`, `designation`, `quote`, `image`, `sort_order`, `is_active`, `created_at`, `updated_at`) VALUES
+(6, 'Mehak Arman', 'Pixel Crafts Lab Studio\'s Admin', 'Be The First To Leave A Review : )', NULL, 1, 1, '2026-04-13 14:57:27', '2026-04-13 14:58:36');
 
 -- --------------------------------------------------------
 
@@ -432,7 +476,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Test User', 'test@example.com', '2026-02-18 14:51:29', '$2y$12$S1rGw7VF3MnX4QeKdEWiq.szHaBkpFGEwHn3o8qJ6I21GSh2xAdaK', 'user', '6MG9uFKlw9', '2026-02-18 14:51:29', '2026-02-18 14:51:29'),
-(2, 'Admin', 'admin@pixelcraftslabstudio', NULL, '$2y$12$veqovoajJo2KOT5IunUHU.B6bw3Wk8wTU.wdLHSN5LoV0aVSNrctm', 'admin', NULL, '2026-04-12 09:43:12', '2026-04-12 09:43:12');
+(2, 'Admin', 'admin@pixelcraftslabstudio.com', NULL, '$2y$12$9BaPlWJdyO0PwHOtBtHDHOF0/duu4gUACVI2FXAJdD1jVK3KfpKuK', 'admin', NULL, '2026-04-12 09:43:12', '2026-04-13 15:14:44');
 
 --
 -- Indexes for dumped tables
@@ -580,7 +624,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -592,7 +636,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `footer_links`
 --
 ALTER TABLE `footer_links`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -610,13 +654,13 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `nav_items`
 --
 ALTER TABLE `nav_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -634,7 +678,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT for table `portfolios`
 --
 ALTER TABLE `portfolios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sections`
@@ -652,19 +696,19 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `team_members`
 --
 ALTER TABLE `team_members`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `testimonials`
 --
 ALTER TABLE `testimonials`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

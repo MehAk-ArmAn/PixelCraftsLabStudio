@@ -23,31 +23,27 @@
 
         <div class="card-img">
 
-            {{-- IMAGE FIX (storage aware like admin) --}}
             @if($project->image)
-                <img src="{{ asset($project->image) }}"
-                     alt="{{ $project->title }}">
+                <img src="{{ asset('storage/' . $project->image) }}"
+                    alt="{{ $project->title }}">
             @endif
 
             <div class="overlay">
-
-                {{-- TITLE --}}
                 <h3>{{ $project->title }}</h3>
-
-                {{-- DESCRIPTION --}}
                 <p>{{ $project->description }}</p>
 
-                {{-- LINK --}}
                 @if($project->link)
-                    <a href="{{ $project->link }}"
-                       target="_blank"
-                       class="view-btn">
+                    <a href="{{ $project->link }}" target="_blank" class="view-btn">
                         View Project
                     </a>
                 @endif
-
             </div>
 
+        </div>
+
+        <div class="card-content">
+            <h3>{{ $project->title }}</h3>
+            <p>{{ Str::limit($project->description, 80) }}</p>
         </div>
 
     </div>
