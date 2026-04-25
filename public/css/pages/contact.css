@@ -61,7 +61,8 @@
 
 /* Inputs */
 .contact-form input,
-.contact-form textarea {
+.contact-form textarea,
+.contact-form select {
     width: 100%;
     padding: 12px;
     margin-top: 5px;
@@ -69,14 +70,20 @@
     border-radius: 10px;
     border: none;
     outline: none;
-    background: rgba(255, 255, 255, 0.08); /* dark input */
+    background: rgba(255, 255, 255, 0.08);
     color: #fff;
 }
 
 /* Input focus */
 .contact-form input:focus,
-.contact-form textarea:focus {
-    border: 1px solid #a855f7; /* purple glow */
+.contact-form textarea:focus,
+.contact-form select:focus {
+    border: 1px solid #a855f7;
+}
+
+.contact-form select option {
+    background: #0f0f1a;
+    color: #fff;
 }
 
 /* Button */

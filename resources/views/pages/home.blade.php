@@ -19,7 +19,7 @@
 @section('content')
     <div class="page-stack">
         <section class="section-shell section-shell-hero">
-            @include('components.forms.big-form')
+            @include('components.sections.hero')
         </section>
 
         <section class="section-shell">

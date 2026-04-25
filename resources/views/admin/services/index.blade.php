@@ -15,7 +15,6 @@
         <thead>
             <tr>
                 <th>Title</th>
-                <th>Image</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -24,12 +23,6 @@
         @foreach($services as $service)
             <tr>
                 <td>{{ $service->title }}</td>
-
-                <td>
-                    @if($service->image)
-                        <img src="{{ asset('storage/'.$service->image) }}" width="60">
-                    @endif
-                </td>
 
                 <td>
                     <a href="{{ route('admin.services.edit', $service) }}" class="btn primary">Edit</a>

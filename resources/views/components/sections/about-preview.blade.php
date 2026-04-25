@@ -5,17 +5,17 @@
 
             <!-- Left Side (Text) -->
             <div class="about-text">
-                <h2>About Us</h2>
+                <h2>We Build Digital Products That Actually Work</h2>
                 <p>
-                    PixelCraftsLab Studio is a creative digital studio crafting
-                    bold, modern and high-performing web experiences that help
-                    brands stand out and grow.
+                    From websites and apps to interactive projects and games, we focus on building
+                    clean, modern, and well-structured digital experiences. Everything we create is
+                    designed to feel smooth, look sharp, and work the way it’s supposed to.
                 </p>
             </div>
 
             <!-- Right Side (Image) -->
             <div class="about-image">
-                <img src="{{ asset('favicon/1/logo.png') }}" alt="PixelCraftsLab Studio Logo">
+                <img src="{{ asset('imgs/elf-moondance-digital-marketing.png') }}" alt="PixelCraftsLab Studio Logo">
             </div>
 
         </div>

@@ -15,9 +15,6 @@
 <label>Description</label>
 <textarea name="description" required></textarea> {{-- desc --}}
 
-<label>Image</label>
-<input type="file" name="image"> {{-- image --}}
-
 <button class="btn primary">Create</button>
 
 </form>

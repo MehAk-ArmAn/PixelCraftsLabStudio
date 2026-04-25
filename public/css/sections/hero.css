@@ -1,9 +1,9 @@
 .about-section {
-    padding: 100px 20px;
+    padding: 10px 20px;
     background: radial-gradient(
-        circle, 
-        #2E005D 0%, 
-        #2E005D 70%, 
+        circle,
+        #2E005D 0%,
+        #2E005D 70%,
         transparent 100%
     );
     color: white;

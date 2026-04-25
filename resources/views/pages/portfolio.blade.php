@@ -10,7 +10,7 @@
 
 <section class="portfolio-hero">
     <div class="hero-content">
-        <h1>Our Creations</h1>
+        <h1>Our Solutions</h1>
         <p>Where creativity meets tech. Explore our projects below!</p>
     </div>
 </section>
@@ -24,7 +24,7 @@
         <div class="card-img">
 
             @if($project->image)
-                <img src="{{ asset('storage/' . $project->image) }}"
+                <img src="{{ asset('public/' . $project->image) }}"
                     alt="{{ $project->title }}">
             @endif
 

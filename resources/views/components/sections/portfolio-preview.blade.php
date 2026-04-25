@@ -4,7 +4,31 @@
 
             <!-- Main Img -->
             <div class="main-img-container">
-                <img src="{{ asset('imgs/2780243-moon-2048727.jpg') }}" alt="The company Logo" class="main-img">
+                <img src="{{ asset('imgs/earth.jpg') }}" alt="The company Logo" class="main-img">
+
+                <!-- floating particles around image -->
+                <span class="orbit-particle dot p1"></span>
+                <span class="orbit-particle dot p2"></span>
+                <span class="orbit-particle dot p3"></span>
+                <span class="orbit-particle dot p4"></span>
+                <span class="orbit-particle dot p5"></span>
+                <span class="orbit-particle dot p6"></span>
+                <span class="orbit-particle dot p7"></span>
+                <span class="orbit-particle dot p8"></span>
+                <span class="orbit-particle dot p9"></span>
+                <span class="orbit-particle dot p10"></span>
+                <span class="orbit-particle dot p11"></span>
+                <span class="orbit-particle dot p12"></span>
+
+                <span class="orbit-particle sparkle p13"></span>
+                <span class="orbit-particle sparkle p14"></span>
+                <span class="orbit-particle sparkle p15"></span>
+                <span class="orbit-particle sparkle p16"></span>
+
+                <span class="orbit-particle diamond p17"></span>
+                <span class="orbit-particle diamond p18"></span>
+                <span class="orbit-particle diamond p19"></span>
+                <span class="orbit-particle diamond p20"></span>
             </div>
 
             <div class="marquee-wrapper">

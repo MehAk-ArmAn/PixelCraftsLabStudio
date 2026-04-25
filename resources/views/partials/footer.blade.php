@@ -3,8 +3,7 @@
         <div class="footer-brand">
             <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio's Logo" class="footer-logo">
             <p>
-                Crafting digital experiences that actually convert.
-                Design. Code. Create.
+                Design. Code. Create. We build high-converting websites and digital tools where creativity meets precision.
             </p>
         </div>
 
@@ -16,13 +15,6 @@
                 <li><a href="/portfolio">Portfolio</a></li>
                 <li><a href="/about">About Us</a></li>
                 <li><a href="/contact">Contact</a></li>
-                @auth
-                    @if(auth()->user()->role === 'admin')
-                        <li><a href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
-                    @endif
-                @else
-                    <li><a href="{{ route('admin.login') }}">Admin Login</a></li>
-                @endauth
             </ul>
         </div>
 

@@ -16,13 +16,6 @@
 <label>Description</label>
 <textarea name="description">{{ $service->description }}</textarea> {{-- desc --}}
 
-<label>Image</label>
-<input type="file" name="image">
-
-@if($service->image)
-<img src="{{ asset('storage/'.$service->image) }}" width="80">
-@endif
-
 <button class="btn primary">Update</button>
 
 </form>

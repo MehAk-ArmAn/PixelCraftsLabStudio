@@ -55,6 +55,8 @@ class PageController extends Controller
         $setting = Setting::first();
         $page = Page::where('page_key', 'contact')->first();
 
-        return view('pages.contact', compact('setting', 'page'));
+        $services = Service::orderBy('title')->get();
+
+        return view('pages.contact', compact('services', 'setting', 'page'));
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2026 at 09:27 PM
+-- Generation Time: Apr 25, 2026 at 07:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -71,7 +71,9 @@ INSERT INTO `contacts` (`id`, `created_at`, `updated_at`, `name`, `email`, `subj
 (1, '2026-03-28 08:41:09', '2026-03-28 08:41:09', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
 (2, '2026-03-28 08:41:28', '2026-03-28 08:41:28', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 0),
 (3, '2026-03-28 08:41:56', '2026-04-13 14:36:58', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg', NULL, '!H', 1),
-(4, '2026-03-28 08:47:28', '2026-04-13 14:50:45', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', NULL, 'HIIIIIIIIIIIIIIIIII', 1);
+(4, '2026-03-28 08:47:28', '2026-04-13 14:50:45', 'Mehak Arman', 'mehakarmaan1@gmail.com', 'Test msg 22222222222222', NULL, 'HIIIIIIIIIIIIIIIIII', 1),
+(6, '2026-04-25 12:47:22', '2026-04-25 12:47:22', 'Arman', 'i@armansabir.com', NULL, 'Web Development', '676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767', 0),
+(7, '2026-04-25 13:51:03', '2026-04-25 13:51:03', 'Arman', 'i@armansabir.com', NULL, 'Offline Game Development', 'zdxfcghjkl', 0);
 
 -- --------------------------------------------------------
 
@@ -336,10 +338,12 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`id`, `title`, `description`, `created_at`, `updated_at`, `icon`) VALUES
-(1, 'Website Development', 'Modern responsive websites', '2026-02-18 14:51:29', '2026-02-18 14:51:29', NULL),
-(2, 'UI/UX Design', 'Clean and user-friendly designs', '2026-02-18 14:51:29', '2026-02-18 14:51:29', NULL),
-(3, 'Brand Identity', 'Logos and branding packages', '2026-02-18 14:51:30', '2026-02-18 14:51:30', NULL),
-(4, 'Maintenance & Support', 'Ongoing updates and fixes', '2026-02-18 14:51:30', '2026-02-18 14:51:30', NULL);
+(5, 'Utility App Development', 'We design and develop practical, lightweight applications focused on solving real-world problems.\r\n\r\nFrom productivity tools and calculators to custom-purpose applications, every solution is built with simplicity, speed, and usability in mind. Our goal is to create apps that feel intuitive, perform efficiently, and deliver clear value without unnecessary complexity.\r\n\r\nWhether for personal use, business workflows, or niche tasks, we focus on building tools that people can rely on daily.', '2026-04-25 17:24:40', '2026-04-25 17:24:40', 'app'),
+(6, 'Offline Game Development', 'We create engaging offline-friendly games that prioritize performance, accessibility, and user experience.\r\n\r\nThese games are designed to run smoothly without constant internet access, making them ideal for broader usability across devices and environments. We focus on creating interactive, enjoyable experiences that are lightweight, responsive, and easy to pick up.\r\n\r\nFrom simple interactive concepts to more structured gameplay systems, our approach balances creativity with technical efficiency.', '2026-04-25 17:24:40', '2026-04-25 17:24:40', 'game'),
+(7, 'Web & Platform Development', 'We build modern websites and supporting platforms that complement your apps, games, or digital presence.\r\n\r\nThis includes landing pages, portfolio sites, and structured platforms that help present your product clearly and professionally. Every build is optimized for performance, responsiveness, and scalability, ensuring it works seamlessly across devices.\r\n\r\nThe focus is always on clean structure, fast loading, and a polished user experience.', '2026-04-25 17:24:40', '2026-04-25 17:24:40', 'web'),
+(8, 'UI/UX Design', 'We design user interfaces that are clear, intuitive, and visually balanced.\r\n\r\nOur approach focuses on usability first — ensuring users can navigate your product easily, understand its purpose quickly, and interact with it without friction. We combine layout clarity, visual hierarchy, and modern aesthetics to create interfaces that feel natural and engaging.\r\n\r\nGood design is not just about looks — it’s about how effortlessly users can use your product.', '2026-04-25 17:24:40', '2026-04-25 17:24:40', 'design'),
+(9, 'Performance Optimization', 'We improve the speed, responsiveness, and efficiency of your digital product.\r\n\r\nThis includes reducing load times, optimizing assets, refining code structure, and ensuring smooth interaction across devices. The goal is to deliver a seamless experience where everything feels fast, stable, and reliable — especially important for apps and games.', '2026-04-25 17:24:40', '2026-04-25 17:24:40', 'speed'),
+(10, 'Maintenance & Support', 'We provide ongoing updates, improvements, and technical support to keep your product running smoothly.\r\n\r\nAs your needs evolve, we help refine features, fix issues, and ensure everything stays aligned with modern standards. This allows your app, game, or platform to remain stable, relevant, and ready for future growth.', '2026-04-25 17:24:40', '2026-04-25 17:24:40', 'support');
 
 -- --------------------------------------------------------
 
@@ -361,8 +365,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('nTzJg3PE7KCeubVZmSQeT6hLEaAnCWUmO4U9BZZ9', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZ2llWFRJY08waExabXJZVUpYbGdXZDE3MkR0ZlFoYllCM3hGR0ZFWiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mjt9', 1776002314),
-('zhBMnllDoC1vUmVvZOC7Cvfe5mhHeHtlBTbILK2J', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYkNzWEoyQUVYbHlueGJOeXU5cm5iUXN0SVBoMjFvM29mT3NzVGZCcCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1776000232);
+('m9HkzsyBx8j6aNNUON8PK1w0aBdLpDteolAB4wDG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUFZYRlBhOTVJNnpQcHZVdEw0b09yOVowWEVQVnRLV2RKdW1uMkw5ZiI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo0OiJob21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1777139480);
 
 -- --------------------------------------------------------
 
@@ -624,7 +627,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -690,7 +693,7 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `settings`

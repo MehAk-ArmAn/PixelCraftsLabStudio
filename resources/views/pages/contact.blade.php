@@ -45,8 +45,17 @@
                     <label for="email">Email:</label><br>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" required><br><br>
 
-                    <label for="subject">Subject:</label><br>
-                    <input type="text" id="subject" name="subject" value="{{ old('subject') }}"><br><br>
+                    {{-- Service Selection --}}
+                    <label for="service">Select a Service:</label><br>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service</option>
+
+                        @foreach($services as $service)
+                            <option value="{{ $service->title }}" {{ old('service') == $service->title ? 'selected' : '' }}>
+                                {{ $service->title }}
+                            </option>
+                        @endforeach
+                    </select><br><br>
 
                     <label for="message">Message:</label><br>
                     <textarea id="message" name="message" rows="5" required>{{ old('message') }}</textarea><br><br>
