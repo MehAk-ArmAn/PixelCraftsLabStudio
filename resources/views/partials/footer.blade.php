@@ -3,7 +3,7 @@
         <div class="footer-brand">
             <img src="{{ asset('favicon/1/Profile_pic/Transparent.gif') }}" alt="PixelCraftsLab Studio's Logo" class="footer-logo">
             <p>
-                Design. Code. Create. We build high-converting websites and digital tools where creativity meets precision.
+                Ideas. Build. Launch. We build high-converting websites and digital tools where creativity meets precision.
             </p>
         </div>
 
