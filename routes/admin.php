@@ -25,7 +25,21 @@ use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->name('admin.')->group(function () {
+/**
+ * Every schema-driven CMS resource exposes the same seven endpoints.
+ * A closure, not a named function: this file is re-included on every app boot.
+ */
+$resourceRoutes = function (string $base, string $controller): void {
+    Route::get($base, [$controller, 'index'])->name($base.'.index');
+    Route::get($base.'/create', [$controller, 'create'])->name($base.'.create');
+    Route::post($base, [$controller, 'store'])->name($base.'.store');
+    Route::post($base.'/reorder', [$controller, 'reorder'])->name($base.'.reorder');
+    Route::get($base.'/{record}/edit', [$controller, 'edit'])->name($base.'.edit');
+    Route::put($base.'/{record}', [$controller, 'update'])->name($base.'.update');
+    Route::delete($base.'/{record}', [$controller, 'destroy'])->name($base.'.destroy');
+};
+
+Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) {
     /*
      * Guest routes. There is deliberately no registration route — accounts are
      * created with `php artisan pcl:admin` or by a super admin in the panel.
@@ -39,32 +53,32 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () use ($resourceRoutes) {
         Route::get('/', DashboardController::class)->name('dashboard');
         Route::get('preview', PreviewController::class)->name('preview');
 
         // ---------------------------------------------------------- content
-        resourceRoutes('projects', ProjectController::class);
+        $resourceRoutes('projects', ProjectController::class);
         Route::post('projects/{project}/duplicate', [ProjectController::class, 'duplicate'])->name('projects.duplicate');
         Route::post('projects/{project}/toggle-publish', [ProjectController::class, 'togglePublish'])->name('projects.toggle-publish');
         Route::post('projects/{project}/metrics', [ProjectMetricController::class, 'store'])->name('projects.metrics.store');
         Route::put('projects/{project}/metrics/{metric}', [ProjectMetricController::class, 'update'])->name('projects.metrics.update');
         Route::delete('projects/{project}/metrics/{metric}', [ProjectMetricController::class, 'destroy'])->name('projects.metrics.destroy');
 
-        resourceRoutes('services', ServiceController::class);
-        resourceRoutes('process', ProcessStageController::class);
-        resourceRoutes('team', TeamMemberController::class);
-        resourceRoutes('socials', SocialLinkController::class);
-        resourceRoutes('testimonials', TestimonialController::class);
-        resourceRoutes('navigation', NavigationItemController::class);
-        resourceRoutes('contact-options', ContactOptionController::class);
+        $resourceRoutes('services', ServiceController::class);
+        $resourceRoutes('process', ProcessStageController::class);
+        $resourceRoutes('team', TeamMemberController::class);
+        $resourceRoutes('socials', SocialLinkController::class);
+        $resourceRoutes('testimonials', TestimonialController::class);
+        $resourceRoutes('navigation', NavigationItemController::class);
+        $resourceRoutes('contact-options', ContactOptionController::class);
 
         // -------------------------------------------------------- marketing
         Route::get('marketing', MarketingOverviewController::class)->name('marketing.overview');
-        resourceRoutes('marketing-services', MarketingServiceController::class);
-        resourceRoutes('channels', MarketingChannelController::class);
-        resourceRoutes('campaigns', MarketingCampaignController::class);
-        resourceRoutes('growth-plans', GrowthPlanController::class);
+        $resourceRoutes('marketing-services', MarketingServiceController::class);
+        $resourceRoutes('channels', MarketingChannelController::class);
+        $resourceRoutes('campaigns', MarketingCampaignController::class);
+        $resourceRoutes('growth-plans', GrowthPlanController::class);
         Route::post('growth-plans/{growthPlan}/items', [GrowthPlanController::class, 'storeItem'])->name('growth-plans.items.store');
         Route::put('growth-plans/{growthPlan}/items/{item}', [GrowthPlanController::class, 'updateItem'])->name('growth-plans.items.update');
         Route::delete('growth-plans/{growthPlan}/items/{item}', [GrowthPlanController::class, 'destroyItem'])->name('growth-plans.items.destroy');
@@ -109,17 +123,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
     });
 });
-
-/**
- * Every schema-driven CMS resource exposes the same seven endpoints.
- */
-function resourceRoutes(string $base, string $controller): void
-{
-    Route::get($base, [$controller, 'index'])->name($base.'.index');
-    Route::get($base.'/create', [$controller, 'create'])->name($base.'.create');
-    Route::post($base, [$controller, 'store'])->name($base.'.store');
-    Route::post($base.'/reorder', [$controller, 'reorder'])->name($base.'.reorder');
-    Route::get($base.'/{record}/edit', [$controller, 'edit'])->name($base.'.edit');
-    Route::put($base.'/{record}', [$controller, 'update'])->name($base.'.update');
-    Route::delete($base.'/{record}', [$controller, 'destroy'])->name($base.'.destroy');
-}

@@ -155,7 +155,7 @@ class PageContentSeeder extends Seeder
                     'eyebrow' => 'Portfolio — {count} live projects',
                     'heading' => 'Our', 'subheading' => 'Solutions',
                     'body' => 'Where creativity meets tech.',
-                    'settings' => ['body2' => 'Explore our projects below!'],
+                    'settings' => ['body2' => 'Explore our projects below!', 'badge' => 'In build'],
                 ],
                 [
                     'key' => 'closing', 'label' => 'Closing',
@@ -430,6 +430,7 @@ class PageContentSeeder extends Seeder
                         'emailPlaceholder' => 'you@company.com',
                         'projectLabel' => 'The project',
                         'projectPlaceholder' => 'What are you building, and what does success look like?',
+                        'stepLabel' => 'Step',
                         'backLabel' => 'Back',
                         'submitLabel' => 'Launch project',
                         'backStepLabel' => '← Back a step',

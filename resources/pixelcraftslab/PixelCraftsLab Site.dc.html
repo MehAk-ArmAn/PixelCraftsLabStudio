@@ -84,7 +84,7 @@
         <img src="assets/L-dot3.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.38s both;" />
         <img src="assets/L-dot2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.44s both;" />
       </div>
-      <div style="position: absolute; bottom: 42px; left: 0; right: 0; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(13,11,18,0.64); animation: pcl-rise 0.4s ease 0.9s both;">Ideas . Build . Launch</div>
+      <div style="position: absolute; bottom: 42px; left: 0; right: 0; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(13,11,18,0.64); animation: pcl-rise 0.4s ease 0.9s both;">{{ tagline }}</div>
     </div>
   </sc-if>
 
@@ -105,10 +105,10 @@
   <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 150; display: flex; justify-content: center; padding: 14px clamp(14px, 3vw, 28px); pointer-events: none;">
     <div style="pointer-events: auto; width: 100%; max-width: 1340px; display: flex; align-items: center; gap: 18px; padding: 10px 10px 10px 14px; border: 1px solid rgba(13,11,18,0.1); border-radius: 16px; background: rgba(246,244,240,0.86); backdrop-filter: blur(14px);">
       <a onClick="{{ goHome }}" href="#home" data-cursor="Home" style="display: flex; align-items: center; gap: 10px; color: #0D0B12;">
-        <img src="assets/pcl-logo.png" alt="PixelCraftsLab" style="height: 34px; width: auto; display: block;" />
+        <img src="{{ logo }}" alt="{{ shortName }}" style="height: 34px; width: auto; display: block;" />
         <span style="display: flex; flex-direction: column; line-height: 1;">
-          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.02em;">PixelCraftsLab</span>
-          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6); margin-top: 4px;">Ideas . Build . Launch</span>
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.02em;">{{ shortName }}</span>
+          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6); margin-top: 4px;">{{ tagline }}</span>
         </span>
       </a>
 
@@ -122,7 +122,7 @@
             </a>
           </sc-for>
         </nav>
-        <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 11px; background: #5B2394; color: #fff; font-size: 14px; font-weight: 700; transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease;" style-hover="transform: translateY(-2px); background: #FF5F1F; color: #fff;">Start a project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+        <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 11px; background: #5B2394; color: #fff; font-size: 14px; font-weight: 700; transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease;" style-hover="transform: translateY(-2px); background: #FF5F1F; color: #fff;">{{ ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
       </sc-if>
 
       <sc-if value="{{ isCompact }}" hint-placeholder-val="{{ false }}">
@@ -137,12 +137,12 @@
   <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
     <div style="position: fixed; inset: 0; z-index: 160; background: #F6F4F0; padding: 90px 20px 28px; display: flex; flex-direction: column; animation: pcl-rise 0.28s ease both;">
       <button onClick="{{ toggleMenu }}" aria-label="Close" style="position: absolute; top: 24px; right: 20px; width: 44px; height: 44px; border: 1px solid rgba(13,11,18,0.14); border-radius: 12px; background: transparent; font-size: 20px; cursor: pointer;">&#215;</button>
-      <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); padding-bottom: 14px; border-bottom: 1px solid rgba(13,11,18,0.1);">Navigate</div>
-      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); padding-bottom: 14px; border-bottom: 1px solid rgba(13,11,18,0.1);">{{ menuLabel }}</div>
+      <sc-for list="{{ navMobile }}" as="n" hint-placeholder-count="5">
         <a onClick="{{ n.goClose }}" href="{{ n.href }}" style="display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.03em; color: {{ n.mcolor }};">{{ n.label }}<span style="font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(13,11,18,0.55);">{{ n.no }}</span></a>
       </sc-for>
-      <a onClick="{{ goContactClose }}" href="#contact" style="margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 18px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 16px; font-weight: 700;">Start a project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
-      <div style="margin-top: auto; padding-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.64);">UK &#183; +44 7871 284043</div>
+      <a onClick="{{ goContactClose }}" href="#contact" style="margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 18px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 16px; font-weight: 700;">{{ ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+      <div style="margin-top: auto; padding-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.64);">{{ contactStrip }}</div>
     </div>
   </sc-if>
 
@@ -166,25 +166,25 @@
             <div style="flex: 1 1 520px; min-width: 290px; position: relative; padding-left: clamp(18px, 2.4vw, 34px);">
               <span data-mo="grow-y" style="position: absolute; left: 0; top: 6px; bottom: 34px; width: 10px; background: linear-gradient(180deg, #5B2394, #8B45FF); transform-origin: top;"></span>
               <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(13,11,18,0.64);">
-                <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.8s infinite;"></span>Creative technology studio &#183; UK
+                <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.8s infinite;"></span>{{ t.home.hero.eyebrow }}
               </div>
-              <h1 style="margin: 22px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 7.6vw, 104px); line-height: 0.92; letter-spacing: -0.048em; text-wrap: balance;">Bring your idea<br />to <span style="position: relative; display: inline-block; font-style: italic; font-weight: 500; color: #5B2394;">life<svg viewBox="0 0 200 40" preserveAspectRatio="none" style="position: absolute; left: -6%; bottom: -0.16em; width: 112%; height: 0.42em; overflow: visible;"><path d="M4 26 C 42 6, 96 34, 150 14 C 168 7, 184 12, 196 20" pathLength="1" fill="none" stroke="#FF5F1F" stroke-width="7" stroke-linecap="round" stroke-dasharray="1" style="stroke-dashoffset: 1; animation: pcl-pen 1.15s cubic-bezier(0.4,0,0.2,1) 0.45s forwards;" /></svg><span aria-hidden="true" style="position: absolute; left: -2%; bottom: -0.34em; width: 26px; height: 26px; transform: translateX(-50%); opacity: 0; animation: pcl-penride 1.15s cubic-bezier(0.4,0,0.2,1) 0.45s forwards;"><svg viewBox="0 0 26 26" width="26" height="26" fill="none"><path d="M4 22 L8 10 L13 5 L18 10 L14 22 Z" fill="#F6F4F0" stroke="#0D0B12" stroke-width="1.5" /><path d="M8 10 L18 10" stroke="#0D0B12" stroke-width="1.2" /><circle cx="13" cy="24" r="2" fill="#FF5F1F" /></svg></span></span></h1>
-              <p style="margin: 24px 0 0; max-width: 560px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.68; color: rgba(13,11,18,0.7); text-wrap: pretty;">From websites and branding to UI/UX and digital experiences, we help turn ideas into polished, professional work that feels modern, purposeful, and ready to launch.</p>
+              <h1 style="margin: 22px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 7.6vw, 104px); line-height: 0.92; letter-spacing: -0.048em; text-wrap: balance;">{{ t.home.hero.heading }}<br />{{ t.home.hero.subheading }} <span style="position: relative; display: inline-block; font-style: italic; font-weight: 500; color: #5B2394;">{{ t.home.hero.emphasis }}<svg viewBox="0 0 200 40" preserveAspectRatio="none" style="position: absolute; left: -6%; bottom: -0.16em; width: 112%; height: 0.42em; overflow: visible;"><path d="M4 26 C 42 6, 96 34, 150 14 C 168 7, 184 12, 196 20" pathLength="1" fill="none" stroke="#FF5F1F" stroke-width="7" stroke-linecap="round" stroke-dasharray="1" style="stroke-dashoffset: 1; animation: pcl-pen 1.15s cubic-bezier(0.4,0,0.2,1) 0.45s forwards;" /></svg><span aria-hidden="true" style="position: absolute; left: -2%; bottom: -0.34em; width: 26px; height: 26px; transform: translateX(-50%); opacity: 0; animation: pcl-penride 1.15s cubic-bezier(0.4,0,0.2,1) 0.45s forwards;"><svg viewBox="0 0 26 26" width="26" height="26" fill="none"><path d="M4 22 L8 10 L13 5 L18 10 L14 22 Z" fill="#F6F4F0" stroke="#0D0B12" stroke-width="1.5" /><path d="M8 10 L18 10" stroke="#0D0B12" stroke-width="1.2" /><circle cx="13" cy="24" r="2" fill="#FF5F1F" /></svg></span></span></h1>
+              <p style="margin: 24px 0 0; max-width: 560px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.68; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ t.home.hero.body }}</p>
               <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;">
-                <a onClick="{{ goWork }}" href="#work" data-cursor="Explore" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 15px; font-weight: 700; overflow: hidden; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">See the work<span style="font-family: 'Space Mono', monospace; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(5px);">&#8594;</span></a>
-                <a onClick="{{ goContact }}" href="#contact" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; color: #0D0B12; font-size: 15px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.07); color: #0D0B12;">Start a project</a>
+                <a onClick="{{ goWork }}" href="#work" data-cursor="Explore" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 15px; font-weight: 700; overflow: hidden; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">{{ t.home.hero.ctaLabel }}<span style="font-family: 'Space Mono', monospace; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(5px);">&#8594;</span></a>
+                <a onClick="{{ goContact }}" href="#contact" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; color: #0D0B12; font-size: 15px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.07); color: #0D0B12;">{{ t.home.hero.cta2Label }}</a>
               </div>
             </div>
 
             <div style="flex: 1 1 400px; min-width: 280px; position: relative; aspect-ratio: 1 / 1; max-height: 560px;">
               <div style="position: absolute; inset: 6% 8% 10% 4%; border-radius: 999px 999px 999px 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transform: translate(calc(var(--px) * -12px), calc(var(--py) * -10px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
-                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(44px, 7vw, 82px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95);">FA</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(44px, 7vw, 82px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95);">{{ featuredInitials }}</span>
               </div>
               <img src="assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0.92; transform: translate(calc(var(--px) * 16px), calc(var(--py) * 13px)) scale(1.18); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
               <img src="assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform: translate(calc(var(--px) * 26px), calc(var(--py) * 20px)) scale(1.1); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
               <div style="position: absolute; right: 2%; bottom: 6%; padding: 12px 14px; border-radius: 12px; background: #fff; border: 1px solid rgba(13,11,18,0.1); box-shadow: 0 18px 40px -24px rgba(13,11,18,0.5); transform: translate(calc(var(--px) * 20px), calc(var(--py) * 16px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Now live</div>
-                <div style="margin-top: 5px; font-weight: 700; font-size: 14px; letter-spacing: -0.01em;">Fikar-e-Adab</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ t.home.hero.badgeLabel }}</div>
+                <div style="margin-top: 5px; font-weight: 700; font-size: 14px; letter-spacing: -0.01em;">{{ featuredName }}</div>
               </div>
               <span aria-hidden="true" style="position: absolute; left: 12%; bottom: 2%; width: calc(16px + var(--pb, 0) * 26px); height: calc(16px + var(--pb, 0) * 26px); background: #5B2394; box-shadow: 0 0 0 calc(var(--pb, 0) * 12px) rgba(91,35,148,0.16); transform: translateY(calc(var(--pb, 0) * 150px)) rotate(calc(var(--pb, 0) * 135deg));"></span>
             </div>
@@ -207,7 +207,7 @@
               <div style="position: relative; aspect-ratio: 16 / 10; border: 2px solid #0D0B12; border-radius: calc(4px + var(--p, 1) * 14px); overflow: hidden; transform: scale(calc(0.24 + var(--p2, 1) * 0.76)); opacity: var(--p2, 1);">
                 <div style="position: absolute; inset: 0; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);"></div>
                 <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: var(--pb, 1);">
-                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 8vw, 104px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95); transform: scale(calc(0.8 + var(--pb, 1) * 0.2));">FA</span>
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 8vw, 104px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95); transform: scale(calc(0.8 + var(--pb, 1) * 0.2));">{{ featuredInitials }}</span>
                 </div>
                 <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
               </div>
@@ -218,12 +218,12 @@
 
               <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 22px; opacity: var(--pb, 1); transform: translateY(calc((1 - var(--pb, 1)) * 18px));">
                 <div>
-                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #B8380A;">Built in the lab &#183; Web platform</div>
-                  <h2 style="margin: 10px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em;">Fikar-e-Adab</h2>
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #B8380A;">{{ t.home.reveal.eyebrow }}</div>
+                  <h2 style="margin: 10px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em;">{{ featuredName }}</h2>
                 </div>
-                <a onClick="{{ openFirst }}" href="#project" data-cursor="Open" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">Open project &#8594;</a>
+                <a onClick="{{ openFirst }}" href="#project" data-cursor="Open" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">{{ t.home.reveal.ctaLabel }}</a>
               </div>
-              <div style="position: absolute; left: 0; right: 0; bottom: -74px; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); opacity: calc(1 - var(--p2, 1));">Scroll &#8212; the pixels are assembling</div>
+              <div style="position: absolute; left: 0; right: 0; bottom: -74px; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); opacity: calc(1 - var(--p2, 1));">{{ t.home.reveal.scrollHint }}</div>
             </div>
           </div>
         </section>
@@ -231,9 +231,9 @@
         <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px); overflow: hidden;">
           <div style="max-width: 1100px; margin: 0 auto; position: relative;">
             <div aria-hidden="true" style="position: absolute; inset: -6% -4%; opacity: calc(var(--pa, 1) * 0.5); background-image: linear-gradient(to right, rgba(91,35,148,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.35) 1px, transparent 1px); background-size: 72px 72px;"></div>
-            <div style="position: relative; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">01 &#8212; What we do</div>
-            <h2 style="position: relative; margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 11vw, 152px); line-height: 0.9; letter-spacing: calc(-0.05em + var(--p, 1) * 0.06em); text-transform: uppercase;">Craft</h2>
-            <p style="position: relative; margin: 26px 0 0; max-width: 720px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">From websites and apps to interactive projects and games, we focus on building clean, modern, and well-structured digital experiences. Everything we create is designed to feel smooth, look sharp, and work the way it&#8217;s supposed to.</p>
+            <div style="position: relative; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.home.craft.eyebrow }}</div>
+            <h2 style="position: relative; margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 11vw, 152px); line-height: 0.9; letter-spacing: calc(-0.05em + var(--p, 1) * 0.06em); text-transform: uppercase;">{{ t.home.craft.heading }}</h2>
+            <p style="position: relative; margin: 26px 0 0; max-width: 720px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ t.home.craft.body }}</p>
           </div>
         </section>
 
@@ -241,10 +241,10 @@
           <div style="max-width: 1340px; margin: 0 auto;">
             <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid rgba(13,11,18,0.12);">
               <div>
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">02 &#8212; Selected work</div>
-                <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(28px, 4vw, 48px); letter-spacing: -0.04em; line-height: 1.04;">Where creativity meets tech</h2>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.home.selected_work.eyebrow }}</div>
+                <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(28px, 4vw, 48px); letter-spacing: -0.04em; line-height: 1.04;">{{ t.home.selected_work.heading }}</h2>
               </div>
-              <a onClick="{{ goWork }}" href="#work" data-cursor="All work" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">All 13 projects &#8594;</a>
+              <a onClick="{{ goWork }}" href="#work" data-cursor="All work" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">{{ t.home.selected_work.ctaLabel }}</a>
             </div>
 
             <div style="display: flex; flex-direction: column; gap: clamp(40px, 6vw, 84px); margin-top: clamp(30px, 4vw, 48px);">
@@ -252,7 +252,7 @@
                 <a onClick="{{ p.open }}" href="#project" data-cursor="{{ p.cursor }}" data-scrub="flow" style="display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 48px); align-items: center; color: #0D0B12;">
                   <div data-morph-src="{{ p.id }}" style="flex: 1 1 520px; min-width: 280px; order: {{ p.mediaOrder }}; position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; border: 1px solid rgba(13,11,18,0.1);">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0); transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.04);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 6vw, 76px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 6vw, 76px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
                     <span aria-hidden="true" style="position: absolute; inset: 0; border: 1px dashed rgba(255,255,255,0.55); opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
@@ -287,10 +287,10 @@
             <div style="position: relative; max-width: 1340px; margin: 0 auto; width: 100%; opacity: var(--pb, 1); transform: translateY(calc((1 - var(--pb, 1)) * 40px));">
               <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px;">
                 <div>
-                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">03 &#8212; Capabilities</div>
-                  <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 46px); letter-spacing: -0.04em; line-height: 1.04;">The disciplines that made that work</h2>
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.home.capabilities.eyebrow }}</div>
+                  <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 46px); letter-spacing: -0.04em; line-height: 1.04;">{{ t.home.capabilities.heading }}</h2>
                 </div>
-                <a onClick="{{ goServices }}" href="#services" data-cursor="Capabilities" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #F6F4F0; border-bottom: 2px solid rgba(255,95,31,0.6); padding-bottom: 4px;">How we work &#8594;</a>
+                <a onClick="{{ goServices }}" href="#services" data-cursor="Capabilities" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #F6F4F0; border-bottom: 2px solid rgba(255,95,31,0.6); padding-bottom: 4px;">{{ t.home.capabilities.ctaLabel }}</a>
               </div>
               <div style="margin-top: clamp(20px, 3vw, 36px); border-top: 1px solid rgba(246,244,240,0.14);">
                 <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
@@ -309,18 +309,18 @@
           <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
             <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #F6F4F0;">
               <div style="text-align: center; padding: 0 24px; opacity: calc(1 - var(--pa, 1));">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">04 &#8212; Behind the finish</div>
-                <h2 style="margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(28px, 4.6vw, 62px); letter-spacing: -0.045em; line-height: 1.0;">Every polished build<br />starts out rough.</h2>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.home.behind.eyebrow }}</div>
+                <h2 style="margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(28px, 4.6vw, 62px); letter-spacing: -0.045em; line-height: 1.0;">{{ t.home.behind.heading }}<br />{{ t.home.behind.heading2 }}</h2>
               </div>
             </div>
 
             <div style="position: absolute; inset: 0; background: #F6F4F0; color: #0D0B12; clip-path: circle(calc(var(--pa, 1) * 140%) at 50% 50%); display: flex; align-items: center; padding: 0 clamp(18px, 4vw, 56px);">
               <div style="max-width: 1340px; margin: 0 auto; width: 100%; display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 64px);">
                 <div style="flex: 1 1 320px; min-width: 270px;">
-                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">How we build</div>
-                  <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 58px); line-height: 0.98; letter-spacing: -0.048em;">Ideas.<br />Build.<br />Launch.</h2>
-                  <p style="margin: 20px 0 0; max-width: 380px; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.66);">Three words on our logo, and the way every project actually runs.</p>
-                  <a onClick="{{ goStudio }}" href="#studio" data-cursor="Studio" style="display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">Inside the studio &#8594;</a>
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.home.process.eyebrow }}</div>
+                  <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 58px); line-height: 0.98; letter-spacing: -0.048em;">{{ t.home.process.word1 }}<br />{{ t.home.process.word2 }}<br />{{ t.home.process.word3 }}</h2>
+                  <p style="margin: 20px 0 0; max-width: 380px; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.66);">{{ t.home.process.body }}</p>
+                  <a onClick="{{ goStudio }}" href="#studio" data-cursor="Studio" style="display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">{{ t.home.process.ctaLabel }}</a>
                 </div>
                 <div style="flex: 1 1 440px; min-width: 280px; display: flex; flex-direction: column; gap: 12px;">
                   <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
@@ -353,9 +353,9 @@
               </sc-for>
             </div>
             <div style="position: relative; text-align: center; max-width: 900px;">
-              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 6.2vw, 86px); line-height: 0.96; letter-spacing: -0.05em; text-wrap: balance; opacity: var(--pb, 1); transform: scale(calc(0.9 + var(--pb, 1) * 0.1));">Ready to build something <span style="font-style: italic; font-weight: 500; color: #FF5F1F;">amazing?</span></h2>
-              <p style="margin: 20px auto 0; max-width: 520px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.65; color: rgba(13,11,18,0.7); opacity: var(--pb, 1);">Let&#8217;s create digital experiences that make your brand stand out.</p>
-              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 18px 28px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 16px; font-weight: 700; opacity: var(--pb, 1); transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(calc(0.86 + var(--pb, 1) * 0.14)); transition: background 0.3s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: #FF5F1F; color: #fff;">Start a Project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 6.2vw, 86px); line-height: 0.96; letter-spacing: -0.05em; text-wrap: balance; opacity: var(--pb, 1); transform: scale(calc(0.9 + var(--pb, 1) * 0.1));">{{ t.home.cta.heading }} <span style="font-style: italic; font-weight: 500; color: #FF5F1F;">{{ t.home.cta.emphasis }}</span></h2>
+              <p style="margin: 20px auto 0; max-width: 520px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.65; color: rgba(13,11,18,0.7); opacity: var(--pb, 1);">{{ t.home.cta.body }}</p>
+              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 18px 28px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 16px; font-weight: 700; opacity: var(--pb, 1); transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(calc(0.86 + var(--pb, 1) * 0.14)); transition: background 0.3s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: #FF5F1F; color: #fff;">{{ t.home.cta.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
             </div>
           </div>
         </section>
@@ -378,12 +378,12 @@
           </div>
 
           <div style="position: relative; max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Portfolio &#8212; 13 live projects</div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">{{ t.work.header.eyebrow }}</div>
             <h1 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(46px, 12.5vw, 190px); line-height: 0.86; letter-spacing: calc(-0.055em + var(--p, 1) * 0.012em); text-transform: uppercase;">
-              <span style="display: block;">Our</span>
-              <span style="display: block; color: #5B2394;">Solutions</span>
+              <span style="display: block;">{{ t.work.header.heading }}</span>
+              <span style="display: block; color: #5B2394;">{{ t.work.header.subheading }}</span>
             </h1>
-            <p style="margin: 24px 0 0; max-width: 620px; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.55; color: rgba(13,11,18,0.72); text-wrap: pretty;">Where creativity meets tech. <span style="position: relative; white-space: nowrap;">Explore our projects below!<span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -3px; height: 2px; background: #FF5F1F; transform-origin: left; transform: scaleX(var(--pa, 1)); "></span></span></p>
+            <p style="margin: 24px 0 0; max-width: 620px; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.55; color: rgba(13,11,18,0.72); text-wrap: pretty;">{{ t.work.header.body }} <span style="position: relative; white-space: nowrap;">{{ t.work.header.body2 }}<span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -3px; height: 2px; background: #FF5F1F; transform-origin: left; transform: scaleX(var(--pa, 1)); "></span></span></p>
 
             <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(13,11,18,0.14);">
               <sc-for list="{{ filters }}" as="fl" hint-placeholder-count="5">
@@ -407,7 +407,7 @@
                       <span style="margin-left: 6px; flex: 1; height: 14px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 8px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.06em; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ p.host }}</span>
                     </div>
                     <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92); transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.1);">{{ p.initials }}</span>
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92); transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.1);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                       <span aria-hidden="true" style="position: absolute; left: 12px; bottom: 12px; width: 22px; height: 22px; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.2,0.8,0.2,1);" style-hover="opacity: 1; transform: none;">
                         <svg viewBox="0 0 22 22" width="22" height="22" fill="none"><path d="M5 4 L5 17 L8.5 13.5 L11 19 L13.5 17.8 L11 12.6 L16 12.6 Z" fill="#fff" stroke="#0D0B12" stroke-width="1.2" /></svg>
                       </span>
@@ -420,7 +420,7 @@
                     <div style="position: relative; width: 68%; max-width: 210px; border: 2px solid #0D0B12; border-radius: 26px; overflow: hidden; background: #fff; padding: 8px 7px; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-8px) rotate(-1.4deg);">
                       <span style="display: block; width: 34%; height: 4px; margin: 0 auto 8px; border-radius: 99px; background: rgba(13,11,18,0.3);"></span>
                       <div style="position: relative; aspect-ratio: 9 / 15; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(160deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 3px, transparent 3px 13px);">
-                        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ p.initials }}</span>
+                        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                         <span aria-hidden="true" style="position: absolute; left: 50%; bottom: 12px; width: 30px; height: 30px; margin-left: -15px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); opacity: 0; transform: scale(0.4); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,1.5,0.4,1);" style-hover="opacity: 1; transform: scale(1);"></span>
                       </div>
                     </div>
@@ -430,7 +430,7 @@
                 <sc-if value="{{ p.isGame }}" hint-placeholder-val="{{ false }}">
                   <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: #0D0B12; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-8px) scale(1.01);">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 4px);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94); transition: letter-spacing 0.5s ease;" style-hover="letter-spacing: 0.04em;">{{ p.initials }}</span>
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94); transition: letter-spacing 0.5s ease;" style-hover="letter-spacing: 0.04em;">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <span aria-hidden="true" style="position: absolute; left: 10px; top: 10px; width: 16px; height: 16px; border-left: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
                     <span aria-hidden="true" style="position: absolute; right: 10px; top: 10px; width: 16px; height: 16px; border-right: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
@@ -446,9 +446,9 @@
                   <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 4 / 3; border: 2px dashed rgba(91,35,148,0.55); border-radius: 14px; overflow: hidden; background: #fff; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-8px); border-color: #FF5F1F;">
                     <span aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(91,35,148,0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.16) 1px, transparent 1px); background-size: 26px 26px;"></span>
                     <div style="position: absolute; inset: 16%; display: flex; align-items: center; justify-content: center; border-radius: 10px; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}); opacity: 0.94;">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
-                    <span style="position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 999px; background: #0D0B12; color: #F6F4F0; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase;">In build</span>
+                    <span style="position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 999px; background: #0D0B12; color: #F6F4F0; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase;">{{ t.work.header.badge }}</span>
                   </div>
                 </sc-if>
 
@@ -464,8 +464,8 @@
 
         <section style="padding: 0 clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px); text-align: center;">
           <div style="max-width: 720px; margin: 0 auto;">
-            <h2 data-mo="rise" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em; line-height: 1.08;">Every one of these is live. Open any of them.</h2>
-            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 16px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F; color: #fff;">Start yours<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+            <h2 data-mo="rise" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em; line-height: 1.08;">{{ t.work.closing.heading }}</h2>
+            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 16px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F; color: #fff;">{{ t.work.closing.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
           </div>
         </section>
       </div>
@@ -476,7 +476,7 @@
         <section data-scrub="flow" style="position: relative; padding: clamp(100px, 12vw, 136px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
           <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 62vh; background: linear-gradient(180deg, {{ P.wash }}, transparent);"></div>
           <div style="position: relative; max-width: 1340px; margin: 0 auto;">
-            <a onClick="{{ backToWork }}" href="#work" data-cursor="All work" style="display: inline-flex; align-items: center; gap: 9px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.7);" style-hover="color: #FF5F1F;"><span style="transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(-4px);">&#8592;</span> All work</a>
+            <a onClick="{{ backToWork }}" href="#work" data-cursor="All work" style="display: inline-flex; align-items: center; gap: 9px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.7);" style-hover="color: #FF5F1F;"><span style="transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(-4px);">&#8592;</span> {{ t.project.detail.backLabel }}</a>
 
             <div style="display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 60px); align-items: flex-end; margin-top: 22px;">
               <div style="flex: 1 1 420px; min-width: 280px;">
@@ -489,10 +489,10 @@
               <div style="flex: 0 1 360px; min-width: 250px;">
                 <p style="margin: 0; font-size: clamp(15px, 1.35vw, 18px); line-height: 1.68; color: rgba(13,11,18,0.72); text-wrap: pretty;">{{ P.blurb }}</p>
                 <sc-if value="{{ P.hasLink }}" hint-placeholder-val="{{ true }}">
-                  <a href="{{ P.link }}" target="_blank" rel="noopener" data-cursor="Open live" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; padding: 15px 22px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 14.5px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">Visit the live project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+                  <a href="{{ P.link }}" target="_blank" rel="noopener" data-cursor="Open live" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; padding: 15px 22px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 14.5px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">{{ t.project.detail.visitLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
                 </sc-if>
                 <sc-if value="{{ P.noLink }}" hint-placeholder-val="{{ false }}">
-                  <div style="display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; padding: 14px 20px; border: 1px dashed rgba(13,11,18,0.3); border-radius: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.7);"><span style="width: 8px; height: 8px; background: #FF5F1F; animation: pcl-blink 1.6s infinite;"></span>Currently in build</div>
+                  <div style="display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; padding: 14px 20px; border: 1px dashed rgba(13,11,18,0.3); border-radius: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.7);"><span style="width: 8px; height: 8px; background: #FF5F1F; animation: pcl-blink 1.6s infinite;"></span>{{ t.project.detail.inBuildLabel }}</div>
                 </sc-if>
               </div>
             </div>
@@ -505,12 +505,12 @@
                 <span style="margin-left: 8px; flex: 1; max-width: 420px; height: 18px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 10px; font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ P.host }}</span>
               </div>
               <div style="position: relative; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ P.tint }}, {{ P.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
-                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ P.initials }}</span>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ P.initials }}</span><sc-if value="{{ P.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ P.shot }}" alt="{{ P.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                 <span aria-hidden="true" style="position: absolute; left: 16px; top: 16px; width: 20px; height: 20px; border-left: 2px solid rgba(255,255,255,0.6); border-top: 2px solid rgba(255,255,255,0.6);"></span>
                 <span aria-hidden="true" style="position: absolute; right: 16px; bottom: 16px; width: 20px; height: 20px; border-right: 2px solid rgba(255,255,255,0.6); border-bottom: 2px solid rgba(255,255,255,0.6);"></span>
               </div>
             </div>
-            <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.6);">[ PLACEHOLDER &#8212; drop real project screenshots in here ]</div>
+            <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.project.detail.mediaPlaceholder }}</div>
           </div>
         </section>
 
@@ -528,12 +528,40 @@
         <section style="padding: clamp(50px, 7vw, 96px) clamp(18px, 4vw, 56px);">
           <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px);">
             <div style="flex: 1 1 420px; min-width: 280px;">
-              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">What we built</div>
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.project.detail.builtLabel }}</div>
               <p data-mo="rise" style="margin: 18px 0 0; font-size: clamp(17px, 1.9vw, 25px); line-height: 1.52; letter-spacing: -0.018em; color: #0D0B12; text-wrap: pretty;">{{ P.blurb }}</p>
-              <div style="margin-top: 22px; padding: 18px 20px; border-left: 3px solid #FF5F1F; background: rgba(255,95,31,0.05); font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.7);">[ PLACEHOLDER ] Brief, role, timeline and outcome for this project &#8212; send us the details and they slot in here.</div>
+              <sc-if value="{{ P.hasCase }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 22px; padding: 18px 20px; border-left: 3px solid #FF5F1F; background: rgba(255,95,31,0.05); font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.7);">{{ P.caseBody }}</div>
+              </sc-if>
+
+              <sc-if value="{{ hasCaseRows }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 18px; margin-top: 26px;">
+                  <sc-for list="{{ caseRows }}" as="cr" hint-placeholder-count="0">
+                    <div data-mo="rise">
+                      <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #B8380A;">{{ cr.k }}</div>
+                      <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.7; color: rgba(13,11,18,0.74); white-space: pre-line;">{{ cr.v }}</p>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ hasMetrics }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 28px;">
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ metricsLabel }}</div>
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 14px;">
+                    <sc-for list="{{ pMetrics }}" as="mx" hint-placeholder-count="0">
+                      <div data-mo="rise" style="padding: 16px; border: 1px solid rgba(13,11,18,0.12); border-radius: 13px; background: #fff;">
+                        <div style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.03em; color: {{ mx.c }};">{{ mx.value }}</div>
+                        <div style="margin-top: 4px; font-size: 13px; font-weight: 600;">{{ mx.label }}</div>
+                        <div style="margin-top: 2px; font-size: 12px; color: rgba(13,11,18,0.6);">{{ mx.context }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
             </div>
             <div style="flex: 1 1 300px; min-width: 250px;">
-              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">Capabilities used</div>
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.project.detail.capsLabel }}</div>
               <div style="display: flex; flex-direction: column; margin-top: 16px; border-top: 1px solid rgba(13,11,18,0.12);">
                 <sc-for list="{{ pCaps }}" as="cp" hint-placeholder-count="4">
                   <div style="display: flex; align-items: center; gap: 12px; padding: 14px 4px; border-bottom: 1px solid rgba(13,11,18,0.12); transition: padding-left 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="padding-left: 12px;">
@@ -550,7 +578,7 @@
           <a onClick="{{ nextP.open }}" href="#project" data-cursor="Next project" style="display: block; max-width: 1340px; margin: 0 auto; padding: clamp(24px, 4vw, 44px); border-radius: 22px; background: #0D0B12; color: #F6F4F0; transition: background 0.4s ease;" style-hover="background: #1B1226; color: #F6F4F0;">
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: clamp(20px, 3vw, 40px);">
               <div style="flex: 1 1 300px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">Next project</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.project.detail.nextLabel }}</div>
                 <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 4vw, 52px); letter-spacing: -0.045em; line-height: 1.02;">{{ nextP.name }}</h2>
                 <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,244,240,0.6);">{{ nextP.kind }}</div>
               </div>
@@ -567,9 +595,9 @@
       <div data-screen-label="Services">
         <section style="padding: clamp(108px, 13vw, 148px) clamp(18px, 4vw, 56px) 0;">
           <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Services &#8212; capabilities</div>
-            <h1 style="margin: 16px 0 0; max-width: 17ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 6.4vw, 92px); line-height: 0.92; letter-spacing: -0.05em;">Watch what we do</h1>
-            <p style="margin: 20px 0 0; max-width: 560px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.66; color: rgba(13,11,18,0.7); text-wrap: pretty;">Six capabilities, end to end. Each one below is running a live miniature of the actual work.</p>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">{{ t.services.header.eyebrow }}</div>
+            <h1 style="margin: 16px 0 0; max-width: 17ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 6.4vw, 92px); line-height: 0.92; letter-spacing: -0.05em;">{{ t.services.header.heading }}</h1>
+            <p style="margin: 20px 0 0; max-width: 560px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.66; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ t.services.header.body }}</p>
 
             <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; padding-bottom: 22px; border-bottom: 1px solid rgba(13,11,18,0.14);">
               <sc-for list="{{ stages }}" as="s" hint-placeholder-count="5">
@@ -587,10 +615,10 @@
 
             <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 56px); align-items: center;">
               <div style="flex: 1 1 300px; min-width: 260px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">01 &#183; Apps</div>
-                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Utility App Development</h2>
-                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We design and develop practical, lightweight applications focused on solving real-world problems.</p>
-                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Components snap into the frame</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">{{ demo.d0.tag }}</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">{{ demo.d0.title }}</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">{{ demo.d0.body }}</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ demo.d0.caption }}</div>
               </div>
               <div style="flex: 1 1 380px; min-width: 270px; display: flex; justify-content: center; padding: 26px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: radial-gradient(ellipse at 50% 20%, rgba(139,69,255,0.14), transparent 70%), #fff;">
                 <div style="position: relative; width: 168px; border: 2px solid #0D0B12; border-radius: 26px; background: #F6F4F0; padding: 10px 9px;">
@@ -625,19 +653,19 @@
                 </div>
               </div>
               <div style="flex: 1 1 300px; min-width: 260px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">02 &#183; Games</div>
-                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Offline Game Development</h2>
-                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We create engaging offline-friendly games that prioritize performance, accessibility, and user experience.</p>
-                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">A static frame becomes playable</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">{{ demo.d1.tag }}</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">{{ demo.d1.title }}</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">{{ demo.d1.body }}</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ demo.d1.caption }}</div>
               </div>
             </div>
 
             <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 56px); align-items: center;">
               <div style="flex: 1 1 300px; min-width: 260px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">03 &#183; Web</div>
-                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Web &amp; Platform Development</h2>
-                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We build modern websites and supporting platforms that complement your apps, games, or digital presence.</p>
-                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Grid, code and cursor finish the page</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">{{ demo.d2.tag }}</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">{{ demo.d2.title }}</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">{{ demo.d2.body }}</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ demo.d2.caption }}</div>
               </div>
               <div style="flex: 1 1 380px; min-width: 270px; padding: 22px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #fff;">
                 <div style="position: relative; border: 2px solid #0D0B12; border-radius: 12px; overflow: hidden; background: #F6F4F0;">
@@ -686,19 +714,19 @@
                 </div>
               </div>
               <div style="flex: 1 1 300px; min-width: 260px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">04 &#183; Design</div>
-                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">UI/UX Design</h2>
-                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We design user interfaces that are clear, intuitive, and visually balanced.</p>
-                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Wireframe resolves into interface</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">{{ demo.d3.tag }}</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">{{ demo.d3.title }}</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">{{ demo.d3.body }}</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ demo.d3.caption }}</div>
               </div>
             </div>
 
             <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 56px); align-items: center;">
               <div style="flex: 1 1 300px; min-width: 260px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">05 &#183; Engineering</div>
-                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Performance Optimization</h2>
-                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We improve the speed, responsiveness, and efficiency of your digital product.</p>
-                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Weight comes down, response comes up</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">{{ demo.d4.tag }}</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">{{ demo.d4.title }}</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">{{ demo.d4.body }}</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ demo.d4.caption }}</div>
               </div>
               <div style="flex: 1 1 380px; min-width: 270px; padding: 26px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #fff; display: flex; flex-direction: column; gap: 16px;">
                 <div>
@@ -730,20 +758,230 @@
                 </div>
               </div>
               <div style="flex: 1 1 300px; min-width: 260px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">06 &#183; Ongoing</div>
-                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Maintenance &amp; Support</h2>
-                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We provide ongoing updates, improvements, and technical support to keep your product running smoothly.</p>
-                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Launch day is the middle, not the end</div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">{{ demo.d5.tag }}</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">{{ demo.d5.title }}</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">{{ demo.d5.body }}</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ demo.d5.caption }}</div>
               </div>
             </div>
 
           </div>
 
           <div style="max-width: 1340px; margin: clamp(50px, 7vw, 90px) auto 0; padding: clamp(24px, 4vw, 44px); border-radius: 22px; background: #0D0B12; color: #F6F4F0; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between;">
-            <h2 style="flex: 1 1 360px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.04em; line-height: 1.06;">Tell us which one you need.</h2>
-            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 13px; background: #FF5F1F; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #F6F4F0; color: #0D0B12;">Start a project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+            <h2 style="flex: 1 1 360px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.04em; line-height: 1.06;">{{ t.services.closing.heading }}</h2>
+            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 13px; background: #FF5F1F; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #F6F4F0; color: #0D0B12;">{{ t.contact.header.eyebrow }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
           </div>
         </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isGrowth }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Growth">
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(112px, 14vw, 158px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <div style="max-width: 1340px; margin: 0 auto; position: relative;">
+            <div aria-hidden="true" style="position: absolute; inset: -8% -4%; opacity: calc(var(--pa, 1) * 0.45); background-image: linear-gradient(to right, rgba(91,35,148,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.3) 1px, transparent 1px); background-size: 72px 72px;"></div>
+            <div style="position: relative; display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(13,11,18,0.64);">
+              <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.8s infinite;"></span>{{ t.growth.hero.eyebrow }}
+            </div>
+            <h1 style="position: relative; margin: 20px 0 0; max-width: 20ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 5.8vw, 84px); line-height: 0.95; letter-spacing: -0.048em; text-wrap: balance;">{{ t.growth.hero.heading }} <span style="font-style: italic; font-weight: 500; color: #5B2394;">{{ t.growth.hero.emphasis }}</span></h1>
+            <p style="position: relative; margin: 26px 0 0; max-width: 720px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ t.growth.hero.body }}</p>
+            <div style="position: relative; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;">
+              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">{{ t.growth.hero.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+              <a onClick="{{ goWork }}" href="#work" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; color: #0D0B12; font-size: 15px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.07); color: #0D0B12;">{{ t.growth.hero.cta2Label }}</a>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.capabilities.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 18px 0 0; max-width: 18ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -0.045em;">{{ t.growth.capabilities.heading }}</h2>
+            <p data-mo="rise" style="margin: 22px 0 0; max-width: 700px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ growthLeadBody }}</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: clamp(34px, 5vw, 56px);">
+              <sc-for list="{{ growthGroups }}" as="g" hint-placeholder-count="8">
+                <div data-mo="rise" style="position: relative; padding: 22px; border: 1px solid rgba(13,11,18,0.12); border-radius: 16px; background: #fff; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-5px); border-color: {{ g.c }};">
+                  <div style="display: flex; align-items: baseline; gap: 10px;">
+                    <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: {{ g.c }};">{{ g.no }}</span>
+                    <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">{{ g.name }}</h3>
+                  </div>
+                  <span aria-hidden="true" style="display: block; height: 3px; width: 44px; margin-top: 12px; background: {{ g.c }};"></span>
+                  <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+                    <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+                      <div>
+                        <div style="font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;">{{ it.title }}</div>
+                        <div style="margin-top: 3px; font-size: 13px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ it.body }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px);">
+            <div style="flex: 1 1 380px; min-width: 280px;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.social.eyebrow }}</div>
+              <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.social.heading }}</h2>
+              <p data-mo="rise" style="margin: 20px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.social.body }}</p>
+            </div>
+            <div style="flex: 1 1 380px; min-width: 280px; display: flex; flex-direction: column; gap: 10px;">
+              <sc-for list="{{ socialServices }}" as="sv" hint-placeholder-count="8">
+                <div data-mo="rise" style="display: flex; gap: 12px; padding: 14px 16px; border: 1px solid rgba(13,11,18,0.12); border-radius: 13px; background: #fff; transition: border-color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="border-color: #FF5F1F; transform: translateX(4px);">
+                  <span aria-hidden="true" style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 7px; background: #FF5F1F;"></span>
+                  <div>
+                    <div style="font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;">{{ sv.title }}</div>
+                    <div style="margin-top: 3px; font-size: 13px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ sv.body }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px);">
+            <div style="flex: 1 1 380px; min-width: 280px; display: flex; flex-direction: column; gap: 10px;">
+              <sc-for list="{{ strategyServices }}" as="sv" hint-placeholder-count="7">
+                <div data-mo="rise" style="display: flex; gap: 12px; padding: 14px 16px; border: 1px solid rgba(13,11,18,0.12); border-radius: 13px; background: #fff; transition: border-color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="border-color: #5B2394; transform: translateX(4px);">
+                  <span aria-hidden="true" style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 7px; background: #5B2394;"></span>
+                  <div>
+                    <div style="font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;">{{ sv.title }}</div>
+                    <div style="margin-top: 3px; font-size: 13px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ sv.body }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="flex: 1 1 380px; min-width: 280px;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.strategy.eyebrow }}</div>
+              <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.strategy.heading }}</h2>
+              <p data-mo="rise" style="margin: 20px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.strategy.body }}</p>
+            </div>
+          </div>
+        </section>
+
+        <sc-if value="{{ hasChannels }}" hint-placeholder-val="{{ true }}">
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.channels.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.channels.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.channels.body }}</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(28px, 4vw, 44px);">
+              <sc-for list="{{ channels }}" as="ch" hint-placeholder-count="11">
+                <div data-mo="rise" data-tool="flee" data-tool-pull="0.4" style="display: inline-flex; align-items: center; gap: 9px; padding: 11px 16px; border: 1px solid rgba(13,11,18,0.16); border-radius: 999px; background: #fff; font-size: 13.5px; font-weight: 600; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease;" style-hover="border-color: {{ ch.c }};">
+                  <span aria-hidden="true" style="width: 8px; height: 8px; background: {{ ch.c }};"></span>{{ ch.label }}
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        </sc-if>
+
+        <sc-if value="{{ hasGrowthPlans }}" hint-placeholder-val="{{ true }}">
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.plans.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.plans.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.plans.body }}</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: clamp(30px, 4vw, 50px);">
+              <sc-for list="{{ growthPlans }}" as="pl" hint-placeholder-count="3">
+                <div data-mo="rise" style="display: flex; flex-direction: column; padding: 24px; border: 2px solid {{ pl.border }}; border-radius: 18px; background: #fff; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
+                  <sc-if value="{{ pl.hasHighlight }}" hint-placeholder-val="{{ false }}">
+                    <span style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: {{ pl.c }}; color: #fff; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;">{{ pl.highlight }}</span>
+                  </sc-if>
+                  <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.03em;">{{ pl.name }}</h3>
+                  <sc-if value="{{ pl.hasIdeal }}" hint-placeholder-val="{{ true }}">
+                    <div style="margin-top: 6px; font-size: 13px; color: rgba(13,11,18,0.6);">{{ pl.idealFor }}</div>
+                  </sc-if>
+                  <p style="margin: 14px 0 0; font-size: 14.5px; line-height: 1.65; color: rgba(13,11,18,0.72);">{{ pl.short }}</p>
+                  <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(13,11,18,0.1);">
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: {{ pl.c }};">{{ pl.price }}</span>
+                    <sc-if value="{{ pl.hasDuration }}" hint-placeholder-val="{{ true }}">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(13,11,18,0.55);">{{ pl.duration }}</span>
+                    </sc-if>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+                    <sc-for list="{{ pl.items }}" as="di" hint-placeholder-count="7">
+                      <div style="display: flex; gap: 9px; font-size: 13.5px; line-height: 1.55;">
+                        <span aria-hidden="true" style="flex: 0 0 auto; width: 7px; height: 7px; margin-top: 6px; background: {{ pl.c }};"></span>
+                        <span>{{ di.title }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="margin-top: auto; padding-top: 20px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: {{ pl.c }};">{{ pl.ctaLabel }} &#8599;</a>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        </sc-if>
+
+        <sc-if value="{{ hasGrowthSteps }}" hint-placeholder-val="{{ true }}">
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.process.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.process.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.process.body }}</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: clamp(30px, 4vw, 50px);">
+              <sc-for list="{{ growthSteps }}" as="gs" hint-placeholder-count="7">
+                <div data-mo="rise" style="padding: 20px; border: 1px solid rgba(13,11,18,0.12); border-radius: 15px; background: #fff;">
+                  <span aria-hidden="true" style="display: block; height: 4px; width: 100%; background: {{ gs.c }};"></span>
+                  <div style="margin-top: 14px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: {{ gs.c }};">{{ gs.no }}</div>
+                  <h3 style="margin: 8px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">{{ gs.name }}</h3>
+                  <p style="margin: 9px 0 0; font-size: 13.5px; line-height: 1.62; color: rgba(13,11,18,0.68);">{{ gs.body }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        </sc-if>
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.cases.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.cases.heading }}</h2>
+
+            <sc-if value="{{ hasGrowthCases }}" hint-placeholder-val="{{ false }}">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 44px);">
+                <sc-for list="{{ growthCases }}" as="p" hint-placeholder-count="0">
+                  <a onClick="{{ p.open }}" href="#project" data-cursor="Read it" data-mo="rise" style="display: block; color: #0D0B12;">
+                    <div style="position: relative; aspect-ratio: 16 / 10; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
+                      <sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                    </div>
+                    <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">{{ p.name }}</h3>
+                    <p style="margin: 6px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ p.short }}</p>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ noGrowthCases }}" hint-placeholder-val="{{ true }}">
+              <div data-mo="rise" style="margin-top: clamp(24px, 3vw, 36px); padding: 24px; border: 1px dashed rgba(13,11,18,0.22); border-radius: 15px; font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.85; color: rgba(13,11,18,0.64); max-width: 70ch;">{{ t.growth.cases.empty }}</div>
+            </sc-if>
+          </div>
+        </section>
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.analytics.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.analytics.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 70ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.analytics.body }}</p>
+          </div>
+        </section>
+
+        <section style="position: relative; padding: clamp(80px, 11vw, 130px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <h2 data-mo="rise" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 5vw, 68px); line-height: 1.0; letter-spacing: -0.048em; text-wrap: balance;">{{ t.growth.cta.heading }}</h2>
+            <p data-mo="rise" style="margin: 20px auto 0; max-width: 56ch; font-size: 16px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.cta.body }}</p>
+            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 17px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15.5px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F;">{{ t.growth.cta.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+          </div>
+        </section>
+
       </div>
     </sc-if>
 
@@ -757,8 +995,8 @@
             <svg viewBox="0 0 62 46" width="62" height="46" fill="none"><path d="M31 4 L58 15 L31 26 L4 15 Z" fill="#8B45FF" stroke="#0D0B12" stroke-width="1.6" stroke-linejoin="round" /><path d="M8 24 L31 33 L54 24" stroke="#0D0B12" stroke-width="1.6" stroke-linejoin="round" /><path d="M8 33 L31 42 L54 33" stroke="#FF5F1F" stroke-width="1.6" stroke-linejoin="round" /></svg>
           </span>
           <div style="position: relative; max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Studio &#8212; who we are</div>
-            <h1 style="margin: 20px 0 0; max-width: 20ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 5.8vw, 84px); line-height: 0.95; letter-spacing: -0.048em; text-wrap: balance;">Crafting digital experiences where <span style="color: #5B2394;">creativity</span> meets <span style="color: #FF5F1F;">precision</span>.</h1>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">{{ t.studio.header.eyebrow }}</div>
+            <h1 style="margin: 20px 0 0; max-width: 20ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 5.8vw, 84px); line-height: 0.95; letter-spacing: -0.048em; text-wrap: balance;">{{ t.studio.header.heading }} <span style="color: #5B2394;">{{ t.studio.header.wordA }}</span> {{ t.studio.header.wordB }} <span style="color: #FF5F1F;">{{ t.studio.header.wordC }}</span>.</h1>
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(13,11,18,0.12);">
               <img src="assets/pcl-logo.png" alt="" style="height: 54px; width: auto;" />
               <div style="display: flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">
@@ -771,7 +1009,7 @@
         </section>
         <section data-scrub="flow" style="padding: clamp(50px, 7vw, 92px) clamp(18px, 4vw, 56px);">
           <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">Our name, read literally</div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.studio.name.heading }}</div>
             <div style="margin-top: 22px; border-top: 1px solid rgba(13,11,18,0.14);">
               <sc-for list="{{ nameParts }}" as="n" hint-placeholder-count="3">
                 <div style="display: flex; flex-wrap: wrap; gap: clamp(14px, 3vw, 44px); align-items: center; padding: clamp(20px, 3vw, 32px) 4px; border-bottom: 1px solid rgba(13,11,18,0.12); transition: background 0.35s ease, padding-left 0.4s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: {{ n.wash }}; padding-left: 20px;">
@@ -790,24 +1028,24 @@
         <section style="background: #0D0B12; color: #F6F4F0; padding: clamp(64px, 9vw, 116px) clamp(18px, 4vw, 56px);">
           <div style="max-width: 1340px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(20px, 3vw, 38px);">
             <div data-mo="rise" style="border-top: 2px solid #F6F4F0; padding-top: 20px;">
-              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">Our Story</h3>
-              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">PixelCraftsLab Studio started with one goal &#8212; build digital experiences that actually stand out. We combine creativity, clean code, and strong UI design to craft modern websites, digital tools, and fun games.</p>
+              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">{{ t.studio.story.heading }}</h3>
+              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">{{ t.studio.story.body }}</p>
             </div>
             <div data-mo="rise" style="border-top: 2px solid #8B45FF; padding-top: 20px;">
-              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">Our Mission</h3>
-              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">Create fast, modern, and visually powerful utility app, and online games that help brands grow and stand out online.</p>
+              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">{{ t.studio.mission.heading }}</h3>
+              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">{{ t.studio.mission.body }}</p>
             </div>
             <div data-mo="rise" style="border-top: 2px solid #FF5F1F; padding-top: 20px;">
-              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">Future Vision</h3>
-              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">We aim to grow PixelCraftsLab into a full creative tech studio specializing in web platforms, design systems, and digital innovation.</p>
+              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">{{ t.studio.vision.heading }}</h3>
+              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">{{ t.studio.vision.body }}</p>
             </div>
           </div>
         </section>
         <section style="padding: clamp(64px, 9vw, 116px) clamp(18px, 4vw, 56px);">
           <div style="max-width: 1340px; margin: 0 auto;">
             <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid rgba(13,11,18,0.12);">
-              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 44px); letter-spacing: -0.04em;">Four people, one studio</h2>
-              <p style="flex: 0 1 340px; min-width: 240px; margin: 0; font-size: 15px; line-height: 1.68; color: rgba(13,11,18,0.6);">Small enough that you talk to the people building your product.</p>
+              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 44px); letter-spacing: -0.04em;">{{ t.studio.team.heading }}</h2>
+              <p style="flex: 0 1 340px; min-width: 240px; margin: 0; font-size: 15px; line-height: 1.68; color: rgba(13,11,18,0.6);">{{ t.studio.team.body }}</p>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(16px, 2vw, 26px); margin-top: clamp(24px, 3vw, 40px);">
               <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
@@ -815,7 +1053,8 @@
                   <div style="position: relative; aspect-ratio: 3 / 4; border-radius: 16px; overflow: hidden; border: 1px solid rgba(13,11,18,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background-image: linear-gradient(155deg, {{ m.tint }}, {{ m.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 3px, transparent 3px 15px); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
                     <span aria-hidden="true" style="position: absolute; inset: 12px; border: 1px dashed rgba(255,255,255,0.45); border-radius: 10px; opacity: 0; transform: scale(1.04); transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2,0.8,0.2,1);" style-hover="opacity: 1; transform: none;"></span>
                     <span style="position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.04em; color: rgba(255,255,255,0.92); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">{{ m.initials }}</span>
-                    <span style="position: relative; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.86);">[ Photo to supply ]</span>
+                    <sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ false }}"><img src="{{ m.img }}" alt="{{ m.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                    <sc-if value="{{ m.noPhoto }}" hint-placeholder-val="{{ true }}"><span style="position: relative; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.86);">{{ t.studio.team.photoPlaceholder }}</span></sc-if>
                   </div>
                   <h3 style="margin: 15px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.02em;">{{ m.name }}</h3>
                   <div style="margin-top: 6px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B2394; line-height: 1.6;">{{ m.role }}</div>
@@ -828,18 +1067,29 @@
         <section style="padding: 0 clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
           <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 56px); padding: clamp(26px, 4vw, 48px); border: 1px solid rgba(13,11,18,0.12); border-radius: 24px; background: #fff;">
             <div style="flex: 1 1 360px; min-width: 270px;">
-              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">Proof, honestly</div>
-              <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.1vw, 38px); line-height: 1.08; letter-spacing: -0.035em; text-wrap: balance;">No borrowed logos. Just shipped products you can open right now.</h2>
-              <p style="margin: 16px 0 0; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.64); text-wrap: pretty;">Every project in the index is live on Google Play or the open web. Click any of them and judge the work directly &#8212; that is the only reference we&#8217;d rather give you.</p>
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.studio.proof.eyebrow }}</div>
+              <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.1vw, 38px); line-height: 1.08; letter-spacing: -0.035em; text-wrap: balance;">{{ t.studio.proof.heading }}</h2>
+              <p style="margin: 16px 0 0; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.64); text-wrap: pretty;">{{ t.studio.proof.body }}</p>
             </div>
+            <sc-if value="{{ showReviewSection }}" hint-placeholder-val="{{ true }}">
             <div style="flex: 1 1 300px; min-width: 250px; display: flex; flex-direction: column; gap: 12px;">
-              <div style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px;">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Client reviews</div>
-                <p style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.28;">&#8220;Be the first to leave a review : )&#8221;</p>
-                <div style="margin-top: 10px; font-size: 13px; color: rgba(13,11,18,0.55);">&#8212; Mehak Arman, PixelCraftsLab Studio&#8217;s Admin</div>
-              </div>
-              <div style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.85; color: rgba(13,11,18,0.64);">[ PLACEHOLDER ] Real client quotes, Play Store ratings or case-study metrics drop in here once you send them over.</div>
+              <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="0">
+                <div data-mo="rise" style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px;">
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ t.studio.reviews.eyebrow }}</div>
+                  <p style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.28;">&#8220;{{ r.quote }}&#8221;</p>
+                  <div style="margin-top: 10px; font-size: 13px; color: rgba(13,11,18,0.55);">&#8212; {{ r.attribution }}</div>
+                </div>
+              </sc-for>
+              <sc-if value="{{ noReviews }}" hint-placeholder-val="{{ true }}">
+                <div style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px;">
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ t.studio.reviews.eyebrow }}</div>
+                  <p style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.28;">{{ t.studio.reviews.body }}</p>
+                  <div style="margin-top: 10px; font-size: 13px; color: rgba(13,11,18,0.55);">{{ t.studio.reviews.attribution }}</div>
+                </div>
+                <div style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.85; color: rgba(13,11,18,0.64);">{{ t.studio.reviews.note }}</div>
+              </sc-if>
             </div>
+            </sc-if>
           </div>
         </section>
       </div>
@@ -853,19 +1103,19 @@
             <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #FF9166;">
               <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.5s infinite;"></span>Lab &#8212; safety rails off
             </div>
-            <h1 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(42px, 9.6vw, 140px); line-height: 0.88; letter-spacing: -0.055em; text-transform: uppercase;">Make a<br /><span style="color: #FF5F1F;">mess</span></h1>
-            <p style="margin: 22px 0 0; max-width: 560px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.66; color: rgba(246,244,240,0.72); text-wrap: pretty;">Lab is where things get tested before they get shipped. Drag the pieces, paint the grid, break the layout. Nothing here is precious.</p>
+            <h1 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(42px, 9.6vw, 140px); line-height: 0.88; letter-spacing: -0.055em; text-transform: uppercase;">{{ t.lab.header.heading }}<br /><span style="color: #FF5F1F;">{{ t.lab.header.emphasis }}</span></h1>
+            <p style="margin: 22px 0 0; max-width: 560px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.66; color: rgba(246,244,240,0.72); text-wrap: pretty;">{{ t.lab.header.body }}</p>
           </div>
         </section>
 
         <section style="padding: clamp(34px, 5vw, 60px) clamp(18px, 4vw, 56px) 0;">
           <div style="max-width: 1340px; margin: 0 auto;">
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-bottom: 16px;">
-              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,240,0.5);">Tool</span>
+              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,240,0.5);">{{ t.lab.header.toolLabel }}</span>
               <sc-for list="{{ labModes }}" as="lm" hint-placeholder-count="3">
                 <button onClick="{{ lm.pick }}" style="padding: 10px 15px; border: 1px solid {{ lm.border }}; border-radius: 999px; background: {{ lm.bg }}; color: {{ lm.color }}; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease;">{{ lm.name }}</button>
               </sc-for>
-              <button onClick="{{ clearLab }}" style="margin-left: auto; padding: 10px 15px; border: 1px solid rgba(246,244,240,0.24); border-radius: 999px; background: transparent; color: rgba(246,244,240,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F;">Clear</button>
+              <button onClick="{{ clearLab }}" style="margin-left: auto; padding: 10px 15px; border: 1px solid rgba(246,244,240,0.24); border-radius: 999px; background: transparent; color: rgba(246,244,240,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F;">{{ t.lab.header.clearLabel }}</button>
             </div>
 
             <div ref="{{ setBoard }}" onPointerDown="{{ boardDown }}" style="position: relative; border: 1px solid rgba(246,244,240,0.16); border-radius: 20px; overflow: hidden; background: rgba(246,244,240,0.02); touch-action: none; cursor: crosshair;">
@@ -887,15 +1137,15 @@
         <section style="padding: clamp(56px, 8vw, 100px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
           <div style="max-width: 1340px; margin: 0 auto;">
             <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(246,244,240,0.16);">
-              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em;">In the lab right now</h2>
-              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,240,0.5);">Not yet shipped</span>
+              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em;">{{ t.lab.projects.eyebrow }}</h2>
+              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,240,0.5);">{{ t.lab.projects.statusLabel }}</span>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(16px, 2vw, 26px); margin-top: clamp(22px, 3vw, 34px);">
               <sc-for list="{{ labProjects }}" as="p" hint-placeholder-count="2">
                 <a onClick="{{ p.open }}" href="#project" data-cursor="Peek" data-mo="rise" style="display: flex; flex-direction: column; color: #F6F4F0;">
                   <div style="position: relative; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden; border: 1px dashed rgba(246,244,240,0.28); display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-6px); border-color: #FF5F1F;">
-                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 46px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.9);">{{ p.initials }}</span>
-                    <span style="position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(13,11,18,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;">In build</span>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 46px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.9);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                    <span style="position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(13,11,18,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;">{{ t.lab.projects.badge }}</span>
                   </div>
                   <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.025em;">{{ p.name }}</h3>
                   <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: rgba(246,244,240,0.62);">{{ p.short }}</p>
@@ -904,8 +1154,8 @@
             </div>
 
             <div style="margin-top: clamp(44px, 6vw, 76px); padding: clamp(24px, 4vw, 44px); border-radius: 22px; background: #F6F4F0; color: #0D0B12; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between;">
-              <h2 style="flex: 1 1 380px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.04em; line-height: 1.06;">Got something that belongs in here?</h2>
-              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F; color: #fff;">Bring it to us<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+              <h2 style="flex: 1 1 380px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.04em; line-height: 1.06;">{{ t.lab.cta.heading }}</h2>
+              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F; color: #fff;">{{ t.lab.cta.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
             </div>
           </div>
         </section>
@@ -916,9 +1166,9 @@
       <div data-screen-label="Start a project">
         <section style="padding: clamp(104px, 13vw, 142px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
           <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Start a project</div>
-            <h1 style="margin: 14px 0 0; max-width: 16ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 6.6vw, 94px); line-height: 0.92; letter-spacing: -0.05em;">Build your brief</h1>
-            <p style="margin: 18px 0 0; max-width: 520px; font-size: clamp(15px, 1.35vw, 18px); line-height: 1.66; color: rgba(13,11,18,0.7);">Answer four things. Watch your project take shape on the right as you go.</p>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">{{ t.contact.header.eyebrow }}</div>
+            <h1 style="margin: 14px 0 0; max-width: 16ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 6.6vw, 94px); line-height: 0.92; letter-spacing: -0.05em;">{{ t.contact.header.heading }}</h1>
+            <p style="margin: 18px 0 0; max-width: 520px; font-size: clamp(15px, 1.35vw, 18px); line-height: 1.66; color: rgba(13,11,18,0.7);">{{ t.contact.header.body }}</p>
 
             <div style="display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px); margin-top: clamp(34px, 5vw, 56px);">
 
@@ -926,13 +1176,13 @@
                 <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
                   <div>
                     <div style="display: flex; align-items: center; gap: 12px;">
-                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6);">Step {{ stepNo }} / 04</span>
+                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.steps.stepLabel }} {{ stepNo }} / {{ stepTotal }}</span>
                       <span style="flex: 1; height: 3px; border-radius: 99px; background: rgba(13,11,18,0.1); overflow: hidden;"><span style="display: block; height: 100%; width: {{ progress }}%; background: #FF5F1F; border-radius: 99px; transition: width 0.5s cubic-bezier(0.2,0.8,0.2,1);"></span></span>
                     </div>
 
                     <sc-if value="{{ isStep0 }}" hint-placeholder-val="{{ true }}">
                       <div style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
-                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">What are you building?</h2>
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">{{ t.contact.steps.qBuild }}</h2>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
                           <sc-for list="{{ buildOptions }}" as="o" hint-placeholder-count="5">
                             <button onClick="{{ o.pick }}" data-magnet="1" style="padding: 14px 20px; border: 1px solid {{ o.border }}; border-radius: 12px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 15px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ o.label }}</button>
@@ -943,7 +1193,7 @@
 
                     <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
                       <div style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
-                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">How much of it?</h2>
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">{{ t.contact.steps.qScope }}</h2>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
                           <sc-for list="{{ scopeOptions }}" as="o" hint-placeholder-count="5">
                             <button onClick="{{ o.pick }}" data-magnet="1" style="padding: 14px 20px; border: 1px solid {{ o.border }}; border-radius: 12px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 15px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ o.label }}</button>
@@ -954,7 +1204,7 @@
 
                     <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
                       <div style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
-                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">When do you need it?</h2>
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">{{ t.contact.steps.qTime }}</h2>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
                           <sc-for list="{{ timeOptions }}" as="o" hint-placeholder-count="4">
                             <button onClick="{{ o.pick }}" data-magnet="1" style="padding: 14px 20px; border: 1px solid {{ o.border }}; border-radius: 12px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 15px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ o.label }}</button>
@@ -965,30 +1215,76 @@
 
                     <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
                       <form onSubmit="{{ submit }}" style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
-                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">Tell us the rest</h2>
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">{{ t.contact.steps.qRest }}</h2>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 20px;">
                           <label style="display: flex; flex-direction: column; gap: 8px;">
-                            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">Your name</span>
-                            <input type="text" required="required" placeholder="Jane Cooper" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.steps.nameLabel }}</span>
+                            <input type="text" required="required" onInput="{{ setName }}" value="{{ nameVal }}" placeholder="{{ t.contact.steps.namePlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
                           </label>
                           <label style="display: flex; flex-direction: column; gap: 8px;">
-                            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">Your email</span>
-                            <input type="email" required="required" placeholder="you@company.com" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.steps.emailLabel }}</span>
+                            <input type="email" required="required" onInput="{{ setEmail }}" value="{{ emailVal }}" placeholder="{{ t.contact.steps.emailPlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
                           </label>
                         </div>
                         <label style="display: flex; flex-direction: column; gap: 8px; margin-top: 14px;">
-                          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">The project</span>
-                          <textarea rows="4" onInput="{{ setBrief }}" placeholder="What are you building, and what does success look like?" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; resize: vertical; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);"></textarea>
+                          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.steps.projectLabel }}</span>
+                          <textarea rows="4" onInput="{{ setBrief }}" placeholder="{{ t.contact.steps.projectPlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; resize: vertical; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);"></textarea>
                         </label>
+
+                        <sc-if value="{{ isMarketingBrief }}" hint-placeholder-val="{{ false }}">
+                          <sc-if value="{{ hasServiceOptions }}" hint-placeholder-val="{{ true }}">
+                            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 14px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.qMarketing }}</span>
+                              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                <sc-for list="{{ serviceOptions }}" as="o" hint-placeholder-count="6">
+                                  <button type="button" onClick="{{ o.pick }}" data-magnet="1" style="padding: 10px 14px; border: 1px solid {{ o.border }}; border-radius: 999px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;">{{ o.label }}</button>
+                                </sc-for>
+                              </div>
+                            </div>
+                          </sc-if>
+                          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 14px;">
+                            <label style="display: flex; flex-direction: column; gap: 8px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.businessLabel }}</span>
+                              <input type="text" onInput="{{ setBusiness }}" value="{{ businessVal }}" placeholder="{{ t.contact.marketing_fields.businessPlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            </label>
+                            <label style="display: flex; flex-direction: column; gap: 8px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.websiteLabel }}</span>
+                              <input type="text" onInput="{{ setWebsite }}" value="{{ websiteVal }}" placeholder="{{ t.contact.marketing_fields.websitePlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            </label>
+                            <label style="display: flex; flex-direction: column; gap: 8px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.goalLabel }}</span>
+                              <input type="text" onInput="{{ setGoal }}" value="{{ goalVal }}" placeholder="{{ t.contact.marketing_fields.goalPlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            </label>
+                            <label style="display: flex; flex-direction: column; gap: 8px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.audienceLabel }}</span>
+                              <input type="text" onInput="{{ setAudience }}" value="{{ audienceVal }}" placeholder="{{ t.contact.marketing_fields.audiencePlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            </label>
+                            <label style="display: flex; flex-direction: column; gap: 8px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.channelsLabel }}</span>
+                              <input type="text" onInput="{{ setChannels }}" value="{{ channelsVal }}" placeholder="{{ t.contact.marketing_fields.channelsPlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            </label>
+                            <label style="display: flex; flex-direction: column; gap: 8px;">
+                              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ t.contact.marketing_fields.currentLabel }}</span>
+                              <input type="text" onInput="{{ setCurrent }}" value="{{ currentVal }}" placeholder="{{ t.contact.marketing_fields.currentPlaceholder }}" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                            </label>
+                          </div>
+                        </sc-if>
+
+                        <input type="text" name="company_website" tabIndex="-1" autoComplete="off" aria-hidden="true" onInput="{{ setHoney }}" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" />
+
+                        <sc-if value="{{ hasSendError }}" hint-placeholder-val="{{ false }}">
+                          <div style="margin-top: 14px; padding: 12px 14px; border: 1px solid rgba(255,95,31,0.45); border-radius: 11px; background: rgba(255,95,31,0.07); font-size: 13px; color: #B8380A;">{{ sendError }}</div>
+                        </sc-if>
+
                         <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
-                          <button type="button" onClick="{{ back }}" style="padding: 15px 20px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; background: transparent; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: border-color 0.25s ease;" style-hover="border-color: #0D0B12;">Back</button>
-                          <button type="submit" data-magnet="1" style="flex: 1; min-width: 200px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 24px; border: none; border-radius: 12px; background: #5B2394; color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F;">Launch project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></button>
+                          <button type="button" onClick="{{ back }}" style="padding: 15px 20px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; background: transparent; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: border-color 0.25s ease;" style-hover="border-color: #0D0B12;">{{ t.contact.steps.backLabel }}</button>
+                          <button type="submit" data-magnet="1" disabled="{{ sending }}" style="flex: 1; min-width: 200px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 24px; border: none; border-radius: 12px; background: #5B2394; color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F;">{{ submitLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></button>
                         </div>
                       </form>
                     </sc-if>
 
                     <sc-if value="{{ canGoBack }}" hint-placeholder-val="{{ false }}">
-                      <button onClick="{{ back }}" style="margin-top: 22px; padding: 11px 16px; border: 1px solid rgba(13,11,18,0.2); border-radius: 10px; background: transparent; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: border-color 0.25s ease, color 0.25s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F;">&#8592; Back a step</button>
+                      <button onClick="{{ back }}" style="margin-top: 22px; padding: 11px 16px; border: 1px solid rgba(13,11,18,0.2); border-radius: 10px; background: transparent; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: border-color 0.25s ease, color 0.25s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F;">{{ t.contact.steps.backStepLabel }}</button>
                     </sc-if>
                   </div>
                 </sc-if>
@@ -996,23 +1292,23 @@
                 <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
                   <div style="padding: clamp(26px, 4vw, 44px); border: 1px solid rgba(13,11,18,0.14); border-radius: 20px; background: #fff; animation: pcl-rise 0.45s cubic-bezier(0.16,1,0.3,1) both;">
                     <div style="width: 42px; height: 42px; border-radius: 50%; background: #FF5F1F; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; animation: pcl-pop 0.45s cubic-bezier(0.2,1.5,0.4,1) both;">&#10003;</div>
-                    <h2 style="margin: 20px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(24px, 3vw, 34px); font-weight: 700; letter-spacing: -0.035em;">Brief assembled.</h2>
-                    <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.7; color: rgba(13,11,18,0.7);">This is a design prototype, so nothing was actually sent. Wire it to the live form endpoint and this becomes the real confirmation state.</p>
-                    <button onClick="{{ resetForm }}" style="margin-top: 20px; padding: 13px 18px; border: 1px solid rgba(13,11,18,0.2); border-radius: 11px; background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color 0.25s ease;" style-hover="border-color: #5B2394;">Build another</button>
+                    <h2 style="margin: 20px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(24px, 3vw, 34px); font-weight: 700; letter-spacing: -0.035em;">{{ t.contact.success.heading }}</h2>
+                    <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.contact.success.body }}</p>
+                    <button onClick="{{ resetForm }}" style="margin-top: 20px; padding: 13px 18px; border: 1px solid rgba(13,11,18,0.2); border-radius: 11px; background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color 0.25s ease;" style-hover="border-color: #5B2394;">{{ t.contact.success.ctaLabel }}</button>
                   </div>
                 </sc-if>
 
                 <div style="margin-top: 34px; display: flex; flex-direction: column; border-top: 1px solid rgba(13,11,18,0.14);">
-                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">Email</span><span>[ PLACEHOLDER &#8212; studio email ]</span></div>
-                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">Phone</span><span>+44 7871 284043</span></div>
-                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">Location</span><span>United Kingdom</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">{{ t.contact.details.emailLabel }}</span><span>{{ studioEmail }}</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">{{ t.contact.details.phoneLabel }}</span><span>{{ studioPhone }}</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">{{ t.contact.details.locationLabel }}</span><span>{{ studioLocation }}</span></div>
                 </div>
               </div>
 
               <div style="flex: 1 1 380px; min-width: 280px;">
                 <div style="position: sticky; top: 100px; padding: clamp(22px, 3vw, 34px); border: 1px solid rgba(13,11,18,0.14); border-radius: 22px; background: linear-gradient(160deg, rgba(139,69,255,0.07), rgba(255,95,31,0.05)), #fff;">
                   <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.55);">
-                    <span>Your brief</span><span style="color: #B8380A;">{{ briefPct }}%</span>
+                    <span>{{ t.contact.preview.briefLabel }}</span><span style="color: #B8380A;">{{ briefPct }}%</span>
                   </div>
 
                   <div style="position: relative; margin-top: 18px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
@@ -1090,21 +1386,21 @@
   <footer style="position: relative; z-index: 1; border-top: 1px solid rgba(13,11,18,0.12); padding: clamp(40px, 5vw, 66px) clamp(18px, 4vw, 56px) 26px; background: #F6F4F0;">
     <div style="max-width: 1340px; margin: 0 auto;">
       <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 0 0 clamp(30px, 4vw, 48px); margin-bottom: clamp(30px, 4vw, 48px); border-bottom: 1px solid rgba(13,11,18,0.12); color: #0D0B12;">
-        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 5.6vw, 76px); line-height: 0.96; letter-spacing: -0.05em;">Let&#8217;s build yours</span>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 5.6vw, 76px); line-height: 0.96; letter-spacing: -0.05em;">{{ t.contact.preview.heading }}</span>
         <span style="display: inline-flex; align-items: center; justify-content: center; width: clamp(52px, 6vw, 76px); height: clamp(52px, 6vw, 76px); border-radius: 50%; background: #5B2394; color: #fff; font-family: 'Space Mono', monospace; font-size: 20px; transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="transform: translate(6px, -6px); background: #FF5F1F;">&#8599;</span>
       </a>
       <div style="display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 56px);">
         <div style="flex: 1 1 300px; min-width: 250px;">
           <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="assets/pcl-logo.png" alt="" style="height: 40px; width: auto;" />
-            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.025em;">PixelCraftsLabStudio</span>
+            <img src="{{ logo }}" alt="" style="height: 40px; width: auto;" />
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.025em;">{{ studioName }}</span>
           </div>
-          <p style="margin: 16px 0 0; max-width: 340px; font-size: 14px; line-height: 1.7; color: rgba(13,11,18,0.6);">Ideas. Build. Launch. We build high-converting websites and digital tools where creativity meets precision.</p>
+          <p style="margin: 16px 0 0; max-width: 340px; font-size: 14px; line-height: 1.7; color: rgba(13,11,18,0.6);">{{ footerDescription }}</p>
         </div>
         <div style="flex: 0 1 160px; min-width: 130px;">
-          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Site</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ footerSiteLabel }}</div>
           <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
-            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <sc-for list="{{ navFooter }}" as="n" hint-placeholder-count="5">
               <a onClick="{{ n.go }}" href="{{ n.href }}" style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: rgba(13,11,18,0.7); transition: color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="color: #FF5F1F; transform: translateX(4px);">
                 <span style="font-family: 'Space Mono', monospace; font-size: 10px; opacity: 0.5;">{{ n.no }}</span>{{ n.label }}
               </a>
@@ -1112,23 +1408,23 @@
           </div>
         </div>
         <div style="flex: 0 1 180px; min-width: 150px;">
-          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Services</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ footerServicesLabel }}</div>
           <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px; font-size: 14px; color: rgba(13,11,18,0.6);">
-            <span>Web Development</span><span>UI/UX Design</span><span>Brand Identity</span><span>SEO Optimization</span>
+            <sc-for list="{{ footerServices }}" as="fs" hint-placeholder-count="4"><span>{{ fs.label }}</span></sc-for>
           </div>
         </div>
         <div style="flex: 1 1 230px; min-width: 210px;">
-          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Follow</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ footerFollowLabel }}</div>
           <div style="display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px;">
             <sc-for list="{{ socials }}" as="s" hint-placeholder-count="8">
               <a href="{{ s.url }}" target="_blank" rel="noopener" style="padding: 7px 11px; border: 1px solid rgba(13,11,18,0.16); border-radius: 999px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(13,11,18,0.7); transition: all 0.2s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F; background: rgba(255,95,31,0.06);">{{ s.name }}</a>
             </sc-for>
           </div>
-          <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.64);">UK &#183; +44 7871 284043<br />[ PLACEHOLDER &#8212; studio email ]</div>
+          <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.64);">{{ contactStrip }}<br />{{ studioEmail }}</div>
         </div>
       </div>
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: clamp(30px, 4vw, 52px); padding-top: 18px; border-top: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(13,11,18,0.64);">
-        <span>&#169; 2026 PixelCraftsLabStudio</span><span>Redesign prototype &#183; content from pixelcraftslab.com</span>
+        <span>{{ copyright }}</span><sc-if value="{{ hasFooterSecondary }}" hint-placeholder-val="{{ false }}"><span>{{ footerSecondary }}</span></sc-if>
       </div>
     </div>
   </footer>
@@ -1337,7 +1633,7 @@ const FALLBACK_COPY = {
   },
   work: {
     header: { eyebrow: "Portfolio — {count} live projects", heading: "Our", subheading: "Solutions",
-      body: "Where creativity meets tech.", body2: "Explore our projects below!" },
+      body: "Where creativity meets tech.", body2: "Explore our projects below!", badge: "In build" },
     closing: { heading: "Every one of these is live. Open any of them.", ctaLabel: "Start yours", ctaUrl: "#contact" },
   },
   project: {
@@ -1414,7 +1710,8 @@ const FALLBACK_COPY = {
       qRest: "Tell us the rest", nameLabel: "Your name", namePlaceholder: "Jane Cooper",
       emailLabel: "Your email", emailPlaceholder: "you@company.com", projectLabel: "The project",
       projectPlaceholder: "What are you building, and what does success look like?",
-      backLabel: "Back", submitLabel: "Launch project", backStepLabel: "← Back a step", sendingLabel: "Sending…" },
+      backLabel: "Back", submitLabel: "Launch project", backStepLabel: "← Back a step", sendingLabel: "Sending…",
+      stepLabel: "Step" },
     marketing_fields: { qMarketing: "A bit about the brand",
       businessLabel: "Business / brand", businessPlaceholder: "What is it called?",
       websiteLabel: "Website", websitePlaceholder: "yourbrand.com",
@@ -1435,6 +1732,7 @@ const FALLBACK_COPY = {
 };
 
 const COPY = merge(FALLBACK_COPY, CMS.copy || {});
+const T = COPY;
 const PAGE_ON = CMS.pages || {};
 
 /* Process stages: build track drives the Services picker, growth track the
@@ -1887,6 +2185,8 @@ class Component extends DCLogic {
     const isDesktop = w >= 940;
     const route = this.state.route;
     const P = PROJECTS.find(p => p.id === this.state.pid) || PROJECTS[0];
+    const counts = { count: PROJECTS.length, projects: PROJECTS.length, services: SERVICES.length, team: TEAM.length };
+    const featuredProject = PROJECTS.find(p => p.featured) || PROJECTS[0];
     const phase = this.state.phase;
     const flavor = this.state.curtain;
     const hidden = HIDDEN[flavor] || "scale(0)";
@@ -1894,12 +2194,12 @@ class Component extends DCLogic {
 
     return {
       isDesktop, isCompact: !isDesktop,
-      pointerFine: isDesktop && !this.state.reduced,
+      pointerFine: isDesktop && !this.state.reduced && flag("cursorEnabled", true),
       reduced: this.state.reduced,
       full: !this.state.reduced,
       menu: this.state.menu,
       toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
-      showIntro: this.state.intro,
+      showIntro: this.state.intro && flag("introEnabled", true),
       endIntro: this.endIntro,
       setRoot: this.setRoot, setCursor: this.setCursor, setCursorDot: this.setCursorDot,
       setCursorLabel: this.setCursorLabel, setMain: this.setMain, setMorph: this.setMorph,
@@ -1916,27 +2216,40 @@ class Component extends DCLogic {
       morphInitials: (this.state.morphMeta || {}).initials || "",
 
       isHome: route === "home", isWork: route === "work", isProject: route === "project",
-      isServices: route === "services", isStudio: route === "studio", isLab: route === "lab",
+      isServices: route === "services", isStudio: route === "studio",
+      isLab: route === "lab" && flag("labEnabled", true),
+      isGrowth: route === "growth" && flag("growthEnabled", true),
       isContact: route === "contact",
 
-      navItems: ROUTES.map(r => ({
-        label: r.label, href: "#" + r.key, no: r.no,
+      navItems: NAV.filter(r => r.desktop).map(r => ({
+        label: r.label, href: r.href, no: r.no,
         color: route === r.key ? "#0D0B12" : "rgba(13,11,18,0.6)",
         mcolor: route === r.key ? "#5B2394" : "#0D0B12",
         on: route === r.key ? 1 : 0,
         go: (e) => { if (e) e.preventDefault(); this.nav(r.key); },
         goClose: (e) => { if (e) e.preventDefault(); this.nav(r.key); },
       })),
+      navMobile: NAV.filter(r => r.mobile).map(r => ({
+        label: r.label, href: r.href, no: r.no,
+        mcolor: route === r.key ? "#5B2394" : "#0D0B12",
+        goClose: (e) => { if (e) e.preventDefault(); this.nav(r.key); },
+      })),
+      navFooter: NAV.filter(r => r.footer).map(r => ({
+        label: r.label, href: r.href, no: r.no,
+        go: (e) => { if (e) e.preventDefault(); this.nav(r.key); },
+      })),
       goHome: (e) => { if (e) e.preventDefault(); this.nav("home"); },
       goWork: (e) => { if (e) e.preventDefault(); this.nav("work"); },
       goServices: (e) => { if (e) e.preventDefault(); this.nav("services"); },
       goStudio: (e) => { if (e) e.preventDefault(); this.nav("studio"); },
       goLab: (e) => { if (e) e.preventDefault(); this.nav("lab"); },
+      goGrowth: (e) => { if (e) e.preventDefault(); this.nav("growth"); },
       goContact: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
       goContactClose: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
 
-      ambient: AMBIENT, labTeaser: LABDOTS,
-      heroImg: img(PROJECTS[0].i),
+      ambient: flag("ambientEnabled", true) ? AMBIENT : [],
+      labTeaser: LABDOTS,
+      heroImg: img(featuredProject.i),
 
       arc: [
         { n: "01", t: "Ideas", d: "Scope, audience and what it has to do.", c: PU, tc: PU, delay: 0 },
@@ -1945,8 +2258,9 @@ class Component extends DCLogic {
         { n: "04", t: "Launch", d: "Ship it, then keep it healthy.", c: INK, tc: INK, delay: 210 },
       ],
 
-      featured: PROJECTS.slice(0, 3).map((p, i) => ({
-        ...p, delay: i * 90, no: String(i + 1).padStart(2, "0"),
+      featured: (PROJECTS.filter(p => p.featured).length ? PROJECTS.filter(p => p.featured) : PROJECTS).slice(0, 3).map((p, i) => ({
+        ...p, delay: i * 90, no: num(i + 1),
+        shot: img(p.i), hasShot: !!img(p.i),
         mediaOrder: i % 2 === 1 ? 2 : 1,
         textOrder: i % 2 === 1 ? 1 : 2,
         cursor: p.cat === "Games" ? "Play it" : p.cat === "Apps" ? "Open app" : "Open site",
@@ -1954,7 +2268,10 @@ class Component extends DCLogic {
         open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
       })),
 
-      openFirst: (e) => { if (e) e.preventDefault(); this.nav("project", PROJECTS[0].id); },
+      openFirst: (e) => { if (e) e.preventDefault(); this.nav("project", featuredProject.id); },
+      featuredName: featuredProject.name,
+      featuredInitials: featuredProject.initials,
+      featuredKind: featuredProject.kind,
 
       layers: [
         { label: "Image", c: "rgba(246,244,240,0.5)", bg: "rgba(139,69,255,0.16)", dx: -190, dy: -120, rot: -7 },
@@ -1982,21 +2299,41 @@ class Component extends DCLogic {
         return out;
       })(),
 
-      services: SERVICES.map((s, i) => ({ ...s, no: String(i + 1).padStart(2, "0"), delay: i * 60 })),
+      services: SERVICES.concat(MARKETING).filter(s => s.onHome !== false).map((s, i) => ({ ...s, no: num(i + 1), delay: i * 60 })),
+
+      /* The six animated service miniatures are bespoke markup, so each binds
+         to one published service and hides itself if that service is gone. */
+      demo: (() => {
+        const out = {};
+        for (let i = 0; i < 6; i++) {
+          const sv = SERVICES[i] || ORIGINAL_SERVICES[i] || {};
+          out["d" + i] = {
+            on: !!SERVICES[i],
+            tag: pick(sv.tag, num(i + 1)),
+            title: pick(sv.title, ""),
+            body: pick(sv.body, ""),
+            caption: pick(sv.caption, ""),
+          };
+        }
+        return out;
+      })(),
 
       steps: [
-        { no: "01", title: "Ideas", delay: 0, rise: 46, c: PU, blocks: [{ c: PU }, { c: "rgba(13,11,18,0.15)" }, { c: "rgba(13,11,18,0.15)" }],
-          body: "We start from the problem, not the pixels. Scope, audience and what the product actually has to do get settled before anything is designed." },
-        { no: "02", title: "Build", delay: 80, rise: 74, c: PL, blocks: [{ c: PU }, { c: PL }, { c: "rgba(13,11,18,0.15)" }],
-          body: "Clean code and strong UI design together — clear, intuitive, visually balanced interfaces on architecture built to be scalable and secure." },
-        { no: "03", title: "Launch", delay: 160, rise: 102, c: OR, blocks: [{ c: PU }, { c: PL }, { c: OR }],
-          body: "Ship it, then keep it healthy: performance tuning, ongoing updates and technical support so the product keeps running the way it should." },
+        { no: COPY.home.process.step1No, title: COPY.home.process.step1Title, delay: 0, rise: 46, c: PU,
+          blocks: [{ c: PU }, { c: "rgba(13,11,18,0.15)" }, { c: "rgba(13,11,18,0.15)" }],
+          body: COPY.home.process.step1Body },
+        { no: COPY.home.process.step2No, title: COPY.home.process.step2Title, delay: 80, rise: 74, c: PL,
+          blocks: [{ c: PU }, { c: PL }, { c: "rgba(13,11,18,0.15)" }],
+          body: COPY.home.process.step2Body },
+        { no: COPY.home.process.step3No, title: COPY.home.process.step3Title, delay: 160, rise: 102, c: OR,
+          blocks: [{ c: PU }, { c: PL }, { c: OR }],
+          body: COPY.home.process.step3Body },
       ],
 
       socials: SOCIALS,
 
       /* ---- WORK ---- */
-      filters: ["All", "Web", "Apps", "Games", "Lab"].map(f => {
+      filters: list(CMS.categories, ["All", "Web", "Apps", "Games", "Lab"]).map(f => {
         const n = f === "All" ? PROJECTS.length : PROJECTS.filter(p => p.cat === f).length;
         const on = this.state.filter === f;
         return {
@@ -2015,6 +2352,7 @@ class Component extends DCLogic {
             isBrowser: frame === "browser", isPhone: frame === "phone",
             isGame: frame === "game", isBlueprint: frame === "blueprint",
             world: frame === "browser" ? "Web" : frame === "phone" ? "Mobile" : frame === "game" ? "Game" : "In build",
+            shot: img(p.i), hasShot: !!img(p.i),
             host: p.link ? p.link.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "in development",
             cursor: frame === "game" ? "Play it" : frame === "phone" ? "Open app" : frame === "blueprint" ? "Peek" : "Open site",
             open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
@@ -2025,15 +2363,37 @@ class Component extends DCLogic {
       /* ---- PROJECT ---- */
       P: {
         ...P, hasLink: !!P.link, noLink: !P.link, link: P.link || "#contact",
+        shot: img(P.i), hasShot: !!img(P.i), noShot: !img(P.i),
+        hasCase: !!P.caseStudy, noCase: !P.caseStudy,
+        caseBody: P.caseStudy || "",
         host: P.link ? P.link.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "in development",
         wash: P.cat === "Games" ? "rgba(255,95,31,0.10)" : P.cat === "Apps" ? "rgba(139,69,255,0.12)" : "rgba(91,35,148,0.10)",
       },
       pMeta: [
-        { k: "Discipline", v: P.kind, delay: 0 },
-        { k: "Platform", v: P.platform, delay: 70 },
-        { k: "Category", v: P.cat, delay: 140 },
-        { k: "Status", v: P.link ? "Live" : "In build", delay: 210 },
-      ],
+        { k: T.project.detail.metaDiscipline, v: P.kind, delay: 0 },
+        { k: T.project.detail.metaPlatform, v: P.platform, delay: 70 },
+        { k: T.project.detail.metaCategory, v: P.cat, delay: 140 },
+        { k: T.project.detail.metaStatus, v: P.link ? T.project.detail.statusLive : T.project.detail.statusBuild, delay: 210 },
+      ].filter(m => has(m.v)),
+
+      /* Marketing case-study blocks only render when an admin filled them in —
+         nothing here is invented. */
+      isCase: !!P.marketing,
+      caseRows: [
+        { k: T.project.marketing.goalLabel, v: P.goal },
+        { k: T.project.marketing.challengeLabel, v: P.challenge },
+        { k: T.project.marketing.audienceLabel, v: P.audience },
+        { k: T.project.marketing.strategyLabel, v: P.strategy },
+        { k: T.project.marketing.approachLabel, v: P.approach },
+        { k: T.project.marketing.deliverablesLabel, v: P.deliverables },
+        { k: T.project.marketing.resultsLabel, v: P.results },
+        { k: T.project.marketing.lessonsLabel, v: P.lessons },
+        { k: T.project.marketing.periodLabel, v: P.period },
+      ].filter(r => has(r.v)),
+      hasCaseRows: !!P.marketing && [P.goal, P.challenge, P.audience, P.strategy, P.approach, P.deliverables, P.results, P.lessons, P.period].some(has),
+      pMetrics: (P.metrics || []).map((m, i) => ({ ...m, c: [PU, PL, OR, INK][i % 4] })),
+      hasMetrics: (P.metrics || []).length > 0,
+      metricsLabel: T.project.marketing.metricsLabel,
       pCaps: (P.cat === "Games"
         ? ["Offline Game Development", "UI/UX Design", "Performance Optimization", "Maintenance & Support"]
         : P.cat === "Apps"
@@ -2049,43 +2409,46 @@ class Component extends DCLogic {
       backToWork: (e) => { if (e) e.preventDefault(); this.nav("work"); },
 
       /* ---- SERVICES ---- */
-      stages: ["Imagine", "Design", "Engineer", "Polish", "Launch"].map((s, i) => {
-        const on = this.state.stage === s;
+      stages: STAGES.map((st, i) => {
+        const on = this.state.stage === st.name;
         return {
-          name: s, no: "0" + (i + 1), on: on ? 1 : 0,
+          name: st.name, no: pick(st.no, num(i + 1)), on: on ? 1 : 0,
           color: on ? "#F6F4F0" : "rgba(13,11,18,0.6)",
-          bg: on ? (i % 2 ? OR : PU) : "transparent",
+          bg: on ? (st.accent || (i % 2 ? OR : PU)) : "transparent",
           border: on ? "transparent" : "rgba(13,11,18,0.16)",
-          pick: () => this.setState({ stage: s }),
+          pick: () => this.setState({ stage: st.name }),
         };
       }),
-      stageBody: {
-        Imagine: "Every project starts from the problem, not the pixels. We settle scope, audience and what the product actually has to do — the part of the work that decides whether the rest is worth building.",
-        Design: "We design user interfaces that are clear, intuitive, and visually balanced. Our approach focuses on usability first, then the visual language that carries the brand through it.",
-        Engineer: "Utility apps, offline games, websites and supporting platforms — built as scalable, secure, high-performance systems that are production-ready rather than demo-ready.",
-        Polish: "We improve the speed, responsiveness, and efficiency of your digital product: reducing load times, tightening interaction, and removing everything that makes it feel slower than it is.",
-        Launch: "We provide ongoing updates, improvements, and technical support to keep your product running smoothly after release — because launch day is the middle of the project, not the end.",
-      }[this.state.stage],
+      stageBody: (STAGES.find(st => st.name === this.state.stage) || STAGES[0] || {}).body || "",
       releases: [
         { v: "v1.4.0", s: "Shipped", c: "#5B2394", d: 0 },
         { v: "v1.4.1", s: "Patch", c: "#8B45FF", d: 0.4 },
         { v: "v1.5.0", s: "In review", c: "#FF5F1F", d: 0.8 },
         { v: "next", s: "Planned", c: "rgba(13,11,18,0.3)", d: 1.2 },
       ],
-      stageServices: SERVICES.filter(s => s.stage === this.state.stage || this.state.stage === "Imagine").map((s, i) => ({ ...s, delay: i * 60 })),
+      stageServices: (() => {
+        const first = (STAGES[0] || {}).name;
+        const pool = SERVICES.concat(MARKETING);
+        return pool
+          .filter(s => s.stage === this.state.stage || this.state.stage === first)
+          .map((s, i) => ({ ...s, delay: i * 60 }));
+      })(),
       stageShape: this.state.stage,
       showBrowser: this.state.stage === "Imagine" || this.state.stage === "Engineer",
       showPhone: this.state.stage === "Design" || this.state.stage === "Polish",
-      showLaunch: this.state.stage === "Launch",
+      showLaunch: this.state.stage === "Launch" || this.state.stage === "Grow",
 
       /* ---- STUDIO ---- */
-      team: TEAM.map((m, i) => ({ ...m, img: img(m.img), delay: i * 80 })),
+      team: TEAM.map((m, i) => {
+        const photo = img(m.img);
+        return { ...m, img: photo, hasPhoto: !!photo, noPhoto: !photo, delay: i * 80 };
+      }),
       nameParts: [
-        { k: "PIXEL", c: PU, spin: -50, wash: "rgba(91,35,148,0.05)", d: "The raw material. Blocks, grids and fragments — the smallest unit of anything digital we make.",
+        { k: COPY.studio.name.part1Key, c: PU, spin: -50, wash: "rgba(91,35,148,0.05)", d: COPY.studio.name.part1Body,
           grid: [1,0,1,0,1,0,1,0,1].map((on, i) => ({ c: on ? PU : "rgba(13,11,18,0.14)", o: on ? 0.35 : 0.2, up: on ? 0.65 : 0.1 })) },
-        { k: "CRAFTS", c: OR, spin: 42, wash: "rgba(255,95,31,0.05)", d: "The part that is not automatic. Brush, vector, type and judgement, applied by people who care how it lands.",
+        { k: COPY.studio.name.part2Key, c: OR, spin: 42, wash: "rgba(255,95,31,0.05)", d: COPY.studio.name.part2Body,
           grid: [1,1,0,1,1,1,0,1,1].map((on) => ({ c: on ? OR : "rgba(13,11,18,0.14)", o: on ? 0.35 : 0.2, up: on ? 0.65 : 0.1 })) },
-        { k: "LAB", c: INK, spin: -28, wash: "rgba(13,11,18,0.04)", d: "Where it gets tested. Prototypes, experiments and in-progress builds before anything reaches a store.",
+        { k: COPY.studio.name.part3Key, c: INK, spin: -28, wash: "rgba(13,11,18,0.04)", d: COPY.studio.name.part3Body,
           grid: [1,1,1,1,0,1,1,1,1].map((on) => ({ c: on ? INK : "rgba(13,11,18,0.14)", o: on ? 0.35 : 0.2, up: on ? 0.65 : 0.1 })) },
       ],
 
@@ -2128,11 +2491,15 @@ class Component extends DCLogic {
       setBoard: this.setBoard,
       boardDown: this.boardDown,
       clearLab: () => this.setState({ labBoard: null }),
-      labProjects: PROJECTS.filter(p => p.cat === "Lab").map(p => ({ ...p, img: img(p.i), open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); } })),
+      labProjects: PROJECTS.filter(p => p.cat === "Lab").map(p => ({
+        ...p, img: img(p.i), shot: img(p.i), hasShot: !!img(p.i),
+        open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
+      })),
 
       /* ---- CONTACT ---- */
       step: this.state.step,
-      stepNo: String(this.state.step + 1).padStart(2, "0"),
+      stepNo: num(this.state.step + 1),
+      stepTotal: "04",
       isStep0: this.state.step === 0, isStep1: this.state.step === 1,
       isStep2: this.state.step === 2, isStep3: this.state.step === 3, isStep4: this.state.step === 4,
       sent: this.state.sent, notSent: !this.state.sent,
@@ -2142,21 +2509,28 @@ class Component extends DCLogic {
       aScope: this.state.answers.scope || "—",
       aTime: this.state.answers.time || "—",
       hasBuild: !!this.state.answers.build, hasScope: !!this.state.answers.scope, hasTime: !!this.state.answers.time,
-      buildOptions: ["Website", "App", "Brand", "Game / Interactive", "Something else"].map(o => {
-        const on = this.state.answers.build === o;
-        return { label: o, bg: on ? PU : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? PU : "rgba(13,11,18,0.16)",
-          pick: () => this.setState(s => ({ answers: { ...s.answers, build: o }, step: 1 })) };
+      buildOptions: list(OPTS.build, ["Website", "App", "Brand", "Game / Interactive", "Something else"].map(l => ({ label: l, value: l, group: "build" }))).map(o => {
+        const on = this.state.answers.build === o.value;
+        return { label: o.label, bg: on ? PU : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? PU : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(st => ({ answers: { ...st.answers, build: o.value, marketing: o.group === "growth" }, step: 1 })) };
       }),
-      scopeOptions: ["A first version / MVP", "A full product build", "A redesign of something existing", "Ongoing support", "Not sure yet"].map(o => {
-        const on = this.state.answers.scope === o;
-        return { label: o, bg: on ? OR : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? OR : "rgba(13,11,18,0.16)",
-          pick: () => this.setState(s => ({ answers: { ...s.answers, scope: o }, step: 2 })) };
+      scopeOptions: list(OPTS.scope, ["A first version / MVP", "A full product build", "A redesign of something existing", "Ongoing support", "Not sure yet"].map(l => ({ label: l, value: l }))).map(o => {
+        const on = this.state.answers.scope === o.value;
+        return { label: o.label, bg: on ? OR : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? OR : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(st => ({ answers: { ...st.answers, scope: o.value }, step: 2 })) };
       }),
-      timeOptions: ["As soon as possible", "1–3 months", "3–6 months", "Just exploring"].map(o => {
-        const on = this.state.answers.time === o;
-        return { label: o, bg: on ? INK : "#fff", color: on ? "#F6F4F0" : "#0D0B12", border: on ? INK : "rgba(13,11,18,0.16)",
-          pick: () => this.setState(s => ({ answers: { ...s.answers, time: o }, step: 3 })) };
+      timeOptions: list(OPTS.timeline, ["As soon as possible", "1–3 months", "3–6 months", "Just exploring"].map(l => ({ label: l, value: l }))).map(o => {
+        const on = this.state.answers.time === o.value;
+        return { label: o.label, bg: on ? INK : "#fff", color: on ? "#F6F4F0" : "#0D0B12", border: on ? INK : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(st => ({ answers: { ...st.answers, time: o.value }, step: 3 })) };
       }),
+      serviceOptions: list(OPTS.service, []).map(o => {
+        const on = this.state.answers.service === o.value;
+        return { label: o.label, bg: on ? PL : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? PL : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(st => ({ answers: { ...st.answers, service: o.value } })) };
+      }),
+      hasServiceOptions: list(OPTS.service, []).length > 0,
+      isMarketingBrief: !!this.state.answers.marketing,
       canGoBack: this.state.step > 0 && this.state.step < 3,
       briefPct: Math.round(((this.state.answers.build ? 1 : 0) + (this.state.answers.scope ? 1 : 0) + (this.state.answers.time ? 1 : 0) + (this.state.answers.brief ? 1 : 0)) / 4 * 100),
       briefEmpty: !this.state.answers.build,
@@ -2166,10 +2540,18 @@ class Component extends DCLogic {
       briefW: (this.state.answers.build === "App" || this.state.answers.build === "Game / Interactive") ? "170px" : "100%",
       briefRadius: (this.state.answers.build === "App" || this.state.answers.build === "Game / Interactive") ? "26px" : "12px",
       timePct: { "As soon as possible": 100, "1–3 months": 66, "3–6 months": 40, "Just exploring": 18 }[this.state.answers.time] || 0,
+      nameVal: this.state.answers.name || "",
+      emailVal: this.state.answers.email || "",
+      businessVal: this.state.answers.business || "",
+      websiteVal: this.state.answers.website || "",
+      goalVal: this.state.answers.goal || "",
+      audienceVal: this.state.answers.audience || "",
+      channelsVal: this.state.answers.channels || "",
+      currentVal: this.state.answers.current || "",
       briefRows: [
-        { k: "Building", v: this.state.answers.build || "—", c: this.state.answers.build ? "#0D0B12" : "rgba(13,11,18,0.35)" },
-        { k: "Scope", v: this.state.answers.scope || "—", c: this.state.answers.scope ? "#0D0B12" : "rgba(13,11,18,0.35)" },
-        { k: "Timing", v: this.state.answers.time || "—", c: this.state.answers.time ? "#0D0B12" : "rgba(13,11,18,0.35)" },
+        { k: T.contact.preview.buildingLabel, v: this.state.answers.build || "—", c: this.state.answers.build ? "#0D0B12" : "rgba(13,11,18,0.35)" },
+        { k: T.contact.preview.scopeLabel, v: this.state.answers.scope || "—", c: this.state.answers.scope ? "#0D0B12" : "rgba(13,11,18,0.35)" },
+        { k: T.contact.preview.timingLabel, v: this.state.answers.time || "—", c: this.state.answers.time ? "#0D0B12" : "rgba(13,11,18,0.35)" },
       ],
       setBrief: (e) => this.setAnswer("brief", e.target.value),
       setName: (e) => this.setAnswer("name", e.target.value),
@@ -2192,6 +2574,118 @@ class Component extends DCLogic {
       sendError: this.state.sendError,
       hasSendError: !!this.state.sendError,
       resetForm: () => this.setState({ sent: false, sending: false, sendError: null, step: 0, answers: {} }),
+
+      /* ---- COPY ----
+         The whole CMS copy tree, with {count} placeholders resolved per page. */
+      t: (() => {
+        const perPage = {
+          home: { count: PROJECTS.length },
+          work: { count: PROJECTS.length },
+          services: { count: SERVICES.length + MARKETING.length },
+          studio: { count: TEAM.length },
+          growth: { count: MARKETING_SUBS.length },
+        };
+        const walk = (node, ctx) => {
+          if (typeof node === "string") return fill(node, ctx);
+          if (node && typeof node === "object") {
+            const out = Array.isArray(node) ? [] : {};
+            for (const k of Object.keys(node)) out[k] = walk(node[k], ctx);
+            return out;
+          }
+          return node;
+        };
+        const out = {};
+        for (const page of Object.keys(COPY)) out[page] = walk(COPY[page], perPage[page] || counts);
+        return out;
+      })(),
+
+      /* ---- SITE SETTINGS ---- */
+      studioName: pick(SET.studioName, "PixelCraftsLabStudio"),
+      shortName: pick(SET.shortName, "PixelCraftsLab"),
+      tagline: pick(SET.tagline, "Ideas . Build . Launch"),
+      logo: pick(SET.logo, "assets/pcl-logo.png"),
+      studioEmail: pick(SET.email, COPY.contact.details.emailPlaceholder),
+      studioPhone: pick(SET.phone, "+44 7871 284043"),
+      studioLocation: pick(SET.location, "United Kingdom"),
+      contactStrip: pick(SET.contactStrip, "UK · +44 7871 284043"),
+      ctaLabel: pick(SET.ctaLabel, "Start a project"),
+      menuLabel: pick(SET.menuLabel, "Navigate"),
+
+      /* ---- FOOTER ---- */
+      footerDescription: pick(SET.footerDescription, "Ideas. Build. Launch. We build high-converting websites and digital tools where creativity meets precision."),
+      copyright: pick(SET.copyright, "© 2026 PixelCraftsLabStudio"),
+      footerSecondary: pick(SET.footerSecondary, ""),
+      hasFooterSecondary: has(SET.footerSecondary),
+      footerSiteLabel: pick(SET.footerSiteLabel, "Site"),
+      footerServicesLabel: pick(SET.footerServicesLabel, "Services"),
+      footerFollowLabel: pick(SET.footerFollowLabel, "Follow"),
+      footerServices: list(SET.footerServices, [
+        { label: "Web Development", url: "#services" },
+        { label: "UI/UX Design", url: "#services" },
+        { label: "Brand Identity", url: "#services" },
+        { label: "SEO Optimization", url: "#services" },
+      ]),
+      footerContact: [pick(SET.contactStrip, "UK · +44 7871 284043"), pick(SET.email, COPY.contact.details.emailPlaceholder)]
+        .filter(has).join(" · "),
+
+      /* ---- TESTIMONIALS ---- */
+      reviews: TESTIMONIALS.map((r, i) => ({ ...r, delay: i * 70 })),
+      hasReviews: flag("testimonialsEnabled", true) && TESTIMONIALS.length > 0,
+      noReviews: !(flag("testimonialsEnabled", true) && TESTIMONIALS.length > 0),
+      showReviewSection: flag("testimonialsEnabled", true),
+
+      /* ---- GROWTH / MARKETING ---- */
+      growthOn: flag("growthEnabled", true),
+      growthLead: MARKETING[0] || {},
+      growthLeadBody: (MARKETING[0] || {}).body || "",
+      growthLeadLong: (MARKETING[0] || {}).longBody || "",
+      growthGroups: (() => {
+        const order = [];
+        const bucket = {};
+        for (const sub of MARKETING_SUBS) {
+          const g = sub.group || "Capabilities";
+          if (!bucket[g]) { bucket[g] = []; order.push(g); }
+          bucket[g].push(sub);
+        }
+        return order.map((g, i) => ({
+          name: g,
+          no: num(i + 1),
+          delay: i * 60,
+          c: [PU, OR, PL, INK][i % 4],
+          items: bucket[g].map((it, j) => ({ ...it, delay: j * 40 })),
+        }));
+      })(),
+      growthCount: MARKETING_SUBS.length,
+      socialServices: MARKETING_SUBS.filter(x => (x.group || "") === "Social").map((x, i) => ({ ...x, delay: i * 50 })),
+      strategyServices: MARKETING_SUBS.filter(x => (x.group || "") === "Strategy").map((x, i) => ({ ...x, delay: i * 50 })),
+      channels: CHANNELS.map((c, i) => ({ ...c, delay: i * 40, c: c.accent || [PU, OR, PL, INK][i % 4] })),
+      hasChannels: CHANNELS.length > 0,
+      growthPlans: GROWTH_PLANS.map((pl, i) => ({
+        ...pl,
+        delay: i * 90,
+        c: pl.accent || [PU, OR, INK][i % 3],
+        featuredOn: pl.featured ? 1 : 0,
+        border: pl.featured ? (pl.accent || PU) : "rgba(13,11,18,0.14)",
+        hasHighlight: has(pl.highlight),
+        hasDuration: has(pl.duration),
+        hasIdeal: has(pl.idealFor),
+      })),
+      hasGrowthPlans: GROWTH_PLANS.length > 0,
+      growthSteps: GROWTH_STAGES.map((st, i) => ({
+        ...st,
+        no: pick(st.no, num(i + 1)),
+        delay: i * 60,
+        c: st.accent || [PU, PL, OR, INK][i % 4],
+      })),
+      hasGrowthSteps: GROWTH_STAGES.length > 0,
+      growthCases: PROJECTS.filter(x => x.marketing).map((x, i) => ({
+        ...x, delay: i * 80,
+        open: (e) => { if (e) e.preventDefault(); this.openProject(x.id, e); },
+      })),
+      hasGrowthCases: PROJECTS.some(x => x.marketing),
+      noGrowthCases: !PROJECTS.some(x => x.marketing),
+      campaigns: CAMPAIGNS.map((c, i) => ({ ...c, delay: i * 60 })),
+      hasCampaigns: CAMPAIGNS.length > 0,
     };
   }
 }
