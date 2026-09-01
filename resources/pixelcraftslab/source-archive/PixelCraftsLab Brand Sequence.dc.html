@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #0C0D10; }
+  a { color: oklch(0.82 0.17 152); }
+  a:hover { color: oklch(0.9 0.13 152); }
+</style>
+<script>window.OM_SCENES = '[{"name":"Idea","dur":3.5,"desc":"Extreme close-up on empty grid: one mint pixel sparks into existence and is labelled idea.px"},{"name":"Experiment","dur":5.5,"desc":"Camera pulls back as pixels swarm in, guides snap across the board, rough sketch shapes and brush sweeps are drawn, a cursor starts working"},{"name":"Craft","dur":6,"desc":"A paper artboard fades up, loose pixels snap into a material tray and fly into place as real UI parts assemble: nav, card, input, Launch button, toggle, chart"},{"name":"Build","dur":6,"desc":"The camera pans across three finished products built from those parts: a web platform, a utility app and an offline game HUD"},{"name":"Launch","dur":6,"desc":"Products collapse toward centre, the nine surviving pixels form the PixelCraftsLab mark and the wordmark plus Ideas. Build. Launch. resolve"}]';</script>
+<script>window.OM_PLAYBACK = '{"mode":"times","count":1}';</script>
+<script>window.PCL_TWEAKS = /*EDITMODE-BEGIN*/{
+  "sectionLabels": true,
+  "motionEditor": true
+}/*EDITMODE-END*/;</script>
+</helmet>
+
+<x-import component-from-global-scope="PCLBrand" from="./animations-v3.jsx ./tweaks-panel.jsx ./pcl-sequence.jsx" hint-size="100%,100%"></x-import>
+</x-dc>
+</body>
+</html>

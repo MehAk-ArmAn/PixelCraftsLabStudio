@@ -1,0 +1,4 @@
+Original: /Users/mehakarman/Downloads/pcl-redesign/PixelCraftsLab Site.dc.html
+SHA-256: 5df0e18f14adca0b0487c87200dea542389d786a3e697a4f5c97af688e4ce019
+Laravel copy: /Users/mehakarman/Downloads/pcl-redesign/PixelCraftsLab-Laravel/resources/pixelcraftslab/PixelCraftsLab Site.dc.html
+SHA-256 copy: 5df0e18f14adca0b0487c87200dea542389d786a3e697a4f5c97af688e4ce019

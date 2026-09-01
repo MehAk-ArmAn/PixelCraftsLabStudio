@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: #F6F4F0; color: #0D0B12; font-family: Figtree, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  * { box-sizing: border-box; }
+  a { color: #5B2394; text-decoration: none; }
+  a:hover { color: #FF5F1F; }
+  input, select, textarea, button { font-family: inherit; }
+  ::selection { background: #FF5F1F; color: #fff; }
+  img { user-select: none; }
+  @keyframes pcl-stem { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes pcl-bowl { from { clip-path: circle(0% at 38% 24%); } to { clip-path: circle(130% at 38% 24%); } }
+  @keyframes pcl-arc { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes pcl-trace { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+  @keyframes pcl-pop { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: none; } }
+  @keyframes pcl-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(0.86) translateY(-12px); } }
+  @keyframes pcl-rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  @keyframes pcl-drift { 0% { transform: translate(0,0); } 50% { transform: translate(6px,-9px); } 100% { transform: translate(0,0); } }
+  @keyframes pcl-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes pcl-blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0.15; } }
+  @keyframes pcl-spin { to { transform: rotate(360deg); } }
+  @keyframes pcl-float { 0%,100% { transform: translate3d(0,0,0) rotate(0deg); } 50% { transform: translate3d(4px,-11px,0) rotate(3deg); } }
+  @keyframes pcl-float2 { 0%,100% { transform: translate3d(0,0,0) rotate(-2deg); } 50% { transform: translate3d(-7px,-8px,0) rotate(4deg); } }
+  @keyframes pcl-dash { to { stroke-dashoffset: -24; } }
+  @keyframes pcl-caret { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+  @keyframes pcl-snap { 0% { opacity: 0; transform: translate(var(--fx, 30px), var(--fy, -20px)) scale(0.7); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translate(var(--fx, 30px), var(--fy, -20px)) scale(0.7); } }
+  @keyframes pcl-type { 0% { width: 0; } 42%, 88% { width: 100%; } 100% { width: 0; } }
+  @keyframes pcl-scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(400%); } }
+  @keyframes pcl-click { 0%, 62% { transform: translate(0,0) scale(1); } 70% { transform: translate(0,0) scale(0.78); } 78%, 100% { transform: translate(0,0) scale(1); } }
+  @keyframes pcl-rove { 0% { transform: translate(6px, 42px); } 30% { transform: translate(64px, 18px); } 55% { transform: translate(40px, 62px); } 80% { transform: translate(78px, 48px); } 100% { transform: translate(6px, 42px); } }
+  @keyframes pcl-polish { 0%, 42% { opacity: 0; } 58%, 100% { opacity: 1; } }
+  @keyframes pcl-rough { 0%, 42% { opacity: 1; } 58%, 100% { opacity: 0; } }
+  @keyframes pcl-gauge { 0% { width: 88%; background: #FF5F1F; } 55%, 100% { width: 26%; background: #5B2394; } }
+  @keyframes pcl-tick { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes pcl-hop { 0%, 100% { transform: translate(0,0); } 25% { transform: translate(26px,-16px); } 50% { transform: translate(52px,0); } 75% { transform: translate(26px,-9px); } }
+  @keyframes pcl-pen { to { stroke-dashoffset: 0; } }
+  @keyframes pcl-penride { 0% { left: -2%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { left: 104%; opacity: 0; } }
+  @keyframes pcl-swatch { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.12s !important; }
+  }
+</style>
+</helmet>
+
+<div ref="{{ setRoot }}" style="position: relative; min-height: 100vh; background: #F6F4F0; --mx: 0px; --my: 0px; --px: 0; --py: 0;">
+
+  <div aria-hidden="true" style="position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: radial-gradient(circle, rgba(91,35,148,0.16) 1.1px, transparent 1.1px); background-size: 44px 44px;"></div>
+  <div aria-hidden="true" style="position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5;">
+    <sc-for list="{{ ambient }}" as="a" hint-placeholder-count="14">
+      <span style="position: absolute; left: {{ a.x }}%; top: {{ a.y }}%; width: {{ a.s }}px; height: {{ a.s }}px; background: {{ a.c }}; opacity: 0.5; animation: pcl-drift {{ a.d }}s ease-in-out infinite; animation-delay: -{{ a.delay }}s; transform: translate(calc(var(--px) * {{ a.pxf }}px), calc(var(--py) * {{ a.pyf }}px));"></span>
+    </sc-for>
+  </div>
+
+  <sc-if value="{{ pointerFine }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ setCursor }}" aria-hidden="true" style="position: fixed; left: 0; top: 0; z-index: 200; pointer-events: none; transform: translate3d(var(--mx), var(--my), 0); will-change: transform;">
+      <div ref="{{ setCursorDot }}" style="position: absolute; left: 0; top: 0; width: 12px; height: 12px; margin-left: -6px; margin-top: -6px; background: #5B2394; transition: width 0.28s cubic-bezier(0.2,0.8,0.2,1), height 0.28s cubic-bezier(0.2,0.8,0.2,1), margin 0.28s cubic-bezier(0.2,0.8,0.2,1), background 0.28s ease, border-radius 0.28s ease;"></div>
+      <div ref="{{ setCursorLabel }}" style="position: absolute; left: 0; top: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; opacity: 0; transition: opacity 0.2s ease; white-space: nowrap;"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showIntro }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ endIntro }}" style="position: fixed; inset: 0; z-index: 300; background: #F6F4F0; display: flex; align-items: center; justify-content: center; animation: pcl-out 0.5s cubic-bezier(0.6,0,0.3,1) 1.55s both;">
+      <div style="position: relative; width: 220px; height: 248px;">
+        <img src="assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.34s cubic-bezier(0.2,1.4,0.4,1) 0.05s both;" />
+        <img src="assets/L-stem.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-stem 0.42s cubic-bezier(0.4,0,0.2,1) 0.26s both;" />
+        <img src="assets/L-bowl.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-bowl 0.46s cubic-bezier(0.4,0,0.2,1) 0.5s both;" />
+        <img src="assets/L-icon.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-trace 0.4s cubic-bezier(0.4,0,0.2,1) 0.78s both;" />
+        <img src="assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-arc 0.42s cubic-bezier(0.4,0,0.2,1) 0.92s both;" />
+        <img src="assets/L-orange2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.28s cubic-bezier(0.2,1.4,0.4,1) 1.16s both;" />
+        <img src="assets/L-black.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-arc 0.36s cubic-bezier(0.4,0,0.2,1) 1.08s both;" />
+        <img src="assets/L-dot1.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.3s both;" />
+        <img src="assets/L-dot3.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.38s both;" />
+        <img src="assets/L-dot2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.44s both;" />
+      </div>
+      <div style="position: absolute; bottom: 42px; left: 0; right: 0; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(13,11,18,0.64); animation: pcl-rise 0.4s ease 0.9s both;">Ideas . Build . Launch</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ curtain }}" hint-placeholder-val="{{ false }}">
+    <div aria-hidden="true" style="position: fixed; inset: 0; z-index: 180; pointer-events: none;">
+      <sc-for list="{{ cells }}" as="c" hint-placeholder-count="0">
+        <span style="position: absolute; left: {{ c.l }}%; top: {{ c.t }}%; width: {{ c.w }}%; height: {{ c.h }}%; background: {{ c.c }}; transform-origin: {{ c.o }}; transform: {{ c.tr }}; opacity: {{ c.op }}; transition: transform 0.38s cubic-bezier(0.5,0,0.2,1) {{ c.d }}ms, opacity 0.3s linear {{ c.d }}ms;"></span>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ morph }}" hint-placeholder-val="{{ false }}">
+    <div ref="{{ setMorph }}" aria-hidden="true" style="position: fixed; z-index: 170; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 16px; background-image: linear-gradient(150deg, {{ morphTint }}, {{ morphTint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); will-change: left, top, width, height; transition: left 0.66s cubic-bezier(0.65,0,0.15,1), top 0.66s cubic-bezier(0.65,0,0.15,1), width 0.66s cubic-bezier(0.65,0,0.15,1), height 0.66s cubic-bezier(0.65,0,0.15,1), border-radius 0.66s ease, opacity 0.3s ease 0.5s;">
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(46px, 7vw, 120px); letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ morphInitials }}</span>
+    </div>
+  </sc-if>
+
+  <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 150; display: flex; justify-content: center; padding: 14px clamp(14px, 3vw, 28px); pointer-events: none;">
+    <div style="pointer-events: auto; width: 100%; max-width: 1340px; display: flex; align-items: center; gap: 18px; padding: 10px 10px 10px 14px; border: 1px solid rgba(13,11,18,0.1); border-radius: 16px; background: rgba(246,244,240,0.86); backdrop-filter: blur(14px);">
+      <a onClick="{{ goHome }}" href="#home" data-cursor="Home" style="display: flex; align-items: center; gap: 10px; color: #0D0B12;">
+        <img src="assets/pcl-logo.png" alt="PixelCraftsLab" style="height: 34px; width: auto; display: block;" />
+        <span style="display: flex; flex-direction: column; line-height: 1;">
+          <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 15px; letter-spacing: -0.02em;">PixelCraftsLab</span>
+          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6); margin-top: 4px;">Ideas . Build . Launch</span>
+        </span>
+      </a>
+
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <nav style="margin-left: auto; display: flex; align-items: center; gap: 2px;">
+          <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+            <a onClick="{{ n.go }}" href="{{ n.href }}" data-cursor="{{ n.label }}" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 7px; padding: 10px 14px; border-radius: 10px; font-size: 14px; font-weight: 500; color: {{ n.color }}; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), color 0.25s ease;" style-hover="color: #0D0B12;">
+              <span style="width: 6px; height: 6px; background: #FF5F1F; opacity: {{ n.on }}; transform: scale({{ n.on }}); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,1.5,0.4,1);"></span>
+              {{ n.label }}
+              <span style="position: absolute; left: 14px; right: 14px; bottom: 5px; height: 2px; background: #FF5F1F; transform: scaleX({{ n.on }}); transform-origin: left; transition: transform 0.34s cubic-bezier(0.2,0.8,0.2,1);"></span>
+            </a>
+          </sc-for>
+        </nav>
+        <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 11px; background: #5B2394; color: #fff; font-size: 14px; font-weight: 700; transition: transform 0.25s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease;" style-hover="transform: translateY(-2px); background: #FF5F1F; color: #fff;">Start a project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+      </sc-if>
+
+      <sc-if value="{{ isCompact }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" style="margin-left: auto; display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 46px; height: 46px; padding: 0 12px; border: 1px solid rgba(13,11,18,0.14); border-radius: 12px; background: transparent; cursor: pointer;">
+          <span style="display: block; height: 2px; width: 100%; background: #0D0B12;"></span>
+          <span style="display: block; height: 2px; width: 66%; background: #FF5F1F;"></span>
+        </button>
+      </sc-if>
+    </div>
+  </header>
+
+  <sc-if value="{{ menu }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 160; background: #F6F4F0; padding: 90px 20px 28px; display: flex; flex-direction: column; animation: pcl-rise 0.28s ease both;">
+      <button onClick="{{ toggleMenu }}" aria-label="Close" style="position: absolute; top: 24px; right: 20px; width: 44px; height: 44px; border: 1px solid rgba(13,11,18,0.14); border-radius: 12px; background: transparent; font-size: 20px; cursor: pointer;">&#215;</button>
+      <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); padding-bottom: 14px; border-bottom: 1px solid rgba(13,11,18,0.1);">Navigate</div>
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+        <a onClick="{{ n.goClose }}" href="{{ n.href }}" style="display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.03em; color: {{ n.mcolor }};">{{ n.label }}<span style="font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(13,11,18,0.55);">{{ n.no }}</span></a>
+      </sc-for>
+      <a onClick="{{ goContactClose }}" href="#contact" style="margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 18px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 16px; font-weight: 700;">Start a project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+      <div style="margin-top: auto; padding-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.64);">UK &#183; +44 7871 284043</div>
+    </div>
+  </sc-if>
+
+  <main ref="{{ setMain }}" style="position: relative; z-index: 1;">
+
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="Home">
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(120px, 15vw, 178px) clamp(18px, 4vw, 56px) clamp(40px, 6vw, 70px); overflow: hidden;">
+          <span aria-hidden="true" data-tool="flee" data-tool-pull="1.3" style="position: absolute; left: 3%; top: 76%; width: 46px; height: 46px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float 11s ease-in-out infinite;">
+            <svg viewBox="0 0 46 46" width="46" height="46" fill="none"><path d="M12 8 L12 34 L19 27 L24 38 L29 35 L24 25 L34 25 Z" fill="#5B2394" stroke="#0D0B12" stroke-width="1.6" stroke-linejoin="round" /></svg>
+          </span>
+          <span aria-hidden="true" data-tool="flee" data-tool-pull="0.8" style="position: absolute; right: 5%; top: 20%; width: 52px; height: 52px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float2 13s ease-in-out infinite;">
+            <svg viewBox="0 0 52 52" width="52" height="52" fill="none"><rect x="7" y="7" width="38" height="38" stroke="#8B45FF" stroke-width="1.6" stroke-dasharray="5 4" /><rect x="3" y="3" width="8" height="8" fill="#FF5F1F" /><rect x="41" y="3" width="8" height="8" fill="#FF5F1F" /><rect x="3" y="41" width="8" height="8" fill="#FF5F1F" /><rect x="41" y="41" width="8" height="8" fill="#FF5F1F" /></svg>
+          </span>
+          <span aria-hidden="true" data-tool="flee" data-tool-pull="1" style="position: absolute; left: 46%; bottom: 8%; width: 60px; height: 26px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float 9s ease-in-out infinite 1s;">
+            <svg viewBox="0 0 60 26" width="60" height="26" fill="none"><rect x="1" y="6" width="58" height="14" rx="2" stroke="#0D0B12" stroke-width="1.5" /><path d="M9 6 v6 M17 6 v9 M25 6 v6 M33 6 v9 M41 6 v6 M49 6 v9" stroke="#0D0B12" stroke-width="1.3" /></svg>
+          </span>
+
+          <div style="position: relative; max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px); align-items: center;">
+            <div style="flex: 1 1 520px; min-width: 290px; position: relative; padding-left: clamp(18px, 2.4vw, 34px);">
+              <span data-mo="grow-y" style="position: absolute; left: 0; top: 6px; bottom: 34px; width: 10px; background: linear-gradient(180deg, #5B2394, #8B45FF); transform-origin: top;"></span>
+              <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(13,11,18,0.64);">
+                <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.8s infinite;"></span>Creative technology studio &#183; UK
+              </div>
+              <h1 style="margin: 22px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 7.6vw, 104px); line-height: 0.92; letter-spacing: -0.048em; text-wrap: balance;">Bring your idea<br />to <span style="position: relative; display: inline-block; font-style: italic; font-weight: 500; color: #5B2394;">life<svg viewBox="0 0 200 40" preserveAspectRatio="none" style="position: absolute; left: -6%; bottom: -0.16em; width: 112%; height: 0.42em; overflow: visible;"><path d="M4 26 C 42 6, 96 34, 150 14 C 168 7, 184 12, 196 20" pathLength="1" fill="none" stroke="#FF5F1F" stroke-width="7" stroke-linecap="round" stroke-dasharray="1" style="stroke-dashoffset: 1; animation: pcl-pen 1.15s cubic-bezier(0.4,0,0.2,1) 0.45s forwards;" /></svg><span aria-hidden="true" style="position: absolute; left: -2%; bottom: -0.34em; width: 26px; height: 26px; transform: translateX(-50%); opacity: 0; animation: pcl-penride 1.15s cubic-bezier(0.4,0,0.2,1) 0.45s forwards;"><svg viewBox="0 0 26 26" width="26" height="26" fill="none"><path d="M4 22 L8 10 L13 5 L18 10 L14 22 Z" fill="#F6F4F0" stroke="#0D0B12" stroke-width="1.5" /><path d="M8 10 L18 10" stroke="#0D0B12" stroke-width="1.2" /><circle cx="13" cy="24" r="2" fill="#FF5F1F" /></svg></span></span></h1>
+              <p style="margin: 24px 0 0; max-width: 560px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.68; color: rgba(13,11,18,0.7); text-wrap: pretty;">From websites and branding to UI/UX and digital experiences, we help turn ideas into polished, professional work that feels modern, purposeful, and ready to launch.</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;">
+                <a onClick="{{ goWork }}" href="#work" data-cursor="Explore" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 15px; font-weight: 700; overflow: hidden; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">See the work<span style="font-family: 'Space Mono', monospace; transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(5px);">&#8594;</span></a>
+                <a onClick="{{ goContact }}" href="#contact" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; color: #0D0B12; font-size: 15px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.07); color: #0D0B12;">Start a project</a>
+              </div>
+            </div>
+
+            <div style="flex: 1 1 400px; min-width: 280px; position: relative; aspect-ratio: 1 / 1; max-height: 560px;">
+              <div style="position: absolute; inset: 6% 8% 10% 4%; border-radius: 999px 999px 999px 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transform: translate(calc(var(--px) * -12px), calc(var(--py) * -10px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(44px, 7vw, 82px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95);">FA</span>
+              </div>
+              <img src="assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0.92; transform: translate(calc(var(--px) * 16px), calc(var(--py) * 13px)) scale(1.18); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
+              <img src="assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform: translate(calc(var(--px) * 26px), calc(var(--py) * 20px)) scale(1.1); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
+              <div style="position: absolute; right: 2%; bottom: 6%; padding: 12px 14px; border-radius: 12px; background: #fff; border: 1px solid rgba(13,11,18,0.1); box-shadow: 0 18px 40px -24px rgba(13,11,18,0.5); transform: translate(calc(var(--px) * 20px), calc(var(--py) * 16px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Now live</div>
+                <div style="margin-top: 5px; font-weight: 700; font-size: 14px; letter-spacing: -0.01em;">Fikar-e-Adab</div>
+              </div>
+              <span aria-hidden="true" style="position: absolute; left: 12%; bottom: 2%; width: calc(16px + var(--pb, 0) * 26px); height: calc(16px + var(--pb, 0) * 26px); background: #5B2394; box-shadow: 0 0 0 calc(var(--pb, 0) * 12px) rgba(91,35,148,0.16); transform: translateY(calc(var(--pb, 0) * 150px)) rotate(calc(var(--pb, 0) * 135deg));"></span>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="sticky" style="position: relative; height: 260vh;">
+          <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0 clamp(18px, 4vw, 56px);">
+            <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(139,69,255,calc(0.13 * var(--p, 1))) 0%, transparent 62%);"></div>
+
+            <div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 100%; max-width: 760px; height: 62vh; transform: translate(-50%, -50%);">
+              <span style="position: absolute; left: 8%; top: 6%; width: 22px; height: 22px; background: #5B2394; transform: translate(calc(var(--pi, 0) * -170px), calc(var(--pi, 0) * -120px)) rotate(calc(var(--pi, 0) * 90deg)); opacity: calc(1 - var(--pb, 1));"></span>
+              <span style="position: absolute; right: 10%; top: 12%; width: 16px; height: 16px; background: #FF5F1F; transform: translate(calc(var(--pi, 0) * 190px), calc(var(--pi, 0) * -90px)) rotate(calc(var(--pi, 0) * -70deg)); opacity: calc(1 - var(--pb, 1));"></span>
+              <span style="position: absolute; left: 14%; bottom: 10%; width: 18px; height: 18px; background: #8B45FF; transform: translate(calc(var(--pi, 0) * -140px), calc(var(--pi, 0) * 150px)); opacity: calc(1 - var(--pb, 1));"></span>
+              <span style="position: absolute; right: 16%; bottom: 8%; width: 24px; height: 24px; background: #0D0B12; transform: translate(calc(var(--pi, 0) * 160px), calc(var(--pi, 0) * 130px)) rotate(calc(var(--pi, 0) * 45deg)); opacity: calc(1 - var(--pb, 1));"></span>
+              <span style="position: absolute; left: 50%; top: -4%; width: 14px; height: 14px; background: #FF5F1F; transform: translate(-50%, calc(var(--pi, 0) * -200px)); opacity: calc(1 - var(--pb, 1));"></span>
+            </div>
+
+            <div style="position: relative; width: 100%; max-width: 760px;">
+              <div style="position: relative; aspect-ratio: 16 / 10; border: 2px solid #0D0B12; border-radius: calc(4px + var(--p, 1) * 14px); overflow: hidden; transform: scale(calc(0.24 + var(--p2, 1) * 0.76)); opacity: var(--p2, 1);">
+                <div style="position: absolute; inset: 0; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);"></div>
+                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: var(--pb, 1);">
+                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 8vw, 104px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95); transform: scale(calc(0.8 + var(--pb, 1) * 0.2));">FA</span>
+                </div>
+                <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
+              </div>
+
+              <span aria-hidden="true" style="position: absolute; left: calc(var(--pa, 1) * 100% - 34px); top: calc(50% - 74px); width: 68px; height: 68px; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1))); transform: rotate(-24deg);">
+                <svg viewBox="0 0 68 68" width="68" height="68" fill="none"><rect x="30" y="4" width="9" height="30" rx="2" fill="#0D0B12" /><rect x="27" y="32" width="15" height="9" rx="2" fill="#8B45FF" /><path d="M28 41 C 26 52, 30 60, 34 64 C 38 60, 42 52, 40 41 Z" fill="#FF5F1F" /></svg>
+              </span>
+
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 22px; opacity: var(--pb, 1); transform: translateY(calc((1 - var(--pb, 1)) * 18px));">
+                <div>
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #B8380A;">Built in the lab &#183; Web platform</div>
+                  <h2 style="margin: 10px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em;">Fikar-e-Adab</h2>
+                </div>
+                <a onClick="{{ openFirst }}" href="#project" data-cursor="Open" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">Open project &#8594;</a>
+              </div>
+              <div style="position: absolute; left: 0; right: 0; bottom: -74px; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); opacity: calc(1 - var(--p2, 1));">Scroll &#8212; the pixels are assembling</div>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px); overflow: hidden;">
+          <div style="max-width: 1100px; margin: 0 auto; position: relative;">
+            <div aria-hidden="true" style="position: absolute; inset: -6% -4%; opacity: calc(var(--pa, 1) * 0.5); background-image: linear-gradient(to right, rgba(91,35,148,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.35) 1px, transparent 1px); background-size: 72px 72px;"></div>
+            <div style="position: relative; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">01 &#8212; What we do</div>
+            <h2 style="position: relative; margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(44px, 11vw, 152px); line-height: 0.9; letter-spacing: calc(-0.05em + var(--p, 1) * 0.06em); text-transform: uppercase;">Craft</h2>
+            <p style="position: relative; margin: 26px 0 0; max-width: 720px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">From websites and apps to interactive projects and games, we focus on building clean, modern, and well-structured digital experiences. Everything we create is designed to feel smooth, look sharp, and work the way it&#8217;s supposed to.</p>
+          </div>
+        </section>
+
+        <section style="padding: 0 clamp(18px, 4vw, 56px) clamp(70px, 10vw, 120px);">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid rgba(13,11,18,0.12);">
+              <div>
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">02 &#8212; Selected work</div>
+                <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(28px, 4vw, 48px); letter-spacing: -0.04em; line-height: 1.04;">Where creativity meets tech</h2>
+              </div>
+              <a onClick="{{ goWork }}" href="#work" data-cursor="All work" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">All 13 projects &#8594;</a>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: clamp(40px, 6vw, 84px); margin-top: clamp(30px, 4vw, 48px);">
+              <sc-for list="{{ featured }}" as="p" hint-placeholder-count="3">
+                <a onClick="{{ p.open }}" href="#project" data-cursor="{{ p.cursor }}" data-scrub="flow" style="display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 48px); align-items: center; color: #0D0B12;">
+                  <div data-morph-src="{{ p.id }}" style="flex: 1 1 520px; min-width: 280px; order: {{ p.mediaOrder }}; position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; border: 1px solid rgba(13,11,18,0.1);">
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0); transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.04);">
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 6vw, 76px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
+                    </div>
+                    <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
+                    <span aria-hidden="true" style="position: absolute; inset: 0; border: 1px dashed rgba(255,255,255,0.55); opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
+                    <span style="position: absolute; left: 12px; top: 12px; padding: 6px 11px; border-radius: 999px; background: rgba(246,244,240,0.94); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: var(--pb, 1);">{{ p.kind }}</span>
+                  </div>
+                  <div style="flex: 1 1 300px; min-width: 250px; order: {{ p.textOrder }};">
+                    <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">
+                      <span aria-hidden="true" style="display: grid; grid-template-columns: repeat(2, 7px); grid-template-rows: repeat(2, 7px); gap: 2px;"><span style="background: {{ p.tint }};"></span><span style="background: {{ p.tint2 }};"></span><span style="background: {{ p.tint2 }};"></span><span style="background: #FF5F1F;"></span></span>{{ p.no }} / {{ p.platform }}
+                    </div>
+                    <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); line-height: 1.06; letter-spacing: -0.038em; text-wrap: balance;">{{ p.name }}</h3>
+                    <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ p.blurb }}</p>
+                    <span style="display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B2394; border-bottom: 2px solid rgba(91,35,148,0.35); padding-bottom: 4px;">{{ p.entrance }}</span>
+                  </div>
+                </a>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="sticky" style="position: relative; height: 300vh; background: #0D0B12; color: #F6F4F0;">
+          <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; padding: 0 clamp(18px, 4vw, 56px);">
+            <div style="position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(246,244,240,0.1) 1px, transparent 1px); background-size: 46px 46px; opacity: calc(0.4 + var(--p, 1) * 0.6);"></div>
+
+            <div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: min(70vw, 620px); aspect-ratio: 16 / 10; transform: translate(-50%, -50%); opacity: calc(1 - var(--pb, 1));">
+              <sc-for list="{{ layers }}" as="L" hint-placeholder-count="6">
+                <div style="position: absolute; inset: 0; border: 1px solid {{ L.c }}; border-radius: 12px; background: {{ L.bg }}; transform: translate3d(calc(var(--pa, 1) * {{ L.dx }}px), calc(var(--pa, 1) * {{ L.dy }}px), 0) rotate(calc(var(--pa, 1) * {{ L.rot }}deg)); display: flex; align-items: flex-end; padding: 10px;">
+                  <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: {{ L.c }}; opacity: var(--pa, 1);">{{ L.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="position: relative; max-width: 1340px; margin: 0 auto; width: 100%; opacity: var(--pb, 1); transform: translateY(calc((1 - var(--pb, 1)) * 40px));">
+              <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px;">
+                <div>
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">03 &#8212; Capabilities</div>
+                  <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 46px); letter-spacing: -0.04em; line-height: 1.04;">The disciplines that made that work</h2>
+                </div>
+                <a onClick="{{ goServices }}" href="#services" data-cursor="Capabilities" style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #F6F4F0; border-bottom: 2px solid rgba(255,95,31,0.6); padding-bottom: 4px;">How we work &#8594;</a>
+              </div>
+              <div style="margin-top: clamp(20px, 3vw, 36px); border-top: 1px solid rgba(246,244,240,0.14);">
+                <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+                  <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: clamp(12px, 2.4vw, 32px); padding: clamp(13px, 1.9vw, 20px) clamp(4px, 1.4vw, 14px); border-bottom: 1px solid rgba(246,244,240,0.14); transition: background 0.3s ease, padding-left 0.35s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: rgba(246,244,240,0.06); padding-left: 24px;">
+                    <span style="font-family: 'Space Mono', monospace; font-size: 11px; color: #FF9166; flex: 0 0 28px;">{{ s.no }}</span>
+                    <h3 style="flex: 1 1 260px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(18px, 2.1vw, 27px); letter-spacing: -0.03em; line-height: 1.12;">{{ s.title }}</h3>
+                    <p style="flex: 1 1 320px; margin: 0; font-size: 14px; line-height: 1.6; color: rgba(246,244,240,0.66);">{{ s.body }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section data-scrub="sticky" style="position: relative; height: 220vh; background: #0D0B12;">
+          <div style="position: sticky; top: 0; height: 100vh; overflow: hidden;">
+            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #F6F4F0;">
+              <div style="text-align: center; padding: 0 24px; opacity: calc(1 - var(--pa, 1));">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">04 &#8212; Behind the finish</div>
+                <h2 style="margin: 18px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(28px, 4.6vw, 62px); letter-spacing: -0.045em; line-height: 1.0;">Every polished build<br />starts out rough.</h2>
+              </div>
+            </div>
+
+            <div style="position: absolute; inset: 0; background: #F6F4F0; color: #0D0B12; clip-path: circle(calc(var(--pa, 1) * 140%) at 50% 50%); display: flex; align-items: center; padding: 0 clamp(18px, 4vw, 56px);">
+              <div style="max-width: 1340px; margin: 0 auto; width: 100%; display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 64px);">
+                <div style="flex: 1 1 320px; min-width: 270px;">
+                  <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">How we build</div>
+                  <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 58px); line-height: 0.98; letter-spacing: -0.048em;">Ideas.<br />Build.<br />Launch.</h2>
+                  <p style="margin: 20px 0 0; max-width: 380px; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.66);">Three words on our logo, and the way every project actually runs.</p>
+                  <a onClick="{{ goStudio }}" href="#studio" data-cursor="Studio" style="display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">Inside the studio &#8594;</a>
+                </div>
+                <div style="flex: 1 1 440px; min-width: 280px; display: flex; flex-direction: column; gap: 12px;">
+                  <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+                    <div style="position: relative; padding: clamp(16px, 2.2vw, 26px); border: 1px solid rgba(13,11,18,0.14); border-radius: 18px; background: #fff; overflow: hidden; transform: translateY(calc((1 - var(--pb, 1)) * {{ st.rise }}px)); transition: border-color 0.3s ease;" style-hover="border-color: {{ st.c }};">
+                      <div style="position: absolute; top: -14px; right: 12px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 72px; font-weight: 800; color: rgba(13,11,18,0.05); letter-spacing: -0.05em;">{{ st.no }}</div>
+                      <div style="position: relative; display: flex; gap: 3px;">
+                        <sc-for list="{{ st.blocks }}" as="b" hint-placeholder-count="3">
+                          <span style="width: 9px; height: 9px; background: {{ b.c }};"></span>
+                        </sc-for>
+                      </div>
+                      <h3 style="position: relative; margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: -0.03em;">{{ st.title }}</h3>
+                      <p style="position: relative; margin: 9px 0 0; font-size: 14.5px; line-height: 1.62; color: rgba(13,11,18,0.66); text-wrap: pretty;">{{ st.body }}</p>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <span aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 96px; height: 96px; margin: -48px 0 0 -48px; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)) * 1.4); transform: rotate(calc(-30deg + var(--pa, 1) * 40deg)) scale(calc(0.8 + var(--pa, 1) * 0.5));">
+              <svg viewBox="0 0 96 96" width="96" height="96" fill="none"><rect x="42" y="4" width="12" height="42" rx="3" fill="#0D0B12" /><rect x="38" y="44" width="20" height="12" rx="3" fill="#8B45FF" /><path d="M39 56 C 35 74, 41 86, 48 92 C 55 86, 61 74, 57 56 Z" fill="#FF5F1F" /></svg>
+            </span>
+          </div>
+        </section>
+
+        <section data-scrub="sticky" style="position: relative; height: 240vh;">
+          <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 0 clamp(18px, 4vw, 56px);">
+            <div aria-hidden="true" style="position: absolute; inset: 0;">
+              <sc-for list="{{ fragments }}" as="fr" hint-placeholder-count="12">
+                <span style="position: absolute; left: 50%; top: 50%; width: {{ fr.s }}px; height: {{ fr.s }}px; background: {{ fr.c }}; border-radius: {{ fr.r }}; transform: translate(-50%, -50%) translate(calc({{ fr.x }}px * (1 - var(--pa, 1)) + var(--pa, 1) * {{ fr.tx }}px), calc({{ fr.y }}px * (1 - var(--pa, 1)) + var(--pa, 1) * {{ fr.ty }}px)) rotate(calc(var(--pi, 0) * {{ fr.rot }}deg)) scale(calc(1 - var(--pb, 1) * 0.6)); opacity: calc(1 - var(--pb, 1) * 0.9);"></span>
+              </sc-for>
+            </div>
+            <div style="position: relative; text-align: center; max-width: 900px;">
+              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 6.2vw, 86px); line-height: 0.96; letter-spacing: -0.05em; text-wrap: balance; opacity: var(--pb, 1); transform: scale(calc(0.9 + var(--pb, 1) * 0.1));">Ready to build something <span style="font-style: italic; font-weight: 500; color: #FF5F1F;">amazing?</span></h2>
+              <p style="margin: 20px auto 0; max-width: 520px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.65; color: rgba(13,11,18,0.7); opacity: var(--pb, 1);">Let&#8217;s create digital experiences that make your brand stand out.</p>
+              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 18px 28px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 16px; font-weight: 700; opacity: var(--pb, 1); transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(calc(0.86 + var(--pb, 1) * 0.14)); transition: background 0.3s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: #FF5F1F; color: #fff;">Start a Project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isWork }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Work">
+        <section data-scrub="flow" style="position: relative; padding: clamp(104px, 13vw, 140px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <div aria-hidden="true" style="position: absolute; inset: 0; opacity: 0.9;">
+            <span data-tool="flee" data-tool-pull="1.1" style="position: absolute; right: 6%; top: 58%; width: 74px; height: 126px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float 12s ease-in-out infinite;">
+              <svg viewBox="0 0 74 126" width="74" height="126" fill="none"><rect x="8" y="4" width="58" height="118" rx="12" fill="#F6F4F0" stroke="#0D0B12" stroke-width="2" /><rect x="28" y="10" width="18" height="4" rx="2" fill="#0D0B12" /><rect x="15" y="22" width="44" height="30" rx="4" fill="#8B45FF" /><rect x="15" y="58" width="30" height="5" rx="2" fill="rgba(13,11,18,0.25)" /><rect x="15" y="68" width="40" height="5" rx="2" fill="rgba(13,11,18,0.15)" /><rect x="15" y="98" width="44" height="14" rx="5" fill="#FF5F1F" /></svg>
+            </span>
+            <span data-tool="flee" data-tool-pull="0.85" style="position: absolute; right: 4%; top: 22%; width: 168px; height: 116px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float2 15s ease-in-out infinite;">
+              <svg viewBox="0 0 168 116" width="168" height="116" fill="none"><rect x="3" y="3" width="162" height="110" rx="9" fill="#F6F4F0" stroke="#0D0B12" stroke-width="2" /><path d="M3 26 H165" stroke="#0D0B12" stroke-width="1.6" /><circle cx="16" cy="15" r="3.4" fill="#FF5F1F" /><circle cx="27" cy="15" r="3.4" fill="#8B45FF" /><circle cx="38" cy="15" r="3.4" fill="rgba(13,11,18,0.25)" /><rect x="14" y="38" width="72" height="10" rx="3" fill="#5B2394" /><rect x="14" y="56" width="140" height="5" rx="2" fill="rgba(13,11,18,0.16)" /><rect x="14" y="68" width="112" height="5" rx="2" fill="rgba(13,11,18,0.16)" /><rect x="14" y="88" width="46" height="14" rx="5" fill="#FF5F1F" /></svg>
+            </span>
+            <span data-tool="flee" data-tool-pull="1.25" style="position: absolute; left: 58%; top: 3%; width: 76px; height: 50px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float 10s ease-in-out infinite 0.6s;">
+              <svg viewBox="0 0 76 50" width="76" height="50" fill="none"><rect x="3" y="12" width="70" height="30" rx="13" fill="#0D0B12" /><rect x="14" y="23" width="14" height="4" rx="2" fill="#F6F4F0" /><rect x="19" y="18" width="4" height="14" rx="2" fill="#F6F4F0" /><circle cx="52" cy="22" r="4" fill="#FF5F1F" /><circle cx="61" cy="30" r="4" fill="#8B45FF" /></svg>
+            </span>
+          </div>
+
+          <div style="position: relative; max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Portfolio &#8212; 13 live projects</div>
+            <h1 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(46px, 12.5vw, 190px); line-height: 0.86; letter-spacing: calc(-0.055em + var(--p, 1) * 0.012em); text-transform: uppercase;">
+              <span style="display: block;">Our</span>
+              <span style="display: block; color: #5B2394;">Solutions</span>
+            </h1>
+            <p style="margin: 24px 0 0; max-width: 620px; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.55; color: rgba(13,11,18,0.72); text-wrap: pretty;">Where creativity meets tech. <span style="position: relative; white-space: nowrap;">Explore our projects below!<span aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: -3px; height: 2px; background: #FF5F1F; transform-origin: left; transform: scaleX(var(--pa, 1)); "></span></span></p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(13,11,18,0.14);">
+              <sc-for list="{{ filters }}" as="fl" hint-placeholder-count="5">
+                <button onClick="{{ fl.select }}" data-magnet="1" style="padding: 11px 16px; border: 1px solid {{ fl.border }}; border-radius: 999px; background: {{ fl.bg }}; color: {{ fl.color }}; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ fl.label }} <span style="opacity: 0.55;">{{ fl.count }}</span></button>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section style="padding: clamp(22px, 3vw, 34px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <div style="max-width: 1340px; margin: 0 auto; display: grid; grid-template-columns: {{ workCols }}; gap: clamp(18px, 2.4vw, 30px); align-items: start;">
+            <sc-for list="{{ visible }}" as="p" hint-placeholder-count="13">
+              <a onClick="{{ p.open }}" href="#project" data-cursor="{{ p.cursor }}" data-mo="rise" style="grid-column: {{ p.span }}; display: flex; flex-direction: column; color: #0D0B12; transition-delay: {{ p.delay }}ms;">
+
+                <sc-if value="{{ p.isBrowser }}" hint-placeholder-val="{{ true }}">
+                  <div data-morph-src="{{ p.id }}" style="position: relative; border: 2px solid #0D0B12; border-radius: 14px; overflow: hidden; background: #fff; box-shadow: 0 22px 44px -34px rgba(13,11,18,0.6); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.5s ease;" style-hover="transform: translateY(-8px); box-shadow: 0 34px 60px -32px rgba(91,35,148,0.55);">
+                    <div style="display: flex; align-items: center; gap: 7px; padding: 9px 12px; border-bottom: 2px solid #0D0B12;">
+                      <span style="width: 8px; height: 8px; border-radius: 50%; background: #FF5F1F;"></span>
+                      <span style="width: 8px; height: 8px; border-radius: 50%; background: #8B45FF;"></span>
+                      <span style="width: 8px; height: 8px; border-radius: 50%; background: rgba(13,11,18,0.22);"></span>
+                      <span style="margin-left: 6px; flex: 1; height: 14px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 8px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.06em; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ p.host }}</span>
+                    </div>
+                    <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92); transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.1);">{{ p.initials }}</span>
+                      <span aria-hidden="true" style="position: absolute; left: 12px; bottom: 12px; width: 22px; height: 22px; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.2,0.8,0.2,1);" style-hover="opacity: 1; transform: none;">
+                        <svg viewBox="0 0 22 22" width="22" height="22" fill="none"><path d="M5 4 L5 17 L8.5 13.5 L11 19 L13.5 17.8 L11 12.6 L16 12.6 Z" fill="#fff" stroke="#0D0B12" stroke-width="1.2" /></svg>
+                      </span>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.isPhone }}" hint-placeholder-val="{{ false }}">
+                  <div data-morph-src="{{ p.id }}" style="position: relative; display: flex; justify-content: center; padding: 14px 0 0; background: radial-gradient(ellipse at 50% 70%, rgba(139,69,255,0.14), transparent 70%); border-radius: 18px;">
+                    <div style="position: relative; width: 68%; max-width: 210px; border: 2px solid #0D0B12; border-radius: 26px; overflow: hidden; background: #fff; padding: 8px 7px; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-8px) rotate(-1.4deg);">
+                      <span style="display: block; width: 34%; height: 4px; margin: 0 auto 8px; border-radius: 99px; background: rgba(13,11,18,0.3);"></span>
+                      <div style="position: relative; aspect-ratio: 9 / 15; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(160deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 3px, transparent 3px 13px);">
+                        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ p.initials }}</span>
+                        <span aria-hidden="true" style="position: absolute; left: 50%; bottom: 12px; width: 30px; height: 30px; margin-left: -15px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); opacity: 0; transform: scale(0.4); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,1.5,0.4,1);" style-hover="opacity: 1; transform: scale(1);"></span>
+                      </div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.isGame }}" hint-placeholder-val="{{ false }}">
+                  <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: #0D0B12; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-8px) scale(1.01);">
+                    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 4px);">
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94); transition: letter-spacing 0.5s ease;" style-hover="letter-spacing: 0.04em;">{{ p.initials }}</span>
+                    </div>
+                    <span aria-hidden="true" style="position: absolute; left: 10px; top: 10px; width: 16px; height: 16px; border-left: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
+                    <span aria-hidden="true" style="position: absolute; right: 10px; top: 10px; width: 16px; height: 16px; border-right: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
+                    <span aria-hidden="true" style="position: absolute; left: 10px; bottom: 10px; width: 16px; height: 16px; border-left: 2px solid #FF5F1F; border-bottom: 2px solid #FF5F1F;"></span>
+                    <span aria-hidden="true" style="position: absolute; right: 10px; bottom: 10px; width: 16px; height: 16px; border-right: 2px solid #FF5F1F; border-bottom: 2px solid #FF5F1F;"></span>
+                    <span aria-hidden="true" style="position: absolute; left: 50%; bottom: 14px; width: 54px; height: 34px; margin-left: -27px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,0.8,0.2,1);" style-hover="opacity: 1; transform: none;">
+                      <svg viewBox="0 0 54 34" width="54" height="34" fill="none"><rect x="2" y="8" width="50" height="22" rx="10" fill="rgba(13,11,18,0.75)" /><rect x="10" y="17" width="10" height="3" rx="1.5" fill="#fff" /><rect x="13.5" y="13.5" width="3" height="10" rx="1.5" fill="#fff" /><circle cx="37" cy="16" r="3" fill="#FF5F1F" /><circle cx="44" cy="22" r="3" fill="#8B45FF" /></svg>
+                    </span>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ p.isBlueprint }}" hint-placeholder-val="{{ false }}">
+                  <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 4 / 3; border: 2px dashed rgba(91,35,148,0.55); border-radius: 14px; overflow: hidden; background: #fff; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-8px); border-color: #FF5F1F;">
+                    <span aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(91,35,148,0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.16) 1px, transparent 1px); background-size: 26px 26px;"></span>
+                    <div style="position: absolute; inset: 16%; display: flex; align-items: center; justify-content: center; border-radius: 10px; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}); opacity: 0.94;">
+                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
+                    </div>
+                    <span style="position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 999px; background: #0D0B12; color: #F6F4F0; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase;">In build</span>
+                  </div>
+                </sc-if>
+
+                <div style="display: flex; justify-content: space-between; gap: 10px; align-items: baseline; margin-top: 14px;">
+                  <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -0.025em; line-height: 1.2; transition: color 0.25s ease;" style-hover="color: #5B2394;">{{ p.name }}</h3>
+                  <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(13,11,18,0.64); white-space: nowrap;">{{ p.world }}</span>
+                </div>
+                <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ p.short }}</p>
+              </a>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="padding: 0 clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px); text-align: center;">
+          <div style="max-width: 720px; margin: 0 auto;">
+            <h2 data-mo="rise" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em; line-height: 1.08;">Every one of these is live. Open any of them.</h2>
+            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 16px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F; color: #fff;">Start yours<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isProject }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Project">
+        <section data-scrub="flow" style="position: relative; padding: clamp(100px, 12vw, 136px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; height: 62vh; background: linear-gradient(180deg, {{ P.wash }}, transparent);"></div>
+          <div style="position: relative; max-width: 1340px; margin: 0 auto;">
+            <a onClick="{{ backToWork }}" href="#work" data-cursor="All work" style="display: inline-flex; align-items: center; gap: 9px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.7);" style-hover="color: #FF5F1F;"><span style="transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(-4px);">&#8592;</span> All work</a>
+
+            <div style="display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 60px); align-items: flex-end; margin-top: 22px;">
+              <div style="flex: 1 1 420px; min-width: 280px;">
+                <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">
+                  <span aria-hidden="true" style="display: grid; grid-template-columns: repeat(2, 7px); grid-template-rows: repeat(2, 7px); gap: 2px;"><span style="background: {{ P.tint }};"></span><span style="background: {{ P.tint2 }};"></span><span style="background: {{ P.tint2 }};"></span><span style="background: #FF5F1F;"></span></span>
+                  {{ P.kind }} &#183; {{ P.platform }}
+                </div>
+                <h1 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 6.2vw, 88px); line-height: 0.92; letter-spacing: -0.05em; text-wrap: balance;">{{ P.name }}</h1>
+              </div>
+              <div style="flex: 0 1 360px; min-width: 250px;">
+                <p style="margin: 0; font-size: clamp(15px, 1.35vw, 18px); line-height: 1.68; color: rgba(13,11,18,0.72); text-wrap: pretty;">{{ P.blurb }}</p>
+                <sc-if value="{{ P.hasLink }}" hint-placeholder-val="{{ true }}">
+                  <a href="{{ P.link }}" target="_blank" rel="noopener" data-cursor="Open live" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; padding: 15px 22px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 14.5px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">Visit the live project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+                </sc-if>
+                <sc-if value="{{ P.noLink }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; padding: 14px 20px; border: 1px dashed rgba(13,11,18,0.3); border-radius: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.7);"><span style="width: 8px; height: 8px; background: #FF5F1F; animation: pcl-blink 1.6s infinite;"></span>Currently in build</div>
+                </sc-if>
+              </div>
+            </div>
+
+            <div style="position: relative; margin-top: clamp(28px, 4vw, 46px); border-radius: 20px; overflow: hidden; border: 2px solid #0D0B12; background: #fff; transform: scale(calc(0.97 + var(--p, 1) * 0.03));">
+              <div style="display: flex; align-items: center; gap: 7px; padding: 10px 14px; border-bottom: 2px solid #0D0B12;">
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: #FF5F1F;"></span>
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: #8B45FF;"></span>
+                <span style="width: 9px; height: 9px; border-radius: 50%; background: rgba(13,11,18,0.2);"></span>
+                <span style="margin-left: 8px; flex: 1; max-width: 420px; height: 18px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 10px; font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ P.host }}</span>
+              </div>
+              <div style="position: relative; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ P.tint }}, {{ P.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ P.initials }}</span>
+                <span aria-hidden="true" style="position: absolute; left: 16px; top: 16px; width: 20px; height: 20px; border-left: 2px solid rgba(255,255,255,0.6); border-top: 2px solid rgba(255,255,255,0.6);"></span>
+                <span aria-hidden="true" style="position: absolute; right: 16px; bottom: 16px; width: 20px; height: 20px; border-right: 2px solid rgba(255,255,255,0.6); border-bottom: 2px solid rgba(255,255,255,0.6);"></span>
+              </div>
+            </div>
+            <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.6);">[ PLACEHOLDER &#8212; drop real project screenshots in here ]</div>
+          </div>
+        </section>
+
+        <section style="padding: clamp(50px, 7vw, 90px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(16px, 2vw, 26px); border-top: 1px solid rgba(13,11,18,0.14); padding-top: clamp(22px, 3vw, 34px);">
+            <sc-for list="{{ pMeta }}" as="mt" hint-placeholder-count="4">
+              <div data-mo="rise" style="transition-delay: {{ mt.delay }}ms;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6);">{{ mt.k }}</div>
+                <div style="margin-top: 8px; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.025em;">{{ mt.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="padding: clamp(50px, 7vw, 96px) clamp(18px, 4vw, 56px);">
+          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px);">
+            <div style="flex: 1 1 420px; min-width: 280px;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">What we built</div>
+              <p data-mo="rise" style="margin: 18px 0 0; font-size: clamp(17px, 1.9vw, 25px); line-height: 1.52; letter-spacing: -0.018em; color: #0D0B12; text-wrap: pretty;">{{ P.blurb }}</p>
+              <div style="margin-top: 22px; padding: 18px 20px; border-left: 3px solid #FF5F1F; background: rgba(255,95,31,0.05); font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.7);">[ PLACEHOLDER ] Brief, role, timeline and outcome for this project &#8212; send us the details and they slot in here.</div>
+            </div>
+            <div style="flex: 1 1 300px; min-width: 250px;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">Capabilities used</div>
+              <div style="display: flex; flex-direction: column; margin-top: 16px; border-top: 1px solid rgba(13,11,18,0.12);">
+                <sc-for list="{{ pCaps }}" as="cp" hint-placeholder-count="4">
+                  <div style="display: flex; align-items: center; gap: 12px; padding: 14px 4px; border-bottom: 1px solid rgba(13,11,18,0.12); transition: padding-left 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="padding-left: 12px;">
+                    <span style="width: 8px; height: 8px; background: {{ cp.c }};"></span>
+                    <span style="font-size: 14.5px; font-weight: 600;">{{ cp.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style="padding: 0 clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <a onClick="{{ nextP.open }}" href="#project" data-cursor="Next project" style="display: block; max-width: 1340px; margin: 0 auto; padding: clamp(24px, 4vw, 44px); border-radius: 22px; background: #0D0B12; color: #F6F4F0; transition: background 0.4s ease;" style-hover="background: #1B1226; color: #F6F4F0;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: clamp(20px, 3vw, 40px);">
+              <div style="flex: 1 1 300px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">Next project</div>
+                <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 4vw, 52px); letter-spacing: -0.045em; line-height: 1.02;">{{ nextP.name }}</h2>
+                <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,244,240,0.6);">{{ nextP.kind }}</div>
+              </div>
+              <div style="flex: 0 1 260px; min-width: 200px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ nextP.tint }}, {{ nextP.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(10px);">
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ nextP.initials }}</span>
+              </div>
+            </div>
+          </a>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isServices }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Services">
+        <section style="padding: clamp(108px, 13vw, 148px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Services &#8212; capabilities</div>
+            <h1 style="margin: 16px 0 0; max-width: 17ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 6.4vw, 92px); line-height: 0.92; letter-spacing: -0.05em;">Watch what we do</h1>
+            <p style="margin: 20px 0 0; max-width: 560px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.66; color: rgba(13,11,18,0.7); text-wrap: pretty;">Six capabilities, end to end. Each one below is running a live miniature of the actual work.</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; padding-bottom: 22px; border-bottom: 1px solid rgba(13,11,18,0.14);">
+              <sc-for list="{{ stages }}" as="s" hint-placeholder-count="5">
+                <button onClick="{{ s.pick }}" data-cursor="{{ s.name }}" data-magnet="1" style="display: inline-flex; align-items: baseline; gap: 8px; padding: 11px 16px; border: 1px solid {{ s.border }}; border-radius: 999px; background: {{ s.bg }}; color: {{ s.color }}; cursor: pointer; font-size: 13.5px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.28s ease, color 0.28s ease, border-color 0.28s ease;">
+                  <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; opacity: 0.7;">{{ s.no }}</span>{{ s.name }}
+                </button>
+              </sc-for>
+            </div>
+            <p style="margin: 22px 0 0; max-width: 780px; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.58; letter-spacing: -0.015em; color: #0D0B12; text-wrap: pretty;">{{ stageBody }}</p>
+          </div>
+        </section>
+
+        <section style="padding: clamp(44px, 6vw, 80px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(40px, 6vw, 82px);">
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 56px); align-items: center;">
+              <div style="flex: 1 1 300px; min-width: 260px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">01 &#183; Apps</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Utility App Development</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We design and develop practical, lightweight applications focused on solving real-world problems.</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Components snap into the frame</div>
+              </div>
+              <div style="flex: 1 1 380px; min-width: 270px; display: flex; justify-content: center; padding: 26px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: radial-gradient(ellipse at 50% 20%, rgba(139,69,255,0.14), transparent 70%), #fff;">
+                <div style="position: relative; width: 168px; border: 2px solid #0D0B12; border-radius: 26px; background: #F6F4F0; padding: 10px 9px;">
+                  <span style="display: block; width: 34%; height: 4px; margin: 0 auto 9px; border-radius: 99px; background: rgba(13,11,18,0.3);"></span>
+                  <div style="display: flex; flex-direction: column; gap: 7px;">
+                    <span style="height: 44px; border-radius: 8px; background: linear-gradient(135deg, #5B2394, #8B45FF); --fx: 52px; --fy: -26px; animation: pcl-snap 4.6s cubic-bezier(0.2,0.9,0.2,1) infinite;"></span>
+                    <span style="height: 12px; border-radius: 4px; background: rgba(13,11,18,0.14); --fx: -46px; --fy: 12px; animation: pcl-snap 4.6s cubic-bezier(0.2,0.9,0.2,1) 0.35s infinite;"></span>
+                    <span style="height: 12px; width: 70%; border-radius: 4px; background: rgba(13,11,18,0.1); --fx: -40px; --fy: 20px; animation: pcl-snap 4.6s cubic-bezier(0.2,0.9,0.2,1) 0.5s infinite;"></span>
+                    <div style="display: flex; gap: 6px;">
+                      <span style="flex: 1; height: 28px; border-radius: 7px; background: rgba(91,35,148,0.16); --fx: 30px; --fy: 26px; animation: pcl-snap 4.6s cubic-bezier(0.2,0.9,0.2,1) 0.7s infinite;"></span>
+                      <span style="flex: 1; height: 28px; border-radius: 7px; background: rgba(91,35,148,0.1); --fx: 44px; --fy: 26px; animation: pcl-snap 4.6s cubic-bezier(0.2,0.9,0.2,1) 0.82s infinite;"></span>
+                    </div>
+                    <span style="height: 30px; border-radius: 9px; background: #FF5F1F; --fx: 0px; --fy: 40px; animation: pcl-snap 4.6s cubic-bezier(0.2,0.9,0.2,1) 1s infinite;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap-reverse; gap: clamp(22px, 4vw, 56px); align-items: center;">
+              <div style="flex: 1 1 380px; min-width: 270px; padding: 22px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #0D0B12;">
+                <div style="position: relative; aspect-ratio: 16 / 10; border-radius: 12px; overflow: hidden; background: linear-gradient(180deg, #2A1147, #0D0B12);">
+                  <span style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, rgba(246,244,240,0.06) 0 1px, transparent 1px 5px);"></span>
+                  <span style="position: absolute; left: 14%; bottom: 22%; width: 26px; height: 26px; background: #FF5F1F; border-radius: 4px; animation: pcl-hop 3.2s ease-in-out infinite;"></span>
+                  <span style="position: absolute; left: 0; right: 0; bottom: 18%; height: 2px; background: rgba(246,244,240,0.24);"></span>
+                  <span style="position: absolute; right: 12%; bottom: 20%; width: 16px; height: 34px; background: #8B45FF;"></span>
+                  <span style="position: absolute; left: 10px; top: 10px; width: 14px; height: 14px; border-left: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
+                  <span style="position: absolute; right: 10px; top: 10px; width: 14px; height: 14px; border-right: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
+                  <span style="position: absolute; left: 50%; top: 12px; margin-left: -22px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: rgba(246,244,240,0.6);">OFFLINE</span>
+                  <span style="position: absolute; right: 12px; bottom: 12px; width: 46px; height: 30px;">
+                    <svg viewBox="0 0 46 30" width="46" height="30" fill="none"><rect x="1" y="6" width="44" height="20" rx="9" fill="rgba(246,244,240,0.14)" stroke="rgba(246,244,240,0.4)" stroke-width="1.2" /><rect x="9" y="14" width="9" height="3" rx="1.5" fill="#F6F4F0" /><rect x="12" y="11" width="3" height="9" rx="1.5" fill="#F6F4F0" /><circle cx="31" cy="13" r="2.6" fill="#FF5F1F" /><circle cx="37" cy="19" r="2.6" fill="#8B45FF" /></svg>
+                  </span>
+                </div>
+              </div>
+              <div style="flex: 1 1 300px; min-width: 260px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">02 &#183; Games</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Offline Game Development</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We create engaging offline-friendly games that prioritize performance, accessibility, and user experience.</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">A static frame becomes playable</div>
+              </div>
+            </div>
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 56px); align-items: center;">
+              <div style="flex: 1 1 300px; min-width: 260px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">03 &#183; Web</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Web &amp; Platform Development</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We build modern websites and supporting platforms that complement your apps, games, or digital presence.</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Grid, code and cursor finish the page</div>
+              </div>
+              <div style="flex: 1 1 380px; min-width: 270px; padding: 22px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #fff;">
+                <div style="position: relative; border: 2px solid #0D0B12; border-radius: 12px; overflow: hidden; background: #F6F4F0;">
+                  <div style="display: flex; align-items: center; gap: 6px; padding: 8px 11px; border-bottom: 2px solid #0D0B12;">
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #FF5F1F;"></span>
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: #8B45FF;"></span>
+                    <span style="width: 7px; height: 7px; border-radius: 50%; background: rgba(13,11,18,0.2);"></span>
+                  </div>
+                  <div style="position: relative; padding: 16px; min-height: 168px;">
+                    <span style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(91,35,148,0.14) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.14) 1px, transparent 1px); background-size: 24px 24px;"></span>
+                    <span style="position: relative; display: block; height: 22px; width: 62%; border-radius: 5px; background: #5B2394; --fx: -30px; --fy: -14px; animation: pcl-snap 5s cubic-bezier(0.2,0.9,0.2,1) infinite;"></span>
+                    <span style="position: relative; display: block; margin-top: 10px; height: 9px; border-radius: 3px; background: rgba(13,11,18,0.16); --fx: -24px; --fy: 10px; animation: pcl-snap 5s cubic-bezier(0.2,0.9,0.2,1) 0.3s infinite;"></span>
+                    <span style="position: relative; display: block; margin-top: 7px; height: 9px; width: 74%; border-radius: 3px; background: rgba(13,11,18,0.12); --fx: -20px; --fy: 14px; animation: pcl-snap 5s cubic-bezier(0.2,0.9,0.2,1) 0.42s infinite;"></span>
+                    <span style="position: relative; display: block; margin-top: 16px; height: 28px; width: 42%; border-radius: 8px; background: #FF5F1F; animation: pcl-click 5s ease-in-out infinite;"></span>
+                    <div style="position: relative; margin-top: 16px; display: flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: 10px; color: #5B2394;">
+                      <span>&#60;/&#62;</span>
+                      <span style="display: block; overflow: hidden; white-space: nowrap; animation: pcl-type 5s steps(24, end) infinite; color: rgba(13,11,18,0.7);">buildPage(&#39;pcl&#39;)</span>
+                      <span style="width: 6px; height: 12px; background: #FF5F1F; animation: pcl-caret 0.9s steps(1) infinite;"></span>
+                    </div>
+                    <span aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 20px; height: 20px; animation: pcl-rove 5s ease-in-out infinite;">
+                      <svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M4 3 L4 15 L7.4 11.8 L9.8 17 L12 15.9 L9.6 11 L14.4 11 Z" fill="#0D0B12" stroke="#F6F4F0" stroke-width="1.1" /></svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap-reverse; gap: clamp(22px, 4vw, 56px); align-items: center;">
+              <div style="flex: 1 1 380px; min-width: 270px; padding: 22px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #fff;">
+                <div style="position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #F6F4F0; border: 1px solid rgba(13,11,18,0.1);">
+                  <div style="position: absolute; inset: 0; padding: 18px; animation: pcl-rough 5.4s ease-in-out infinite;">
+                    <span style="display: block; height: 20px; width: 58%; border: 1.5px dashed rgba(13,11,18,0.4);"></span>
+                    <span style="display: block; margin-top: 10px; height: 8px; width: 90%; border: 1.5px dashed rgba(13,11,18,0.28);"></span>
+                    <span style="display: block; margin-top: 6px; height: 8px; width: 72%; border: 1.5px dashed rgba(13,11,18,0.28);"></span>
+                    <span style="display: block; margin-top: 14px; height: 46px; width: 100%; border: 1.5px dashed rgba(13,11,18,0.34);"></span>
+                    <span style="display: block; margin-top: 12px; height: 24px; width: 38%; border: 1.5px dashed rgba(13,11,18,0.34);"></span>
+                  </div>
+                  <div style="position: absolute; inset: 0; padding: 18px; animation: pcl-polish 5.4s ease-in-out infinite;">
+                    <span style="display: block; height: 20px; width: 58%; border-radius: 5px; background: #5B2394;"></span>
+                    <span style="display: block; margin-top: 10px; height: 8px; width: 90%; border-radius: 3px; background: rgba(13,11,18,0.14);"></span>
+                    <span style="display: block; margin-top: 6px; height: 8px; width: 72%; border-radius: 3px; background: rgba(13,11,18,0.1);"></span>
+                    <span style="display: block; margin-top: 14px; height: 46px; width: 100%; border-radius: 10px; background: linear-gradient(135deg, #8B45FF, #5B2394);"></span>
+                    <span style="display: block; margin-top: 12px; height: 24px; width: 38%; border-radius: 8px; background: #FF5F1F;"></span>
+                  </div>
+                  <span style="position: absolute; left: 0; right: 0; top: 0; height: 42%; background: linear-gradient(180deg, rgba(139,69,255,0.22), transparent); animation: pcl-scan 5.4s linear infinite;"></span>
+                </div>
+              </div>
+              <div style="flex: 1 1 300px; min-width: 260px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">04 &#183; Design</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">UI/UX Design</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We design user interfaces that are clear, intuitive, and visually balanced.</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Wireframe resolves into interface</div>
+              </div>
+            </div>
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: clamp(22px, 4vw, 56px); align-items: center;">
+              <div style="flex: 1 1 300px; min-width: 260px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">05 &#183; Engineering</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Performance Optimization</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We improve the speed, responsiveness, and efficiency of your digital product.</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Weight comes down, response comes up</div>
+              </div>
+              <div style="flex: 1 1 380px; min-width: 270px; padding: 26px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #fff; display: flex; flex-direction: column; gap: 16px;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);"><span>Load</span><span>Optimised</span></div>
+                  <div style="margin-top: 8px; height: 12px; border-radius: 99px; background: rgba(13,11,18,0.08); overflow: hidden;">
+                    <span style="display: block; height: 100%; border-radius: 99px; animation: pcl-gauge 4.4s cubic-bezier(0.4,0,0.2,1) infinite;"></span>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 6px; align-items: flex-end; height: 74px;">
+                  <span style="flex: 1; height: 100%; background: rgba(91,35,148,0.14); border-radius: 4px 4px 0 0; animation: pcl-tick 2.6s ease-in-out infinite;"></span>
+                  <span style="flex: 1; height: 72%; background: rgba(91,35,148,0.2); border-radius: 4px 4px 0 0; animation: pcl-tick 2.6s ease-in-out 0.18s infinite;"></span>
+                  <span style="flex: 1; height: 54%; background: rgba(91,35,148,0.3); border-radius: 4px 4px 0 0; animation: pcl-tick 2.6s ease-in-out 0.36s infinite;"></span>
+                  <span style="flex: 1; height: 38%; background: #8B45FF; border-radius: 4px 4px 0 0; animation: pcl-tick 2.6s ease-in-out 0.54s infinite;"></span>
+                  <span style="flex: 1; height: 26%; background: #FF5F1F; border-radius: 4px 4px 0 0; animation: pcl-tick 2.6s ease-in-out 0.72s infinite;"></span>
+                </div>
+              </div>
+            </div>
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap-reverse; gap: clamp(22px, 4vw, 56px); align-items: center;">
+              <div style="flex: 1 1 380px; min-width: 270px; padding: 26px; border: 1px solid rgba(13,11,18,0.12); border-radius: 20px; background: #fff;">
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <sc-for list="{{ releases }}" as="rl" hint-placeholder-count="4">
+                    <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid rgba(13,11,18,0.12); border-radius: 12px; background: #F6F4F0;">
+                      <span style="width: 9px; height: 9px; border-radius: 50%; background: {{ rl.c }}; animation: pcl-blink 2.4s infinite; animation-delay: {{ rl.d }}s;"></span>
+                      <span style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: #0D0B12;">{{ rl.v }}</span>
+                      <span style="margin-left: auto; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ rl.s }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="flex: 1 1 300px; min-width: 260px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">06 &#183; Ongoing</div>
+                <h2 style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 38px); letter-spacing: -0.038em; line-height: 1.08;">Maintenance &amp; Support</h2>
+                <p style="margin: 12px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7);">We provide ongoing updates, improvements, and technical support to keep your product running smoothly.</p>
+                <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Launch day is the middle, not the end</div>
+              </div>
+            </div>
+
+          </div>
+
+          <div style="max-width: 1340px; margin: clamp(50px, 7vw, 90px) auto 0; padding: clamp(24px, 4vw, 44px); border-radius: 22px; background: #0D0B12; color: #F6F4F0; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between;">
+            <h2 style="flex: 1 1 360px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.04em; line-height: 1.06;">Tell us which one you need.</h2>
+            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 13px; background: #FF5F1F; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #F6F4F0; color: #0D0B12;">Start a project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isStudio }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Studio">
+        <section data-scrub="flow" style="position: relative; padding: clamp(112px, 14vw, 158px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <span aria-hidden="true" data-tool="flee" data-tool-pull="1.1" style="position: absolute; right: 7%; top: 26%; width: 54px; height: 54px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float 12s ease-in-out infinite;">
+            <svg viewBox="0 0 54 54" width="54" height="54" fill="none"><path d="M38 8 a7 7 0 0 1 10 10 L30 36 l-10 -10 Z" fill="#F6F4F0" stroke="#0D0B12" stroke-width="2" stroke-linejoin="round" /><path d="M20 26 L16 42 L32 38 Z" fill="#5B2394" /><circle cx="15" cy="45" r="4" fill="#5B2394" /></svg>
+          </span>
+          <span aria-hidden="true" data-tool="flee" data-tool-pull="0.8" style="position: absolute; left: 5%; bottom: 8%; width: 62px; height: 46px; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1); pointer-events: none; animation: pcl-float2 14s ease-in-out infinite;">
+            <svg viewBox="0 0 62 46" width="62" height="46" fill="none"><path d="M31 4 L58 15 L31 26 L4 15 Z" fill="#8B45FF" stroke="#0D0B12" stroke-width="1.6" stroke-linejoin="round" /><path d="M8 24 L31 33 L54 24" stroke="#0D0B12" stroke-width="1.6" stroke-linejoin="round" /><path d="M8 33 L31 42 L54 33" stroke="#FF5F1F" stroke-width="1.6" stroke-linejoin="round" /></svg>
+          </span>
+          <div style="position: relative; max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Studio &#8212; who we are</div>
+            <h1 style="margin: 20px 0 0; max-width: 20ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 5.8vw, 84px); line-height: 0.95; letter-spacing: -0.048em; text-wrap: balance;">Crafting digital experiences where <span style="color: #5B2394;">creativity</span> meets <span style="color: #FF5F1F;">precision</span>.</h1>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(13,11,18,0.12);">
+              <img src="assets/pcl-logo.png" alt="" style="height: 54px; width: auto;" />
+              <div style="display: flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">
+                <span style="width: 14px; height: 14px; background: #5B2394;"></span>#5B2394
+                <span style="width: 14px; height: 14px; background: #FF5F1F; margin-left: 10px;"></span>#FF5F1F
+                <span style="width: 14px; height: 14px; background: #0D0B12; margin-left: 10px;"></span>#0D0B12
+              </div>
+            </div>
+          </div>
+        </section>
+        <section data-scrub="flow" style="padding: clamp(50px, 7vw, 92px) clamp(18px, 4vw, 56px);">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">Our name, read literally</div>
+            <div style="margin-top: 22px; border-top: 1px solid rgba(13,11,18,0.14);">
+              <sc-for list="{{ nameParts }}" as="n" hint-placeholder-count="3">
+                <div style="display: flex; flex-wrap: wrap; gap: clamp(14px, 3vw, 44px); align-items: center; padding: clamp(20px, 3vw, 32px) 4px; border-bottom: 1px solid rgba(13,11,18,0.12); transition: background 0.35s ease, padding-left 0.4s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: {{ n.wash }}; padding-left: 20px;">
+                  <div style="flex: 0 0 auto; display: grid; grid-template-columns: repeat(3, 10px); grid-template-rows: repeat(3, 10px); gap: 3px; transform: rotate(calc(var(--pi, 0) * {{ n.spin }}deg));">
+                    <sc-for list="{{ n.grid }}" as="g" hint-placeholder-count="9">
+                      <span style="background: {{ g.c }}; opacity: calc({{ g.o }} + var(--pa, 1) * {{ g.up }}); transform: scale(calc(0.4 + var(--pa, 1) * 0.6));"></span>
+                    </sc-for>
+                  </div>
+                  <h2 style="flex: 0 1 260px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(34px, 5.4vw, 72px); letter-spacing: calc(-0.05em + var(--pi, 0) * 0.09em); line-height: 0.95; color: {{ n.c }};">{{ n.k }}</h2>
+                  <p style="flex: 1 1 320px; margin: 0; font-size: clamp(15px, 1.4vw, 19px); line-height: 1.68; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ n.d }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        <section style="background: #0D0B12; color: #F6F4F0; padding: clamp(64px, 9vw, 116px) clamp(18px, 4vw, 56px);">
+          <div style="max-width: 1340px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(20px, 3vw, 38px);">
+            <div data-mo="rise" style="border-top: 2px solid #F6F4F0; padding-top: 20px;">
+              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">Our Story</h3>
+              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">PixelCraftsLab Studio started with one goal &#8212; build digital experiences that actually stand out. We combine creativity, clean code, and strong UI design to craft modern websites, digital tools, and fun games.</p>
+            </div>
+            <div data-mo="rise" style="border-top: 2px solid #8B45FF; padding-top: 20px;">
+              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">Our Mission</h3>
+              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">Create fast, modern, and visually powerful utility app, and online games that help brands grow and stand out online.</p>
+            </div>
+            <div data-mo="rise" style="border-top: 2px solid #FF5F1F; padding-top: 20px;">
+              <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">Future Vision</h3>
+              <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.72; color: rgba(246,244,240,0.66); text-wrap: pretty;">We aim to grow PixelCraftsLab into a full creative tech studio specializing in web platforms, design systems, and digital innovation.</p>
+            </div>
+          </div>
+        </section>
+        <section style="padding: clamp(64px, 9vw, 116px) clamp(18px, 4vw, 56px);">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; padding-bottom: 22px; border-bottom: 1px solid rgba(13,11,18,0.12);">
+              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 3.6vw, 44px); letter-spacing: -0.04em;">Four people, one studio</h2>
+              <p style="flex: 0 1 340px; min-width: 240px; margin: 0; font-size: 15px; line-height: 1.68; color: rgba(13,11,18,0.6);">Small enough that you talk to the people building your product.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: clamp(16px, 2vw, 26px); margin-top: clamp(24px, 3vw, 40px);">
+              <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
+                <div data-mo="rise" style="display: flex; flex-direction: column; transition-delay: {{ m.delay }}ms;">
+                  <div style="position: relative; aspect-ratio: 3 / 4; border-radius: 16px; overflow: hidden; border: 1px solid rgba(13,11,18,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background-image: linear-gradient(155deg, {{ m.tint }}, {{ m.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 3px, transparent 3px 15px); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
+                    <span aria-hidden="true" style="position: absolute; inset: 12px; border: 1px dashed rgba(255,255,255,0.45); border-radius: 10px; opacity: 0; transform: scale(1.04); transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.2,0.8,0.2,1);" style-hover="opacity: 1; transform: none;"></span>
+                    <span style="position: relative; font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.04em; color: rgba(255,255,255,0.92); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">{{ m.initials }}</span>
+                    <span style="position: relative; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.86);">[ Photo to supply ]</span>
+                  </div>
+                  <h3 style="margin: 15px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: -0.02em;">{{ m.name }}</h3>
+                  <div style="margin-top: 6px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #5B2394; line-height: 1.6;">{{ m.role }}</div>
+                  <p style="margin: 11px 0 0; font-size: 13.5px; line-height: 1.65; color: rgba(13,11,18,0.66); text-wrap: pretty;">{{ m.bio }}</p>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+        <section style="padding: 0 clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 56px); padding: clamp(26px, 4vw, 48px); border: 1px solid rgba(13,11,18,0.12); border-radius: 24px; background: #fff;">
+            <div style="flex: 1 1 360px; min-width: 270px;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">Proof, honestly</div>
+              <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.1vw, 38px); line-height: 1.08; letter-spacing: -0.035em; text-wrap: balance;">No borrowed logos. Just shipped products you can open right now.</h2>
+              <p style="margin: 16px 0 0; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.64); text-wrap: pretty;">Every project in the index is live on Google Play or the open web. Click any of them and judge the work directly &#8212; that is the only reference we&#8217;d rather give you.</p>
+            </div>
+            <div style="flex: 1 1 300px; min-width: 250px; display: flex; flex-direction: column; gap: 12px;">
+              <div style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px;">
+                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Client reviews</div>
+                <p style="margin: 12px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.28;">&#8220;Be the first to leave a review : )&#8221;</p>
+                <div style="margin-top: 10px; font-size: 13px; color: rgba(13,11,18,0.55);">&#8212; Mehak Arman, PixelCraftsLab Studio&#8217;s Admin</div>
+              </div>
+              <div style="border: 1px dashed rgba(13,11,18,0.22); border-radius: 14px; padding: 20px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.85; color: rgba(13,11,18,0.64);">[ PLACEHOLDER ] Real client quotes, Play Store ratings or case-study metrics drop in here once you send them over.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isLab }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Lab" style="background: #0D0B12; color: #F6F4F0;">
+        <section style="position: relative; padding: clamp(108px, 13vw, 148px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <div aria-hidden="true" style="position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(246,244,240,0.11) 1px, transparent 1px); background-size: 40px 40px; mask-image: linear-gradient(to bottom, black, transparent 82%); -webkit-mask-image: linear-gradient(to bottom, black, transparent 82%);"></div>
+          <div style="position: relative; max-width: 1340px; margin: 0 auto;">
+            <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #FF9166;">
+              <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.5s infinite;"></span>Lab &#8212; safety rails off
+            </div>
+            <h1 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(42px, 9.6vw, 140px); line-height: 0.88; letter-spacing: -0.055em; text-transform: uppercase;">Make a<br /><span style="color: #FF5F1F;">mess</span></h1>
+            <p style="margin: 22px 0 0; max-width: 560px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.66; color: rgba(246,244,240,0.72); text-wrap: pretty;">Lab is where things get tested before they get shipped. Drag the pieces, paint the grid, break the layout. Nothing here is precious.</p>
+          </div>
+        </section>
+
+        <section style="padding: clamp(34px, 5vw, 60px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-bottom: 16px;">
+              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,240,0.5);">Tool</span>
+              <sc-for list="{{ labModes }}" as="lm" hint-placeholder-count="3">
+                <button onClick="{{ lm.pick }}" style="padding: 10px 15px; border: 1px solid {{ lm.border }}; border-radius: 999px; background: {{ lm.bg }}; color: {{ lm.color }}; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease;">{{ lm.name }}</button>
+              </sc-for>
+              <button onClick="{{ clearLab }}" style="margin-left: auto; padding: 10px 15px; border: 1px solid rgba(246,244,240,0.24); border-radius: 999px; background: transparent; color: rgba(246,244,240,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F;">Clear</button>
+            </div>
+
+            <div ref="{{ setBoard }}" onPointerDown="{{ boardDown }}" style="position: relative; border: 1px solid rgba(246,244,240,0.16); border-radius: 20px; overflow: hidden; background: rgba(246,244,240,0.02); touch-action: none; cursor: crosshair;">
+              <div style="display: grid; grid-template-columns: repeat({{ labCols }}, 1fr); gap: 2px; padding: 2px;">
+                <sc-for list="{{ labCells }}" as="c" hint-placeholder-count="156">
+                  <span onMouseEnter="{{ c.enter }}" onPointerDown="{{ c.enter }}" style="aspect-ratio: 1; background: {{ c.c }}; border-radius: {{ c.r }}; transition: background 0.24s ease, transform 0.24s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.35);"></span>
+                </sc-for>
+              </div>
+
+              <sc-for list="{{ labToys }}" as="t" hint-placeholder-count="5">
+                <div onPointerDown="{{ t.grab }}" style="position: absolute; left: {{ t.x }}px; top: {{ t.y }}px; width: {{ t.w }}px; height: {{ t.h }}px; border-radius: {{ t.r }}; background: {{ t.bg }}; border: {{ t.border }}; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: {{ t.fg }}; cursor: grab; touch-action: none; user-select: none; box-shadow: {{ t.shadow }}; transform: rotate({{ t.rot }}deg) scale({{ t.scale }}); transition: {{ t.trans }};">{{ t.label }}</div>
+              </sc-for>
+
+              <span aria-hidden="true" style="position: absolute; right: 14px; bottom: 12px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246,244,240,0.35); pointer-events: none;">{{ labHint }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section style="padding: clamp(56px, 8vw, 100px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(246,244,240,0.16);">
+              <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 42px); letter-spacing: -0.04em;">In the lab right now</h2>
+              <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(246,244,240,0.5);">Not yet shipped</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(16px, 2vw, 26px); margin-top: clamp(22px, 3vw, 34px);">
+              <sc-for list="{{ labProjects }}" as="p" hint-placeholder-count="2">
+                <a onClick="{{ p.open }}" href="#project" data-cursor="Peek" data-mo="rise" style="display: flex; flex-direction: column; color: #F6F4F0;">
+                  <div style="position: relative; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden; border: 1px dashed rgba(246,244,240,0.28); display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-6px); border-color: #FF5F1F;">
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 46px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.9);">{{ p.initials }}</span>
+                    <span style="position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(13,11,18,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;">In build</span>
+                  </div>
+                  <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.025em;">{{ p.name }}</h3>
+                  <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: rgba(246,244,240,0.62);">{{ p.short }}</p>
+                </a>
+              </sc-for>
+            </div>
+
+            <div style="margin-top: clamp(44px, 6vw, 76px); padding: clamp(24px, 4vw, 44px); border-radius: 22px; background: #F6F4F0; color: #0D0B12; display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between;">
+              <h2 style="flex: 1 1 380px; margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.04em; line-height: 1.06;">Got something that belongs in here?</h2>
+              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 17px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F; color: #fff;">Bring it to us<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Start a project">
+        <section style="padding: clamp(104px, 13vw, 142px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">Start a project</div>
+            <h1 style="margin: 14px 0 0; max-width: 16ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(38px, 6.6vw, 94px); line-height: 0.92; letter-spacing: -0.05em;">Build your brief</h1>
+            <p style="margin: 18px 0 0; max-width: 520px; font-size: clamp(15px, 1.35vw, 18px); line-height: 1.66; color: rgba(13,11,18,0.7);">Answer four things. Watch your project take shape on the right as you go.</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: clamp(26px, 4vw, 64px); margin-top: clamp(34px, 5vw, 56px);">
+
+              <div style="flex: 1 1 440px; min-width: 290px;">
+                <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.6);">Step {{ stepNo }} / 04</span>
+                      <span style="flex: 1; height: 3px; border-radius: 99px; background: rgba(13,11,18,0.1); overflow: hidden;"><span style="display: block; height: 100%; width: {{ progress }}%; background: #FF5F1F; border-radius: 99px; transition: width 0.5s cubic-bezier(0.2,0.8,0.2,1);"></span></span>
+                    </div>
+
+                    <sc-if value="{{ isStep0 }}" hint-placeholder-val="{{ true }}">
+                      <div style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">What are you building?</h2>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                          <sc-for list="{{ buildOptions }}" as="o" hint-placeholder-count="5">
+                            <button onClick="{{ o.pick }}" data-magnet="1" style="padding: 14px 20px; border: 1px solid {{ o.border }}; border-radius: 12px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 15px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ o.label }}</button>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+
+                    <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">How much of it?</h2>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                          <sc-for list="{{ scopeOptions }}" as="o" hint-placeholder-count="5">
+                            <button onClick="{{ o.pick }}" data-magnet="1" style="padding: 14px 20px; border: 1px solid {{ o.border }}; border-radius: 12px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 15px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ o.label }}</button>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+
+                    <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">When do you need it?</h2>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                          <sc-for list="{{ timeOptions }}" as="o" hint-placeholder-count="4">
+                            <button onClick="{{ o.pick }}" data-magnet="1" style="padding: 14px 20px; border: 1px solid {{ o.border }}; border-radius: 12px; background: {{ o.bg }}; color: {{ o.color }}; font-size: 15px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;">{{ o.label }}</button>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+
+                    <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+                      <form onSubmit="{{ submit }}" style="margin-top: 26px; animation: pcl-rise 0.4s cubic-bezier(0.16,1,0.3,1) both;">
+                        <h2 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.038em;">Tell us the rest</h2>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 20px;">
+                          <label style="display: flex; flex-direction: column; gap: 8px;">
+                            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">Your name</span>
+                            <input type="text" required="required" placeholder="Jane Cooper" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                          </label>
+                          <label style="display: flex; flex-direction: column; gap: 8px;">
+                            <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">Your email</span>
+                            <input type="email" required="required" placeholder="you@company.com" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);" />
+                          </label>
+                        </div>
+                        <label style="display: flex; flex-direction: column; gap: 8px; margin-top: 14px;">
+                          <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">The project</span>
+                          <textarea rows="4" onInput="{{ setBrief }}" placeholder="What are you building, and what does success look like?" style="padding: 14px; border: 1px solid rgba(13,11,18,0.18); border-radius: 11px; font-size: 15px; background: #fff; color: #0D0B12; outline: none; resize: vertical; transition: border-color 0.2s ease, box-shadow 0.2s ease;" style-focus="border-color: #5B2394; box-shadow: 0 0 0 3px rgba(139,69,255,0.25);"></textarea>
+                        </label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                          <button type="button" onClick="{{ back }}" style="padding: 15px 20px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; background: transparent; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: border-color 0.25s ease;" style-hover="border-color: #0D0B12;">Back</button>
+                          <button type="submit" data-magnet="1" style="flex: 1; min-width: 200px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 24px; border: none; border-radius: 12px; background: #5B2394; color: #fff; font-size: 15.5px; font-weight: 700; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F;">Launch project<span style="font-family: 'Space Mono', monospace;">&#8599;</span></button>
+                        </div>
+                      </form>
+                    </sc-if>
+
+                    <sc-if value="{{ canGoBack }}" hint-placeholder-val="{{ false }}">
+                      <button onClick="{{ back }}" style="margin-top: 22px; padding: 11px 16px; border: 1px solid rgba(13,11,18,0.2); border-radius: 10px; background: transparent; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: border-color 0.25s ease, color 0.25s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F;">&#8592; Back a step</button>
+                    </sc-if>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding: clamp(26px, 4vw, 44px); border: 1px solid rgba(13,11,18,0.14); border-radius: 20px; background: #fff; animation: pcl-rise 0.45s cubic-bezier(0.16,1,0.3,1) both;">
+                    <div style="width: 42px; height: 42px; border-radius: 50%; background: #FF5F1F; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; animation: pcl-pop 0.45s cubic-bezier(0.2,1.5,0.4,1) both;">&#10003;</div>
+                    <h2 style="margin: 20px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(24px, 3vw, 34px); font-weight: 700; letter-spacing: -0.035em;">Brief assembled.</h2>
+                    <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.7; color: rgba(13,11,18,0.7);">This is a design prototype, so nothing was actually sent. Wire it to the live form endpoint and this becomes the real confirmation state.</p>
+                    <button onClick="{{ resetForm }}" style="margin-top: 20px; padding: 13px 18px; border: 1px solid rgba(13,11,18,0.2); border-radius: 11px; background: transparent; font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color 0.25s ease;" style-hover="border-color: #5B2394;">Build another</button>
+                  </div>
+                </sc-if>
+
+                <div style="margin-top: 34px; display: flex; flex-direction: column; border-top: 1px solid rgba(13,11,18,0.14);">
+                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">Email</span><span>[ PLACEHOLDER &#8212; studio email ]</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">Phone</span><span>+44 7871 284043</span></div>
+                  <div style="display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 12px;"><span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">Location</span><span>United Kingdom</span></div>
+                </div>
+              </div>
+
+              <div style="flex: 1 1 380px; min-width: 280px;">
+                <div style="position: sticky; top: 100px; padding: clamp(22px, 3vw, 34px); border: 1px solid rgba(13,11,18,0.14); border-radius: 22px; background: linear-gradient(160deg, rgba(139,69,255,0.07), rgba(255,95,31,0.05)), #fff;">
+                  <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.55);">
+                    <span>Your brief</span><span style="color: #B8380A;">{{ briefPct }}%</span>
+                  </div>
+
+                  <div style="position: relative; margin-top: 18px; min-height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <sc-if value="{{ briefEmpty }}" hint-placeholder-val="{{ true }}">
+                      <div style="text-align: center; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 2; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(13,11,18,0.4);">
+                        <div style="display: grid; grid-template-columns: repeat(3, 12px); grid-template-rows: repeat(3, 12px); gap: 4px; margin: 0 auto 18px;">
+                          <span style="background: rgba(13,11,18,0.1);"></span><span style="background: rgba(13,11,18,0.06);"></span><span style="background: rgba(13,11,18,0.1);"></span>
+                          <span style="background: rgba(13,11,18,0.06);"></span><span style="background: rgba(13,11,18,0.14);"></span><span style="background: rgba(13,11,18,0.06);"></span>
+                          <span style="background: rgba(13,11,18,0.1);"></span><span style="background: rgba(13,11,18,0.06);"></span><span style="background: rgba(13,11,18,0.1);"></span>
+                        </div>
+                        Nothing built yet
+                      </div>
+                    </sc-if>
+
+                    <sc-if value="{{ hasBuild }}" hint-placeholder-val="{{ false }}">
+                      <div style="position: relative; width: 100%; display: flex; justify-content: center;">
+                        <div style="position: relative; width: {{ briefW }}; max-width: 260px; border: 2px solid #0D0B12; border-radius: {{ briefRadius }}; background: #F6F4F0; padding: 12px 11px; animation: pcl-pop 0.5s cubic-bezier(0.2,1.5,0.4,1) both;">
+                          <sc-if value="{{ briefIsPhone }}" hint-placeholder-val="{{ false }}">
+                            <span style="display: block; width: 32%; height: 4px; margin: 0 auto 10px; border-radius: 99px; background: rgba(13,11,18,0.3);"></span>
+                          </sc-if>
+                          <sc-if value="{{ briefIsBrowser }}" hint-placeholder-val="{{ true }}">
+                            <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                              <span style="width: 7px; height: 7px; border-radius: 50%; background: #FF5F1F;"></span>
+                              <span style="width: 7px; height: 7px; border-radius: 50%; background: #8B45FF;"></span>
+                              <span style="width: 7px; height: 7px; border-radius: 50%; background: rgba(13,11,18,0.2);"></span>
+                            </div>
+                          </sc-if>
+
+                          <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <span style="height: 40px; border-radius: 8px; background: linear-gradient(135deg, #5B2394, #8B45FF); animation: pcl-pop 0.42s cubic-bezier(0.2,1.5,0.4,1) both;"></span>
+                            <sc-if value="{{ hasScope }}" hint-placeholder-val="{{ false }}">
+                              <div style="display: flex; flex-direction: column; gap: 6px; animation: pcl-pop 0.42s cubic-bezier(0.2,1.5,0.4,1) both;">
+                                <span style="height: 9px; border-radius: 3px; background: rgba(13,11,18,0.16);"></span>
+                                <span style="height: 9px; width: 76%; border-radius: 3px; background: rgba(13,11,18,0.12);"></span>
+                                <div style="display: flex; gap: 6px; margin-top: 2px;">
+                                  <span style="flex: 1; height: 26px; border-radius: 7px; background: rgba(91,35,148,0.16);"></span>
+                                  <span style="flex: 1; height: 26px; border-radius: 7px; background: rgba(91,35,148,0.1);"></span>
+                                </div>
+                              </div>
+                            </sc-if>
+                            <sc-if value="{{ hasTime }}" hint-placeholder-val="{{ false }}">
+                              <div style="animation: pcl-pop 0.42s cubic-bezier(0.2,1.5,0.4,1) both;">
+                                <div style="height: 4px; border-radius: 99px; background: rgba(13,11,18,0.1); overflow: hidden;"><span style="display: block; height: 100%; width: {{ timePct }}%; background: #FF5F1F; border-radius: 99px; transition: width 0.6s cubic-bezier(0.2,0.8,0.2,1);"></span></div>
+                                <div style="margin-top: 7px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.55);">{{ aTime }}</div>
+                              </div>
+                            </sc-if>
+                            <sc-if value="{{ hasBrief }}" hint-placeholder-val="{{ false }}">
+                              <span style="height: 30px; border-radius: 9px; background: #FF5F1F; animation: pcl-pop 0.42s cubic-bezier(0.2,1.5,0.4,1) both;"></span>
+                            </sc-if>
+                          </div>
+                        </div>
+                      </div>
+                    </sc-if>
+                  </div>
+
+                  <div style="margin-top: 20px; display: flex; flex-direction: column; border-top: 1px solid rgba(13,11,18,0.12);">
+                    <sc-for list="{{ briefRows }}" as="br" hint-placeholder-count="3">
+                      <div style="display: flex; justify-content: space-between; gap: 14px; padding: 11px 0; border-bottom: 1px solid rgba(13,11,18,0.09); font-family: 'Space Mono', monospace; font-size: 10.5px;">
+                        <span style="letter-spacing: 0.14em; text-transform: uppercase; color: rgba(13,11,18,0.5);">{{ br.k }}</span>
+                        <span style="text-align: right; color: {{ br.c }};">{{ br.v }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <footer style="position: relative; z-index: 1; border-top: 1px solid rgba(13,11,18,0.12); padding: clamp(40px, 5vw, 66px) clamp(18px, 4vw, 56px) 26px; background: #F6F4F0;">
+    <div style="max-width: 1340px; margin: 0 auto;">
+      <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 0 0 clamp(30px, 4vw, 48px); margin-bottom: clamp(30px, 4vw, 48px); border-bottom: 1px solid rgba(13,11,18,0.12); color: #0D0B12;">
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 5.6vw, 76px); line-height: 0.96; letter-spacing: -0.05em;">Let&#8217;s build yours</span>
+        <span style="display: inline-flex; align-items: center; justify-content: center; width: clamp(52px, 6vw, 76px); height: clamp(52px, 6vw, 76px); border-radius: 50%; background: #5B2394; color: #fff; font-family: 'Space Mono', monospace; font-size: 20px; transition: transform 0.35s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="transform: translate(6px, -6px); background: #FF5F1F;">&#8599;</span>
+      </a>
+      <div style="display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 56px);">
+        <div style="flex: 1 1 300px; min-width: 250px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="assets/pcl-logo.png" alt="" style="height: 40px; width: auto;" />
+            <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.025em;">PixelCraftsLabStudio</span>
+          </div>
+          <p style="margin: 16px 0 0; max-width: 340px; font-size: 14px; line-height: 1.7; color: rgba(13,11,18,0.6);">Ideas. Build. Launch. We build high-converting websites and digital tools where creativity meets precision.</p>
+        </div>
+        <div style="flex: 0 1 160px; min-width: 130px;">
+          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Site</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+            <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
+              <a onClick="{{ n.go }}" href="{{ n.href }}" style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: rgba(13,11,18,0.7); transition: color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="color: #FF5F1F; transform: translateX(4px);">
+                <span style="font-family: 'Space Mono', monospace; font-size: 10px; opacity: 0.5;">{{ n.no }}</span>{{ n.label }}
+              </a>
+            </sc-for>
+          </div>
+        </div>
+        <div style="flex: 0 1 180px; min-width: 150px;">
+          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Services</div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px; font-size: 14px; color: rgba(13,11,18,0.6);">
+            <span>Web Development</span><span>UI/UX Design</span><span>Brand Identity</span><span>SEO Optimization</span>
+          </div>
+        </div>
+        <div style="flex: 1 1 230px; min-width: 210px;">
+          <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.64);">Follow</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px;">
+            <sc-for list="{{ socials }}" as="s" hint-placeholder-count="8">
+              <a href="{{ s.url }}" target="_blank" rel="noopener" style="padding: 7px 11px; border: 1px solid rgba(13,11,18,0.16); border-radius: 999px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(13,11,18,0.7); transition: all 0.2s ease;" style-hover="border-color: #FF5F1F; color: #FF5F1F; background: rgba(255,95,31,0.06);">{{ s.name }}</a>
+            </sc-for>
+          </div>
+          <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 11px; line-height: 1.9; color: rgba(13,11,18,0.64);">UK &#183; +44 7871 284043<br />[ PLACEHOLDER &#8212; studio email ]</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-top: clamp(30px, 4vw, 52px); padding-top: 18px; border-top: 1px solid rgba(13,11,18,0.1); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(13,11,18,0.64);">
+        <span>&#169; 2026 PixelCraftsLabStudio</span><span>Redesign prototype &#183; content from pixelcraftslab.com</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const PU = "#5B2394", PL = "#8B45FF", OR = "#FF5F1F", INK = "#0D0B12";
+/* Remote studio screenshots are not reachable from this prototype, so imagery
+   renders as brand placeholders until real assets are supplied. */
+const img = () => "";
+
+const PROJECTS = [
+  { id: "fikar", name: "Fikar-e-Adab", cat: "Web", kind: "Web platform", platform: "Web", size: "wide",
+    short: "An Urdu-first literary world for poetry, audio and novels.",
+    blurb: "Fikar-e-Adab is an Urdu-first literary world for poetry, audio, novels and creators. Read, listen, learn, support writers, collect Pearls and build your own visible Personal Library.",
+    link: "https://fikareadab.com/", i: "imgs/portfolio/1787230521_Screenshot 2026-08-20 at 4.55.00 PM.png" },
+  { id: "abandoned", name: "Abandoned City: Zombie Attack", cat: "Games", kind: "Game", platform: "Google Play", size: "tall",
+    short: "A first-person survival shooter with bosses, vehicles and maps.",
+    blurb: "Abandoned City: Zombie Survival is a first-person survival shooter packed with weapons, bosses, vehicles, and multiple maps.",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.abandonedcity&hl=en", i: "imgs/portfolio/1787585433_unnamed (12).webp" },
+  { id: "farmcare", name: "The Farm Care", cat: "Web", kind: "Website", platform: "Web", size: "std",
+    short: "Veterinary equipment and animal nutrition, built for buyers.",
+    blurb: "The Farm Care is a trusted name in veterinary equipment and animal nutrition solutions, proudly based in Sialkot, Pakistan. Their focus is on quality, reliability, and practical products for farms, clinics, distributors, and international buyers.",
+    link: "https://thefarmcare.com/", i: "imgs/portfolio/1786878319_Screenshot 2026-08-16 at 3.02.33 PM.png" },
+  { id: "studybuddy", name: "Study Buddy", cat: "Web", kind: "Web platform", platform: "Web", size: "wide",
+    short: "A gamified peer-learning concept for homework and test prep.",
+    blurb: "Study buddy is a playful peer learning or gamified study tool concept designed to make homework and test prep less lonely and way more entertaining.",
+    link: "https://www.studybuddy.fun/", i: "imgs/portfolio/1787585347_Screenshot 2026-08-24 at 7.28.20 PM.png" },
+  { id: "bangtan", name: "BangTan", cat: "Web", kind: "Fan platform", platform: "Web", size: "std",
+    short: "A fan-made BTS hub with vaults, quizzes and a leaderboard.",
+    blurb: "A fan-made BTS hub where ARMY can learn, explore member vaults, take quizzes, earn points, unlock profile upgrades, and climb the leaderboard.",
+    link: "https://bangtan.info/", i: "imgs/portfolio/1786520047_unnamed.webp" },
+  { id: "matchmallow", name: "MatchMallow: Memory Match", cat: "Games", kind: "Game", platform: "Google Play", size: "std",
+    short: "Match animal pairs, build streaks, beat your best score.",
+    blurb: "Match cute animal pairs, build streaks, and beat your best score with Mallow!",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.matchmallow", i: "imgs/portfolio/1786694460_ChatGPT Image Aug 14, 2026, 11_59_18 AM.png" },
+  { id: "coloriboo", name: "Coloriboo: Learn Colors", cat: "Apps", kind: "Kids app", platform: "Google Play", size: "std",
+    short: "Pop, play and learn colors with Boo.",
+    blurb: "Pop, play and learn colors with Boo through fun, magical mini-games.",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.coloriboo", i: "imgs/portfolio/1786691028_ChatGPT Image Aug 13, 2026, 07_26_37 PM.png" },
+  { id: "mathibble", name: "Mathibble: Kids Math Games", cat: "Apps", kind: "Kids app", platform: "Google Play", size: "std",
+    short: "Visual math questions, friendly feedback and rewards.",
+    blurb: "Fun math games for kids with visual questions, friendly feedback and rewards.",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.mathibble", i: "imgs/portfolio/1786520278_unnamed (3).png" },
+  { id: "animal", name: "Animal Adventure: Learn & Play", cat: "Apps", kind: "Kids app", platform: "Google Play", size: "std",
+    short: "Meet animals, learn their names, discover their sounds.",
+    blurb: "Meet colorful animals, learn their names and discover their fun sounds!",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.animalkingdom", i: "imgs/portfolio/1786520187_unnamed (1).png" },
+  { id: "bloxabet", name: "Bloxabet: Learn ABC", cat: "Apps", kind: "Kids app", platform: "Google Play", size: "wide",
+    short: "An interactive alphabet adventure in colorful letter blocks.",
+    blurb: "Bloxabet: Learn ABC is a vibrant, interactive alphabet adventure where toddlers can tap, listen, and play their way from A to Z using colorful letter blocks and friendly animations!",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.abclearning", i: "imgs/portfolio/1786447304_unnamed (1).webp" },
+  { id: "globepop", name: "GlobePop: Learn Flags", cat: "Apps", kind: "Kids app", platform: "Google Play", size: "std",
+    short: "Learn world flags through quizzes with Orbit.",
+    blurb: "Learn world flags through fun quizzes with Orbit, clues, sounds and rewards.",
+    link: "https://play.google.com/store/apps/details?id=com.pixelcraftslab.flagquest", i: "imgs/portfolio/1786447121_unnamed.webp" },
+  { id: "alphablock", name: "Alpha Block Solutions", cat: "Lab", kind: "Coming soon", platform: "In build", size: "std",
+    short: "Secure platforms, trading intelligence and automation tools.",
+    blurb: "ABS builds secure digital platforms, trading-intelligence systems and automation tools for founders, teams and investors who want to move from idea to working product.",
+    link: "https://alphablocksolutions.com/", i: "imgs/portfolio/1786521532_Screenshot 2026-08-12 at 11.50.27 AM.png" },
+  { id: "pulse", name: "Pulse", cat: "Lab", kind: "Coming soon", platform: "In build", size: "std",
+    short: "AI-powered crypto trading signals and market intelligence.",
+    blurb: "AI-powered crypto trading signals and market intelligence.",
+    link: "", i: "imgs/portfolio/1786520821_unnamed (4).png" },
+];
+
+const TINTS = [["#5B2394","#8B45FF"],["#0D0B12","#3A3346"],["#FF5F1F","#F2894F"],["#8B45FF","#FF5F1F"],["#3A3346","#5B2394"],["#FF5F1F","#5B2394"]];
+PROJECTS.forEach((p, i) => {
+  p.initials = p.name.replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(s => s[0]).join("");
+  p.tint = TINTS[i % TINTS.length][0];
+  p.tint2 = TINTS[i % TINTS.length][1];
+});
+
+const SERVICES = [
+  { title: "Utility App Development", stage: "Engineer", body: "We design and develop practical, lightweight applications focused on solving real-world problems." },
+  { title: "Offline Game Development", stage: "Engineer", body: "We create engaging offline-friendly games that prioritize performance, accessibility, and user experience." },
+  { title: "Web & Platform Development", stage: "Engineer", body: "We build modern websites and supporting platforms that complement your apps, games, or digital presence." },
+  { title: "UI/UX Design", stage: "Design", body: "We design user interfaces that are clear, intuitive, and visually balanced." },
+  { title: "Performance Optimization", stage: "Polish", body: "We improve the speed, responsiveness, and efficiency of your digital product." },
+  { title: "Maintenance & Support", stage: "Launch", body: "We provide ongoing updates, improvements, and technical support to keep your product running smoothly." },
+];
+
+const TEAM = [
+  { name: "Mehak Arman", role: "Founder, Creative Director & Digital Marketing Lead", img: "storage/team/22RPejylwi0liOaJqP23dw8rlzLSKGokLYFJyHqv.png",
+    bio: "Leads the vision, branding, and overall direction of PixelCraftsLabStudio. Oversees creative strategy, digital presence, and audience growth while ensuring every project aligns with a strong, modern brand identity." },
+  { name: "Sahil Arman", role: "Lead Backend Engineer", img: "storage/team/Q4e0fZV365WfYaJYIAEIzb9S48InXC1Pfvd3XoAe.png",
+    bio: "Heads backend architecture and system development for web and application projects. Specializes in building scalable, secure, and high-performance systems." },
+  { name: "Hamdan Arman", role: "Game Developer", img: "storage/team/QvhfCoo6xE9yDpcCoQASeXG4fLOGk7niVbsfqfXs.png",
+    bio: "Designs and develops interactive gameplay systems and immersive experiences. Focuses on performance optimization, game mechanics and engaging gaming solutions." },
+  { name: "Mobeen Bhalli", role: "API & Integration Engineer", img: "storage/team/kSsegaCWHBpnOyx7W7eNWy1DGpJeBNpBd5Ax0PtD.png",
+    bio: "Handles API development and system integrations, enabling seamless communication between platforms and reliable backend connectivity." },
+];
+
+TEAM.forEach((m, i) => {
+  m.initials = m.name.split(" ").map(s => s[0]).join("");
+  m.tint = TINTS[i % TINTS.length][0];
+  m.tint2 = TINTS[i % TINTS.length][1];
+});
+
+const SOCIALS = [
+  { name: "Instagram", url: "https://www.instagram.com/pixel_crafts_lab_studio?igsh=dzQzczA4aDUyaGYz" },
+  { name: "LinkedIn", url: "http://linkedin.com/in/pixelcraftslab-studio-46364139b" },
+  { name: "X", url: "https://x.com/PixelCraftsLab" },
+  { name: "TikTok", url: "http://tiktok.com/@pixel_crafts_lab_studio" },
+  { name: "Pinterest", url: "https://pin.it/7maousVqc" },
+  { name: "Facebook", url: "https://facebook.com/profile.php?id=61584760521477" },
+  { name: "YouTube", url: "https://www.youtube.com/@PIXELCRAFTSLABSTUDIO" },
+  { name: "WhatsApp", url: "https://www.whatsapp.com/channel/0029Vb7gHBr9Bb5revqEZz1W" },
+];
+
+const ROUTES = [
+  { key: "work", label: "Work", no: "01" },
+  { key: "services", label: "Services", no: "02" },
+  { key: "studio", label: "Studio", no: "03" },
+  { key: "lab", label: "Lab", no: "04" },
+];
+
+const FLAVOR = { work: "pixels", services: "columns", studio: "brush", lab: "scatter", contact: "center", home: "grid", project: "pixels" };
+
+function rnd(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+const AMBIENT = (() => { const r = rnd(77), o = []; for (let i = 0; i < 16; i++) o.push({ x: +(r() * 96).toFixed(1), y: +(r() * 96).toFixed(1), s: 5 + Math.round(r() * 9), c: r() < 0.6 ? "rgba(91,35,148,0.5)" : "rgba(255,95,31,0.5)", d: +(7 + r() * 8).toFixed(1), delay: +(r() * 9).toFixed(1), pxf: Math.round((r() - 0.5) * 30), pyf: Math.round((r() - 0.5) * 24) }); return o; })();
+const LABDOTS = (() => { const r = rnd(31), o = []; for (let i = 0; i < 26; i++) o.push({ x: +(r() * 92).toFixed(1), y: +(r() * 90).toFixed(1), s: 6 + Math.round(r() * 14), c: r() < 0.45 ? OR : r() < 0.7 ? PL : "rgba(246,244,240,0.5)", dur: +(5 + r() * 6).toFixed(1), delay: +(r() * 8).toFixed(1), f: Math.round((r() - 0.5) * 44) }); return o; })();
+
+const cells = (flavor) => {
+  const out = [];
+  const mk = (cols, rows, fn) => {
+    for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++) out.push(fn(x, y, cols, rows));
+  };
+  const r = rnd(9);
+  if (flavor === "columns") mk(7, 1, (x, y, c) => ({ l: (x * 100) / c, t: 0, w: 100 / c + 0.2, h: 100, c: x % 2 ? PU : PL, o: "top", d: x * 34 }));
+  else if (flavor === "brush") mk(1, 5, (x, y, c, rws) => ({ l: 0, t: (y * 100) / rws, w: 100, h: 100 / rws + 0.2, c: y % 2 ? PU : OR, o: "left", d: y * 52 }));
+  else if (flavor === "scatter") mk(10, 6, (x, y, c, rws) => ({ l: (x * 100) / c, t: (y * 100) / rws, w: 100 / c + 0.2, h: 100 / rws + 0.2, c: r() < 0.4 ? OR : r() < 0.7 ? PU : INK, o: "center", d: Math.round(r() * 300) }));
+  else if (flavor === "center") mk(9, 6, (x, y, c, rws) => { const dx = x - (c - 1) / 2, dy = y - (rws - 1) / 2; return { l: (x * 100) / c, t: (y * 100) / rws, w: 100 / c + 0.2, h: 100 / rws + 0.2, c: PU, o: "center", d: Math.round(260 - Math.hypot(dx, dy) * 46) }; })
+  else if (flavor === "pixels") mk(14, 8, (x, y, c, rws) => ({ l: (x * 100) / c, t: (y * 100) / rws, w: 100 / c + 0.15, h: 100 / rws + 0.15, c: (x + y) % 5 === 0 ? OR : PU, o: "center", d: (x + y) * 16 }));
+  else mk(8, 5, (x, y, c, rws) => ({ l: (x * 100) / c, t: (y * 100) / rws, w: 100 / c + 0.2, h: 100 / rws + 0.2, c: (x + y) % 4 === 0 ? OR : PU, o: "center", d: (x + y) * 26 }));
+  return out;
+};
+
+const HIDDEN = { columns: "scaleY(0)", brush: "scaleX(0)", scatter: "scale(0) rotate(35deg)", center: "scale(0)", pixels: "scale(0)", grid: "scale(0)" };
+
+class Component extends DCLogic {
+  state = {
+    route: "home", pid: null, w: 1440, menu: false, intro: true,
+    curtain: null, phase: null, filter: "All", step: 0, answers: {}, sent: false,
+    stage: "Imagine", labMode: "pixels", labBoard: null, openProc: 0, morph: null, morphMeta: null,
+    toys: null, dragging: null, painting: false,
+    reduced: false, hoverKind: null,
+  };
+
+  componentDidMount() {
+    this.onResize = () => {
+      this.setState({ w: window.innerWidth, toys: null });
+      this.cacheTools();
+    };
+    this.onResize();
+    window.addEventListener("resize", this.onResize);
+
+    this.mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    this.setState({ reduced: this.mq.matches });
+    this.onMq = () => this.setState({ reduced: this.mq.matches });
+    if (this.mq.addEventListener) this.mq.addEventListener("change", this.onMq);
+
+    let seen = false;
+    try { seen = window.localStorage.getItem("pcl-intro-v1") === "1"; } catch (e) { seen = false; }
+    if (seen) this.setState({ intro: false });
+    else this.introTimer = setTimeout(() => this.endIntro(), 2050);
+
+    this.onMove = (e) => {
+      this.mouse = { x: e.clientX, y: e.clientY };
+      if (!this.root) return;
+      this.root.style.setProperty("--mx", e.clientX + "px");
+      this.root.style.setProperty("--my", e.clientY + "px");
+      this.root.style.setProperty("--px", ((e.clientX / window.innerWidth) * 2 - 1).toFixed(3));
+      this.root.style.setProperty("--py", ((e.clientY / window.innerHeight) * 2 - 1).toFixed(3));
+      if (!this.state.reduced && !this.mraf) this.mraf = requestAnimationFrame(() => { this.mraf = null; this.applyPointer(); });
+    };
+    window.addEventListener("pointermove", this.onMove, { passive: true });
+
+    this.onOver = (e) => {
+      const t = e.target.closest && e.target.closest("[data-cursor]");
+      const label = t ? t.getAttribute("data-cursor") : "";
+      if (!this.cursorDot) return;
+      if (label) {
+        const w = Math.max(74, label.length * 8 + 30);
+        this.cursorDot.style.width = w + "px"; this.cursorDot.style.height = "30px";
+        this.cursorDot.style.marginLeft = -w / 2 + "px"; this.cursorDot.style.marginTop = "-15px";
+        this.cursorDot.style.borderRadius = "999px"; this.cursorDot.style.background = OR;
+        if (this.cursorLabel) { this.cursorLabel.textContent = label; this.cursorLabel.style.opacity = "1"; }
+      } else {
+        this.cursorDot.style.width = "12px"; this.cursorDot.style.height = "12px";
+        this.cursorDot.style.marginLeft = "-6px"; this.cursorDot.style.marginTop = "-6px";
+        this.cursorDot.style.borderRadius = "0"; this.cursorDot.style.background = PU;
+        if (this.cursorLabel) this.cursorLabel.style.opacity = "0";
+      }
+    };
+    document.addEventListener("pointerover", this.onOver);
+
+    this.scan();
+    this.onScroll = () => {
+      const now = Date.now();
+      if (now - (this._last || 0) > 110) { this._last = now; this.applyMotion(); }
+      if (this.raf) cancelAnimationFrame(this.raf);
+      this.raf = requestAnimationFrame(() => { this.raf = null; this._last = Date.now(); this.applyMotion(); });
+    };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    this.onVis = () => { this.raf = null; this.scan(); this.applyMotion(); };
+    document.addEventListener("visibilitychange", this.onVis);
+    this.applyMotion();
+    this.safety = setTimeout(() => { this.els.forEach(el => { el.style.opacity = ""; }); }, 4000);
+  }
+
+  componentDidUpdate(pp, ps) {
+    const s = this.state;
+    const sig = s.route + "|" + s.pid + "|" + s.filter + "|" + s.step + "|" + s.stage;
+    const stale = !this.scrubs || !this.els
+      || (this.scrubs[0] && !this.scrubs[0].isConnected)
+      || (this.els[0] && !this.els[0].isConnected)
+      || document.querySelectorAll("[data-scrub]").length !== this.scrubs.length;
+    if (sig !== this._sig || stale) { this._sig = sig; this.scan(); this.applyMotion(); }
+    if (s.route === "project" && this.morphPending) this.runMorph();
+    if (s.morph && this.morphEl) {
+      const m = s.morph;
+      this.morphEl.style.left = m.left + "px";
+      this.morphEl.style.top = m.top + "px";
+      this.morphEl.style.width = m.width + "px";
+      this.morphEl.style.height = m.height + "px";
+      this.morphEl.style.borderRadius = m.radius + "px";
+      this.morphEl.style.opacity = String(m.opacity);
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener("pointermove", this.onMove);
+    document.removeEventListener("pointerover", this.onOver);
+    window.removeEventListener("scroll", this.onScroll);
+    document.removeEventListener("visibilitychange", this.onVis);
+    if (this.mq && this.mq.removeEventListener) this.mq.removeEventListener("change", this.onMq);
+    clearTimeout(this.introTimer); clearTimeout(this.safety);
+    clearTimeout(this.mt); clearTimeout(this.mt2);
+  }
+
+  setRoot = (el) => { this.root = el; };
+  setCursor = (el) => { this.cursorEl = el; };
+  setCursorDot = (el) => { this.cursorDot = el; };
+  setCursorLabel = (el) => { this.cursorLabel = el; };
+  setMain = (el) => { this.main = el; };
+  setMorph = (el) => {
+    this.morphEl = el;
+    const m = this.state.morph;
+    if (el && m) {
+      el.style.left = m.left + "px"; el.style.top = m.top + "px";
+      el.style.width = m.width + "px"; el.style.height = m.height + "px";
+    }
+  };
+
+  setBoard = (el) => { this.board = el; };
+
+  initToys() {
+    if (this.state.toys) return this.state.toys;
+    const box = this.board ? this.board.getBoundingClientRect() : null;
+    const W = box && box.width ? box.width : Math.min(this.state.w - 40, 1200);
+    const H = box && box.height ? box.height : 360;
+    const narrow = W < 520;
+    const seed = [
+      { label: "hero", fx: 0.05, fy: 0.10, w: narrow ? 92 : 128, h: narrow ? 44 : 56, bg: "#5B2394", fg: "#fff", r: "10px", border: "none" },
+      { label: "image", fx: 0.40, fy: 0.30, w: narrow ? 66 : 96, h: narrow ? 66 : 96, bg: "linear-gradient(140deg, #8B45FF, #FF5F1F)", fg: "rgba(255,255,255,0.9)", r: "14px", border: "none" },
+      { label: "cta", fx: 0.14, fy: 0.62, w: narrow ? 78 : 104, h: 40, bg: "#FF5F1F", fg: "#fff", r: "999px", border: "none" },
+      { label: "grid", fx: 0.70, fy: 0.12, w: narrow ? 58 : 84, h: narrow ? 58 : 84, bg: "transparent", fg: "rgba(246,244,240,0.7)", r: "6px", border: "1px dashed rgba(246,244,240,0.45)" },
+      { label: "node", fx: 0.64, fy: 0.64, w: 44, h: 44, bg: "#F6F4F0", fg: "#0D0B12", r: "50%", border: "none" },
+    ];
+    return seed.map(t => ({
+      ...t,
+      x: Math.max(4, Math.min(W - t.w - 4, Math.round(W * t.fx))),
+      y: Math.max(4, Math.min(H - t.h - 4, Math.round(H * t.fy))),
+    }));
+  }
+
+  toyDown = (i) => (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const toys = this.state.toys || this.initToys();
+    const box = this.board ? this.board.getBoundingClientRect() : { left: 0, top: 0 };
+    this.drag = { i, ox: e.clientX - box.left - toys[i].x, oy: e.clientY - box.top - toys[i].y };
+    this.setState({ toys, dragging: i });
+    window.addEventListener("pointermove", this.toyMove);
+    window.addEventListener("pointerup", this.toyUp);
+  };
+
+  toyMove = (e) => {
+    if (!this.drag || !this.board) return;
+    const box = this.board.getBoundingClientRect();
+    const toys = (this.state.toys || this.initToys()).slice();
+    const t = { ...toys[this.drag.i] };
+    t.x = Math.max(4, Math.min(box.width - t.w - 4, e.clientX - box.left - this.drag.ox));
+    t.y = Math.max(4, Math.min(box.height - t.h - 4, e.clientY - box.top - this.drag.oy));
+    toys[this.drag.i] = t;
+    this.setState({ toys });
+  };
+
+  toyUp = () => {
+    window.removeEventListener("pointermove", this.toyMove);
+    window.removeEventListener("pointerup", this.toyUp);
+    if (this.drag) {
+      const toys = (this.state.toys || []).slice();
+      const t = { ...toys[this.drag.i] };
+      t.x = Math.round(t.x / 24) * 24;
+      t.y = Math.round(t.y / 24) * 24;
+      toys[this.drag.i] = t;
+      this.setState({ toys, dragging: null });
+    }
+    this.drag = null;
+  };
+
+  boardDown = () => {
+    this.setState({ painting: true });
+    const stop = () => { this.setState({ painting: false }); window.removeEventListener("pointerup", stop); };
+    window.addEventListener("pointerup", stop);
+  };
+
+  scan() {
+    this.els = Array.from(document.querySelectorAll("[data-mo]"));
+    this.scrubs = Array.from(document.querySelectorAll("[data-scrub]"));
+    this.cacheTools();
+    const hideTools = window.innerWidth < 760;
+    for (const t of (this.tools || [])) t.el.style.display = hideTools ? "none" : "";
+    clearTimeout(this.safety);
+    this.safety = setTimeout(() => {
+      const vh = window.innerHeight;
+      for (const el of this.els) {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0 && parseFloat(getComputedStyle(el).opacity) < 0.9) {
+          el.style.opacity = "1"; el.style.transform = "none";
+        }
+      }
+    }, 1600);
+  }
+
+  cacheTools() {
+    this.tools = Array.from(document.querySelectorAll("[data-tool]")).map(el => ({
+      el,
+      mode: el.getAttribute("data-tool"),
+      pull: parseFloat(el.getAttribute("data-tool-pull") || "1"),
+      base: null,
+    }));
+    this.magnets = Array.from(document.querySelectorAll("[data-magnet]"));
+  }
+
+  applyPointer() {
+    const m = this.mouse; if (!m) return;
+    if (this.tools) {
+      for (const t of this.tools) {
+        const r = t.el.getBoundingClientRect();
+        if (r.bottom < -120 || r.top > window.innerHeight + 120) continue;
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const dx = cx - m.x, dy = cy - m.y;
+        const d = Math.hypot(dx, dy);
+        const R = 190;
+        let ox = 0, oy = 0, rot = 0;
+        if (d < R && d > 0.1) {
+          const f = (1 - d / R);
+          if (t.mode === "flee") { ox = (dx / d) * f * 46 * t.pull; oy = (dy / d) * f * 46 * t.pull; rot = f * 10 * t.pull; }
+          else if (t.mode === "snap") { ox = -(dx / d) * f * 30 * t.pull; oy = -(dy / d) * f * 30 * t.pull; rot = -f * 8 * t.pull; }
+        }
+        t.el.style.setProperty("--tx", ox.toFixed(1) + "px");
+        t.el.style.setProperty("--ty", oy.toFixed(1) + "px");
+        t.el.style.setProperty("--tr", rot.toFixed(2) + "deg");
+      }
+    }
+    if (this.magnets) {
+      for (const el of this.magnets) {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > window.innerHeight) continue;
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const dx = m.x - cx, dy = m.y - cy;
+        const d = Math.hypot(dx, dy);
+        const R = Math.max(r.width, r.height) * 1.5;
+        const f = d < R ? 1 - d / R : 0;
+        el.style.setProperty("--gx", (dx * f * 0.16).toFixed(1) + "px");
+        el.style.setProperty("--gy", (dy * f * 0.16).toFixed(1) + "px");
+      }
+    }
+  }
+
+  applyMotion() {
+    const vh = window.innerHeight;
+    const reduced = this.state.reduced;
+
+    if (this.scrubs) {
+      for (const el of this.scrubs) {
+        const r = el.getBoundingClientRect();
+        const span = el.getAttribute("data-scrub") === "sticky"
+          ? Math.max(1, r.height - vh)
+          : Math.max(1, r.height + vh * 0.7);
+        const raw = el.getAttribute("data-scrub") === "sticky"
+          ? -r.top / span
+          : (vh * 0.88 - r.top) / span;
+        const p = reduced ? 1 : Math.max(0, Math.min(1, raw));
+        el.style.setProperty("--p", p.toFixed(4));
+        el.style.setProperty("--pi", (1 - p).toFixed(4));
+        el.style.setProperty("--p2", Math.max(0, Math.min(1, p * 2)).toFixed(4));
+        el.style.setProperty("--pa", Math.max(0, Math.min(1, (p - 0.28) / 0.34)).toFixed(4));
+        el.style.setProperty("--pb", Math.max(0, Math.min(1, (p - 0.6) / 0.34)).toFixed(4));
+      }
+    }
+
+    if (!this.els) return;
+    const reads = this.els.map(el => [el, el.getBoundingClientRect(), el.getAttribute("data-mo")]);
+    for (const [el, r, spec] of reads) {
+      const [type, raw] = spec.split(":");
+      const amt = parseFloat(raw || "0");
+      const p = Math.max(0, Math.min(1, (vh * 0.94 - r.top) / Math.min(vh * 0.55, r.height + vh * 0.3)));
+      const e = reduced ? 1 : 1 - Math.pow(1 - p, 3);
+      const c = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+      if (type === "rise") {
+        el.style.transitionProperty = "opacity, transform";
+        el.style.transitionDuration = reduced ? "0.2s" : "0.8s";
+        el.style.transitionTimingFunction = "cubic-bezier(0.16,1,0.3,1)";
+        el.style.opacity = String(Math.min(1, e * 1.25));
+        el.style.transform = reduced ? "none" : `translateY(${(1 - e) * 40}px)`;
+      } else if (reduced) {
+        if (type === "draw" || type === "wipe") el.style.clipPath = "inset(0 0 0 0)";
+        else if (type === "grow" || type === "grow-y") el.style.transform = "none";
+        else el.style.transform = "none";
+      } else if (type === "par") {
+        el.style.transform = `translateY(${(c - 0.5) * (amt || 70)}px)`;
+      } else if (type === "grow") {
+        el.style.transform = `scaleX(${e})`;
+      } else if (type === "grow-y") {
+        el.style.transform = `scaleY(${e})`;
+      } else if (type === "draw") {
+        el.style.clipPath = `inset(0 ${(1 - e) * 100}% 0 0)`;
+      } else if (type === "wipe") {
+        el.style.clipPath = `inset(${(1 - e) * 100}% 0 0 0)`;
+      } else if (type === "zoom") {
+        el.style.transform = `scale(${1.14 - 0.14 * Math.min(1, c * 1.6)})`;
+      } else if (type === "spin") {
+        el.style.transform = `rotate(${(c - 0.5) * (amt || 10)}deg)`;
+      }
+    }
+  }
+
+  endIntro = () => {
+    clearTimeout(this.introTimer);
+    try { window.localStorage.setItem("pcl-intro-v1", "1"); } catch (e) {}
+    this.setState({ intro: false });
+  };
+
+  nav = (route, pid) => {
+    if (this.state.route === route && this.state.pid === (pid || null)) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    if (this.state.reduced) {
+      window.scrollTo(0, 0);
+      this.setState({ route, pid: pid || null, step: 0, menu: false, morph: null });
+      return;
+    }
+    const flavor = FLAVOR[route] || "grid";
+    this.setState({ curtain: flavor, phase: "arm", menu: false });
+    requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ phase: "out" })));
+    clearTimeout(this.t1); clearTimeout(this.t2);
+    this.t1 = setTimeout(() => {
+      window.scrollTo(0, 0);
+      this.setState({ route, pid: pid || null, phase: "in", step: 0 });
+    }, 520);
+    this.t2 = setTimeout(() => this.setState({ curtain: null, phase: null }), 1020);
+  };
+
+  openProject = (id, e) => {
+    const card = e && e.currentTarget && e.currentTarget.querySelector("[data-morph-src]");
+    const p = PROJECTS.find(x => x.id === id);
+    if (card && p) {
+      const r = card.getBoundingClientRect();
+      this.setState({
+        morph: { left: r.left, top: r.top, width: r.width, height: r.height, radius: 16, opacity: 1 },
+        morphMeta: { tint: p.tint, tint2: p.tint2, initials: p.initials },
+      });
+      this.morphPending = true;
+    }
+    this.nav("project", id);
+  };
+
+  runMorph() {
+    if (!this.morphPending || !this.morphEl) return;
+    const dest = document.querySelector("[data-morph-dest]");
+    if (!dest) { this.morphPending = false; this.setState({ morph: null }); return; }
+    this.morphPending = false;
+    const r = dest.getBoundingClientRect();
+    requestAnimationFrame(() => {
+      this.setState({ morph: { left: r.left, top: r.top, width: r.width, height: r.height, radius: 22, opacity: 1 } });
+      clearTimeout(this.mt);
+      this.mt = setTimeout(() => this.setState(s => ({ morph: s.morph ? { ...s.morph, opacity: 0 } : null })), 620);
+      this.mt2 = setTimeout(() => this.setState({ morph: null }), 1000);
+    });
+  }
+
+  renderVals() {
+    const w = this.state.w;
+    const isDesktop = w >= 940;
+    const route = this.state.route;
+    const P = PROJECTS.find(p => p.id === this.state.pid) || PROJECTS[0];
+    const phase = this.state.phase;
+    const flavor = this.state.curtain;
+    const hidden = HIDDEN[flavor] || "scale(0)";
+    const shown = flavor === "columns" ? "scaleY(1)" : flavor === "brush" ? "scaleX(1)" : "scale(1)";
+
+    return {
+      isDesktop, isCompact: !isDesktop,
+      pointerFine: isDesktop && !this.state.reduced,
+      reduced: this.state.reduced,
+      full: !this.state.reduced,
+      menu: this.state.menu,
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      showIntro: this.state.intro,
+      endIntro: this.endIntro,
+      setRoot: this.setRoot, setCursor: this.setCursor, setCursorDot: this.setCursorDot,
+      setCursorLabel: this.setCursorLabel, setMain: this.setMain, setMorph: this.setMorph,
+
+      curtain: !!flavor,
+      cells: flavor ? cells(flavor).map((c, i) => ({
+        ...c, tr: phase === "out" ? shown : hidden,
+        op: phase === "out" ? 1 : phase === "in" ? 1 : 0,
+        d: phase === "in" ? c.d * 0.7 : c.d,
+      })) : [],
+      morph: !!this.state.morph,
+      morphTint: (this.state.morphMeta || {}).tint || PU,
+      morphTint2: (this.state.morphMeta || {}).tint2 || PL,
+      morphInitials: (this.state.morphMeta || {}).initials || "",
+
+      isHome: route === "home", isWork: route === "work", isProject: route === "project",
+      isServices: route === "services", isStudio: route === "studio", isLab: route === "lab",
+      isContact: route === "contact",
+
+      navItems: ROUTES.map(r => ({
+        label: r.label, href: "#" + r.key, no: r.no,
+        color: route === r.key ? "#0D0B12" : "rgba(13,11,18,0.6)",
+        mcolor: route === r.key ? "#5B2394" : "#0D0B12",
+        on: route === r.key ? 1 : 0,
+        go: (e) => { if (e) e.preventDefault(); this.nav(r.key); },
+        goClose: (e) => { if (e) e.preventDefault(); this.nav(r.key); },
+      })),
+      goHome: (e) => { if (e) e.preventDefault(); this.nav("home"); },
+      goWork: (e) => { if (e) e.preventDefault(); this.nav("work"); },
+      goServices: (e) => { if (e) e.preventDefault(); this.nav("services"); },
+      goStudio: (e) => { if (e) e.preventDefault(); this.nav("studio"); },
+      goLab: (e) => { if (e) e.preventDefault(); this.nav("lab"); },
+      goContact: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
+      goContactClose: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
+
+      ambient: AMBIENT, labTeaser: LABDOTS,
+      heroImg: img(PROJECTS[0].i),
+
+      arc: [
+        { n: "01", t: "Ideas", d: "Scope, audience and what it has to do.", c: PU, tc: PU, delay: 0 },
+        { n: "02", t: "Craft", d: "Interfaces that are clear and balanced.", c: PL, tc: "#6A3BAF", delay: 70 },
+        { n: "03", t: "Build", d: "Scalable, secure, production-ready.", c: OR, tc: "#B8380A", delay: 140 },
+        { n: "04", t: "Launch", d: "Ship it, then keep it healthy.", c: INK, tc: INK, delay: 210 },
+      ],
+
+      featured: PROJECTS.slice(0, 3).map((p, i) => ({
+        ...p, delay: i * 90, no: String(i + 1).padStart(2, "0"),
+        mediaOrder: i % 2 === 1 ? 2 : 1,
+        textOrder: i % 2 === 1 ? 1 : 2,
+        cursor: p.cat === "Games" ? "Play it" : p.cat === "Apps" ? "Open app" : "Open site",
+        entrance: "Open project \u2197",
+        open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
+      })),
+
+      openFirst: (e) => { if (e) e.preventDefault(); this.nav("project", PROJECTS[0].id); },
+
+      layers: [
+        { label: "Image", c: "rgba(246,244,240,0.5)", bg: "rgba(139,69,255,0.16)", dx: -190, dy: -120, rot: -7 },
+        { label: "Typography", c: "rgba(246,244,240,0.5)", bg: "rgba(246,244,240,0.05)", dx: -95, dy: -58, rot: -3 },
+        { label: "Grid", c: "rgba(255,95,31,0.55)", bg: "rgba(255,95,31,0.07)", dx: 0, dy: 0, rot: 0 },
+        { label: "Components", c: "rgba(246,244,240,0.5)", bg: "rgba(246,244,240,0.05)", dx: 95, dy: 58, rot: 3 },
+        { label: "Code", c: "rgba(139,69,255,0.7)", bg: "rgba(91,35,148,0.2)", dx: 190, dy: 118, rot: 7 },
+        { label: "Colour", c: "rgba(255,145,102,0.7)", bg: "rgba(255,95,31,0.12)", dx: 282, dy: 176, rot: 11 },
+      ],
+
+      fragments: (() => {
+        const r = rnd(613), out = [];
+        for (let i = 0; i < 14; i++) {
+          const a = (i / 14) * Math.PI * 2;
+          const rad = 240 + r() * 200;
+          out.push({
+            s: 10 + Math.round(r() * 22),
+            c: r() < 0.45 ? PU : r() < 0.72 ? OR : INK,
+            r: r() < 0.25 ? "999px" : "2px",
+            x: Math.round(Math.cos(a) * rad), y: Math.round(Math.sin(a) * rad * 0.72),
+            tx: Math.round(Math.cos(a) * 62), ty: Math.round(Math.sin(a) * 44),
+            rot: Math.round((r() - 0.5) * 220),
+          });
+        }
+        return out;
+      })(),
+
+      services: SERVICES.map((s, i) => ({ ...s, no: String(i + 1).padStart(2, "0"), delay: i * 60 })),
+
+      steps: [
+        { no: "01", title: "Ideas", delay: 0, rise: 46, c: PU, blocks: [{ c: PU }, { c: "rgba(13,11,18,0.15)" }, { c: "rgba(13,11,18,0.15)" }],
+          body: "We start from the problem, not the pixels. Scope, audience and what the product actually has to do get settled before anything is designed." },
+        { no: "02", title: "Build", delay: 80, rise: 74, c: PL, blocks: [{ c: PU }, { c: PL }, { c: "rgba(13,11,18,0.15)" }],
+          body: "Clean code and strong UI design together — clear, intuitive, visually balanced interfaces on architecture built to be scalable and secure." },
+        { no: "03", title: "Launch", delay: 160, rise: 102, c: OR, blocks: [{ c: PU }, { c: PL }, { c: OR }],
+          body: "Ship it, then keep it healthy: performance tuning, ongoing updates and technical support so the product keeps running the way it should." },
+      ],
+
+      socials: SOCIALS,
+
+      /* ---- WORK ---- */
+      filters: ["All", "Web", "Apps", "Games", "Lab"].map(f => {
+        const n = f === "All" ? PROJECTS.length : PROJECTS.filter(p => p.cat === f).length;
+        const on = this.state.filter === f;
+        return {
+          label: f, count: String(n).padStart(2, "0"),
+          bg: on ? INK : "transparent", color: on ? "#F6F4F0" : "rgba(13,11,18,0.65)",
+          border: on ? INK : "rgba(13,11,18,0.18)",
+          select: () => this.setState({ filter: f }),
+        };
+      }),
+      visible: (this.state.filter === "All" ? PROJECTS : PROJECTS.filter(p => p.cat === this.state.filter))
+        .map((p, i) => {
+          const frame = p.cat === "Lab" ? "blueprint" : p.cat === "Games" ? "game" : p.cat === "Apps" ? "phone" : "browser";
+          return {
+            ...p, delay: (i % 6) * 70,
+            span: isDesktop && frame === "browser" ? "span 2" : "span 1",
+            isBrowser: frame === "browser", isPhone: frame === "phone",
+            isGame: frame === "game", isBlueprint: frame === "blueprint",
+            world: frame === "browser" ? "Web" : frame === "phone" ? "Mobile" : frame === "game" ? "Game" : "In build",
+            host: p.link ? p.link.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "in development",
+            cursor: frame === "game" ? "Play it" : frame === "phone" ? "Open app" : frame === "blueprint" ? "Peek" : "Open site",
+            open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
+          };
+        }),
+      workCols: isDesktop ? "repeat(4, minmax(0, 1fr))" : w >= 620 ? "repeat(2, 1fr)" : "1fr",
+
+      /* ---- PROJECT ---- */
+      P: {
+        ...P, hasLink: !!P.link, noLink: !P.link, link: P.link || "#contact",
+        host: P.link ? P.link.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "in development",
+        wash: P.cat === "Games" ? "rgba(255,95,31,0.10)" : P.cat === "Apps" ? "rgba(139,69,255,0.12)" : "rgba(91,35,148,0.10)",
+      },
+      pMeta: [
+        { k: "Discipline", v: P.kind, delay: 0 },
+        { k: "Platform", v: P.platform, delay: 70 },
+        { k: "Category", v: P.cat, delay: 140 },
+        { k: "Status", v: P.link ? "Live" : "In build", delay: 210 },
+      ],
+      pCaps: (P.cat === "Games"
+        ? ["Offline Game Development", "UI/UX Design", "Performance Optimization", "Maintenance & Support"]
+        : P.cat === "Apps"
+        ? ["Utility App Development", "UI/UX Design", "Performance Optimization", "Maintenance & Support"]
+        : ["Web & Platform Development", "UI/UX Design", "Performance Optimization", "Maintenance & Support"]
+      ).map((label, i) => ({ label, c: [PU, PL, OR, INK][i] })),
+      nextP: (() => {
+        const i = PROJECTS.findIndex(x => x.id === P.id);
+        const nx = PROJECTS[(i + 1) % PROJECTS.length];
+        return { name: nx.name, kind: nx.kind, initials: nx.initials, tint: nx.tint, tint2: nx.tint2,
+          open: (e) => { if (e) e.preventDefault(); this.openProject(nx.id, e); } };
+      })(),
+      backToWork: (e) => { if (e) e.preventDefault(); this.nav("work"); },
+
+      /* ---- SERVICES ---- */
+      stages: ["Imagine", "Design", "Engineer", "Polish", "Launch"].map((s, i) => {
+        const on = this.state.stage === s;
+        return {
+          name: s, no: "0" + (i + 1), on: on ? 1 : 0,
+          color: on ? "#F6F4F0" : "rgba(13,11,18,0.6)",
+          bg: on ? (i % 2 ? OR : PU) : "transparent",
+          border: on ? "transparent" : "rgba(13,11,18,0.16)",
+          pick: () => this.setState({ stage: s }),
+        };
+      }),
+      stageBody: {
+        Imagine: "Every project starts from the problem, not the pixels. We settle scope, audience and what the product actually has to do — the part of the work that decides whether the rest is worth building.",
+        Design: "We design user interfaces that are clear, intuitive, and visually balanced. Our approach focuses on usability first, then the visual language that carries the brand through it.",
+        Engineer: "Utility apps, offline games, websites and supporting platforms — built as scalable, secure, high-performance systems that are production-ready rather than demo-ready.",
+        Polish: "We improve the speed, responsiveness, and efficiency of your digital product: reducing load times, tightening interaction, and removing everything that makes it feel slower than it is.",
+        Launch: "We provide ongoing updates, improvements, and technical support to keep your product running smoothly after release — because launch day is the middle of the project, not the end.",
+      }[this.state.stage],
+      releases: [
+        { v: "v1.4.0", s: "Shipped", c: "#5B2394", d: 0 },
+        { v: "v1.4.1", s: "Patch", c: "#8B45FF", d: 0.4 },
+        { v: "v1.5.0", s: "In review", c: "#FF5F1F", d: 0.8 },
+        { v: "next", s: "Planned", c: "rgba(13,11,18,0.3)", d: 1.2 },
+      ],
+      stageServices: SERVICES.filter(s => s.stage === this.state.stage || this.state.stage === "Imagine").map((s, i) => ({ ...s, delay: i * 60 })),
+      stageShape: this.state.stage,
+      showBrowser: this.state.stage === "Imagine" || this.state.stage === "Engineer",
+      showPhone: this.state.stage === "Design" || this.state.stage === "Polish",
+      showLaunch: this.state.stage === "Launch",
+
+      /* ---- STUDIO ---- */
+      team: TEAM.map((m, i) => ({ ...m, img: img(m.img), delay: i * 80 })),
+      nameParts: [
+        { k: "PIXEL", c: PU, spin: -50, wash: "rgba(91,35,148,0.05)", d: "The raw material. Blocks, grids and fragments — the smallest unit of anything digital we make.",
+          grid: [1,0,1,0,1,0,1,0,1].map((on, i) => ({ c: on ? PU : "rgba(13,11,18,0.14)", o: on ? 0.35 : 0.2, up: on ? 0.65 : 0.1 })) },
+        { k: "CRAFTS", c: OR, spin: 42, wash: "rgba(255,95,31,0.05)", d: "The part that is not automatic. Brush, vector, type and judgement, applied by people who care how it lands.",
+          grid: [1,1,0,1,1,1,0,1,1].map((on) => ({ c: on ? OR : "rgba(13,11,18,0.14)", o: on ? 0.35 : 0.2, up: on ? 0.65 : 0.1 })) },
+        { k: "LAB", c: INK, spin: -28, wash: "rgba(13,11,18,0.04)", d: "Where it gets tested. Prototypes, experiments and in-progress builds before anything reaches a store.",
+          grid: [1,1,1,1,0,1,1,1,1].map((on) => ({ c: on ? INK : "rgba(13,11,18,0.14)", o: on ? 0.35 : 0.2, up: on ? 0.65 : 0.1 })) },
+      ],
+
+      /* ---- LAB ---- */
+      labModes: ["pixels", "grid", "brush"].map(m => {
+        const on = this.state.labMode === m;
+        return { name: m, bg: on ? PU : "transparent", color: on ? "#F6F4F0" : "rgba(246,244,240,0.65)", border: on ? PU : "rgba(246,244,240,0.24)", pick: () => this.setState({ labMode: m, labBoard: null }) };
+      }),
+      labCols: isDesktop ? 26 : w >= 620 ? 18 : 12,
+      labHint: isDesktop ? "Drag the blocks \u00b7 draw on the grid" : "Tap to paint \u00b7 drag the blocks",
+      labCells: (() => {
+        const board = this.state.labBoard || {};
+        const mode = this.state.labMode;
+        const cols = isDesktop ? 26 : w >= 620 ? 18 : 12;
+        const total = cols * (isDesktop ? 9 : 8);
+        const out = [];
+        for (let i = 0; i < total; i++) {
+          const on = !!board[i];
+          const base = mode === "pixels" ? "rgba(246,244,240,0.07)" : mode === "grid" ? "rgba(246,244,240,0.035)" : "rgba(246,244,240,0.05)";
+          const hit = mode === "pixels" ? PU : mode === "grid" ? OR : PL;
+          out.push({
+            i, c: on ? hit : base,
+            r: mode === "grid" ? "0" : mode === "brush" ? "999px" : "2px",
+            enter: (e) => {
+              if (e && e.type === "mouseenter" && !this.state.painting) return;
+              const b = { ...(this.state.labBoard || {}) };
+              b[i] = true; this.setState({ labBoard: b });
+            },
+          });
+        }
+        return out;
+      })(),
+      labToys: (this.state.toys || this.initToys()).map((t, i) => ({
+        ...t, grab: this.toyDown(i),
+        rot: this.state.dragging === i ? -2.5 : 0,
+        scale: this.state.dragging === i ? 1.06 : 1,
+        shadow: this.state.dragging === i ? "0 26px 40px -18px rgba(0,0,0,0.7)" : "0 10px 22px -16px rgba(0,0,0,0.8)",
+        trans: this.state.dragging === i ? "transform 0.18s ease" : "left 0.34s cubic-bezier(0.2,1.5,0.4,1), top 0.34s cubic-bezier(0.2,1.5,0.4,1), transform 0.3s ease",
+      })),
+      setBoard: this.setBoard,
+      boardDown: this.boardDown,
+      clearLab: () => this.setState({ labBoard: null }),
+      labProjects: PROJECTS.filter(p => p.cat === "Lab").map(p => ({ ...p, img: img(p.i), open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); } })),
+
+      /* ---- CONTACT ---- */
+      step: this.state.step,
+      stepNo: String(this.state.step + 1).padStart(2, "0"),
+      isStep0: this.state.step === 0, isStep1: this.state.step === 1,
+      isStep2: this.state.step === 2, isStep3: this.state.step === 3, isStep4: this.state.step === 4,
+      sent: this.state.sent, notSent: !this.state.sent,
+      progress: Math.round((this.state.step / 4) * 100),
+      answers: this.state.answers,
+      aBuild: this.state.answers.build || "—",
+      aScope: this.state.answers.scope || "—",
+      aTime: this.state.answers.time || "—",
+      hasBuild: !!this.state.answers.build, hasScope: !!this.state.answers.scope, hasTime: !!this.state.answers.time,
+      buildOptions: ["Website", "App", "Brand", "Game / Interactive", "Something else"].map(o => {
+        const on = this.state.answers.build === o;
+        return { label: o, bg: on ? PU : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? PU : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(s => ({ answers: { ...s.answers, build: o }, step: 1 })) };
+      }),
+      scopeOptions: ["A first version / MVP", "A full product build", "A redesign of something existing", "Ongoing support", "Not sure yet"].map(o => {
+        const on = this.state.answers.scope === o;
+        return { label: o, bg: on ? OR : "#fff", color: on ? "#fff" : "#0D0B12", border: on ? OR : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(s => ({ answers: { ...s.answers, scope: o }, step: 2 })) };
+      }),
+      timeOptions: ["As soon as possible", "1–3 months", "3–6 months", "Just exploring"].map(o => {
+        const on = this.state.answers.time === o;
+        return { label: o, bg: on ? INK : "#fff", color: on ? "#F6F4F0" : "#0D0B12", border: on ? INK : "rgba(13,11,18,0.16)",
+          pick: () => this.setState(s => ({ answers: { ...s.answers, time: o }, step: 3 })) };
+      }),
+      canGoBack: this.state.step > 0 && this.state.step < 3,
+      briefPct: Math.round(((this.state.answers.build ? 1 : 0) + (this.state.answers.scope ? 1 : 0) + (this.state.answers.time ? 1 : 0) + (this.state.answers.brief ? 1 : 0)) / 4 * 100),
+      briefEmpty: !this.state.answers.build,
+      hasBrief: !!(this.state.answers.brief && this.state.answers.brief.length > 2),
+      briefIsPhone: this.state.answers.build === "App" || this.state.answers.build === "Game / Interactive",
+      briefIsBrowser: this.state.answers.build === "Website" || this.state.answers.build === "Brand" || this.state.answers.build === "Something else",
+      briefW: (this.state.answers.build === "App" || this.state.answers.build === "Game / Interactive") ? "170px" : "100%",
+      briefRadius: (this.state.answers.build === "App" || this.state.answers.build === "Game / Interactive") ? "26px" : "12px",
+      timePct: { "As soon as possible": 100, "1–3 months": 66, "3–6 months": 40, "Just exploring": 18 }[this.state.answers.time] || 0,
+      briefRows: [
+        { k: "Building", v: this.state.answers.build || "—", c: this.state.answers.build ? "#0D0B12" : "rgba(13,11,18,0.35)" },
+        { k: "Scope", v: this.state.answers.scope || "—", c: this.state.answers.scope ? "#0D0B12" : "rgba(13,11,18,0.35)" },
+        { k: "Timing", v: this.state.answers.time || "—", c: this.state.answers.time ? "#0D0B12" : "rgba(13,11,18,0.35)" },
+      ],
+      setBrief: (e) => { const v = e.target.value; this.setState(s => ({ answers: { ...s.answers, brief: v } })); },
+      briefVal: this.state.answers.brief || "",
+      toStep: (n) => () => this.setState({ step: n }),
+      back: () => this.setState(s => ({ step: Math.max(0, s.step - 1) })),
+      next: () => this.setState(s => ({ step: Math.min(4, s.step + 1) })),
+      submit: (e) => { if (e) e.preventDefault(); this.setState({ sent: true }); },
+      resetForm: () => this.setState({ sent: false, step: 0, answers: {} }),
+    };
+  }
+}
+</script>
+</body>
+</html>
