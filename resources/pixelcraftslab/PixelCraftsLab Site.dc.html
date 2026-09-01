@@ -1136,11 +1136,39 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
 const PU = "#5B2394", PL = "#8B45FF", OR = "#FF5F1F", INK = "#0D0B12";
-/* Remote studio screenshots are not reachable from this prototype, so imagery
-   renders as brand placeholders until real assets are supplied. */
-const img = () => "";
 
-const PROJECTS = [
+/* ------------------------------------------------------------------ CMS
+   Content comes from window.PCL_CMS, injected by Laravel before this script
+   runs. Every lookup falls back to the original hard-coded value below, so a
+   database problem degrades to the original site rather than an empty one. */
+const CMS = (typeof window !== "undefined" && window.PCL_CMS) || {};
+const SET = CMS.settings || {};
+const FLAG = CMS.flags || {};
+const OPTS = CMS.contactOptions || {};
+const ENDPOINTS = CMS.endpoints || {};
+
+const has = (v) => v !== undefined && v !== null && v !== "";
+const pick = (v, fb) => (has(v) ? v : fb);
+const list = (v, fb) => (Array.isArray(v) && v.length ? v : (fb || []));
+const flag = (k, fb) => (typeof FLAG[k] === "boolean" ? FLAG[k] : fb);
+const isUrl = (v) => typeof v === "string" && /^(https?:|\/|data:)/.test(v);
+
+/* Deep-merges CMS copy over the fallback tree, skipping empty values. */
+const merge = (base, over) => {
+  const out = Array.isArray(base) ? base.slice() : { ...base };
+  if (!over || typeof over !== "object") return out;
+  for (const k of Object.keys(over)) {
+    const v = over[k];
+    if (v && typeof v === "object" && !Array.isArray(v)) out[k] = merge(base[k] || {}, v);
+    else if (has(v)) out[k] = v;
+  }
+  return out;
+};
+
+/* Only resolvable URLs render; anything else keeps the original placeholder. */
+const img = (src) => (isUrl(src) ? src : "");
+
+const ORIGINAL_PROJECTS = [
   { id: "fikar", name: "Fikar-e-Adab", cat: "Web", kind: "Web platform", platform: "Web", size: "wide",
     short: "An Urdu-first literary world for poetry, audio and novels.",
     blurb: "Fikar-e-Adab is an Urdu-first literary world for poetry, audio, novels and creators. Read, listen, learn, support writers, collect Pearls and build your own visible Personal Library.",
@@ -1196,13 +1224,18 @@ const PROJECTS = [
 ];
 
 const TINTS = [["#5B2394","#8B45FF"],["#0D0B12","#3A3346"],["#FF5F1F","#F2894F"],["#8B45FF","#FF5F1F"],["#3A3346","#5B2394"],["#FF5F1F","#5B2394"]];
-PROJECTS.forEach((p, i) => {
-  p.initials = p.name.replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(s => s[0]).join("");
-  p.tint = TINTS[i % TINTS.length][0];
-  p.tint2 = TINTS[i % TINTS.length][1];
+
+const PROJECTS = list(CMS.projects, ORIGINAL_PROJECTS).map((raw, i) => {
+  const p = { ...raw };
+  p.i = pick(p.image, p.i);
+  if (!p.initials) p.initials = p.name.replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(s => s[0]).join("");
+  if (!p.tint) p.tint = TINTS[i % TINTS.length][0];
+  if (!p.tint2) p.tint2 = TINTS[i % TINTS.length][1];
+  p.metrics = Array.isArray(p.metrics) ? p.metrics : [];
+  return p;
 });
 
-const SERVICES = [
+const ORIGINAL_SERVICES = [
   { title: "Utility App Development", stage: "Engineer", body: "We design and develop practical, lightweight applications focused on solving real-world problems." },
   { title: "Offline Game Development", stage: "Engineer", body: "We create engaging offline-friendly games that prioritize performance, accessibility, and user experience." },
   { title: "Web & Platform Development", stage: "Engineer", body: "We build modern websites and supporting platforms that complement your apps, games, or digital presence." },
@@ -1211,7 +1244,15 @@ const SERVICES = [
   { title: "Maintenance & Support", stage: "Launch", body: "We provide ongoing updates, improvements, and technical support to keep your product running smoothly." },
 ];
 
-const TEAM = [
+const SERVICES = list(CMS.services, ORIGINAL_SERVICES);
+const MARKETING = list(CMS.marketingServices, []);
+const MARKETING_SUBS = MARKETING.reduce((acc, m) => acc.concat(m.children || []), []);
+const GROWTH_PLANS = list(CMS.growthPlans, []);
+const CHANNELS = list(CMS.channels, []);
+const TESTIMONIALS = list(CMS.testimonials, []);
+const CAMPAIGNS = list(CMS.campaigns, []);
+
+const ORIGINAL_TEAM = [
   { name: "Mehak Arman", role: "Founder, Creative Director & Digital Marketing Lead", img: "storage/team/22RPejylwi0liOaJqP23dw8rlzLSKGokLYFJyHqv.png",
     bio: "Leads the vision, branding, and overall direction of PixelCraftsLabStudio. Oversees creative strategy, digital presence, and audience growth while ensuring every project aligns with a strong, modern brand identity." },
   { name: "Sahil Arman", role: "Lead Backend Engineer", img: "storage/team/Q4e0fZV365WfYaJYIAEIzb9S48InXC1Pfvd3XoAe.png",
@@ -1222,13 +1263,16 @@ const TEAM = [
     bio: "Handles API development and system integrations, enabling seamless communication between platforms and reliable backend connectivity." },
 ];
 
-TEAM.forEach((m, i) => {
-  m.initials = m.name.split(" ").map(s => s[0]).join("");
-  m.tint = TINTS[i % TINTS.length][0];
-  m.tint2 = TINTS[i % TINTS.length][1];
+const TEAM = list(CMS.team, ORIGINAL_TEAM).map((raw, i) => {
+  const m = { ...raw };
+  m.img = pick(m.image, m.img);
+  if (!m.initials) m.initials = m.name.split(" ").map(s => s[0]).join("");
+  if (!m.tint) m.tint = TINTS[i % TINTS.length][0];
+  if (!m.tint2) m.tint2 = TINTS[i % TINTS.length][1];
+  return m;
 });
 
-const SOCIALS = [
+const ORIGINAL_SOCIALS = [
   { name: "Instagram", url: "https://www.instagram.com/pixel_crafts_lab_studio?igsh=dzQzczA4aDUyaGYz" },
   { name: "LinkedIn", url: "http://linkedin.com/in/pixelcraftslab-studio-46364139b" },
   { name: "X", url: "https://x.com/PixelCraftsLab" },
@@ -1239,14 +1283,176 @@ const SOCIALS = [
   { name: "WhatsApp", url: "https://www.whatsapp.com/channel/0029Vb7gHBr9Bb5revqEZz1W" },
 ];
 
-const ROUTES = [
+const SOCIALS = list(CMS.socials, ORIGINAL_SOCIALS);
+
+const ORIGINAL_ROUTES = [
   { key: "work", label: "Work", no: "01" },
   { key: "services", label: "Services", no: "02" },
   { key: "studio", label: "Studio", no: "03" },
   { key: "lab", label: "Lab", no: "04" },
 ];
 
-const FLAVOR = { work: "pixels", services: "columns", studio: "brush", lab: "scatter", contact: "center", home: "grid", project: "pixels" };
+/* Navigation is one CMS list feeding the header, the mobile menu and the
+   footer, with per-surface visibility flags. */
+const NAV = list(CMS.nav, ORIGINAL_ROUTES).map(n => ({
+  key: n.key,
+  label: n.label,
+  no: pick(n.no, ""),
+  href: pick(n.href, "#" + n.key),
+  desktop: n.desktop !== false,
+  mobile: n.mobile !== false,
+  footer: n.footer !== false,
+  external: n.external === true,
+  newTab: n.newTab === true,
+}));
+const ROUTES = NAV;
+
+/* ---------------------------------------------------------------- COPY
+   Fallback copy is the exact original wording. CMS.copy is merged over it, so
+   an admin edit wins and an empty field falls back rather than rendering blank. */
+const FALLBACK_COPY = {
+  home: {
+    hero: { eyebrow: "Creative technology studio · UK", heading: "Bring your idea", subheading: "to",
+      emphasis: "life", badgeLabel: "Now live",
+      body: "From websites and branding to UI/UX and digital experiences, we help turn ideas into polished, professional work that feels modern, purposeful, and ready to launch.",
+      ctaLabel: "See the work", ctaUrl: "#work", cta2Label: "Start a project", cta2Url: "#contact" },
+    reveal: { eyebrow: "Built in the lab · Web platform", ctaLabel: "Open project →",
+      scrollHint: "Scroll — the pixels are assembling" },
+    craft: { eyebrow: "01 — What we do", heading: "Craft",
+      body: "From websites and apps to interactive projects and games, we focus on building clean, modern, and well-structured digital experiences. Everything we create is designed to feel smooth, look sharp, and work the way it’s supposed to." },
+    selected_work: { eyebrow: "02 — Selected work", heading: "Where creativity meets tech",
+      ctaLabel: "All {count} projects →", ctaUrl: "#work" },
+    capabilities: { eyebrow: "03 — Capabilities", heading: "The disciplines that made that work",
+      ctaLabel: "How we work →", ctaUrl: "#services" },
+    behind: { eyebrow: "04 — Behind the finish", heading: "Every polished build", heading2: "starts out rough." },
+    process: { eyebrow: "How we build", body: "Three words on our logo, and the way every project actually runs.",
+      ctaLabel: "Inside the studio →", ctaUrl: "#studio",
+      word1: "Ideas.", word2: "Build.", word3: "Launch.",
+      step1No: "01", step1Title: "Ideas", step1Body: "We start from the problem, not the pixels. Scope, audience and what the product actually has to do get settled before anything is designed.",
+      step2No: "02", step2Title: "Build", step2Body: "Clean code and strong UI design together — clear, intuitive, visually balanced interfaces on architecture built to be scalable and secure.",
+      step3No: "03", step3Title: "Launch", step3Body: "Ship it, then keep it healthy: performance tuning, ongoing updates and technical support so the product keeps running the way it should." },
+    cta: { heading: "Ready to build something", emphasis: "amazing?",
+      body: "Let’s create digital experiences that make your brand stand out.",
+      ctaLabel: "Start a Project", ctaUrl: "#contact" },
+  },
+  work: {
+    header: { eyebrow: "Portfolio — {count} live projects", heading: "Our", subheading: "Solutions",
+      body: "Where creativity meets tech.", body2: "Explore our projects below!" },
+    closing: { heading: "Every one of these is live. Open any of them.", ctaLabel: "Start yours", ctaUrl: "#contact" },
+  },
+  project: {
+    detail: { backLabel: "All work", visitLabel: "Visit the live project", inBuildLabel: "Currently in build",
+      mediaPlaceholder: "[ PLACEHOLDER — drop real project screenshots in here ]",
+      builtLabel: "What we built",
+      casePlaceholder: "[ PLACEHOLDER ] Brief, role, timeline and outcome for this project — send us the details and they slot in here.",
+      capsLabel: "Capabilities used", nextLabel: "Next project",
+      metaDiscipline: "Discipline", metaPlatform: "Platform", metaCategory: "Category", metaStatus: "Status",
+      statusLive: "Live", statusBuild: "In build" },
+    marketing: { goalLabel: "Client goal", challengeLabel: "The problem", audienceLabel: "Audience",
+      strategyLabel: "Strategy", approachLabel: "Content & campaign approach", deliverablesLabel: "Deliverables",
+      resultsLabel: "Results", lessonsLabel: "What we’d do next", metricsLabel: "Measured", periodLabel: "Campaign period" },
+  },
+  services: {
+    header: { eyebrow: "Services — capabilities", heading: "Watch what we do",
+      body: "{count} capabilities, end to end. Each one below is running a live miniature of the actual work." },
+    closing: { heading: "Tell us which one you need.", ctaLabel: "Start a project", ctaUrl: "#contact" },
+  },
+  growth: {
+    hero: { eyebrow: "Marketing & growth · UK", heading: "Build it.", emphasis: "Then grow it.",
+      body: "Shipping a product is the easy half. We plan and run the marketing that finds its audience — strategy, social, content, search and campaigns — built by the same studio that builds the product, and measured against goals set before anything goes live.",
+      ctaLabel: "Start a project", ctaUrl: "#contact", cta2Label: "See the work", cta2Url: "#work" },
+    capabilities: { eyebrow: "01 — What we grow", heading: "Marketing, run like engineering",
+      body: "Define the problem, choose the channels that fit it, build the work, then measure whether it moved." },
+    social: { eyebrow: "02 — Social", heading: "Social that has a strategy behind it",
+      body: "Channel strategy, content pillars, calendars, short-form video concepts, creative direction and community engagement." },
+    strategy: { eyebrow: "03 — Strategy", heading: "Where growth actually comes from",
+      body: "Audits, positioning, audience and competitor research, customer journey mapping, and acquisition, retention and conversion strategy." },
+    channels: { eyebrow: "04 — Channels", heading: "The places we work",
+      body: "We pick channels because they suit the audience, not because they are available." },
+    plans: { eyebrow: "05 — Growth plans", heading: "Ways to work together",
+      body: "Every engagement is scoped to the business in front of us, so pricing is quoted rather than listed." },
+    process: { eyebrow: "06 — How we work", heading: "Discover, strategize, create, launch, measure",
+      body: "The marketing process runs on its own track." },
+    cases: { eyebrow: "07 — Case studies", heading: "Growth work, documented",
+      body: "Marketing case studies are published here once the client has approved the detail.",
+      empty: "No marketing case studies are published yet. We would rather show nothing than invent numbers." },
+    analytics: { eyebrow: "08 — Measurement", heading: "Reported in plain language",
+      body: "Reach, engagement, traffic, leads, conversion rate, CTR, audience growth, search visibility and email performance." },
+    cta: { heading: "Got something that deserves an audience?",
+      body: "Tell us what you have built, or what you are about to.",
+      ctaLabel: "Start a project", ctaUrl: "#contact" },
+  },
+  studio: {
+    header: { eyebrow: "Studio — who we are", heading: "Crafting digital experiences where",
+      wordA: "creativity", wordB: "meets", wordC: "precision" },
+    name: { heading: "Our name, read literally",
+      part1Key: "PIXEL", part1Body: "The raw material. Blocks, grids and fragments — the smallest unit of anything digital we make.",
+      part2Key: "CRAFTS", part2Body: "The part that is not automatic. Brush, vector, type and judgement, applied by people who care how it lands.",
+      part3Key: "LAB", part3Body: "Where it gets tested. Prototypes, experiments and in-progress builds before anything reaches a store." },
+    story: { heading: "Our Story", body: "PixelCraftsLab Studio started with one goal — build digital experiences that actually stand out. We combine creativity, clean code, and strong UI design to craft modern websites, digital tools, and fun games." },
+    mission: { heading: "Our Mission", body: "Create fast, modern, and visually powerful utility app, and online games that help brands grow and stand out online." },
+    vision: { heading: "Future Vision", body: "We aim to grow PixelCraftsLab into a full creative tech studio specializing in web platforms, design systems, and digital innovation." },
+    team: { heading: "{count} people, one studio", body: "Small enough that you talk to the people building your product.",
+      photoPlaceholder: "[ Photo to supply ]" },
+    proof: { eyebrow: "Proof, honestly", heading: "No borrowed logos. Just shipped products you can open right now.",
+      body: "Every project in the index is live on Google Play or the open web. Click any of them and judge the work directly — that is the only reference we’d rather give you." },
+    reviews: { eyebrow: "Client reviews", body: "“Be the first to leave a review : )”",
+      attribution: "— Mehak Arman, PixelCraftsLab Studio’s Admin",
+      note: "[ PLACEHOLDER ] Real client quotes, Play Store ratings or case-study metrics drop in here once you send them over." },
+  },
+  lab: {
+    header: { heading: "Make a", emphasis: "mess",
+      body: "Lab is where things get tested before they get shipped. Drag the pieces, paint the grid, break the layout. Nothing here is precious.",
+      toolLabel: "Tool", clearLabel: "Clear" },
+    projects: { eyebrow: "In the lab right now", statusLabel: "Not yet shipped", badge: "In build" },
+    cta: { heading: "Got something that belongs in here?", ctaLabel: "Bring it to us", ctaUrl: "#contact" },
+  },
+  contact: {
+    header: { eyebrow: "Start a project", heading: "Build your brief",
+      body: "Answer four things. Watch your project take shape on the right as you go." },
+    steps: { qBuild: "What are you building?", qScope: "How much of it?", qTime: "When do you need it?",
+      qRest: "Tell us the rest", nameLabel: "Your name", namePlaceholder: "Jane Cooper",
+      emailLabel: "Your email", emailPlaceholder: "you@company.com", projectLabel: "The project",
+      projectPlaceholder: "What are you building, and what does success look like?",
+      backLabel: "Back", submitLabel: "Launch project", backStepLabel: "← Back a step", sendingLabel: "Sending…" },
+    marketing_fields: { qMarketing: "A bit about the brand",
+      businessLabel: "Business / brand", businessPlaceholder: "What is it called?",
+      websiteLabel: "Website", websitePlaceholder: "yourbrand.com",
+      goalLabel: "Primary goal", goalPlaceholder: "More leads, more downloads, more reach…",
+      audienceLabel: "Target audience", audiencePlaceholder: "Who are you trying to reach?",
+      channelsLabel: "Preferred channels", channelsPlaceholder: "Instagram, TikTok, search…",
+      currentLabel: "Current marketing", currentPlaceholder: "What are you doing now, and what is working?",
+      skipLabel: "Skip this step" },
+    success: { heading: "Brief assembled.",
+      body: "Thanks — your brief is with us. We read every enquiry ourselves and will come back to you shortly.",
+      ctaLabel: "Build another",
+      errorMessage: "Something went wrong sending that. Please try again, or email us directly." },
+    details: { emailLabel: "Email", phoneLabel: "Phone", locationLabel: "Location",
+      emailPlaceholder: "[ PLACEHOLDER — studio email ]" },
+    preview: { heading: "Let’s build yours", briefLabel: "Your brief",
+      buildingLabel: "Building", scopeLabel: "Scope", timingLabel: "Timing" },
+  },
+};
+
+const COPY = merge(FALLBACK_COPY, CMS.copy || {});
+const PAGE_ON = CMS.pages || {};
+
+/* Process stages: build track drives the Services picker, growth track the
+   marketing process on the Growth page. */
+const ORIGINAL_STAGES = [
+  { name: "Imagine", no: "01", body: "Every project starts from the problem, not the pixels. We settle scope, audience and what the product actually has to do — the part of the work that decides whether the rest is worth building." },
+  { name: "Design", no: "02", body: "We design user interfaces that are clear, intuitive, and visually balanced. Our approach focuses on usability first, then the visual language that carries the brand through it." },
+  { name: "Engineer", no: "03", body: "Utility apps, offline games, websites and supporting platforms — built as scalable, secure, high-performance systems that are production-ready rather than demo-ready." },
+  { name: "Polish", no: "04", body: "We improve the speed, responsiveness, and efficiency of your digital product: reducing load times, tightening interaction, and removing everything that makes it feel slower than it is." },
+  { name: "Launch", no: "05", body: "We provide ongoing updates, improvements, and technical support to keep your product running smoothly after release — because launch day is the middle of the project, not the end." },
+];
+const STAGES = list(CMS.stages, ORIGINAL_STAGES);
+const GROWTH_STAGES = list(CMS.growthStages, []);
+
+const num = (n) => String(n).padStart(2, "0");
+const fill = (str, map) => String(str || "").replace(/\{(\w+)\}/g, (m, k) => (has(map[k]) ? map[k] : m));
+
+const FLAVOR = { work: "pixels", services: "columns", growth: "columns", studio: "brush", lab: "scatter", contact: "center", home: "grid", project: "pixels" };
 
 function rnd(seed) { let a = seed >>> 0; return () => { a = (a + 0x6d2b79f5) >>> 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 
@@ -1274,7 +1480,8 @@ class Component extends DCLogic {
   state = {
     route: "home", pid: null, w: 1440, menu: false, intro: true,
     curtain: null, phase: null, filter: "All", step: 0, answers: {}, sent: false,
-    stage: "Imagine", labMode: "pixels", labBoard: null, openProc: 0, morph: null, morphMeta: null,
+    sending: false, sendError: null,
+    stage: (STAGES[0] && STAGES[0].name) || "Imagine", labMode: "pixels", labBoard: null, openProc: 0, morph: null, morphMeta: null,
     toys: null, dragging: null, painting: false,
     reduced: false, hoverKind: null,
   };
@@ -1294,7 +1501,7 @@ class Component extends DCLogic {
 
     let seen = false;
     try { seen = window.localStorage.getItem("pcl-intro-v1") === "1"; } catch (e) { seen = false; }
-    if (seen) this.setState({ intro: false });
+    if (seen || !flag("introEnabled", true)) this.setState({ intro: false });
     else this.introTimer = setTimeout(() => this.endIntro(), 2050);
 
     this.onMove = (e) => {
@@ -1571,6 +1778,58 @@ class Component extends DCLogic {
     }
   }
 
+  setAnswer = (key, value) => this.setState(s => ({ answers: { ...s.answers, [key]: value } }));
+
+  /* Posts the brief to Laravel, then hands over to the existing success state.
+     A failed request leaves the form intact so nothing typed is lost. */
+  submit = (e) => {
+    if (e) e.preventDefault();
+    if (this.state.sending) return;
+
+    const a = this.state.answers || {};
+    const endpoint = ENDPOINTS.contact || "/contact";
+
+    this.setState({ sending: true, sendError: null });
+
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-TOKEN": CMS.csrf || "",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+      credentials: "same-origin",
+      body: JSON.stringify({
+        name: a.name || "",
+        email: a.email || "",
+        message: a.brief || "",
+        build_type: a.build || null,
+        scope: a.scope || null,
+        timeline: a.time || null,
+        service: a.service || null,
+        business_name: a.business || null,
+        website_url: a.website || null,
+        primary_goal: a.goal || null,
+        target_audience: a.audience || null,
+        preferred_channels: a.channels || null,
+        current_marketing: a.current || null,
+        company_website: a.hp || "",
+      }),
+    })
+      .then(res => res.json().catch(() => ({})).then(body => ({ ok: res.ok, body })))
+      .then(({ ok, body }) => {
+        if (!ok) {
+          const errors = body && body.errors ? Object.values(body.errors).flat() : [];
+          throw new Error(errors[0] || (body && body.message) || "");
+        }
+        this.setState({ sending: false, sent: true, sendError: null });
+      })
+      .catch((err) => {
+        this.setState({ sending: false, sendError: (err && err.message) || T.contact.success.errorMessage });
+      });
+  };
+
   endIntro = () => {
     clearTimeout(this.introTimer);
     try { window.localStorage.setItem("pcl-intro-v1", "1"); } catch (e) {}
@@ -1579,7 +1838,7 @@ class Component extends DCLogic {
 
   nav = (route, pid) => {
     if (this.state.route === route && this.state.pid === (pid || null)) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-    if (this.state.reduced) {
+    if (this.state.reduced || !flag("transitionsEnabled", true)) {
       window.scrollTo(0, 0);
       this.setState({ route, pid: pid || null, step: 0, menu: false, morph: null });
       return;
@@ -1912,13 +2171,27 @@ class Component extends DCLogic {
         { k: "Scope", v: this.state.answers.scope || "—", c: this.state.answers.scope ? "#0D0B12" : "rgba(13,11,18,0.35)" },
         { k: "Timing", v: this.state.answers.time || "—", c: this.state.answers.time ? "#0D0B12" : "rgba(13,11,18,0.35)" },
       ],
-      setBrief: (e) => { const v = e.target.value; this.setState(s => ({ answers: { ...s.answers, brief: v } })); },
+      setBrief: (e) => this.setAnswer("brief", e.target.value),
+      setName: (e) => this.setAnswer("name", e.target.value),
+      setEmail: (e) => this.setAnswer("email", e.target.value),
+      setBusiness: (e) => this.setAnswer("business", e.target.value),
+      setWebsite: (e) => this.setAnswer("website", e.target.value),
+      setGoal: (e) => this.setAnswer("goal", e.target.value),
+      setAudience: (e) => this.setAnswer("audience", e.target.value),
+      setChannels: (e) => this.setAnswer("channels", e.target.value),
+      setCurrent: (e) => this.setAnswer("current", e.target.value),
+      setHoney: (e) => this.setAnswer("hp", e.target.value),
       briefVal: this.state.answers.brief || "",
       toStep: (n) => () => this.setState({ step: n }),
       back: () => this.setState(s => ({ step: Math.max(0, s.step - 1) })),
       next: () => this.setState(s => ({ step: Math.min(4, s.step + 1) })),
-      submit: (e) => { if (e) e.preventDefault(); this.setState({ sent: true }); },
-      resetForm: () => this.setState({ sent: false, step: 0, answers: {} }),
+      submit: this.submit,
+      sending: this.state.sending,
+      notSending: !this.state.sending,
+      submitLabel: this.state.sending ? T.contact.steps.sendingLabel : T.contact.steps.submitLabel,
+      sendError: this.state.sendError,
+      hasSendError: !!this.state.sendError,
+      resetForm: () => this.setState({ sent: false, sending: false, sendError: null, step: 0, answers: {} }),
     };
   }
 }
