@@ -48,6 +48,12 @@
   @keyframes pcl-pen { to { stroke-dashoffset: 0; } }
   @keyframes pcl-penride { 0% { left: -2%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { left: 104%; opacity: 0; } }
   @keyframes pcl-swatch { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+  /* --- Growth experience --- */
+  @keyframes pcl-ring { 0% { transform: scale(0.6); opacity: 0.85; } 100% { transform: scale(2.4); opacity: 0; } }
+  @keyframes pcl-sheen { 0% { transform: translateX(-120%) skewX(-18deg); } 100% { transform: translateX(320%) skewX(-18deg); } }
+  @keyframes pcl-bar { from { transform: scaleY(0.12); } to { transform: scaleY(1); } }
+  @keyframes pcl-breathe { 0%,100% { opacity: 0.32; transform: scale(1); } 50% { opacity: 0.62; transform: scale(1.09); } }
+  @keyframes pcl-rail { 0% { left: -12%; } 100% { left: 104%; } }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.12s !important; }
   }
@@ -318,7 +324,7 @@
               <div style="max-width: 1340px; margin: 0 auto; width: 100%; display: flex; flex-wrap: wrap; gap: clamp(24px, 4vw, 64px);">
                 <div style="flex: 1 1 320px; min-width: 270px;">
                   <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.home.process.eyebrow }}</div>
-                  <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 58px); line-height: 0.98; letter-spacing: -0.048em;">{{ t.home.process.word1 }}<br />{{ t.home.process.word2 }}<br />{{ t.home.process.word3 }}</h2>
+                  <h2 style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 58px); line-height: 0.98; letter-spacing: -0.048em;">{{ t.home.process.word1 }}<br />{{ t.home.process.word2 }}<br />{{ t.home.process.word3 }}<sc-if value="{{ hasWord4 }}" hint-placeholder-val="{{ true }}"><br /><span style="color: #8B45FF;">{{ t.home.process.word4 }}</span></sc-if></h2>
                   <p style="margin: 20px 0 0; max-width: 380px; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.66);">{{ t.home.process.body }}</p>
                   <a onClick="{{ goStudio }}" href="#studio" data-cursor="Studio" style="display: inline-flex; align-items: center; gap: 9px; margin-top: 22px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; border-bottom: 2px solid rgba(91,35,148,0.4); padding-bottom: 4px;">{{ t.home.process.ctaLabel }}</a>
                 </div>
@@ -776,103 +782,125 @@
     </sc-if>
 
     <sc-if value="{{ isGrowth }}" hint-placeholder-val="{{ false }}">
-      <div data-screen-label="Growth">
+      <div data-screen-label="Growth" style="background: #0D0B12; color: #F6F4F0;">
 
-        <section data-scrub="flow" style="position: relative; padding: clamp(112px, 14vw, 158px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
-          <div style="max-width: 1340px; margin: 0 auto; position: relative;">
-            <div aria-hidden="true" style="position: absolute; inset: -8% -4%; opacity: calc(var(--pa, 1) * 0.45); background-image: linear-gradient(to right, rgba(91,35,148,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.3) 1px, transparent 1px); background-size: 72px 72px;"></div>
-            <div style="position: relative; display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(13,11,18,0.64);">
-              <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.8s infinite;"></span>{{ t.growth.hero.eyebrow }}
+        <!-- ============================ HERO ============================ -->
+        <section data-scrub="flow" style="position: relative; padding: clamp(108px, 13vw, 152px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
+          <div aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(139,69,255,0.14) 1px, transparent 1px), linear-gradient(to bottom, rgba(139,69,255,0.14) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse at 30% 0%, black, transparent 76%); -webkit-mask-image: radial-gradient(ellipse at 30% 0%, black, transparent 76%);"></div>
+          <div aria-hidden="true" style="position: absolute; left: 58%; top: -14%; width: 62vw; max-width: 760px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(139,69,255,0.34), transparent 66%); filter: blur(12px); animation: pcl-breathe 11s ease-in-out infinite; transform: translate(calc(var(--px) * -26px), calc(var(--py) * -18px));"></div>
+          <div aria-hidden="true" style="position: absolute; left: 4%; bottom: -22%; width: 44vw; max-width: 520px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,95,31,0.22), transparent 68%); filter: blur(14px); animation: pcl-breathe 14s ease-in-out infinite 3s;"></div>
+
+          <div style="position: relative; max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px); align-items: center;">
+            <div style="flex: 1 1 520px; min-width: 290px; position: relative; padding-left: clamp(18px, 2.4vw, 34px);">
+              <span data-mo="grow-y" style="position: absolute; left: 0; top: 6px; bottom: 30px; width: 10px; background: linear-gradient(180deg, #5B2394, #8B45FF 46%, #FF5F1F); transform-origin: top;"></span>
+
+              <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #FF9166;">
+                <span style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.6s infinite;"></span>{{ t.growth.hero.eyebrow }}
+              </div>
+
+              <h1 style="margin: 20px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(42px, 7.4vw, 104px); line-height: 0.92; letter-spacing: -0.05em; text-wrap: balance;">{{ t.growth.hero.heading }}<br /><span style="position: relative; display: inline-block; font-style: italic; font-weight: 500; background-image: linear-gradient(96deg, #8B45FF, #FF5F1F); -webkit-background-clip: text; background-clip: text; color: transparent;">{{ t.growth.hero.emphasis }}<svg viewBox="0 0 240 40" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -3%; bottom: -0.17em; width: 106%; height: 0.4em; overflow: visible;"><path d="M4 28 C 54 8, 118 34, 176 14 C 200 6, 222 12, 236 22" pathLength="1" fill="none" stroke="#FF5F1F" stroke-width="7" stroke-linecap="round" stroke-dasharray="1" style="stroke-dashoffset: 1; animation: pcl-pen 1.2s cubic-bezier(0.4,0,0.2,1) 0.4s forwards;" /></svg></span></h1>
+
+              <p style="margin: 24px 0 0; max-width: 580px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.68; color: rgba(246,244,240,0.72); text-wrap: pretty;">{{ t.growth.hero.body }}</p>
+
+              <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;">
+                <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: 12px; background: linear-gradient(96deg, #5B2394, #8B45FF); color: #fff; font-size: 15px; font-weight: 700; overflow: hidden; box-shadow: 0 22px 46px -26px #8B45FF; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.3s ease;" style-hover="box-shadow: 0 26px 60px -22px #FF5F1F;">{{ t.growth.hero.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span><span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: 0; width: 42%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent); animation: pcl-sheen 3.6s ease-in-out infinite;"></span></a>
+                <a onClick="{{ goWork }}" href="#work" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border: 1px solid rgba(246,244,240,0.24); border-radius: 12px; color: #F6F4F0; font-size: 15px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.09);">{{ t.growth.hero.cta2Label }}</a>
+              </div>
+
+              <div style="margin-top: 30px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(246,244,240,0.42);">{{ t.growth.hero.note }}</div>
             </div>
-            <h1 style="position: relative; margin: 20px 0 0; max-width: 20ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 5.8vw, 84px); line-height: 0.95; letter-spacing: -0.048em; text-wrap: balance;">{{ t.growth.hero.heading }} <span style="font-style: italic; font-weight: 500; color: #5B2394;">{{ t.growth.hero.emphasis }}</span></h1>
-            <p style="position: relative; margin: 26px 0 0; max-width: 720px; font-size: clamp(15px, 1.35vw, 19px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ t.growth.hero.body }}</p>
-            <div style="position: relative; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px;">
-              <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border-radius: 12px; background: #0D0B12; color: #F6F4F0; font-size: 15px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #5B2394; color: #fff;">{{ t.growth.hero.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
-              <a onClick="{{ goWork }}" href="#work" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; padding: 16px 24px; border: 1px solid rgba(13,11,18,0.2); border-radius: 12px; color: #0D0B12; font-size: 15px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.07); color: #0D0B12;">{{ t.growth.hero.cta2Label }}</a>
+
+            <!-- Live growth curve: draws itself, then a signal rides the rail. -->
+            <div style="flex: 1 1 400px; min-width: 280px; position: relative; aspect-ratio: 5 / 4; max-height: 460px;">
+              <div style="position: absolute; inset: 4%; border: 1px solid rgba(246,244,240,0.12); border-radius: 20px; background: linear-gradient(150deg, rgba(139,69,255,0.14), rgba(13,11,18,0.4)); overflow: hidden; transform: translate(calc(var(--px) * -10px), calc(var(--py) * -8px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
+                <div aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(246,244,240,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(246,244,240,0.06) 1px, transparent 1px); background-size: 34px 34px;"></div>
+
+                <svg viewBox="0 0 320 240" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%;">
+                  <defs>
+                    <linearGradient id="pclGrowLine" x1="0" y1="1" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#5B2394" /><stop offset="55%" stop-color="#8B45FF" /><stop offset="100%" stop-color="#FF5F1F" />
+                    </linearGradient>
+                    <linearGradient id="pclGrowFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(139,69,255,0.36)" /><stop offset="100%" stop-color="rgba(139,69,255,0)" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M8 214 C 66 208, 96 186, 130 160 C 166 132, 190 128, 224 96 C 252 70, 280 44, 312 22 L 312 236 L 8 236 Z" fill="url(#pclGrowFill)" style="clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);" />
+                  <path d="M8 214 C 66 208, 96 186, 130 160 C 166 132, 190 128, 224 96 C 252 70, 280 44, 312 22" pathLength="1" fill="none" stroke="url(#pclGrowLine)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1" style="stroke-dashoffset: 1; animation: pcl-pen 1.7s cubic-bezier(0.4,0,0.2,1) 0.35s forwards;" />
+                </svg>
+
+                <span aria-hidden="true" style="position: absolute; top: 8%; width: 10px; height: 10px; border-radius: 50%; background: #FF5F1F; box-shadow: 0 0 0 6px rgba(255,95,31,0.22), 0 0 26px 6px rgba(255,95,31,0.5); animation: pcl-rail 4.6s cubic-bezier(0.5,0,0.3,1) infinite;"></span>
+
+                <div style="position: absolute; left: 16px; bottom: 14px; display: flex; gap: 6px; align-items: flex-end; height: 44%;">
+                  <sc-for list="{{ metricChips }}" as="mc" hint-placeholder-count="12">
+                    <span aria-hidden="true" style="width: 8px; height: {{ mc.h }}%; border-radius: 2px 2px 0 0; background: {{ mc.c }}; opacity: 0.55; transform-origin: bottom; animation: pcl-bar 0.9s cubic-bezier(0.2,1,0.3,1) both; animation-delay: {{ mc.delay }}ms;"></span>
+                  </sc-for>
+                </div>
+
+                <div style="position: absolute; right: 14px; top: 14px; padding: 9px 12px; border-radius: 11px; border: 1px solid rgba(246,244,240,0.16); background: rgba(13,11,18,0.62); backdrop-filter: blur(8px);">
+                  <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246,244,240,0.56);">{{ t.growth.analytics.eyebrow }}</div>
+                  <div style="margin-top: 4px; font-size: 13px; font-weight: 700; letter-spacing: -0.01em;">{{ growthCount }} capabilities</div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0; overflow: hidden;">
-          <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.capabilities.eyebrow }}</div>
-            <h2 data-mo="rise" style="margin: 18px 0 0; max-width: 18ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -0.045em;">{{ t.growth.capabilities.heading }}</h2>
-            <p data-mo="rise" style="margin: 22px 0 0; max-width: 700px; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ growthLeadBody }}</p>
+        <!-- ================ PIPELINE (pinned, scroll-built) ================
+             Desktop pins the section and builds the rail from the scrub value.
+             Compact screens get the same nodes stacked, revealed on scroll —
+             a pinned horizontal rail does not survive wrapping. -->
+        <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <section data-scrub="sticky" style="position: relative; height: 300vh;">
+          <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; align-items: center; padding: 0 clamp(18px, 4vw, 56px);">
+            <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 46%, rgba(139,69,255, calc(0.20 * var(--p, 1))) 0%, transparent 64%);"></div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: clamp(34px, 5vw, 56px);">
-              <sc-for list="{{ growthGroups }}" as="g" hint-placeholder-count="8">
-                <div data-mo="rise" style="position: relative; padding: 22px; border: 1px solid rgba(13,11,18,0.12); border-radius: 16px; background: #fff; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-5px); border-color: {{ g.c }};">
-                  <div style="display: flex; align-items: baseline; gap: 10px;">
-                    <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: {{ g.c }};">{{ g.no }}</span>
-                    <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">{{ g.name }}</h3>
-                  </div>
-                  <span aria-hidden="true" style="display: block; height: 3px; width: 44px; margin-top: 12px; background: {{ g.c }};"></span>
-                  <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
-                    <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
-                      <div>
-                        <div style="font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;">{{ it.title }}</div>
-                        <div style="margin-top: 3px; font-size: 13px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ it.body }}</div>
+            <div style="position: relative; width: 100%; max-width: 1340px; margin: 0 auto;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.pipeline.eyebrow }}</div>
+              <h2 style="margin: 14px 0 0; max-width: 16ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 5vw, 68px); line-height: 0.98; letter-spacing: -0.048em;">{{ t.growth.pipeline.heading }}</h2>
+              <p style="margin: 16px 0 0; max-width: 56ch; font-size: 15px; line-height: 1.68; color: rgba(246,244,240,0.66); opacity: calc(1 - var(--pb, 0));">{{ t.growth.pipeline.body }}</p>
+
+              <div style="position: relative; margin-top: clamp(38px, 6vw, 72px); min-height: 190px;">
+                <span aria-hidden="true" style="position: absolute; left: 3%; right: 3%; top: 26px; height: 2px; background: rgba(246,244,240,0.12);"></span>
+                <span aria-hidden="true" style="position: absolute; left: 3%; right: 3%; top: 26px; height: 2px; background: linear-gradient(90deg, #5B2394, #8B45FF 46%, #FF5F1F); clip-path: inset(0 calc((1 - var(--p, 1)) * 100%) 0 0);"></span>
+                <span aria-hidden="true" style="position: absolute; top: 20px; left: calc(3% + var(--p, 1) * 94%); width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #FF5F1F; box-shadow: 0 0 0 5px rgba(255,95,31,0.2), 0 0 22px 5px rgba(255,95,31,0.5); opacity: calc(1 - var(--pb, 0));"></span>
+
+                <div style="position: relative; display: flex; gap: 14px; align-items: flex-start;">
+                  <sc-for list="{{ pipeline }}" as="pn" hint-placeholder-count="7">
+                    <div style="--t: {{ pn.t }}; flex: 1 1 0; min-width: 0; opacity: clamp(0, calc((var(--p, 1) - var(--t)) * 9), 1); transform: translateY(calc((1 - clamp(0, calc((var(--p, 1) - var(--t)) * 9), 1)) * 26px));">
+                      <span aria-hidden="true" style="position: relative; display: block; width: 18px; height: 18px; margin: 18px auto 0; border-radius: 50%; background: {{ pn.c }}; box-shadow: 0 0 0 4px #0D0B12, 0 0 0 6px {{ pn.c }};">
+                        <span aria-hidden="true" style="position: absolute; inset: -3px; border-radius: 50%; border: 2px solid {{ pn.c }}; animation: pcl-ring 2.6s ease-out infinite; animation-delay: {{ pn.delay }}ms;"></span>
+                      </span>
+                      <div style="margin-top: 20px; text-align: center;">
+                        <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; color: {{ pn.c }};">{{ pn.no }}</div>
+                        <h3 style="margin: 7px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(15px, 1.4vw, 21px); font-weight: 700; letter-spacing: -0.02em;">{{ pn.name }}</h3>
+                        <p style="margin: 8px 0 0; font-size: 12.5px; line-height: 1.55; color: rgba(246,244,240,0.6);">{{ pn.body }}</p>
                       </div>
-                    </sc-for>
-                  </div>
+                    </div>
+                  </sc-for>
                 </div>
-              </sc-for>
+              </div>
+
+              <div style="margin-top: 26px; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(246,244,240,0.4); opacity: calc(1 - var(--p2, 1));">{{ t.growth.pipeline.scrollHint }}</div>
             </div>
           </div>
         </section>
+        </sc-if>
 
-        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
-          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px);">
-            <div style="flex: 1 1 380px; min-width: 280px;">
-              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.social.eyebrow }}</div>
-              <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.social.heading }}</h2>
-              <p data-mo="rise" style="margin: 20px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.social.body }}</p>
-            </div>
-            <div style="flex: 1 1 380px; min-width: 280px; display: flex; flex-direction: column; gap: 10px;">
-              <sc-for list="{{ socialServices }}" as="sv" hint-placeholder-count="8">
-                <div data-mo="rise" style="display: flex; gap: 12px; padding: 14px 16px; border: 1px solid rgba(13,11,18,0.12); border-radius: 13px; background: #fff; transition: border-color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="border-color: #FF5F1F; transform: translateX(4px);">
-                  <span aria-hidden="true" style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 7px; background: #FF5F1F;"></span>
-                  <div>
-                    <div style="font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;">{{ sv.title }}</div>
-                    <div style="margin-top: 3px; font-size: 13px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ sv.body }}</div>
-                  </div>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-        </section>
-
-        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
-          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px);">
-            <div style="flex: 1 1 380px; min-width: 280px; display: flex; flex-direction: column; gap: 10px;">
-              <sc-for list="{{ strategyServices }}" as="sv" hint-placeholder-count="7">
-                <div data-mo="rise" style="display: flex; gap: 12px; padding: 14px 16px; border: 1px solid rgba(13,11,18,0.12); border-radius: 13px; background: #fff; transition: border-color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="border-color: #5B2394; transform: translateX(4px);">
-                  <span aria-hidden="true" style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 7px; background: #5B2394;"></span>
-                  <div>
-                    <div style="font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;">{{ sv.title }}</div>
-                    <div style="margin-top: 3px; font-size: 13px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ sv.body }}</div>
-                  </div>
-                </div>
-              </sc-for>
-            </div>
-            <div style="flex: 1 1 380px; min-width: 280px;">
-              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.strategy.eyebrow }}</div>
-              <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.strategy.heading }}</h2>
-              <p data-mo="rise" style="margin: 20px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.strategy.body }}</p>
-            </div>
-          </div>
-        </section>
-
-        <sc-if value="{{ hasChannels }}" hint-placeholder-val="{{ true }}">
+        <sc-if value="{{ isCompact }}" hint-placeholder-val="{{ false }}">
         <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
           <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.channels.eyebrow }}</div>
-            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.channels.heading }}</h2>
-            <p data-mo="rise" style="margin: 18px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.channels.body }}</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(28px, 4vw, 44px);">
-              <sc-for list="{{ channels }}" as="ch" hint-placeholder-count="11">
-                <div data-mo="rise" data-tool="flee" data-tool-pull="0.4" style="display: inline-flex; align-items: center; gap: 9px; padding: 11px 16px; border: 1px solid rgba(13,11,18,0.16); border-radius: 999px; background: #fff; font-size: 13.5px; font-weight: 600; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease;" style-hover="border-color: {{ ch.c }};">
-                  <span aria-hidden="true" style="width: 8px; height: 8px; background: {{ ch.c }};"></span>{{ ch.label }}
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.pipeline.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 8vw, 44px); line-height: 1.0; letter-spacing: -0.045em;">{{ t.growth.pipeline.heading }}</h2>
+            <p data-mo="rise" style="margin: 16px 0 0; font-size: 15px; line-height: 1.68; color: rgba(246,244,240,0.66);">{{ t.growth.pipeline.body }}</p>
+
+            <div style="position: relative; margin-top: 30px; padding-left: 26px;">
+              <span aria-hidden="true" style="position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; background: linear-gradient(180deg, #5B2394, #8B45FF 46%, #FF5F1F);" data-mo="grow-y"></span>
+              <sc-for list="{{ pipeline }}" as="pn" hint-placeholder-count="7">
+                <div data-mo="rise" style="position: relative; padding: 0 0 24px;">
+                  <span aria-hidden="true" style="position: absolute; left: -25px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: {{ pn.c }}; box-shadow: 0 0 0 3px #0D0B12, 0 0 0 5px {{ pn.c }};"></span>
+                  <div style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.18em; color: {{ pn.c }};">{{ pn.no }}</div>
+                  <h3 style="margin: 6px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em;">{{ pn.name }}</h3>
+                  <p style="margin: 7px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(246,244,240,0.62);">{{ pn.body }}</p>
                 </div>
               </sc-for>
             </div>
@@ -880,105 +908,263 @@
         </section>
         </sc-if>
 
-        <sc-if value="{{ hasGrowthPlans }}" hint-placeholder-val="{{ true }}">
+        <!-- ================= CAPABILITIES (progressive) ================= -->
+        <sc-if value="{{ hasGrowthTabs }}" hint-placeholder-val="{{ true }}">
         <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
           <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.plans.eyebrow }}</div>
-            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.plans.heading }}</h2>
-            <p data-mo="rise" style="margin: 18px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.plans.body }}</p>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.capabilities.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; max-width: 18ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 4.4vw, 58px); line-height: 1.02; letter-spacing: -0.045em;">{{ t.growth.capabilities.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 64ch; font-size: 15.5px; line-height: 1.7; color: rgba(246,244,240,0.68);">{{ t.growth.capabilities.body }}</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: clamp(30px, 4vw, 50px);">
-              <sc-for list="{{ growthPlans }}" as="pl" hint-placeholder-count="3">
-                <div data-mo="rise" style="display: flex; flex-direction: column; padding: 24px; border: 2px solid {{ pl.border }}; border-radius: 18px; background: #fff; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
-                  <sc-if value="{{ pl.hasHighlight }}" hint-placeholder-val="{{ false }}">
-                    <span style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: {{ pl.c }}; color: #fff; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;">{{ pl.highlight }}</span>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: clamp(28px, 4vw, 44px);">
+              <sc-for list="{{ growthTabs }}" as="gt" hint-placeholder-count="8">
+                <button onClick="{{ gt.pick }}" data-cursor="{{ gt.name }}" data-magnet="1" style="display: inline-flex; align-items: center; gap: 9px; padding: 11px 17px; border: 1px solid {{ gt.border }}; border-radius: 999px; background: {{ gt.bg }}; color: {{ gt.color }}; font-family: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);">
+                  <span aria-hidden="true" style="width: 7px; height: 7px; border-radius: 50%; background: {{ gt.c }}; opacity: {{ gt.on }}; transform: scale({{ gt.on }}); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,1.5,0.4,1);"></span>{{ gt.name }}<span style="font-family: 'Space Mono', monospace; font-size: 10px; opacity: 0.6;">{{ gt.count }}</span>
+                </button>
+              </sc-for>
+            </div>
+
+            <div style="position: relative; margin-top: 22px; padding: clamp(22px, 3vw, 34px); border: 1px solid rgba(246,244,240,0.12); border-radius: 20px; background: linear-gradient(160deg, rgba(139,69,255,0.09), rgba(13,11,18,0.2)); overflow: hidden;">
+              <span aria-hidden="true" style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: {{ growthActive.c }};"></span>
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px;">
+                <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: {{ growthActive.c }};">{{ growthActive.no }}</span>
+                <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(22px, 2.6vw, 32px); font-weight: 800; letter-spacing: -0.03em;">{{ growthActive.name }}</h3>
+                <span style="margin-left: auto; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246,244,240,0.42);">{{ t.growth.capabilities.hint }}</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin-top: 22px;">
+                <sc-for list="{{ growthActive.items }}" as="gi" hint-placeholder-count="8">
+                  <div style="position: relative; padding: 16px 18px; border: 1px solid rgba(246,244,240,0.1); border-radius: 14px; background: rgba(246,244,240,0.03); animation: pcl-rise 0.5s cubic-bezier(0.16,1,0.3,1) both; animation-delay: {{ gi.delay }}ms; transition: border-color 0.25s ease, transform 0.35s cubic-bezier(0.2,0.8,0.2,1), background 0.25s ease;" style-hover="border-color: {{ gi.c }}; transform: translateY(-4px); background: rgba(246,244,240,0.06);">
+                    <div style="display: flex; align-items: baseline; gap: 9px;">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.16em; color: {{ gi.c }};">{{ gi.no }}</span>
+                      <div style="font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em;">{{ gi.title }}</div>
+                    </div>
+                    <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: rgba(246,244,240,0.62);">{{ gi.body }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </section>
+        </sc-if>
+
+        <!-- ==================== SOCIAL & CONTENT ==================== -->
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: clamp(28px, 4vw, 56px); align-items: center;">
+            <div style="flex: 1 1 380px; min-width: 280px;">
+              <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.social.eyebrow }}</div>
+              <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.social.heading }}</h2>
+              <p data-mo="rise" style="margin: 20px 0 0; max-width: 58ch; font-size: 15.5px; line-height: 1.7; color: rgba(246,244,240,0.68);">{{ t.growth.social.body }}</p>
+              <div data-mo="rise" style="margin-top: 22px; padding: 14px 18px; border-left: 3px solid #FF5F1F; background: rgba(255,95,31,0.07); font-family: 'Space Mono', monospace; font-size: 11.5px; line-height: 1.8; color: rgba(246,244,240,0.7);">{{ t.growth.social.note }}</div>
+
+              <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 24px;">
+                <sc-for list="{{ socialServices }}" as="sv" hint-placeholder-count="8">
+                  <div data-mo="rise" style="display: flex; gap: 12px; padding: 13px 15px; border: 1px solid rgba(246,244,240,0.1); border-radius: 12px; background: rgba(246,244,240,0.03); transition: border-color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="border-color: #FF5F1F; transform: translateX(5px);">
+                    <span aria-hidden="true" style="flex: 0 0 auto; width: 7px; height: 7px; margin-top: 7px; background: #FF5F1F;"></span>
+                    <div>
+                      <div style="font-size: 14px; font-weight: 700; letter-spacing: -0.01em;">{{ sv.title }}</div>
+                      <div style="margin-top: 3px; font-size: 12.5px; line-height: 1.58; color: rgba(246,244,240,0.6);">{{ sv.body }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+
+            <!-- Creative formats, drifting. Each card flees the cursor a little. -->
+            <div style="flex: 1 1 380px; min-width: 280px; position: relative; aspect-ratio: 1 / 1; max-height: 500px;">
+              <div aria-hidden="true" style="position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(139,69,255,0.22), transparent 68%); filter: blur(10px); animation: pcl-breathe 12s ease-in-out infinite;"></div>
+              <sc-for list="{{ socialCards }}" as="sc" hint-placeholder-count="4">
+                <div data-tool="flee" data-tool-pull="0.55" style="position: absolute; top: {{ sc.top }}; left: {{ sc.left }}; width: {{ sc.w }}; height: {{ sc.h }}; border-radius: {{ sc.r }}; overflow: hidden; border: 1px solid rgba(246,244,240,0.16); background-image: linear-gradient(150deg, {{ sc.c }}, {{ sc.c2 }}); box-shadow: 0 26px 54px -30px rgba(0,0,0,0.9); transform: rotate({{ sc.rot }}) translate(var(--tx, 0px), var(--ty, 0px)); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1);">
+                  <span aria-hidden="true" style="position: absolute; inset: 0; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.09) 0 3px, transparent 3px 13px); animation: {{ sc.anim }} {{ sc.dur }} ease-in-out infinite; animation-delay: {{ sc.d }};"></span>
+                  <span aria-hidden="true" style="position: absolute; left: 10px; right: 10px; bottom: 10px; height: 5px; border-radius: 99px; background: rgba(255,255,255,0.5);"></span>
+                  <span aria-hidden="true" style="position: absolute; left: 10px; bottom: 22px; width: 56%; height: 5px; border-radius: 99px; background: rgba(255,255,255,0.28);"></span>
+                  <span style="position: absolute; left: 10px; top: 10px; padding: 3px 8px; border-radius: 999px; background: rgba(13,11,18,0.55); font-family: 'Space Mono', monospace; font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #F6F4F0;">{{ sc.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================== CHANNELS ======================== -->
+        <sc-if value="{{ hasChannels }}" hint-placeholder-val="{{ true }}">
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.channels.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.channels.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 58ch; font-size: 15.5px; line-height: 1.7; color: rgba(246,244,240,0.68);">{{ t.growth.channels.body }}</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(28px, 4vw, 44px);">
+              <sc-for list="{{ channels }}" as="ch" hint-placeholder-count="11">
+                <div data-mo="rise" data-tool="flee" data-tool-pull="0.42" data-cursor="{{ ch.name }}" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 11px 17px 11px 11px; border: 1px solid rgba(246,244,240,0.14); border-radius: 999px; background: rgba(246,244,240,0.03); font-size: 13.5px; font-weight: 600; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: {{ ch.c }}; background: rgba(246,244,240,0.07);">
+                  <span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: {{ ch.c }}; font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; color: #fff;">{{ ch.initials }}</span>{{ ch.label }}
+                </div>
+              </sc-for>
+            </div>
+            <div data-mo="rise" style="margin-top: 18px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(246,244,240,0.36);">{{ t.growth.channels.hint }}</div>
+          </div>
+        </section>
+        </sc-if>
+
+        <!-- ===================== FUNNEL (scrubbed) ===================== -->
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.funnel.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.funnel.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 58ch; font-size: 15.5px; line-height: 1.7; color: rgba(246,244,240,0.68);">{{ t.growth.funnel.body }}</p>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: clamp(30px, 4vw, 48px);">
+              <sc-for list="{{ funnel }}" as="fn" hint-placeholder-count="6">
+                <div style="--t: {{ fn.t }}; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; opacity: clamp(0.18, calc((var(--p, 1) - var(--t)) * 6), 1);">
+                  <div style="flex: 0 0 auto; width: {{ fn.w }}%; min-width: 130px; max-width: 100%; padding: 15px 20px; border-radius: 12px; background: linear-gradient(96deg, {{ fn.c }}, rgba(13,11,18,0.15)); transform: scaleX(clamp(0.24, calc((var(--p, 1) - var(--t)) * 6), 1)); transform-origin: left; transition: transform 0.1s linear;">
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(17px, 2vw, 24px); font-weight: 800; letter-spacing: -0.025em; white-space: nowrap;">{{ fn.k }}</span>
+                  </div>
+                  <p style="flex: 1 1 220px; margin: 0; font-size: 14px; line-height: 1.6; color: rgba(246,244,240,0.62);">{{ fn.d }}</p>
+                </div>
+              </sc-for>
+            </div>
+
+            <div data-mo="rise" style="margin-top: 22px; padding: 14px 18px; border-left: 3px solid #8B45FF; background: rgba(139,69,255,0.08); font-family: 'Space Mono', monospace; font-size: 11.5px; line-height: 1.8; color: rgba(246,244,240,0.7);">{{ t.growth.funnel.note }}</div>
+          </div>
+        </section>
+
+        <!-- ====================== MEASUREMENT ====================== -->
+        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div style="max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.analytics.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.analytics.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 62ch; font-size: 15.5px; line-height: 1.7; color: rgba(246,244,240,0.68);">{{ t.growth.analytics.body }}</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 9px; margin-top: clamp(26px, 4vw, 40px);">
+              <sc-for list="{{ metricChips }}" as="mc" hint-placeholder-count="12">
+                <span data-mo="rise" data-magnet="1" style="display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px; border: 1px solid rgba(246,244,240,0.14); border-radius: 999px; background: rgba(246,244,240,0.03); font-family: 'Space Mono', monospace; font-size: 11.5px; letter-spacing: 0.06em; color: rgba(246,244,240,0.82); transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease;" style-hover="border-color: {{ mc.c }};">
+                  <span aria-hidden="true" style="width: 6px; height: 6px; background: {{ mc.c }};"></span>{{ mc.label }}
+                </span>
+              </sc-for>
+            </div>
+
+            <div data-mo="rise" style="margin-top: 22px; padding: 14px 18px; border-left: 3px solid #FF5F1F; background: rgba(255,95,31,0.07); font-family: 'Space Mono', monospace; font-size: 11.5px; line-height: 1.8; color: rgba(246,244,240,0.7);">{{ t.growth.analytics.note }}</div>
+          </div>
+        </section>
+
+        <!-- ======================== PRICING ======================== -->
+        <sc-if value="{{ hasGrowthPlans }}" hint-placeholder-val="{{ true }}">
+        <section id="pcl-pricing" data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
+          <div aria-hidden="true" style="position: absolute; left: 50%; top: 18%; width: 70vw; max-width: 900px; aspect-ratio: 2 / 1; transform: translateX(-50%); background: radial-gradient(ellipse, rgba(139,69,255,0.18), transparent 68%); filter: blur(16px);"></div>
+          <div style="position: relative; max-width: 1340px; margin: 0 auto;">
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.plans.eyebrow }}</div>
+            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.plans.heading }}</h2>
+            <p data-mo="rise" style="margin: 18px 0 0; max-width: 58ch; font-size: 15.5px; line-height: 1.7; color: rgba(246,244,240,0.68);">{{ t.growth.plans.body }}</p>
+
+            <div data-mo="rise" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px;">
+              <sc-for list="{{ engagementWays }}" as="way" hint-placeholder-count="4">
+                <span style="padding: 8px 12px; border: 1px solid rgba(246,244,240,0.14); border-radius: 999px; font-family: 'Space Mono', monospace; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(246,244,240,0.72);">{{ way }}</span>
+              </sc-for>
+            </div>
+
+            <sc-for list="{{ growthPlanGroups }}" as="pg" hint-placeholder-count="1">
+            <div style="margin-top: clamp(32px, 4vw, 54px);">
+              <sc-if value="{{ pg.named }}" hint-placeholder-val="{{ false }}">
+                <div data-mo="rise" style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid rgba(246,244,240,0.1);">
+                  <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: {{ pg.c }};">{{ pg.no }}</span>
+                  <h3 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(19px, 2.1vw, 26px); font-weight: 700; letter-spacing: -0.025em;">{{ pg.name }}</h3>
+                </div>
+              </sc-if>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 16px; align-items: stretch;">
+              <sc-for list="{{ pg.plans }}" as="pl" hint-placeholder-count="4">
+                <div data-mo="rise" style="position: relative; display: flex; flex-direction: column; padding: clamp(22px, 2.6vw, 30px); border: 1px solid {{ pl.border }}; border-radius: 20px; background: {{ pl.bg }}; box-shadow: {{ pl.shadow }}; transform: translateY({{ pl.lift }}); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease, box-shadow 0.4s ease;" style-hover="transform: translateY(-12px); border-color: {{ pl.c }};">
+
+                  <sc-if value="{{ pl.recommended }}" hint-placeholder-val="{{ false }}">
+                    <span aria-hidden="true" style="position: absolute; inset: -1px; border-radius: 20px; padding: 1px; background: linear-gradient(140deg, {{ pl.c }}, transparent 46%, {{ pl.c }}); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;"></span>
                   </sc-if>
-                  <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.03em;">{{ pl.name }}</h3>
+
+                  <sc-if value="{{ pl.hasBadge }}" hint-placeholder-val="{{ false }}">
+                    <span style="align-self: flex-start; padding: 5px 11px; border-radius: 999px; background: {{ pl.c }}; color: #fff; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;">{{ pl.badge }}</span>
+                  </sc-if>
+
+                  <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(24px, 2.6vw, 30px); font-weight: 800; letter-spacing: -0.034em;">{{ pl.name }}</h3>
+
                   <sc-if value="{{ pl.hasIdeal }}" hint-placeholder-val="{{ true }}">
-                    <div style="margin-top: 6px; font-size: 13px; color: rgba(13,11,18,0.6);">{{ pl.idealFor }}</div>
+                    <div style="margin-top: 7px; font-size: 13px; line-height: 1.55; color: rgba(246,244,240,0.6);">{{ pl.idealFor }}</div>
                   </sc-if>
-                  <p style="margin: 14px 0 0; font-size: 14.5px; line-height: 1.65; color: rgba(13,11,18,0.72);">{{ pl.short }}</p>
-                  <div style="display: flex; align-items: baseline; gap: 8px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(13,11,18,0.1);">
-                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: {{ pl.c }};">{{ pl.price }}</span>
-                    <sc-if value="{{ pl.hasDuration }}" hint-placeholder-val="{{ true }}">
-                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(13,11,18,0.55);">{{ pl.duration }}</span>
+
+                  <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 9px; margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(246,244,240,0.1);">
+                    <sc-if value="{{ pl.hasStartingFrom }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,244,240,0.5); width: 100%;">{{ pl.startingFrom }}</span>
+                    </sc-if>
+                    <sc-if value="{{ pl.hasDiscount }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 14px; color: rgba(246,244,240,0.4); text-decoration: line-through;">{{ pl.originalPrice }}</span>
+                    </sc-if>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: -0.04em; background-image: linear-gradient(96deg, {{ pl.c }}, #F6F4F0); -webkit-background-clip: text; background-clip: text; color: transparent;">{{ pl.price }}</span>
+                    <sc-if value="{{ pl.hasPeriod }}" hint-placeholder-val="{{ true }}">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(246,244,240,0.5);">{{ pl.period }}</span>
                     </sc-if>
                   </div>
-                  <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px;">
+
+                  <sc-if value="{{ pl.hasShort }}" hint-placeholder-val="{{ true }}">
+                    <p style="margin: 16px 0 0; font-size: 14px; line-height: 1.65; color: rgba(246,244,240,0.7);">{{ pl.short }}</p>
+                  </sc-if>
+
+                  <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 18px;">
                     <sc-for list="{{ pl.items }}" as="di" hint-placeholder-count="7">
-                      <div style="display: flex; gap: 9px; font-size: 13.5px; line-height: 1.55;">
-                        <span aria-hidden="true" style="flex: 0 0 auto; width: 7px; height: 7px; margin-top: 6px; background: {{ pl.c }};"></span>
+                      <div style="display: flex; gap: 10px; font-size: 13.5px; line-height: 1.55; color: rgba(246,244,240,0.84);">
+                        <span aria-hidden="true" style="flex: 0 0 auto; width: 15px; height: 15px; margin-top: 2px; border-radius: 50%; border: 1px solid {{ di.c }}; position: relative;"><span aria-hidden="true" style="position: absolute; left: 4px; top: 4px; width: 5px; height: 5px; border-radius: 50%; background: {{ di.c }};"></span></span>
                         <span>{{ di.title }}</span>
                       </div>
                     </sc-for>
                   </div>
-                  <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" style="margin-top: auto; padding-top: 20px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: {{ pl.c }};">{{ pl.ctaLabel }} &#8599;</a>
+
+                  <sc-if value="{{ pl.hasMediaNote }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top: 16px; font-family: 'Space Mono', monospace; font-size: 10px; line-height: 1.7; color: rgba(246,244,240,0.44);">{{ pl.mediaNote }}</div>
+                  </sc-if>
+
+                  <a onClick="{{ pl.open }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; justify-content: center; gap: 9px; margin-top: auto; padding-top: 22px;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; padding: 14px 18px; border: 1px solid {{ pl.c }}; border-radius: 12px; background: rgba(246,244,240,0.02); color: #F6F4F0; font-size: 14px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: background 0.3s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="background: {{ pl.c }};">{{ pl.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></span>
+                  </a>
                 </div>
               </sc-for>
             </div>
+            </div>
+            </sc-for>
+
+            <div data-mo="rise" style="margin-top: 20px; font-family: 'Space Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: rgba(246,244,240,0.42);">{{ pricingNotes }}</div>
           </div>
         </section>
         </sc-if>
 
-        <sc-if value="{{ hasGrowthSteps }}" hint-placeholder-val="{{ true }}">
+        <!-- ====================== CASE STUDIES ====================== -->
         <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
           <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.process.eyebrow }}</div>
-            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.process.heading }}</h2>
-            <p data-mo="rise" style="margin: 18px 0 0; max-width: 60ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.process.body }}</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-top: clamp(30px, 4vw, 50px);">
-              <sc-for list="{{ growthSteps }}" as="gs" hint-placeholder-count="7">
-                <div data-mo="rise" style="padding: 20px; border: 1px solid rgba(13,11,18,0.12); border-radius: 15px; background: #fff;">
-                  <span aria-hidden="true" style="display: block; height: 4px; width: 100%; background: {{ gs.c }};"></span>
-                  <div style="margin-top: 14px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.18em; color: {{ gs.c }};">{{ gs.no }}</div>
-                  <h3 style="margin: 8px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.02em;">{{ gs.name }}</h3>
-                  <p style="margin: 9px 0 0; font-size: 13.5px; line-height: 1.62; color: rgba(13,11,18,0.68);">{{ gs.body }}</p>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-        </section>
-        </sc-if>
-
-        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
-          <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.cases.eyebrow }}</div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #FF9166;">{{ t.growth.cases.eyebrow }}</div>
             <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.cases.heading }}</h2>
 
             <sc-if value="{{ hasGrowthCases }}" hint-placeholder-val="{{ false }}">
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 44px);">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 16px; margin-top: clamp(28px, 4vw, 44px);">
                 <sc-for list="{{ growthCases }}" as="p" hint-placeholder-count="0">
-                  <a onClick="{{ p.open }}" href="#project" data-cursor="Read it" data-mo="rise" style="display: block; color: #0D0B12;">
-                    <div style="position: relative; aspect-ratio: 16 / 10; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
+                  <a onClick="{{ p.open }}" href="#project" data-cursor="Read it" data-mo="rise" style="display: block; color: #F6F4F0;">
+                    <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 16 / 10; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
                       <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
                       <sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.name }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">{{ p.name }}</h3>
-                    <p style="margin: 6px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(13,11,18,0.66);">{{ p.short }}</p>
+                    <p style="margin: 6px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(246,244,240,0.64);">{{ p.short }}</p>
                   </a>
                 </sc-for>
               </div>
             </sc-if>
 
             <sc-if value="{{ noGrowthCases }}" hint-placeholder-val="{{ true }}">
-              <div data-mo="rise" style="margin-top: clamp(24px, 3vw, 36px); padding: 24px; border: 1px dashed rgba(13,11,18,0.22); border-radius: 15px; font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.85; color: rgba(13,11,18,0.64); max-width: 70ch;">{{ t.growth.cases.empty }}</div>
+              <div data-mo="rise" style="margin-top: clamp(24px, 3vw, 36px); padding: 26px; border: 1px dashed rgba(246,244,240,0.22); border-radius: 16px; font-family: 'Space Mono', monospace; font-size: 12px; line-height: 1.85; color: rgba(246,244,240,0.6); max-width: 70ch;">{{ t.growth.cases.empty }}</div>
             </sc-if>
           </div>
         </section>
 
-        <section data-scrub="flow" style="position: relative; padding: clamp(70px, 10vw, 120px) clamp(18px, 4vw, 56px) 0;">
-          <div style="max-width: 1340px; margin: 0 auto;">
-            <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: #B8380A;">{{ t.growth.analytics.eyebrow }}</div>
-            <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 3.8vw, 48px); line-height: 1.04; letter-spacing: -0.042em;">{{ t.growth.analytics.heading }}</h2>
-            <p data-mo="rise" style="margin: 18px 0 0; max-width: 70ch; font-size: 15.5px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.analytics.body }}</p>
-          </div>
-        </section>
-
-        <section style="position: relative; padding: clamp(80px, 11vw, 130px) clamp(18px, 4vw, 56px) clamp(80px, 11vw, 130px);">
-          <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+        <!-- ========================== CTA ========================== -->
+        <section style="position: relative; padding: clamp(84px, 12vw, 138px) clamp(18px, 4vw, 56px) clamp(84px, 12vw, 138px); overflow: hidden;">
+          <div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 90vw; max-width: 1100px; aspect-ratio: 2 / 1; transform: translate(-50%, -50%); background: radial-gradient(ellipse, rgba(139,69,255,0.24), transparent 66%); filter: blur(18px); animation: pcl-breathe 13s ease-in-out infinite;"></div>
+          <div style="position: relative; max-width: 900px; margin: 0 auto; text-align: center;">
             <h2 data-mo="rise" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 5vw, 68px); line-height: 1.0; letter-spacing: -0.048em; text-wrap: balance;">{{ t.growth.cta.heading }}</h2>
-            <p data-mo="rise" style="margin: 20px auto 0; max-width: 56ch; font-size: 16px; line-height: 1.7; color: rgba(13,11,18,0.7);">{{ t.growth.cta.body }}</p>
-            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 17px 26px; border-radius: 13px; background: #5B2394; color: #fff; font-size: 15.5px; font-weight: 700; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease;" style-hover="background: #FF5F1F;">{{ t.growth.cta.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span></a>
+            <p data-mo="rise" style="margin: 20px auto 0; max-width: 56ch; font-size: 16px; line-height: 1.7; color: rgba(246,244,240,0.7);">{{ t.growth.cta.body }}</p>
+            <a onClick="{{ goContact }}" href="#contact" data-cursor="Let's talk" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 18px 30px; border-radius: 14px; background: linear-gradient(96deg, #5B2394, #8B45FF 52%, #FF5F1F); color: #fff; font-size: 16px; font-weight: 700; overflow: hidden; box-shadow: 0 28px 60px -28px #8B45FF; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.35s ease;" style-hover="box-shadow: 0 32px 74px -24px #FF5F1F;">{{ t.growth.cta.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8599;</span><span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: 0; width: 38%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: pcl-sheen 4s ease-in-out infinite;"></span></a>
           </div>
         </section>
 
@@ -1442,6 +1628,13 @@ const SET = CMS.settings || {};
 const FLAG = CMS.flags || {};
 const OPTS = CMS.contactOptions || {};
 const ENDPOINTS = CMS.endpoints || {};
+const ROUTING = CMS.routing || {};
+const URLS = ROUTING.urls || {};
+const PROJECT_URLS = ROUTING.projectUrls || {};
+const clientRoute = (route) => route === "marketing" || route === "pricing" ? "growth" : (route || "home");
+const routePath = (route, pid) => route === "project"
+  ? (PROJECT_URLS[pid] || URLS.work || "/work")
+  : (URLS[route] || URLS[clientRoute(route)] || "/");
 
 const has = (v) => v !== undefined && v !== null && v !== "";
 const pick = (v, fb) => (has(v) ? v : fb);
@@ -1528,6 +1721,7 @@ const PROJECTS = list(CMS.projects, ORIGINAL_PROJECTS).map((raw, i) => {
   if (!p.tint) p.tint = TINTS[i % TINTS.length][0];
   if (!p.tint2) p.tint2 = TINTS[i % TINTS.length][1];
   p.metrics = Array.isArray(p.metrics) ? p.metrics : [];
+  p.url = PROJECT_URLS[p.id] || "/work/" + encodeURIComponent(p.id);
   return p;
 });
 
@@ -1543,10 +1737,11 @@ const ORIGINAL_SERVICES = [
 const SERVICES = list(CMS.services, ORIGINAL_SERVICES);
 const MARKETING = list(CMS.marketingServices, []);
 const MARKETING_SUBS = MARKETING.reduce((acc, m) => acc.concat(m.children || []), []);
-const GROWTH_PLANS = list(CMS.growthPlans, []);
+const GROWTH_PLANS = list(CMS.packages, list(CMS.growthPlans, []));
 const CHANNELS = list(CMS.channels, []);
 const TESTIMONIALS = list(CMS.testimonials, []);
 const CAMPAIGNS = list(CMS.campaigns, []);
+const PRICING_NOTES = CMS.pricingNotes || {};
 
 const ORIGINAL_TEAM = [
   { name: "Mehak Arman", role: "Founder, Creative Director & Digital Marketing Lead", img: "storage/team/22RPejylwi0liOaJqP23dw8rlzLSKGokLYFJyHqv.png",
@@ -1582,10 +1777,10 @@ const ORIGINAL_SOCIALS = [
 const SOCIALS = list(CMS.socials, ORIGINAL_SOCIALS);
 
 const ORIGINAL_ROUTES = [
-  { key: "work", label: "Work", no: "01" },
-  { key: "services", label: "Services", no: "02" },
-  { key: "studio", label: "Studio", no: "03" },
-  { key: "lab", label: "Lab", no: "04" },
+  { key: "work", label: "Work", no: "01", href: "/work" },
+  { key: "services", label: "Services", no: "02", href: "/services" },
+  { key: "studio", label: "Studio", no: "03", href: "/studio" },
+  { key: "lab", label: "Lab", no: "04", href: "/lab" },
 ];
 
 /* Navigation is one CMS list feeding the header, the mobile menu and the
@@ -1594,7 +1789,7 @@ const NAV = list(CMS.nav, ORIGINAL_ROUTES).map(n => ({
   key: n.key,
   label: n.label,
   no: pick(n.no, ""),
-  href: pick(n.href, "#" + n.key),
+  href: pick(n.href, routePath(n.key)),
   desktop: n.desktop !== false,
   mobile: n.mobile !== false,
   footer: n.footer !== false,
@@ -1623,10 +1818,12 @@ const FALLBACK_COPY = {
     behind: { eyebrow: "04 — Behind the finish", heading: "Every polished build", heading2: "starts out rough." },
     process: { eyebrow: "How we build", body: "Three words on our logo, and the way every project actually runs.",
       ctaLabel: "Inside the studio →", ctaUrl: "#studio",
-      word1: "Ideas.", word2: "Build.", word3: "Launch.",
+      word1: "Ideas.", word2: "Build.", word3: "Launch.", word4: "Grow.",
       step1No: "01", step1Title: "Ideas", step1Body: "We start from the problem, not the pixels. Scope, audience and what the product actually has to do get settled before anything is designed.",
       step2No: "02", step2Title: "Build", step2Body: "Clean code and strong UI design together — clear, intuitive, visually balanced interfaces on architecture built to be scalable and secure.",
-      step3No: "03", step3Title: "Launch", step3Body: "Ship it, then keep it healthy: performance tuning, ongoing updates and technical support so the product keeps running the way it should." },
+      step3No: "03", step3Title: "Launch", step3Body: "Ship it, then keep it healthy: performance tuning, ongoing updates and technical support so the product keeps running the way it should.",
+      step4No: "04", step4Title: "Grow", step4Body: "Then it needs an audience. Strategy, social, content, search and campaigns — measured against the goals we set before anything went live.",
+      step4Cta: "Marketing & growth →" },
     cta: { heading: "Ready to build something", emphasis: "amazing?",
       body: "Let’s create digital experiences that make your brand stand out.",
       ctaLabel: "Start a Project", ctaUrl: "#contact" },
@@ -1656,24 +1853,36 @@ const FALLBACK_COPY = {
   growth: {
     hero: { eyebrow: "Marketing & growth · UK", heading: "Build it.", emphasis: "Then grow it.",
       body: "Shipping a product is the easy half. We plan and run the marketing that finds its audience — strategy, social, content, search and campaigns — built by the same studio that builds the product, and measured against goals set before anything goes live.",
-      ctaLabel: "Start a project", ctaUrl: "#contact", cta2Label: "See the work", cta2Url: "#work" },
+      ctaLabel: "Start a project", ctaUrl: "#contact", cta2Label: "See the work", cta2Url: "#work",
+      note: "Idea · Design · Build · Launch · Grow" },
+    pipeline: { eyebrow: "The route", heading: "One pipeline, end to end",
+      body: "Most studios hand you a product and wish you luck. We keep going: the same team that shipped it plans how it finds an audience.",
+      scrollHint: "Keep scrolling — the pipeline builds itself" },
     capabilities: { eyebrow: "01 — What we grow", heading: "Marketing, run like engineering",
-      body: "Define the problem, choose the channels that fit it, build the work, then measure whether it moved." },
-    social: { eyebrow: "02 — Social", heading: "Social that has a strategy behind it",
-      body: "Channel strategy, content pillars, calendars, short-form video concepts, creative direction and community engagement." },
-    strategy: { eyebrow: "03 — Strategy", heading: "Where growth actually comes from",
-      body: "Audits, positioning, audience and competitor research, customer journey mapping, and acquisition, retention and conversion strategy." },
-    channels: { eyebrow: "04 — Channels", heading: "The places we work",
-      body: "We pick channels because they suit the audience, not because they are available." },
-    plans: { eyebrow: "05 — Growth plans", heading: "Ways to work together",
-      body: "Every engagement is scoped to the business in front of us, so pricing is quoted rather than listed." },
-    process: { eyebrow: "06 — How we work", heading: "Discover, strategize, create, launch, measure",
-      body: "The marketing process runs on its own track." },
+      body: "Define the problem, choose the channels that fit it, build the work, then measure whether it moved. Pick a discipline to see what is actually inside it.",
+      hint: "Select a discipline" },
+    social: { eyebrow: "02 — Social & content", heading: "Social that has a strategy behind it",
+      body: "Channel strategy, content pillars, calendars, short-form concepts, creative direction and community engagement — planned as ongoing work rather than posted when someone remembers.",
+      note: "No follower promises, no virality guarantees. Reach, engagement and the audience that actually converts." },
+    channels: { eyebrow: "03 — Channels", heading: "The places we work",
+      body: "We pick channels because they suit the audience, not because they are available.",
+      hint: "Move your cursor through them" },
+    funnel: { eyebrow: "04 — The path", heading: "From seen to sold to staying",
+      body: "Every stage below is a decision someone makes. Marketing's job is to remove the reason not to.",
+      note: "Stage names only. Real numbers appear on a project when a client has approved them." },
+    analytics: { eyebrow: "05 — Measurement", heading: "Reported in plain language",
+      body: "Tracking set up properly, then reported against the goals we set at the start.",
+      note: "These are the things we report on — never a number we made up." },
+    plans: { eyebrow: "06 — Growth plans", heading: "Ways to work together",
+      body: "Choose a focused strategy project, monthly marketing management, performance growth, or a full growth partnership.",
+      engagement1: "Strategy Project", engagement2: "Monthly Marketing Management",
+      engagement3: "Performance / Growth", engagement4: "Full Growth Partnership",
+      note: "Media spend is billed separately and paid directly to the platform." },
     cases: { eyebrow: "07 — Case studies", heading: "Growth work, documented",
       body: "Marketing case studies are published here once the client has approved the detail.",
       empty: "No marketing case studies are published yet. We would rather show nothing than invent numbers." },
-    analytics: { eyebrow: "08 — Measurement", heading: "Reported in plain language",
-      body: "Reach, engagement, traffic, leads, conversion rate, CTR, audience growth, search visibility and email performance." },
+    process: { eyebrow: "How we work", heading: "Discover, strategize, create, launch, measure",
+      body: "The marketing process runs on its own track. It borrows the studio's discipline without forcing engineering language onto creative work." },
     cta: { heading: "Got something that deserves an audience?",
       body: "Tell us what you have built, or what you are about to.",
       ctaLabel: "Start a project", ctaUrl: "#contact" },
@@ -1747,6 +1956,34 @@ const ORIGINAL_STAGES = [
 const STAGES = list(CMS.stages, ORIGINAL_STAGES);
 const GROWTH_STAGES = list(CMS.growthStages, []);
 
+/* Marketing work reuses the existing four card frames — a campaign is not a
+   new visual system, it just needs the right frame and the right words. */
+const GROWTH_CATS = ["Marketing", "Social Media", "Campaign", "Brand Growth", "SEO", "Content", "Launch Campaign", "Growth Strategy"];
+const IS_GROWTH_CAT = (p) => !!(p && (p.marketing || GROWTH_CATS.indexOf(p.cat) !== -1));
+
+const FRAME_FOR = (p) => {
+  if (!p) return "browser";
+  if (p.cat === "Lab") return "blueprint";
+  if (p.cat === "Games") return "game";
+  if (p.cat === "Apps") return "phone";
+  if (IS_GROWTH_CAT(p)) return p.link ? "browser" : "blueprint";
+  return "browser";
+};
+
+const WORLD_FOR = (p, frame) => {
+  if (IS_GROWTH_CAT(p)) {
+    return { "Social Media": "Social", "Campaign": "Campaign", "SEO": "Search",
+             "Content": "Content", "Launch Campaign": "Launch", "Brand Growth": "Brand",
+             "Growth Strategy": "Strategy" }[p.cat] || "Growth";
+  }
+  return frame === "browser" ? "Web" : frame === "phone" ? "Mobile" : frame === "game" ? "Game" : "In build";
+};
+
+const CURSOR_FOR = (p, frame) => {
+  if (IS_GROWTH_CAT(p)) return p.link ? "See it" : "Read it";
+  return frame === "game" ? "Play it" : frame === "phone" ? "Open app" : frame === "blueprint" ? "Peek" : "Open site";
+};
+
 const num = (n) => String(n).padStart(2, "0");
 const fill = (str, map) => String(str || "").replace(/\{(\w+)\}/g, (m, k) => (has(map[k]) ? map[k] : m));
 
@@ -1776,15 +2013,29 @@ const HIDDEN = { columns: "scaleY(0)", brush: "scaleX(0)", scatter: "scale(0) ro
 
 class Component extends DCLogic {
   state = {
-    route: "home", pid: null, w: 1440, menu: false, intro: true,
+    route: clientRoute(ROUTING.route), pid: ROUTING.projectSlug || null, w: 1440, menu: false, intro: true,
     curtain: null, phase: null, filter: "All", step: 0, answers: {}, sent: false,
     sending: false, sendError: null,
-    stage: (STAGES[0] && STAGES[0].name) || "Imagine", labMode: "pixels", labBoard: null, openProc: 0, morph: null, morphMeta: null,
+    stage: (STAGES[0] && STAGES[0].name) || "Imagine", labMode: "pixels",
+    growthGroup: null, growthPlan: null, labBoard: null, openProc: 0, morph: null, morphMeta: null,
     toys: null, dragging: null, painting: false,
     reduced: false, hoverKind: null,
   };
 
   componentDidMount() {
+    this.onPopState = (event) => {
+      const target = event.state && event.state.pclRoute
+        ? { route: event.state.pclRoute, pid: event.state.pid || null }
+        : this.routeFromLocation();
+      this.nav(target.route, target.pid, { history: false, pricing: target.route === "pricing" });
+    };
+    window.addEventListener("popstate", this.onPopState);
+    window.history.replaceState(
+      { pclRoute: ROUTING.route || "home", pid: ROUTING.projectSlug || null },
+      "",
+      window.location.pathname + window.location.search
+    );
+
     this.onResize = () => {
       this.setState({ w: window.innerWidth, toys: null });
       this.cacheTools();
@@ -1844,11 +2095,12 @@ class Component extends DCLogic {
     document.addEventListener("visibilitychange", this.onVis);
     this.applyMotion();
     this.safety = setTimeout(() => { this.els.forEach(el => { el.style.opacity = ""; }); }, 4000);
+    if (ROUTING.route === "pricing") this.pricingTimer = setTimeout(() => this.scrollToPricing(), 120);
   }
 
   componentDidUpdate(pp, ps) {
     const s = this.state;
-    const sig = s.route + "|" + s.pid + "|" + s.filter + "|" + s.step + "|" + s.stage;
+    const sig = s.route + "|" + s.pid + "|" + s.filter + "|" + s.step + "|" + s.stage + "|" + s.growthGroup;
     const stale = !this.scrubs || !this.els
       || (this.scrubs[0] && !this.scrubs[0].isConnected)
       || (this.els[0] && !this.els[0].isConnected)
@@ -1867,13 +2119,14 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    window.removeEventListener("popstate", this.onPopState);
     window.removeEventListener("resize", this.onResize);
     window.removeEventListener("pointermove", this.onMove);
     document.removeEventListener("pointerover", this.onOver);
     window.removeEventListener("scroll", this.onScroll);
     document.removeEventListener("visibilitychange", this.onVis);
     if (this.mq && this.mq.removeEventListener) this.mq.removeEventListener("change", this.onMq);
-    clearTimeout(this.introTimer); clearTimeout(this.safety);
+    clearTimeout(this.introTimer); clearTimeout(this.safety); clearTimeout(this.pricingTimer);
     clearTimeout(this.mt); clearTimeout(this.mt2);
   }
 
@@ -2134,11 +2387,38 @@ class Component extends DCLogic {
     this.setState({ intro: false });
   };
 
-  nav = (route, pid) => {
-    if (this.state.route === route && this.state.pid === (pid || null)) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  routeFromLocation = () => {
+    const path = window.location.pathname.replace(/\/$/, "") || "/";
+    const project = Object.keys(PROJECT_URLS).find(id => PROJECT_URLS[id] === path);
+    if (project) return { route: "project", pid: project };
+    const matched = Object.keys(URLS).find(key => URLS[key] === path);
+    return { route: matched || "home", pid: null };
+  };
+
+  scrollToPricing = () => {
+    const pricing = document.getElementById("pcl-pricing");
+    if (pricing) pricing.scrollIntoView({ block: "start", behavior: this.state.reduced ? "auto" : "smooth" });
+  };
+
+  nav = (requestedRoute, pid, options = {}) => {
+    const route = clientRoute(requestedRoute);
+    if (options.history !== false) {
+      window.history.pushState(
+        { pclRoute: requestedRoute, pid: pid || null },
+        "",
+        routePath(requestedRoute, pid)
+      );
+    }
+    if (this.state.route === route && this.state.pid === (pid || null)) {
+      if (options.pricing || requestedRoute === "pricing") this.scrollToPricing();
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     if (this.state.reduced || !flag("transitionsEnabled", true)) {
       window.scrollTo(0, 0);
-      this.setState({ route, pid: pid || null, step: 0, menu: false, morph: null });
+      this.setState({ route, pid: pid || null, step: 0, menu: false, morph: null }, () => {
+        if (options.pricing || requestedRoute === "pricing") this.scrollToPricing();
+      });
       return;
     }
     const flavor = FLAVOR[route] || "grid";
@@ -2147,7 +2427,9 @@ class Component extends DCLogic {
     clearTimeout(this.t1); clearTimeout(this.t2);
     this.t1 = setTimeout(() => {
       window.scrollTo(0, 0);
-      this.setState({ route, pid: pid || null, phase: "in", step: 0 });
+      this.setState({ route, pid: pid || null, phase: "in", step: 0 }, () => {
+        if (options.pricing || requestedRoute === "pricing") this.scrollToPricing();
+      });
     }, 520);
     this.t2 = setTimeout(() => this.setState({ curtain: null, phase: null }), 1020);
   };
@@ -2263,12 +2545,13 @@ class Component extends DCLogic {
         shot: img(p.i), hasShot: !!img(p.i),
         mediaOrder: i % 2 === 1 ? 2 : 1,
         textOrder: i % 2 === 1 ? 1 : 2,
-        cursor: p.cat === "Games" ? "Play it" : p.cat === "Apps" ? "Open app" : "Open site",
+        cursor: CURSOR_FOR(p, FRAME_FOR(p)),
         entrance: "Open project \u2197",
         open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
       })),
 
       openFirst: (e) => { if (e) e.preventDefault(); this.nav("project", featuredProject.id); },
+      featuredUrl: featuredProject.url,
       featuredName: featuredProject.name,
       featuredInitials: featuredProject.initials,
       featuredKind: featuredProject.kind,
@@ -2328,7 +2611,12 @@ class Component extends DCLogic {
         { no: COPY.home.process.step3No, title: COPY.home.process.step3Title, delay: 160, rise: 102, c: OR,
           blocks: [{ c: PU }, { c: PL }, { c: OR }],
           body: COPY.home.process.step3Body },
-      ],
+      ].concat(has(COPY.home.process.step4Title) ? [{
+        no: COPY.home.process.step4No, title: COPY.home.process.step4Title, delay: 240, rise: 130, c: PL,
+        blocks: [{ c: PU }, { c: PL }, { c: OR }, { c: "#B94FC0" }],
+        body: COPY.home.process.step4Body,
+      }] : []),
+      hasWord4: has(COPY.home.process.word4),
 
       socials: SOCIALS,
 
@@ -2345,16 +2633,16 @@ class Component extends DCLogic {
       }),
       visible: (this.state.filter === "All" ? PROJECTS : PROJECTS.filter(p => p.cat === this.state.filter))
         .map((p, i) => {
-          const frame = p.cat === "Lab" ? "blueprint" : p.cat === "Games" ? "game" : p.cat === "Apps" ? "phone" : "browser";
+          const frame = FRAME_FOR(p);
           return {
             ...p, delay: (i % 6) * 70,
             span: isDesktop && frame === "browser" ? "span 2" : "span 1",
             isBrowser: frame === "browser", isPhone: frame === "phone",
             isGame: frame === "game", isBlueprint: frame === "blueprint",
-            world: frame === "browser" ? "Web" : frame === "phone" ? "Mobile" : frame === "game" ? "Game" : "In build",
+            world: WORLD_FOR(p, frame),
             shot: img(p.i), hasShot: !!img(p.i),
             host: p.link ? p.link.replace(/^https?:\/\//, "").replace(/\/.*$/, "") : "in development",
-            cursor: frame === "game" ? "Play it" : frame === "phone" ? "Open app" : frame === "blueprint" ? "Peek" : "Open site",
+            cursor: CURSOR_FOR(p, frame),
             open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
           };
         }),
@@ -2403,7 +2691,7 @@ class Component extends DCLogic {
       nextP: (() => {
         const i = PROJECTS.findIndex(x => x.id === P.id);
         const nx = PROJECTS[(i + 1) % PROJECTS.length];
-        return { name: nx.name, kind: nx.kind, initials: nx.initials, tint: nx.tint, tint2: nx.tint2,
+        return { name: nx.name, kind: nx.kind, initials: nx.initials, tint: nx.tint, tint2: nx.tint2, url: nx.url,
           open: (e) => { if (e) e.preventDefault(); this.openProject(nx.id, e); } };
       })(),
       backToWork: (e) => { if (e) e.preventDefault(); this.nav("work"); },
@@ -2632,14 +2920,48 @@ class Component extends DCLogic {
       reviews: TESTIMONIALS.map((r, i) => ({ ...r, delay: i * 70 })),
       hasReviews: flag("testimonialsEnabled", true) && TESTIMONIALS.length > 0,
       noReviews: !(flag("testimonialsEnabled", true) && TESTIMONIALS.length > 0),
-      showReviewSection: flag("testimonialsEnabled", true),
+      showReviewSection: flag("testimonialsEnabled", true) && TESTIMONIALS.length > 0,
 
-      /* ---- GROWTH / MARKETING ---- */
+      /* ---- GROWTH / MARKETING ----
+         Every list below is derived from the CMS payload. The journey, funnel
+         and reporting vocabularies fall back to studio defaults so the page is
+         never empty, and no figure is ever invented — only metric names. */
       growthOn: flag("growthEnabled", true),
       growthLead: MARKETING[0] || {},
       growthLeadBody: (MARKETING[0] || {}).body || "",
       growthLeadLong: (MARKETING[0] || {}).longBody || "",
-      growthGroups: (() => {
+      growthCount: MARKETING_SUBS.length,
+
+      /* The pinned journey. Colours ramp ink -> purple -> violet -> orange so
+         the pipeline visibly "heats up" from strategy through to growth. */
+      pipeline: (() => {
+        const source = GROWTH_STAGES.length
+          ? GROWTH_STAGES
+          : [
+              { name: "Discover", body: "Audience, market and current performance." },
+              { name: "Strategize", body: "Positioning, channels and the measurement plan." },
+              { name: "Create", body: "Content and campaign creative built for the channel." },
+              { name: "Launch", body: "Live, with a stated goal and tracking in place." },
+              { name: "Measure", body: "Reach, engagement, traffic, leads and conversion." },
+              { name: "Optimize", body: "Keep what performs, cut what does not." },
+              { name: "Grow", body: "Compound the parts that work." },
+            ];
+        const ramp = ["#3A3346", "#5B2394", "#7231C4", "#8B45FF", "#B94FC0", "#FF5F1F", "#FF9166"];
+        const n = source.length;
+        return source.map((st, i) => ({
+          name: st.name,
+          no: pick(st.no, num(i + 1)),
+          body: st.body || "",
+          c: st.accent || ramp[Math.round((i / Math.max(1, n - 1)) * (ramp.length - 1))],
+          /* Scrub threshold: each node lights as --p passes its share. */
+          t: (i / (n + 1.15)).toFixed(3),
+          left: n === 1 ? 50 : (6 + (i * 88) / (n - 1)).toFixed(2),
+          delay: i * 70,
+        }));
+      })(),
+
+      /* Capability groups, revealed one at a time rather than dumped at once. */
+      growthTabs: (() => {
         const order = [];
         const bucket = {};
         for (const sub of MARKETING_SUBS) {
@@ -2647,30 +2969,189 @@ class Component extends DCLogic {
           if (!bucket[g]) { bucket[g] = []; order.push(g); }
           bucket[g].push(sub);
         }
-        return order.map((g, i) => ({
-          name: g,
-          no: num(i + 1),
-          delay: i * 60,
-          c: [PU, OR, PL, INK][i % 4],
-          items: bucket[g].map((it, j) => ({ ...it, delay: j * 40 })),
-        }));
+        const active = this.state.growthGroup || order[0];
+        const ramp = [PU, OR, PL, "#B94FC0", "#3A3346", "#7231C4", "#FF9166", INK];
+        return order.map((g, i) => {
+          const on = g === active;
+          return {
+            name: g,
+            no: num(i + 1),
+            count: num(bucket[g].length),
+            on: on ? 1 : 0,
+            c: ramp[i % ramp.length],
+            bg: on ? ramp[i % ramp.length] : "rgba(246,244,240,0.04)",
+            color: on ? "#F6F4F0" : "rgba(246,244,240,0.66)",
+            border: on ? ramp[i % ramp.length] : "rgba(246,244,240,0.16)",
+            pick: () => this.setState({ growthGroup: g }),
+          };
+        });
       })(),
-      growthCount: MARKETING_SUBS.length,
+      growthActive: (() => {
+        const order = [];
+        const bucket = {};
+        for (const sub of MARKETING_SUBS) {
+          const g = sub.group || "Capabilities";
+          if (!bucket[g]) { bucket[g] = []; order.push(g); }
+          bucket[g].push(sub);
+        }
+        const name = this.state.growthGroup || order[0];
+        const idx = Math.max(0, order.indexOf(name));
+        const ramp = [PU, OR, PL, "#B94FC0", "#3A3346", "#7231C4", "#FF9166", INK];
+        return {
+          name: name || "",
+          c: ramp[idx % ramp.length],
+          no: num(idx + 1),
+          items: (bucket[name] || []).map((it, i) => ({
+            ...it,
+            no: num(i + 1),
+            delay: i * 45,
+            c: ramp[idx % ramp.length],
+          })),
+        };
+      })(),
+      hasGrowthTabs: MARKETING_SUBS.length > 0,
+
       socialServices: MARKETING_SUBS.filter(x => (x.group || "") === "Social").map((x, i) => ({ ...x, delay: i * 50 })),
       strategyServices: MARKETING_SUBS.filter(x => (x.group || "") === "Strategy").map((x, i) => ({ ...x, delay: i * 50 })),
-      channels: CHANNELS.map((c, i) => ({ ...c, delay: i * 40, c: c.accent || [PU, OR, PL, INK][i % 4] })),
+
+      channels: CHANNELS.map((c, i) => {
+        const ring = CHANNELS.length || 1;
+        const a = (i / ring) * Math.PI * 2;
+        return {
+          ...c,
+          delay: i * 40,
+          c: c.accent || [PU, OR, PL, "#B94FC0"][i % 4],
+          x: (50 + Math.cos(a) * 34).toFixed(2),
+          y: (50 + Math.sin(a) * 30).toFixed(2),
+          dur: (9 + (i % 5) * 1.7).toFixed(1),
+          initials: (c.name || "").replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(w => w[0]).join(""),
+        };
+      }),
       hasChannels: CHANNELS.length > 0,
-      growthPlans: GROWTH_PLANS.map((pl, i) => ({
-        ...pl,
-        delay: i * 90,
-        c: pl.accent || [PU, OR, INK][i % 3],
-        featuredOn: pl.featured ? 1 : 0,
-        border: pl.featured ? (pl.accent || PU) : "rgba(13,11,18,0.14)",
-        hasHighlight: has(pl.highlight),
-        hasDuration: has(pl.duration),
-        hasIdeal: has(pl.idealFor),
+
+      /* The acquisition path. Labels only — deliberately no numbers. */
+      funnel: [
+        { k: "Reach", d: "The people who see it at all.", w: 100, c: PU, t: "0.05" },
+        { k: "Engagement", d: "The ones who stop and respond.", w: 82, c: "#7231C4", t: "0.20" },
+        { k: "Traffic", d: "The ones who come to your side of the internet.", w: 62, c: PL, t: "0.36" },
+        { k: "Leads", d: "The ones who raise a hand.", w: 44, c: "#B94FC0", t: "0.52" },
+        { k: "Conversion", d: "The ones who become customers.", w: 28, c: OR, t: "0.68" },
+        { k: "Retention", d: "The ones who stay, and bring others.", w: 20, c: "#FF9166", t: "0.82" },
+      ],
+
+      /* What we report on. Names, never values — a real figure only ever comes
+         from a published project metric an admin entered. */
+      metricChips: [
+        "Reach", "Impressions", "Engagement rate", "Traffic", "Leads",
+        "Conversion rate", "CTR", "Cost per lead", "Audience growth",
+        "Search visibility", "Email open rate", "Retention",
+      ].map((label, i) => ({
+        label,
+        delay: i * 40,
+        c: [PU, PL, OR, "#B94FC0"][i % 4],
+        h: 26 + ((i * 37) % 58),
       })),
+
+      /* Creative formats the studio actually produces, as floating mock cards. */
+      socialCards: [
+        { k: "Reel", w: "132px", h: "196px", r: "18px", rot: "-6deg", top: "6%", left: "2%", c: OR, c2: "#B94FC0", anim: "pcl-float", dur: "9s", d: "0s", label: "Short-form" },
+        { k: "Post", w: "152px", h: "152px", r: "16px", rot: "4deg", top: "34%", left: "38%", c: PU, c2: PL, anim: "pcl-float2", dur: "11s", d: "-2s", label: "Carousel" },
+        { k: "Story", w: "112px", h: "184px", r: "20px", rot: "8deg", top: "10%", left: "70%", c: PL, c2: OR, anim: "pcl-float", dur: "10s", d: "-4s", label: "Story" },
+        { k: "Ad", w: "168px", h: "112px", r: "12px", rot: "-3deg", top: "62%", left: "6%", c: "#3A3346", c2: PU, anim: "pcl-float2", dur: "12s", d: "-6s", label: "Paid creative" },
+      ],
+
+      /* ---- PRICING ----
+         Purely presentational mapping. Every field is CMS-backed so packages
+         can be renamed, repriced, reordered or removed without code. */
+      growthPlans: GROWTH_PLANS.map((pl, i) => {
+        const accent = pl.accent || [PU, OR, PL, "#B94FC0"][i % 4];
+        const featured = !!pl.featured;
+        return {
+          ...pl,
+          delay: i * 90,
+          c: accent,
+          featuredOn: featured ? 1 : 0,
+          recommended: featured,
+          notRecommended: !featured,
+          border: featured ? accent : "rgba(246,244,240,0.14)",
+          bg: featured ? "rgba(139,69,255,0.09)" : "rgba(246,244,240,0.03)",
+          shadow: featured ? "0 30px 70px -40px " + accent : "none",
+          lift: featured ? "-6px" : "0px",
+          badge: pick(pl.badge, pl.highlight),
+          hasBadge: has(pick(pl.badge, pl.highlight)),
+          period: pick(pl.period, pl.duration),
+          hasPeriod: has(pick(pl.period, pl.duration)),
+          originalPrice: pick(pl.originalPrice, ""),
+          hasDiscount: has(pl.originalPrice),
+          startingFrom: pick(pl.startingFrom, ""),
+          hasStartingFrom: has(pl.startingFrom),
+          mediaNote: pick(pl.mediaNote, ""),
+          hasMediaNote: has(pl.mediaNote),
+          hasIdeal: has(pl.idealFor),
+          hasShort: has(pl.short),
+          ctaLabel: pick(pl.ctaLabel, "Start a project"),
+          items: (pl.items || []).map((it, j) => ({ ...it, delay: j * 30, c: accent })),
+          open: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
+        };
+      }),
       hasGrowthPlans: GROWTH_PLANS.length > 0,
+      engagementWays: [T.growth.plans.engagement1, T.growth.plans.engagement2, T.growth.plans.engagement3, T.growth.plans.engagement4].filter(has),
+      pricingNotes: Object.values(PRICING_NOTES).filter(has).join(" · ") || T.growth.plans.note,
+
+      /* Packages grouped by category, so the same card system renders both the
+         headline bundles and individual service packages. A single unnamed
+         group renders exactly like a flat row — no heading, no extra chrome. */
+      growthPlanGroups: (() => {
+        const order = [];
+        const bucket = {};
+        const ramp = [PU, OR, PL, "#B94FC0", "#7231C4", "#FF9166"];
+
+        GROWTH_PLANS.forEach((pl, i) => {
+          const key = pl.category || "";
+          if (!bucket[key]) { bucket[key] = []; order.push(key); }
+          bucket[key].push(i);
+        });
+
+        return order.map((name, gi) => ({
+          name,
+          no: num(gi + 1),
+          named: has(name),
+          c: ramp[gi % ramp.length],
+          delay: gi * 80,
+          plans: bucket[name].map((idx) => {
+            const pl = GROWTH_PLANS[idx];
+            const accent = pl.accent || ramp[idx % ramp.length];
+            const featured = !!pl.featured;
+            return {
+              ...pl,
+              delay: (idx % 4) * 90,
+              c: accent,
+              featuredOn: featured ? 1 : 0,
+              recommended: featured,
+              border: featured ? accent : "rgba(246,244,240,0.14)",
+              bg: featured ? "rgba(139,69,255,0.09)" : "rgba(246,244,240,0.03)",
+              shadow: featured ? "0 30px 70px -40px " + accent : "none",
+              lift: featured ? "-6px" : "0px",
+              badge: pick(pl.badge, pl.highlight),
+              hasBadge: has(pick(pl.badge, pl.highlight)),
+              period: pick(pl.period, pl.duration),
+              hasPeriod: has(pick(pl.period, pl.duration)),
+              originalPrice: pick(pl.originalPrice, ""),
+              hasDiscount: has(pl.originalPrice),
+              startingFrom: pick(pl.startingFrom, ""),
+              hasStartingFrom: has(pl.startingFrom),
+              mediaNote: pick(pl.mediaNote, ""),
+              hasMediaNote: has(pl.mediaNote),
+              hasIdeal: has(pl.idealFor),
+              hasShort: has(pl.short),
+              ctaLabel: pick(pl.ctaLabel, "Start a project"),
+              items: (pl.items || []).map((it, j) => ({ ...it, delay: j * 30, c: accent })),
+              open: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
+            };
+          }),
+        }));
+      })(),
+
       growthSteps: GROWTH_STAGES.map((st, i) => ({
         ...st,
         no: pick(st.no, num(i + 1)),
@@ -2680,6 +3161,7 @@ class Component extends DCLogic {
       hasGrowthSteps: GROWTH_STAGES.length > 0,
       growthCases: PROJECTS.filter(x => x.marketing).map((x, i) => ({
         ...x, delay: i * 80,
+        shot: img(x.i), hasShot: !!img(x.i),
         open: (e) => { if (e) e.preventDefault(); this.openProject(x.id, e); },
       })),
       hasGrowthCases: PROJECTS.some(x => x.marketing),

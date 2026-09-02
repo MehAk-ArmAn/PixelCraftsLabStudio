@@ -48,6 +48,16 @@ final class MediaTest extends TestCase
         $this->assertSame(0, Media::count());
     }
 
+    public function test_active_svg_files_cannot_be_uploaded(): void
+    {
+        $this->actingAs($this->admin)
+            ->post(route('admin.media.store'), [
+                'files' => [UploadedFile::fake()->createWithContent('active.svg', '<svg><script>alert(1)</script></svg>')],
+            ])->assertSessionHasErrors('files.0');
+
+        $this->assertSame(0, Media::count());
+    }
+
     public function test_oversized_files_are_rejected(): void
     {
         $this->actingAs($this->admin)

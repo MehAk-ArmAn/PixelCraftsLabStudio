@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,11 +10,13 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     public const ROLE_SUPER_ADMIN = 'super_admin';
+
     public const ROLE_ADMIN = 'admin';
+
     public const ROLE_EDITOR = 'editor';
 
     public const ROLES = [self::ROLE_SUPER_ADMIN, self::ROLE_ADMIN, self::ROLE_EDITOR];
@@ -60,10 +63,15 @@ class User extends Authenticatable
         return $this->is_active && in_array($this->role, self::ROLES, true);
     }
 
-    /** Content = projects, services, team, pages, media, marketing, enquiries. */
+    /** Content = projects, services, team, pages, media and marketing. */
     public function canManageContent(): bool
     {
         return $this->canAccessAdminPanel();
+    }
+
+    public function canManageAdministration(): bool
+    {
+        return $this->is_active && $this->isAdmin();
     }
 
     /** Security = admin users, activity log, destructive system controls. */

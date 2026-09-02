@@ -69,6 +69,24 @@ class SiteSettingsSeeder extends Seeder
             ['page_transitions_enabled', true, 'features', 'bool', 'Page transition effects enabled', null],
             ['testimonials_enabled', true, 'features', 'bool', 'Testimonial section enabled', null],
 
+            // --------------------------------------------------------- pricing
+            ['pricing_media_spend_note', 'Advertising/media spend is separate.', 'pricing', 'text', 'Media-spend note', 'Shown on packages where media spend is explicitly separated.'],
+            ['pricing_third_party_note', 'Third-party software/provider costs are separate.', 'pricing', 'text', 'Third-party costs note', 'Used for automation, email and other provider-dependent work.'],
+            ['pricing_production_note', 'On-site shoots and professional production may be separately scoped.', 'pricing', 'text', 'Production note', null],
+            ['pricing_creator_note', 'Influencer and creator fees are separate.', 'pricing', 'text', 'Creator-fees note', null],
+            ['pricing_licensing_note', 'Paid stock and licence costs are separate where applicable.', 'pricing', 'text', 'Stock/licensing note', null],
+            ['pricing_rebuild_note', 'Large website rebuilds outside a marketing retainer are separately scoped.', 'pricing', 'text', 'Website-rebuild note', null],
+            ['pricing_multilingual_note', 'Arabic or multilingual content beyond the included scope may be separately quoted.', 'pricing', 'text', 'Multilingual-content note', null],
+            ['founding_client_enabled', false, 'pricing', 'bool', 'Founding Client offer enabled', 'Disabled by default. Enable only while the real offer is available.'],
+            ['founding_client_discount_percent', 20, 'pricing', 'int', 'Founding discount percent', 'Calculated from the stored Growth Bundle price.'],
+            ['founding_client_duration_months', 3, 'pricing', 'int', 'Discount duration in months', null],
+            ['founding_client_limit', 8, 'pricing', 'int', 'Client limit', 'The real maximum number of clients who may claim this offer.'],
+            ['founding_client_claimed_count', 0, 'pricing', 'int', 'Claimed client count', 'Update this from real records only.'],
+            ['founding_client_show_remaining', false, 'pricing', 'bool', 'Show remaining count', 'Only enable when the claimed count is actively maintained.'],
+            ['founding_client_promotion_text', 'Founding Client — 20% off the first 3 months', 'pricing', 'string', 'Promotion text', null],
+            ['founding_client_starts_on', '', 'pricing', 'string', 'Promotion start date', 'Optional, YYYY-MM-DD.'],
+            ['founding_client_ends_on', '', 'pricing', 'string', 'Promotion end date', 'Optional, YYYY-MM-DD.'],
+
             // ------------------------------------------------------------- seo
             ['seo_site_title', 'PixelCraftsLab Studio — Ideas. Build. Launch. Grow.', 'seo', 'string', 'Site title', null],
             ['seo_default_description', 'PixelCraftsLab is a creative technology studio building websites, apps, games and brand experiences — and the digital marketing and growth work that takes them to an audience.', 'seo', 'text', 'Default meta description', null],

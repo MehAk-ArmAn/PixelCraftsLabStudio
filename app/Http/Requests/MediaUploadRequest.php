@@ -29,7 +29,7 @@ class MediaUploadRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'files.*.mimes' => 'Only images (jpg, png, gif, webp, svg, avif) and video (mp4, webm, ogg) can be uploaded.',
+            'files.*.mimes' => 'Only images (jpg, png, gif, webp, avif) and video (mp4, webm, ogg) can be uploaded.',
             'files.*.max' => 'Each file must be 20 MB or smaller.',
         ];
     }

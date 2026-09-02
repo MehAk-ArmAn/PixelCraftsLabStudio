@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             TeamSeeder::class,
             SocialLinkSeeder::class,
             GrowthPlanSeeder::class,
+            PackageSeeder::class,
             ContactOptionSeeder::class,
             PageContentSeeder::class,
             MediaSeeder::class,

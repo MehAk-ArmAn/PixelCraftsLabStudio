@@ -28,17 +28,39 @@ class SiteRenderer
         return resource_path(self::SOURCE);
     }
 
-    public function render(bool $preview = false, ?string $csrfToken = null): string
+    public function render(bool $preview = false, ?string $csrfToken = null, array $context = []): string
     {
         $html = File::get($this->sourcePath());
+        $html = $this->routeAwareLinks($html);
 
         $payload = $this->content->payload($preview);
         $payload['endpoints'] = [
             'contact' => route('contact.store', [], false),
         ];
+        $payload['routing'] = [
+            'route' => $context['route'] ?? 'home',
+            'projectSlug' => $context['projectSlug'] ?? null,
+            'canonicalUrl' => $context['canonicalUrl'] ?? route('home', [], false),
+            'urls' => [
+                'home' => route('home', [], false),
+                'work' => route('work.index', [], false),
+                'services' => route('services.index', [], false),
+                'growth' => route('marketing.index', [], false),
+                'marketing' => route('marketing.index', [], false),
+                'pricing' => route('pricing.index', [], false),
+                'studio' => route('studio', [], false),
+                'lab' => route('lab', [], false),
+                'contact' => route('contact', [], false),
+            ],
+            'projectUrls' => collect($payload['projects'] ?? [])->mapWithKeys(
+                fn (array $project) => [
+                    $project['id'] => route('projects.show', ['project' => $project['id']], false),
+                ],
+            )->all(),
+        ];
         $payload['csrf'] = $csrfToken ?? csrf_token();
 
-        return $this->injectHead($html, $this->metaTags($payload).$this->payloadScript($payload));
+        return $this->injectHead($html, $this->metaTags($payload, $context['seo'] ?? []).$this->payloadScript($payload));
     }
 
     private function payloadScript(array $payload): string
@@ -58,16 +80,18 @@ class SiteRenderer
         return "\n<script>window.PCL_CMS = {$json};</script>\n";
     }
 
-    private function metaTags(array $payload): string
+    private function metaTags(array $payload, array $routeSeo = []): string
     {
         $seo = $payload['seo'] ?? [];
         $settings = $payload['settings'] ?? [];
 
-        $title = $seo['title'] ?? ($settings['studioName'] ?? 'PixelCraftsLab');
-        $description = $seo['description'] ?? '';
-        $ogImage = $this->absolute($seo['ogImage'] ?? '');
+        $title = ($routeSeo['title'] ?? null) ?: ($seo['title'] ?? ($settings['studioName'] ?? 'PixelCraftsLab'));
+        $description = ($routeSeo['description'] ?? null) ?: ($seo['description'] ?? '');
+        $ogTitle = ($routeSeo['ogTitle'] ?? null) ?: $title;
+        $ogDescription = ($routeSeo['ogDescription'] ?? null) ?: $description;
+        $ogImage = $this->absolute(($routeSeo['ogImage'] ?? null) ?: ($seo['ogImage'] ?? ''));
         $twitterImage = $this->absolute($seo['twitterImage'] ?? '') ?: $ogImage;
-        $canonical = $seo['canonicalBase'] ?? '';
+        $canonical = $this->absolute(($routeSeo['canonical'] ?? null) ?: ($seo['canonicalBase'] ?? ''));
         $favicon = $this->absolute($settings['favicon'] ?? '');
 
         $tags = [
@@ -75,8 +99,8 @@ class SiteRenderer
             '<meta name="description" content="'.e($description).'" />',
             '<meta property="og:type" content="website" />',
             '<meta property="og:site_name" content="'.e($settings['studioName'] ?? '').'" />',
-            '<meta property="og:title" content="'.e($title).'" />',
-            '<meta property="og:description" content="'.e($description).'" />',
+            '<meta property="og:title" content="'.e($ogTitle).'" />',
+            '<meta property="og:description" content="'.e($ogDescription).'" />',
             '<meta name="twitter:card" content="summary_large_image" />',
             '<meta name="twitter:title" content="'.e($title).'" />',
             '<meta name="twitter:description" content="'.e($description).'" />',
@@ -99,7 +123,7 @@ class SiteRenderer
             $tags[] = '<link rel="icon" href="'.e($favicon).'" />';
         }
 
-        $tags[] = ($seo['robotsIndex'] ?? true)
+        $tags[] = ($routeSeo['robotsIndex'] ?? $seo['robotsIndex'] ?? true)
             ? '<meta name="robots" content="index, follow" />'
             : '<meta name="robots" content="noindex, nofollow" />';
 
@@ -113,6 +137,41 @@ class SiteRenderer
         }
 
         return rtrim((string) config('app.url'), '/').'/'.ltrim($url, '/');
+    }
+
+    /**
+     * Gives every rendered anchor a real Laravel destination while leaving the
+     * Claude transition handlers in place for enhanced client-side navigation.
+     */
+    private function routeAwareLinks(string $html): string
+    {
+        $links = [
+            'home' => route('home', [], false),
+            'work' => route('work.index', [], false),
+            'services' => route('services.index', [], false),
+            'growth' => route('marketing.index', [], false),
+            'studio' => route('studio', [], false),
+            'lab' => route('lab', [], false),
+            'contact' => route('contact', [], false),
+        ];
+
+        foreach ($links as $key => $url) {
+            $html = str_replace('href="#'.$key.'"', 'href="'.e($url).'"', $html);
+        }
+
+        return str_replace(
+            [
+                'onClick="{{ p.open }}" href="#project"',
+                'onClick="{{ nextP.open }}" href="#project"',
+                'onClick="{{ openFirst }}" href="#project"',
+            ],
+            [
+                'onClick="{{ p.open }}" href="{{ p.url }}"',
+                'onClick="{{ nextP.open }}" href="{{ nextP.url }}"',
+                'onClick="{{ openFirst }}" href="{{ featuredUrl }}"',
+            ],
+            $html,
+        );
     }
 
     /**

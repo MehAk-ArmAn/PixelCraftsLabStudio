@@ -1,6 +1,8 @@
 @php
-    $unread = \App\Models\ContactSubmission::unread()->count();
     $user = auth()->user();
+    $unread = $user?->canManageAdministration()
+        ? \App\Models\ContactSubmission::unread()->count()
+        : 0;
 
     $link = function (string $route, string $label, ?int $badge = null) {
         $active = request()->routeIs($route) || request()->routeIs(str_replace('.index', '.*', $route));
@@ -10,7 +12,6 @@
     $groups = [
         'Overview' => [
             $link('admin.dashboard', 'Dashboard'),
-            $link('admin.enquiries.index', 'Enquiries', $unread ?: null),
         ],
         'Website' => [
             $link('admin.pages.index', 'Pages'),
@@ -27,14 +28,19 @@
             $link('admin.marketing.overview', 'Overview'),
             $link('admin.marketing-services.index', 'Marketing services'),
             $link('admin.growth-plans.index', 'Growth plans'),
+            $link('admin.packages.index', 'Pricing'),
             $link('admin.campaigns.index', 'Campaigns'),
             $link('admin.channels.index', 'Channels'),
         ],
-        'Configuration' => [
+    ];
+
+    if ($user?->canManageAdministration()) {
+        $groups['Overview'][] = $link('admin.enquiries.index', 'Enquiries', $unread ?: null);
+        $groups['Configuration'] = [
             $link('admin.contact-options.index', 'Contact options'),
             $link('admin.settings.edit', 'Settings'),
-        ],
-    ];
+        ];
+    }
 
     if ($user?->canManageSecurity()) {
         $groups['Security'] = [

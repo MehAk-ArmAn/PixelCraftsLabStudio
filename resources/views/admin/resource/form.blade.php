@@ -47,6 +47,10 @@
       @if ($mode !== 'create' && $routeBase === 'growth-plans')
         @include('admin.resource.partials.plan-items')
       @endif
+
+      @if ($mode !== 'create' && $routeBase === 'packages')
+        @include('admin.resource.partials.package-items')
+      @endif
     </div>
   </div>
 </form>
@@ -56,6 +60,18 @@
   <form id="metric-form" method="POST" action="{{ route('admin.projects.metrics.store', $record) }}">@csrf</form>
   @foreach ($extra['metrics'] as $metric)
     <form id="delm{{ $metric->id }}" method="POST" action="{{ route('admin.projects.metrics.destroy', [$record, $metric]) }}">
+      @csrf @method('DELETE')
+    </form>
+  @endforeach
+@endif
+
+@if ($mode !== 'create' && $routeBase === 'packages')
+  <form id="package-item-form" method="POST" action="{{ route('admin.packages.items.store', $record) }}">@csrf</form>
+  @foreach ($extra['packageItems'] as $item)
+    <form id="pkgitem{{ $item->id }}" method="POST" action="{{ route('admin.packages.items.update', [$record, $item]) }}">
+      @csrf @method('PUT')
+    </form>
+    <form id="delpkg{{ $item->id }}" method="POST" action="{{ route('admin.packages.items.destroy', [$record, $item]) }}">
       @csrf @method('DELETE')
     </form>
   @endforeach

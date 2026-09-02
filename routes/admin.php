@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MarketingOverviewController;
 use App\Http\Controllers\Admin\MarketingServiceController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\NavigationItemController;
+use App\Http\Controllers\Admin\PackageController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PreviewController;
 use App\Http\Controllers\Admin\ProcessStageController;
@@ -71,17 +72,19 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
         $resourceRoutes('socials', SocialLinkController::class);
         $resourceRoutes('testimonials', TestimonialController::class);
         $resourceRoutes('navigation', NavigationItemController::class);
-        $resourceRoutes('contact-options', ContactOptionController::class);
-
         // -------------------------------------------------------- marketing
         Route::get('marketing', MarketingOverviewController::class)->name('marketing.overview');
         $resourceRoutes('marketing-services', MarketingServiceController::class);
         $resourceRoutes('channels', MarketingChannelController::class);
         $resourceRoutes('campaigns', MarketingCampaignController::class);
         $resourceRoutes('growth-plans', GrowthPlanController::class);
+        $resourceRoutes('packages', PackageController::class);
         Route::post('growth-plans/{growthPlan}/items', [GrowthPlanController::class, 'storeItem'])->name('growth-plans.items.store');
         Route::put('growth-plans/{growthPlan}/items/{item}', [GrowthPlanController::class, 'updateItem'])->name('growth-plans.items.update');
         Route::delete('growth-plans/{growthPlan}/items/{item}', [GrowthPlanController::class, 'destroyItem'])->name('growth-plans.items.destroy');
+        Route::post('packages/{package}/items', [PackageController::class, 'storeItem'])->name('packages.items.store');
+        Route::put('packages/{package}/items/{item}', [PackageController::class, 'updateItem'])->name('packages.items.update');
+        Route::delete('packages/{package}/items/{item}', [PackageController::class, 'destroyItem'])->name('packages.items.destroy');
 
         // ------------------------------------------------------------ pages
         Route::get('pages', [PageController::class, 'index'])->name('pages.index');
@@ -100,16 +103,19 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
         Route::post('media/{medium}/replace', [MediaController::class, 'replace'])->name('media.replace');
         Route::delete('media/{medium}', [MediaController::class, 'destroy'])->name('media.destroy');
 
-        // -------------------------------------------------------- enquiries
-        Route::get('enquiries', [EnquiryController::class, 'index'])->name('enquiries.index');
-        Route::get('enquiries/{enquiry}', [EnquiryController::class, 'show'])->name('enquiries.show');
-        Route::put('enquiries/{enquiry}', [EnquiryController::class, 'update'])->name('enquiries.update');
-        Route::post('enquiries/{enquiry}/toggle-read', [EnquiryController::class, 'toggleRead'])->name('enquiries.toggle-read');
-        Route::delete('enquiries/{enquiry}', [EnquiryController::class, 'destroy'])->name('enquiries.destroy');
+        Route::middleware('can:manage-administration')->group(function () use ($resourceRoutes) {
+            // ---------------------------------------------------- enquiries
+            Route::get('enquiries', [EnquiryController::class, 'index'])->name('enquiries.index');
+            Route::get('enquiries/{enquiry}', [EnquiryController::class, 'show'])->name('enquiries.show');
+            Route::put('enquiries/{enquiry}', [EnquiryController::class, 'update'])->name('enquiries.update');
+            Route::post('enquiries/{enquiry}/toggle-read', [EnquiryController::class, 'toggleRead'])->name('enquiries.toggle-read');
+            Route::delete('enquiries/{enquiry}', [EnquiryController::class, 'destroy'])->name('enquiries.destroy');
 
-        // --------------------------------------------------------- settings
-        Route::get('settings/{group?}', [SettingsController::class, 'edit'])->name('settings.edit');
-        Route::put('settings/{group}', [SettingsController::class, 'update'])->name('settings.update');
+            // ----------------------------------------------------- settings
+            $resourceRoutes('contact-options', ContactOptionController::class);
+            Route::get('settings/{group?}', [SettingsController::class, 'edit'])->name('settings.edit');
+            Route::put('settings/{group}', [SettingsController::class, 'update'])->name('settings.update');
+        });
 
         // --------------------------------------------------------- security
         Route::middleware('can:manage-security')->group(function () {

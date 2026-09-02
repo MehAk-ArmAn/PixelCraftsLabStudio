@@ -77,6 +77,7 @@
     @endforelse
   </div>
 
+  @if ($canManageAdministration)
   <div class="card">
     <h2>Marketing enquiries</h2>
     @forelse ($enquiries as $enquiry)
@@ -90,6 +91,7 @@
       <p class="small muted">No marketing enquiries yet.</p>
     @endforelse
   </div>
+  @endif
 
   <div class="card">
     <h2>Recent marketing updates</h2>

@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Services\SettingsRepository;
 use App\Services\SiteContentService;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -48,8 +49,8 @@ final class PublicSiteTest extends TestCase
         $this->assertCount(4, $payload['team']);
         $this->assertCount(8, $payload['socials']);
         $this->assertCount(6, $payload['services']);
-        $this->assertCount(3, $payload['growthPlans']);
-        $this->assertCount(11, $payload['channels']);
+        $this->assertCount(4, $payload['growthPlans']);
+        $this->assertCount(15, $payload['channels']);
         $this->assertNotEmpty($payload['copy']['home']['hero']['heading']);
         $this->assertSame('Bring your idea', $payload['copy']['home']['hero']['heading']);
     }
@@ -115,7 +116,7 @@ final class PublicSiteTest extends TestCase
 
     private function seedSite(): void
     {
-        $this->seed(\Database\Seeders\DatabaseSeeder::class);
+        $this->seed(DatabaseSeeder::class);
         SiteContentService::flush();
     }
 }

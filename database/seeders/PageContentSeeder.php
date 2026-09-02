@@ -32,7 +32,7 @@ class PageContentSeeder extends Seeder
             );
 
             foreach ($page['sections'] as $index => $section) {
-                PageSection::firstOrCreate(
+                $sectionRecord = PageSection::firstOrCreate(
                     ['page_id' => $record->id, 'section_key' => $section['key']],
                     [
                         'label' => $section['label'],
@@ -49,6 +49,17 @@ class PageContentSeeder extends Seeder
                         'is_enabled' => true,
                     ],
                 );
+
+                if ($page['key'] === 'growth' && $section['key'] === 'plans') {
+                    $legacyBody = 'Three starting points. Every engagement is scoped to the business in front of us, so pricing is quoted rather than listed.';
+
+                    if ($sectionRecord->body === $legacyBody) {
+                        $sectionRecord->body = $section['body'];
+                    }
+
+                    $sectionRecord->settings = array_replace($section['settings'] ?? [], $sectionRecord->settings ?? []);
+                    $sectionRecord->save();
+                }
             }
         }
     }
@@ -62,6 +73,7 @@ class PageContentSeeder extends Seeder
             $this->project(),
             $this->services(),
             $this->growth(),
+            $this->pricing(),
             $this->studio(),
             $this->lab(),
             $this->contact(),
@@ -278,7 +290,13 @@ class PageContentSeeder extends Seeder
                     'key' => 'plans', 'label' => 'Growth plans',
                     'eyebrow' => '05 — Growth plans',
                     'heading' => 'Ways to work together',
-                    'body' => 'Three starting points. Every engagement is scoped to the business in front of us, so pricing is quoted rather than listed.',
+                    'body' => 'Choose a focused strategy project, monthly marketing management, performance growth, or a full growth partnership. Core prices are listed below and every scope remains editable.',
+                    'settings' => [
+                        'engagement1' => 'Strategy Project',
+                        'engagement2' => 'Monthly Marketing Management',
+                        'engagement3' => 'Performance / Growth',
+                        'engagement4' => 'Full Growth Partnership',
+                    ],
                 ],
                 [
                     'key' => 'process', 'label' => 'Process',
@@ -306,6 +324,17 @@ class PageContentSeeder extends Seeder
                     'cta_label' => 'Start a project', 'cta_url' => '#contact',
                 ],
             ],
+        ];
+    }
+
+    private function pricing(): array
+    {
+        return [
+            'key' => 'pricing',
+            'title' => 'Pricing',
+            'seo_title' => 'Pricing — PixelCraftsLab Studio',
+            'seo_description' => 'Transparent PixelCraftsLab pricing for growth, social media, content, paid media, SEO, WhatsApp, automation and launches.',
+            'sections' => [],
         ];
     }
 

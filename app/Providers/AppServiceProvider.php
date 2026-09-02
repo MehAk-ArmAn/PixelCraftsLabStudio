@@ -9,6 +9,8 @@ use App\Models\MarketingCampaign;
 use App\Models\MarketingChannel;
 use App\Models\Media;
 use App\Models\NavigationItem;
+use App\Models\Package;
+use App\Models\PackageItem;
 use App\Models\Page;
 use App\Models\PageSection;
 use App\Models\ProcessStage;
@@ -37,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
         TeamMember::class, SocialLink::class, Testimonial::class, Page::class,
         PageSection::class, NavigationItem::class, Media::class, SiteSetting::class,
         ContactOption::class, MarketingChannel::class, GrowthPlan::class,
-        GrowthPlanItem::class, MarketingCampaign::class,
+        GrowthPlanItem::class, MarketingCampaign::class, Package::class, PackageItem::class,
     ];
 
     public function register(): void
@@ -55,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('manage-security', fn (User $user) => $user->canManageSecurity());
         Gate::define('manage-content', fn (User $user) => $user->canManageContent());
+        Gate::define('manage-administration', fn (User $user) => $user->canManageAdministration());
 
         RateLimiter::for('pcl-contact', fn (Request $request) => [
             Limit::perMinute(5)->by($request->ip()),

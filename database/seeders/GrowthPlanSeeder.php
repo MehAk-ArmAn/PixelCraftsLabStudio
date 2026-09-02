@@ -6,8 +6,9 @@ use App\Models\GrowthPlan;
 use Illuminate\Database\Seeder;
 
 /**
- * Starting packages only. No prices are invented — every plan displays
- * "Custom" until an admin fills in the pricing fields.
+ * Editorial Growth Plan records. Public package pricing is managed separately
+ * by PackageSeeder, while these records remain available for plan-specific CMS
+ * content and channel relationships.
  */
 class GrowthPlanSeeder extends Seeder
 {
@@ -24,6 +25,7 @@ class GrowthPlanSeeder extends Seeder
                 'highlight' => 'Start here',
                 'accent' => '#5B2394',
                 'featured' => false,
+                'price' => 2990,
                 'items' => [
                     ['Brand & marketing audit', 'A review of current positioning, channels and output — including what to stop doing.'],
                     ['Audience definition', 'Who the product is genuinely for, and the language they respond to.'],
@@ -44,6 +46,7 @@ class GrowthPlanSeeder extends Seeder
                 'highlight' => 'Most common',
                 'accent' => '#FF5F1F',
                 'featured' => true,
+                'price' => 4990,
                 'items' => [
                     ['Everything in Foundation', 'The strategy work stays current rather than going stale.'],
                     ['Monthly social strategy', 'Reviewed against performance, not repeated on autopilot.'],
@@ -65,6 +68,7 @@ class GrowthPlanSeeder extends Seeder
                 'highlight' => '',
                 'accent' => '#0D0B12',
                 'featured' => false,
+                'price' => 7990,
                 'items' => [
                     ['Multi-channel growth strategy', 'One plan covering every channel rather than several competing ones.'],
                     ['Paid campaign strategy', 'Structure, audiences and creative direction for paid social and search.'],
@@ -75,6 +79,25 @@ class GrowthPlanSeeder extends Seeder
                     ['Testing roadmap', 'What gets tested next, and what a result would have to look like.'],
                     ['Detailed performance reporting', 'Channel-level reporting with context, not a dashboard screenshot.'],
                     ['Ongoing strategic recommendations', 'A standing point of contact for growth decisions.'],
+                ],
+            ],
+            [
+                'slug' => 'growth-partner-plus',
+                'name' => 'Growth Partner+',
+                'ideal_for' => 'Larger teams that need a joined-up growth partner.',
+                'short' => 'A custom larger scope across strategy, content, paid media, SEO, CRO and lifecycle growth.',
+                'full' => 'Growth Partner+ is configured around the business, team and active channels. It can combine multi-channel strategy, production, paid media, SEO, CRM, automation, email, retention, launch support and advanced analytics.',
+                'duration' => 'Monthly, ongoing',
+                'highlight' => 'Custom scope',
+                'accent' => '#B94FC0',
+                'featured' => false,
+                'price' => 11990,
+                'items' => [
+                    ['Multi-channel strategy', 'One accountable direction across the whole growth system.'],
+                    ['Content & production', 'A larger creative scope configured around the campaign calendar.'],
+                    ['Paid media & SEO', 'Acquisition and search work managed against shared goals.'],
+                    ['CRO, CRM & automation', 'Conversion, lifecycle and retention systems included where relevant.'],
+                    ['Advanced reporting', 'Deeper measurement and ongoing strategic review.'],
                 ],
             ],
         ];
@@ -88,15 +111,22 @@ class GrowthPlanSeeder extends Seeder
                     'full_description' => $row['full'],
                     'ideal_for' => $row['ideal_for'],
                     'duration' => $row['duration'],
+                    'starting_price' => (string) $row['price'],
+                    'billing_period' => '/month',
+                    'currency' => 'AED ',
                     'highlight_text' => $row['highlight'],
                     'accent' => $row['accent'],
                     'cta_label' => 'Start a project',
-                    'cta_url' => '#contact',
+                    'cta_url' => '/contact',
                     'is_featured' => $row['featured'],
                     'is_published' => true,
                     'sort_order' => ($index + 1) * 10,
                 ],
             );
+
+            if (str_starts_with((string) $plan->cta_url, '#')) {
+                $plan->update(['cta_url' => '/contact']);
+            }
 
             if (! $plan->wasRecentlyCreated) {
                 continue;

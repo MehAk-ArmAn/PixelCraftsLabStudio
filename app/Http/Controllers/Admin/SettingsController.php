@@ -18,6 +18,7 @@ class SettingsController extends Controller
         'contact' => 'Contact',
         'footer' => 'Footer',
         'features' => 'Features',
+        'pricing' => 'Pricing & promotions',
         'seo' => 'SEO',
     ];
 
@@ -55,11 +56,17 @@ class SettingsController extends Controller
         $rules = [];
 
         foreach ($records as $setting) {
-            $rules['values.'.$setting->key] = match ($setting->type) {
-                'bool' => ['nullable'],
-                'int' => ['nullable', 'integer'],
-                'text' => ['nullable', 'string', 'max:8000'],
-                default => ['nullable', 'string', 'max:1000'],
+            $rules['values.'.$setting->key] = match ($setting->key) {
+                'founding_client_discount_percent' => ['nullable', 'integer', 'min:0', 'max:100'],
+                'founding_client_duration_months' => ['nullable', 'integer', 'min:0', 'max:120'],
+                'founding_client_limit', 'founding_client_claimed_count' => ['nullable', 'integer', 'min:0', 'max:1000000'],
+                'founding_client_starts_on', 'founding_client_ends_on' => ['nullable', 'date_format:Y-m-d'],
+                default => match ($setting->type) {
+                    'bool' => ['nullable'],
+                    'int' => ['nullable', 'integer'],
+                    'text' => ['nullable', 'string', 'max:8000'],
+                    default => ['nullable', 'string', 'max:1000'],
+                },
             };
         }
 

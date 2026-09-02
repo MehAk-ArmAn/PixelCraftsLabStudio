@@ -149,10 +149,14 @@ class MediaController extends Controller
         $ref = $media->reference();
 
         $checks = [
-            'Projects' => \App\Models\Project::where('primary_image', $ref)->orWhere('og_image', $ref)->exists(),
+            'Projects' => \App\Models\Project::where('primary_image', $ref)
+                ->orWhere('og_image', $ref)
+                ->orWhereJsonContains('gallery', $ref)
+                ->exists(),
             'Team' => \App\Models\TeamMember::where('photo', $ref)->exists(),
             'Services' => \App\Models\Service::where('icon', $ref)->exists(),
             'Testimonials' => \App\Models\Testimonial::where('avatar', $ref)->exists(),
+            'Page metadata' => \App\Models\Page::where('og_image', $ref)->exists(),
             'Page sections' => \App\Models\PageSection::where('media', $ref)->exists(),
             'Site settings' => \App\Models\SiteSetting::where('value', $ref)->exists(),
         ];

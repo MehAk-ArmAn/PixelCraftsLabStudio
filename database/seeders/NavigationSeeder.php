@@ -10,20 +10,20 @@ class NavigationSeeder extends Seeder
     public function run(): void
     {
         $items = [
-            ['work', 'Work', '01'],
-            ['services', 'Services', '02'],
-            ['growth', 'Growth', '03'],
-            ['studio', 'Studio', '04'],
-            ['lab', 'Lab', '05'],
+            ['work', 'Work', '01', '/work'],
+            ['services', 'Services', '02', '/services'],
+            ['growth', 'Growth', '03', '/marketing'],
+            ['studio', 'Studio', '04', '/studio'],
+            ['lab', 'Lab', '05', '/lab'],
         ];
 
-        foreach ($items as $index => [$key, $label, $number]) {
-            NavigationItem::firstOrCreate(
+        foreach ($items as $index => [$key, $label, $number, $destination]) {
+            $item = NavigationItem::firstOrCreate(
                 ['route_key' => $key],
                 [
                     'label' => $label,
                     'number' => $number,
-                    'destination' => '#'.$key,
+                    'destination' => $destination,
                     'sort_order' => ($index + 1) * 10,
                     'is_visible' => true,
                     'show_desktop' => true,
@@ -31,6 +31,10 @@ class NavigationSeeder extends Seeder
                     'show_footer' => true,
                 ],
             );
+
+            if (str_starts_with((string) $item->destination, '#')) {
+                $item->update(['destination' => $destination]);
+            }
         }
     }
 }

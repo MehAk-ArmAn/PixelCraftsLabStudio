@@ -7,6 +7,7 @@ use App\Models\GrowthPlan;
 use App\Models\MarketingCampaign;
 use App\Models\MarketingChannel;
 use App\Models\NavigationItem;
+use App\Models\Package;
 use App\Models\Page;
 use App\Models\ProcessStage;
 use App\Models\Project;
@@ -26,7 +27,10 @@ class SiteContentService
 {
     public const CACHE_KEY = 'pcl.site-content.v1';
 
-    public function __construct(private readonly SettingsRepository $settings) {}
+    public function __construct(
+        private readonly SettingsRepository $settings,
+        private readonly PricingService $pricing,
+    ) {}
 
     public static function flush(): void
     {
@@ -52,6 +56,7 @@ class SiteContentService
         }
 
         $projects = $this->projects($includeDrafts);
+        $packages = $this->packages($includeDrafts);
 
         return [
             'ready' => true,
@@ -69,7 +74,18 @@ class SiteContentService
             'team' => $this->team($includeDrafts),
             'socials' => $this->socials(),
             'testimonials' => $this->testimonials($includeDrafts),
-            'growthPlans' => $this->growthPlans($includeDrafts),
+            'growthPlans' => $this->publicGrowthPlans($includeDrafts, $packages),
+            'packages' => $packages,
+            'pricingPromotion' => $this->pricing->promotionPayload(),
+            'pricingNotes' => [
+                'mediaSpend' => $this->settings->string('pricing_media_spend_note', 'Advertising/media spend is separate.'),
+                'thirdParty' => $this->settings->string('pricing_third_party_note', 'Third-party software/provider costs are separate.'),
+                'production' => $this->settings->string('pricing_production_note', ''),
+                'creatorFees' => $this->settings->string('pricing_creator_note', ''),
+                'licensing' => $this->settings->string('pricing_licensing_note', ''),
+                'websiteRebuild' => $this->settings->string('pricing_rebuild_note', ''),
+                'multilingual' => $this->settings->string('pricing_multilingual_note', ''),
+            ],
             'channels' => $this->channels(),
             'campaigns' => $this->campaigns($includeDrafts),
             'contactOptions' => $this->contactOptions(),
@@ -174,6 +190,18 @@ class SiteContentService
     /** @return list<array<string, mixed>> */
     private function navigation(): array
     {
+        $routeDestinations = [
+            'home' => route('home', [], false),
+            'work' => route('work.index', [], false),
+            'services' => route('services.index', [], false),
+            'growth' => route('marketing.index', [], false),
+            'marketing' => route('marketing.index', [], false),
+            'pricing' => route('pricing.index', [], false),
+            'studio' => route('studio', [], false),
+            'lab' => route('lab', [], false),
+            'contact' => route('contact', [], false),
+        ];
+
         return NavigationItem::query()
             ->where('is_visible', true)
             ->ordered()
@@ -182,7 +210,9 @@ class SiteContentService
                 'key' => $n->route_key,
                 'label' => $n->label,
                 'no' => (string) ($n->number ?? ''),
-                'href' => $n->destination ?: '#'.$n->route_key,
+                'href' => $n->destination && ! str_starts_with($n->destination, '#')
+                    ? $n->destination
+                    : ($routeDestinations[$n->route_key] ?? route('home', [], false)),
                 'desktop' => (bool) $n->show_desktop,
                 'mobile' => (bool) $n->show_mobile,
                 'footer' => (bool) $n->show_footer,
@@ -418,6 +448,38 @@ class SiteContentService
                 'description' => (string) ($i->description ?? ''),
             ])->values()->all(),
         ])->all();
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function packages(bool $includeDrafts): array
+    {
+        if (! Schema::hasTable('packages')) {
+            return [];
+        }
+
+        $query = Package::query()
+            ->with('items')
+            ->orderByRaw("case when category = 'Growth Bundles' then 0 else 1 end")
+            ->ordered();
+
+        if (! $includeDrafts) {
+            $query->published();
+        }
+
+        return $query->get()
+            ->map(fn (Package $package) => $this->pricing->packagePayload($package))
+            ->all();
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function publicGrowthPlans(bool $includeDrafts, array $packages): array
+    {
+        $growthPackages = collect($packages)
+            ->where('category', 'Growth Bundles')
+            ->values()
+            ->all();
+
+        return $growthPackages !== [] ? $growthPackages : $this->growthPlans($includeDrafts);
     }
 
     /** @return list<array<string, string>> */

@@ -12,7 +12,10 @@ class MediaLibraryService
 {
     public const MAX_KILOBYTES = 20480; // 20 MB
 
-    public const IMAGE_MIMES = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'avif'];
+    public const IMAGE_MIMES = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
+
+    /** Existing trusted artwork can be registered without allowing active SVG uploads. */
+    public const LEGACY_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'avif'];
 
     public const VIDEO_MIMES = ['mp4', 'webm', 'ogg'];
 
@@ -45,12 +48,11 @@ class MediaLibraryService
 
     public function replace(Media $media, UploadedFile $file): Media
     {
-        if (! $media->is_legacy && Storage::disk($media->disk)->exists($media->path)) {
-            Storage::disk($media->disk)->delete($media->path);
-        }
-
         $folder = trim(dirname($media->path), '.') ?: 'library';
         $fresh = $this->store($file, $folder);
+        $oldDisk = $media->disk;
+        $oldPath = $media->path;
+        $oldIsLegacy = $media->is_legacy;
 
         $media->update([
             'path' => $fresh->path,
@@ -63,6 +65,10 @@ class MediaLibraryService
         ]);
 
         $fresh->delete();
+
+        if (! $oldIsLegacy && Storage::disk($oldDisk)->exists($oldPath)) {
+            Storage::disk($oldDisk)->delete($oldPath);
+        }
 
         return $media->refresh();
     }
@@ -98,7 +104,7 @@ class MediaLibraryService
 
                 $ext = Str::lower(pathinfo($entry, PATHINFO_EXTENSION));
 
-                if (! in_array($ext, array_merge(self::IMAGE_MIMES, self::VIDEO_MIMES), true)) {
+                if (! in_array($ext, array_merge(self::LEGACY_IMAGE_EXTENSIONS, self::VIDEO_MIMES), true)) {
                     continue;
                 }
 

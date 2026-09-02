@@ -7,16 +7,19 @@ use App\Models\AdminActivityLog;
 use App\Models\ContactSubmission;
 use App\Models\GrowthPlan;
 use App\Models\Media;
+use App\Models\Package;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(Request $request): View
     {
+        $canManageAdministration = $request->user()?->canManageAdministration() ?? false;
         $projects = Project::query()->selectRaw(
             'count(*) as total,'
             .' sum(case when is_published = 1 and is_archived = 0 then 1 else 0 end) as published,'
@@ -31,24 +34,30 @@ class DashboardController extends Controller
             ['label' => 'Services', 'value' => Service::where('track', Service::TRACK_BUILD)->count(), 'href' => route('admin.services.index')],
             ['label' => 'Marketing services', 'value' => Service::where('track', Service::TRACK_GROWTH)->count(), 'href' => route('admin.marketing-services.index')],
             ['label' => 'Growth plans', 'value' => GrowthPlan::count(), 'href' => route('admin.growth-plans.index')],
+            ['label' => 'Pricing packages', 'value' => Package::count(), 'href' => route('admin.packages.index')],
             ['label' => 'Team members', 'value' => TeamMember::count(), 'href' => route('admin.team.index')],
-            ['label' => 'Unread enquiries', 'value' => ContactSubmission::unread()->count(), 'href' => route('admin.enquiries.index'), 'tone' => ContactSubmission::unread()->count() > 0 ? 'alert' : null],
-            ['label' => 'Total enquiries', 'value' => ContactSubmission::count(), 'href' => route('admin.enquiries.index')],
             ['label' => 'Testimonials', 'value' => Testimonial::count(), 'href' => route('admin.testimonials.index')],
             ['label' => 'Media files', 'value' => Media::count(), 'href' => route('admin.media.index')],
         ];
 
+        if ($canManageAdministration) {
+            $unread = ContactSubmission::unread()->count();
+            $cards[] = ['label' => 'Unread enquiries', 'value' => $unread, 'href' => route('admin.enquiries.index'), 'tone' => $unread > 0 ? 'alert' : null];
+            $cards[] = ['label' => 'Total enquiries', 'value' => ContactSubmission::count(), 'href' => route('admin.enquiries.index')];
+        }
+
         return view('admin.dashboard', [
             'cards' => $cards,
-            'recentEnquiries' => ContactSubmission::query()->latest()->limit(6)->get(),
+            'recentEnquiries' => $canManageAdministration ? ContactSubmission::query()->latest()->limit(6)->get() : collect(),
             'recentActivity' => AdminActivityLog::query()->with('user')->latest()->limit(8)->get(),
             'recentlyUpdated' => Project::query()->latest('updated_at')->limit(5)->get(),
-            'needsAttention' => $this->needsAttention(),
+            'needsAttention' => $this->needsAttention($canManageAdministration),
+            'canManageAdministration' => $canManageAdministration,
         ]);
     }
 
     /** @return list<array{label: string, href: string}> */
-    private function needsAttention(): array
+    private function needsAttention(bool $canManageAdministration): array
     {
         $items = [];
 
@@ -67,7 +76,7 @@ class DashboardController extends Controller
             $items[] = ['label' => $unpublishedTestimonials.' testimonial'.($unpublishedTestimonials === 1 ? '' : 's').' awaiting publication', 'href' => route('admin.testimonials.index')];
         }
 
-        $unreadEnquiries = ContactSubmission::unread()->count();
+        $unreadEnquiries = $canManageAdministration ? ContactSubmission::unread()->count() : 0;
         if ($unreadEnquiries > 0) {
             $items[] = ['label' => $unreadEnquiries.' unread enquir'.($unreadEnquiries === 1 ? 'y' : 'ies'), 'href' => route('admin.enquiries.index')];
         }

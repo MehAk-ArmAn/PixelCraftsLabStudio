@@ -5,7 +5,9 @@ namespace Tests\Feature\Admin;
 use App\Models\Project;
 use App\Models\Service;
 use App\Models\User;
+use App\Services\SettingsRepository;
 use App\Services\SiteContentService;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,7 +21,7 @@ final class MarketingTest extends TestCase
     {
         parent::setUp();
         $this->admin = User::factory()->superAdmin()->create();
-        $this->seed(\Database\Seeders\DatabaseSeeder::class);
+        $this->seed(DatabaseSeeder::class);
         SiteContentService::flush();
     }
 
@@ -36,15 +38,17 @@ final class MarketingTest extends TestCase
         $this->assertContains('SEO', array_column($parent['children'], 'title'));
     }
 
-    public function test_growth_plans_render_without_invented_prices(): void
+    public function test_growth_plans_render_from_the_admin_controlled_package_catalog(): void
     {
         $plans = app(SiteContentService::class)->payload()['growthPlans'];
 
-        $this->assertCount(3, $plans);
+        $this->assertCount(4, $plans);
         foreach ($plans as $plan) {
-            $this->assertSame('Custom', $plan['price']);
+            $this->assertStringStartsWith('AED ', $plan['price']);
             $this->assertNotEmpty($plan['items']);
         }
+
+        $this->assertTrue(collect($plans)->firstWhere('id', 'growth')['recommended']);
     }
 
     public function test_a_hidden_marketing_service_does_not_render(): void
@@ -133,11 +137,13 @@ final class MarketingTest extends TestCase
 
         $this->assertContains('Instagram', array_column($channels, 'name'));
         $this->assertContains('Google Ads', array_column($channels, 'name'));
+        $this->assertContains('WhatsApp', array_column($channels, 'name'));
+        $this->assertContains('Snapchat', array_column($channels, 'name'));
     }
 
     public function test_the_growth_page_can_be_disabled(): void
     {
-        app(\App\Services\SettingsRepository::class)->set('growth_page_enabled', false, 'features', 'bool');
+        app(SettingsRepository::class)->set('growth_page_enabled', false, 'features', 'bool');
         SiteContentService::flush();
 
         $this->assertFalse(app(SiteContentService::class)->payload()['flags']['growthEnabled']);

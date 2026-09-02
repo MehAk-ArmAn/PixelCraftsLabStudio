@@ -14,17 +14,24 @@
 <div class="card">
   <h2>Quick actions</h2>
   <div class="row">
-    <a class="btn small" href="{{ route('admin.projects.create') }}">Add project</a>
-    <a class="btn ghost small" href="{{ route('admin.marketing-services.create') }}">Add marketing service</a>
+    <a class="btn ghost small" href="{{ route('home') }}" target="_blank" rel="noopener">View website</a>
+    <a class="btn ghost small" href="{{ route('admin.preview') }}" target="_blank" rel="noopener">Preview</a>
+    <a class="btn small" href="{{ route('admin.projects.create') }}">New project</a>
+    <a class="btn ghost small" href="{{ route('admin.marketing-services.create') }}">New marketing service</a>
+    <a class="btn ghost small" href="{{ route('admin.growth-plans.create') }}">New growth plan</a>
+    <a class="btn ghost small" href="{{ route('admin.packages.create') }}">New pricing package</a>
     <a class="btn ghost small" href="{{ route('admin.team.create') }}">Add team member</a>
     <a class="btn ghost small" href="{{ route('admin.testimonials.create') }}">Add testimonial</a>
     <a class="btn ghost small" href="{{ route('admin.media.index') }}">Upload media</a>
     <a class="btn ghost small" href="{{ route('admin.pages.index') }}">Edit page copy</a>
-    <a class="btn ghost small" href="{{ route('admin.settings.edit') }}">Site settings</a>
+    @if ($canManageAdministration)
+      <a class="btn ghost small" href="{{ route('admin.settings.edit') }}">Site settings</a>
+    @endif
   </div>
 </div>
 
 <div class="grid-2">
+  @if ($canManageAdministration)
   <div class="card">
     <h2>Recent enquiries</h2>
     @forelse ($recentEnquiries as $enquiry)
@@ -39,6 +46,7 @@
       <p class="small muted">No enquiries yet.</p>
     @endforelse
   </div>
+  @endif
 
   <div class="card">
     <h2>Needs attention</h2>
