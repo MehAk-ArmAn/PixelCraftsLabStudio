@@ -5,7 +5,8 @@
     $label = $field['label'] ?? \Illuminate\Support\Str::headline($name);
     $help = $field['help'] ?? null;
     $required = $field['required'] ?? false;
-    $value = old($name, data_get($record ?? null, $name));
+    $storedValue = data_get($extra ?? [], 'fieldValues.'.$name, data_get($record ?? null, $name));
+    $value = old($name, $storedValue);
     $error = $errors->first($name);
     $id = 'f_'.$name;
 

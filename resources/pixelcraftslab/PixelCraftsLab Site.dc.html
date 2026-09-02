@@ -1087,16 +1087,16 @@
                     <div style="margin-top: 7px; font-size: 13px; line-height: 1.55; color: rgba(246,244,240,0.6);">{{ pl.idealFor }}</div>
                   </sc-if>
 
-                  <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 9px; margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(246,244,240,0.1);">
-                    <sc-if value="{{ pl.hasStartingFrom }}" hint-placeholder-val="{{ false }}">
-                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,244,240,0.5); width: 100%;">{{ pl.startingFrom }}</span>
+                  <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(246,244,240,0.1);">
+                    <sc-if value="{{ pl.hasBudgetLabel }}" hint-placeholder-val="{{ true }}">
+                      <span style="width: 100%; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246,244,240,0.46);">{{ pl.budgetLabel }}</span>
                     </sc-if>
-                    <sc-if value="{{ pl.hasDiscount }}" hint-placeholder-val="{{ false }}">
-                      <span style="font-family: 'Space Mono', monospace; font-size: 14px; color: rgba(246,244,240,0.4); text-decoration: line-through;">{{ pl.originalPrice }}</span>
+                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.022em; color: rgba(246,244,240,0.9);">{{ pl.budgetRange }}</span>
+                    <sc-if value="{{ pl.showPeriod }}" hint-placeholder-val="{{ true }}">
+                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(246,244,240,0.46);">/ {{ pl.period }}</span>
                     </sc-if>
-                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(26px, 3vw, 36px); font-weight: 800; letter-spacing: -0.04em; background-image: linear-gradient(96deg, {{ pl.c }}, #F6F4F0); -webkit-background-clip: text; background-clip: text; color: transparent;">{{ pl.price }}</span>
-                    <sc-if value="{{ pl.hasPeriod }}" hint-placeholder-val="{{ true }}">
-                      <span style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(246,244,240,0.5);">{{ pl.period }}</span>
+                    <sc-if value="{{ pl.hasBudgetNote }}" hint-placeholder-val="{{ false }}">
+                      <span style="width: 100%; margin-top: 4px; font-size: 12.5px; line-height: 1.55; color: rgba(246,244,240,0.56);">{{ pl.budgetNote }}</span>
                     </sc-if>
                   </div>
 
@@ -1883,10 +1883,12 @@ const FALLBACK_COPY = {
       body: "Choose a focused strategy project, monthly marketing management, performance growth, or a full growth partnership.",
       engagement1: "Strategy Project", engagement2: "Monthly Marketing Management",
       engagement3: "Performance / Growth", engagement4: "Full Growth Partnership",
-      estimatedLabel: "Estimated",
-      estimatedFromLabel: "Estimated from",
-      disclaimer: "Marketing prices shown are estimated starting rates. Final pricing depends on scope, channels, content volume, campaign requirements and production needs.",
-      mediaNote: "Advertising media spend is separate unless explicitly included.",
+      investmentLabel: "Estimated investment",
+      customLabel: "Custom estimate",
+      customNote: "Scoped around your channels, output and growth requirements.",
+      ctaLabel: "Get a tailored estimate",
+      disclaimer: "Figures shown are indicative budget estimates only — not fixed PixelCraftsLab prices or formal quotations. Final investment is confirmed after we understand your scope, channels, content requirements, production needs and campaign objectives.",
+      mediaNote: "Advertising/media spend and third-party costs are separate unless specifically included in the final proposal.",
       note: "Media spend is billed separately and paid directly to the platform." },
     cases: { eyebrow: "07 — Case studies", heading: "Growth work, documented",
       body: "Marketing case studies are published here once the client has approved the detail.",
@@ -1996,15 +1998,70 @@ const CURSOR_FOR = (p, frame) => {
 
 const num = (n) => String(n).padStart(2, "0");
 
-/* Public prices are anchors, not quotations. Anything with a real figure is
-   labelled "Estimated" (or "Estimated from" when the package is open-ended);
-   "Custom" already reads correctly on its own and takes no qualifier. */
-const PRICE_QUALIFIER = (plan, copy) => {
-  const price = String((plan && plan.price) || "").trim();
-  if (!price || price.toLowerCase() === "custom") return "";
-  return has(plan && plan.startingFrom)
-    ? ((copy && copy.estimatedFromLabel) || "Estimated from")
-    : ((copy && copy.estimatedLabel) || "Estimated");
+/* ------------------------------------------------------------------ PRICING
+   The admin record holds one exact figure (AED 4,990). That number is an
+   internal planning reference, not a quotation, so the public site never shows
+   it: it is widened to a rounded indicative band (AED 4K–6K) at render time.
+   The stored value is untouched — this is presentation only. */
+
+/* Rounding step scales with magnitude so small packages don't collapse into
+   a single bucket and large ones don't end up with false precision. */
+const BUDGET_STEP = (n) => (n < 1000 ? 100 : n < 2000 ? 250 : 500);
+
+const ROUND_TO = (n, step) => Math.round(n / step) * step;
+
+/* ±17%, rounded outward to the nearest step. Wide enough to read as guidance,
+   tight enough to still be commercially useful. */
+const BUDGET_BAND = (raw) => {
+  const n = Number(raw);
+  if (!isFinite(n) || n <= 0) return null;
+  const step = BUDGET_STEP(n);
+  const lo = ROUND_TO(n * 0.83, step);
+  const hi = ROUND_TO(n * 1.17, step);
+  return hi > lo ? { lo, hi } : { lo, hi: lo + step };
+};
+
+const BUDGET_NUM = (n) => {
+  if (n < 1000) return String(Math.round(n));
+  const k = n / 1000;
+  return (Math.round(k * 10) / 10).toString().replace(/\.0$/, "") + "K";
+};
+
+const BUDGET_PLAIN = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+/* Returns what the card actually prints. Open-ended scopes and custom billing
+   never get a number — forcing one there would be the most misleading case. */
+const PUBLIC_BUDGET = (plan, copy) => {
+  const c = copy || {};
+  const custom = {
+    range: (plan && (plan.priceLabel || plan.price)) || c.customLabel || "Custom",
+    note: c.customNote || "Scoped around your channels, output and growth requirements.",
+    isCustom: true,
+  };
+
+  if (!plan) return custom;
+
+  /* The admin's presentation choice controls the public label. Only an
+     explicit Custom choice, custom billing or a missing figure suppresses
+     the indicative range. */
+  if (String(plan.pricePresentation || "").toLowerCase() === "custom") return custom;
+  if (String(plan.startingFrom || "").toLowerCase() === "custom") return custom;
+  if (plan.billingType === "custom") return custom;
+  if (String(plan.price || "").toLowerCase() === "custom") return custom;
+
+  const band = BUDGET_BAND(plan.rawPrice);
+  if (!band) return custom;
+
+  const currency = String(plan.price || "").replace(/[\d.,\s]/g, "") || "AED";
+  const useK = band.lo >= 1000 && band.hi >= 1000;
+  const lo = useK ? BUDGET_NUM(band.lo) : BUDGET_PLAIN(band.lo);
+  const hi = useK ? BUDGET_NUM(band.hi) : BUDGET_PLAIN(band.hi);
+
+  return {
+    range: "≈ " + currency + " " + lo + "–" + hi,
+    note: "",
+    isCustom: false,
+  };
 };
 const fill = (str, map) => String(str || "").replace(/\{(\w+)\}/g, (m, k) => (has(map[k]) ? map[k] : m));
 
@@ -3106,13 +3163,21 @@ class Component extends DCLogic {
           hasDiscount: has(pl.originalPrice),
           startingFrom: pick(pl.startingFrom, ""),
           hasStartingFrom: has(pl.startingFrom),
-          qualifier: PRICE_QUALIFIER(pl, COPY.growth.plans),
-          hasQualifier: has(PRICE_QUALIFIER(pl, COPY.growth.plans)),
+          budget: PUBLIC_BUDGET(pl, COPY.growth.plans),
+          budgetLabel: PUBLIC_BUDGET(pl, COPY.growth.plans).isCustom
+            ? "" : pick(pl.priceLabel, COPY.growth.plans.investmentLabel, "Estimated"),
+          hasBudgetLabel: !PUBLIC_BUDGET(pl, COPY.growth.plans).isCustom,
+          budgetRange: PUBLIC_BUDGET(pl, COPY.growth.plans).range,
+          budgetNote: PUBLIC_BUDGET(pl, COPY.growth.plans).note,
+          hasBudgetNote: has(PUBLIC_BUDGET(pl, COPY.growth.plans).note),
+          showPeriod: !PUBLIC_BUDGET(pl, COPY.growth.plans).isCustom && has(pl.period),
           mediaNote: pick(pl.mediaNote, ""),
           hasMediaNote: has(pl.mediaNote),
           hasIdeal: has(pl.idealFor),
           hasShort: has(pl.short),
-          ctaLabel: pick(pl.ctaLabel, "Start a project"),
+          ctaLabel: (!has(pl.ctaLabel) || pl.ctaLabel === "Start a project")
+            ? (COPY.growth.plans.ctaLabel || "Get a tailored estimate")
+            : pl.ctaLabel,
           items: (pl.items || []).map((it, j) => ({ ...it, delay: j * 30, c: accent })),
           open: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
         };
@@ -3164,13 +3229,21 @@ class Component extends DCLogic {
               hasDiscount: has(pl.originalPrice),
               startingFrom: pick(pl.startingFrom, ""),
               hasStartingFrom: has(pl.startingFrom),
-              qualifier: PRICE_QUALIFIER(pl, COPY.growth.plans),
-              hasQualifier: has(PRICE_QUALIFIER(pl, COPY.growth.plans)),
+              budget: PUBLIC_BUDGET(pl, COPY.growth.plans),
+              budgetLabel: PUBLIC_BUDGET(pl, COPY.growth.plans).isCustom
+                ? "" : pick(pl.priceLabel, COPY.growth.plans.investmentLabel, "Estimated"),
+              hasBudgetLabel: !PUBLIC_BUDGET(pl, COPY.growth.plans).isCustom,
+              budgetRange: PUBLIC_BUDGET(pl, COPY.growth.plans).range,
+              budgetNote: PUBLIC_BUDGET(pl, COPY.growth.plans).note,
+              hasBudgetNote: has(PUBLIC_BUDGET(pl, COPY.growth.plans).note),
+              showPeriod: !PUBLIC_BUDGET(pl, COPY.growth.plans).isCustom && has(pl.period),
               mediaNote: pick(pl.mediaNote, ""),
               hasMediaNote: has(pl.mediaNote),
               hasIdeal: has(pl.idealFor),
               hasShort: has(pl.short),
-              ctaLabel: pick(pl.ctaLabel, "Start a project"),
+              ctaLabel: (!has(pl.ctaLabel) || pl.ctaLabel === "Start a project")
+                ? (COPY.growth.plans.ctaLabel || "Get a tailored estimate")
+                : pl.ctaLabel,
               items: (pl.items || []).map((it, j) => ({ ...it, delay: j * 30, c: accent })),
               open: (e) => { if (e) e.preventDefault(); this.nav("contact"); },
             };

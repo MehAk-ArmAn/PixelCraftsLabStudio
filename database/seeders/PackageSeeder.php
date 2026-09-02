@@ -23,6 +23,7 @@ class PackageSeeder extends Seeder
                     'currency' => 'AED',
                     'billing_period' => $period,
                     'is_starting_from' => $options['from'] ?? false,
+                    'price_presentation' => ($options['from'] ?? false) ? 'estimated_from' : 'estimated',
                     'short_description' => $options['short'] ?? null,
                     'full_description' => $options['full'] ?? null,
                     'is_featured' => $options['featured'] ?? false,

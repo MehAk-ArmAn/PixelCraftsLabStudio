@@ -12,18 +12,19 @@ class PricingService
     /** @return array<string, mixed> */
     public function packagePayload(Package $package): array
     {
-        $basePrice = $package->promotional_price ?? $package->price;
+        $promotionalPrice = $package->promotion_eligible ? $package->promotional_price : null;
+        $basePrice = $promotionalPrice ?? $package->price;
         $foundingPrice = $this->foundingPrice($package, $basePrice === null ? null : (float) $basePrice);
         $currentPrice = $foundingPrice ?? ($basePrice === null ? null : (float) $basePrice);
         $originalPrice = $foundingPrice !== null
             ? ($basePrice === null ? null : (float) $basePrice)
-            : ($package->promotional_price !== null
+            : ($promotionalPrice !== null
                 ? (float) ($package->original_price ?? $package->price)
                 : ($package->original_price === null ? null : (float) $package->original_price));
 
         return [
             'id' => $package->slug,
-            'name' => $package->name,
+            'name' => $package->displayName(),
             'category' => $package->category,
             'billingType' => $package->billing_type,
             'short' => (string) ($package->short_description ?? ''),
@@ -31,7 +32,10 @@ class PricingService
             'price' => $this->formatPrice($package, $currentPrice),
             'rawPrice' => $currentPrice,
             'originalPrice' => $originalPrice === null ? '' : $this->formatMoney($originalPrice, $package->currency),
-            'startingFrom' => $package->is_starting_from ? 'From' : '',
+            'pricePresentation' => $package->price_presentation,
+            'priceLabel' => $package->pricePresentationLabel(),
+            'startingFrom' => $package->price_presentation === 'custom' ? '' : $package->pricePresentationLabel(),
+            'openEnded' => (bool) $package->is_starting_from,
             'period' => (string) ($package->billing_period ?? ''),
             'featured' => (bool) $package->is_featured,
             'recommended' => (bool) $package->is_recommended,
@@ -74,7 +78,7 @@ class PricingService
 
     private function foundingPrice(Package $package, ?float $price): ?float
     {
-        if ($price === null || $package->category !== 'Growth Bundles' || ! $this->foundingPromotionActive()) {
+        if ($price === null || ! $package->founding_eligible || $package->category !== 'Growth Bundles' || ! $this->foundingPromotionActive()) {
             return null;
         }
 
@@ -128,12 +132,16 @@ class PricingService
             return $this->settings->string('founding_client_promotion_text', 'Founding client offer');
         }
 
+        if (! $package->promotion_eligible) {
+            return '';
+        }
+
         return (string) ($package->promotion_label ?? '');
     }
 
     private function formatPrice(Package $package, ?float $price): string
     {
-        if ($price === null || $package->billing_type === 'custom') {
+        if ($price === null || $package->billing_type === 'custom' || $package->price_presentation === 'custom') {
             return 'Custom';
         }
 
