@@ -23,6 +23,8 @@ class EnsureUserIsAdmin
                 ->withErrors(['email' => 'This account cannot access the admin panel.']);
         }
 
+        $request->attributes->set('pcl.authenticated_admin', true);
+
         return $next($request);
     }
 }
