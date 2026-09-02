@@ -62,4 +62,17 @@ final class PublicRoutingTest extends TestCase
 
         $this->get('/lab')->assertNotFound();
     }
+
+    public function test_rendered_shell_uses_progressive_real_links_and_history_navigation(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('href="/work"', false)
+            ->assertSee('href="/services"', false)
+            ->assertSee('href="/contact"', false)
+            ->assertSee('history.pushState', false)
+            ->assertSee('popstate', false)
+            ->assertDontSee('href="#work"', false)
+            ->assertDontSee('href="#contact"', false);
+    }
 }

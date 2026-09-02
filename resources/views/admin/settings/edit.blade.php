@@ -46,10 +46,22 @@
             <span class="mono small muted" style="display:block; margin-top:3px;">{{ $setting->key }}</span>
           </label>
         @endif
+        @if ($setting->revisions_exists)
+          <button class="btn ghost small" type="submit" form="restore-setting-{{ $setting->id }}">Restore previous value</button>
+        @endif
       @endforeach
 
       <button class="btn" type="submit">Save {{ strtolower($groups[$group]) }} settings</button>
     </form>
   @endif
 </div>
+
+@foreach ($settings as $setting)
+  @if ($setting->revisions_exists)
+    <form id="restore-setting-{{ $setting->id }}" method="POST" action="{{ route('admin.settings.restore', $setting) }}"
+          onsubmit="return confirm('Restore the previous value for this setting?');">
+      @csrf
+    </form>
+  @endif
+@endforeach
 @endsection

@@ -217,4 +217,21 @@ class ProjectController extends AdminResourceController
 
         return back()->with('status', 'Project '.($publish ? 'published' : 'unpublished').'.');
     }
+
+    public function restore(Project $project): RedirectResponse
+    {
+        $this->authorize('update', $project);
+
+        $revision = $project->revisions()->first();
+
+        if (! $revision) {
+            return back()->withErrors(['revision' => 'No earlier project version is stored.']);
+        }
+
+        $project->forceFill(collect($revision->payload)->only($project->getFillable())->all())->save();
+        $revision->delete();
+        $this->logger->log('restored', $project, 'Project “'.$project->name.'” restored to its previous version.');
+
+        return back()->with('status', 'Previous project version restored.');
+    }
 }

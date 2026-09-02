@@ -17,14 +17,18 @@
 
   <div class="two-col">
     <div>
-      @foreach ($sections as $sectionName => $fields)
-        <div class="card">
-          <h2>{{ $sectionName }}</h2>
-          @foreach ($fields as $field)
-            @include('admin.partials.field', ['field' => $field, 'record' => $record, 'extra' => $extra])
-          @endforeach
-        </div>
-      @endforeach
+      @if ($routeBase === 'packages')
+        @include('admin.packages.file')
+      @else
+        @foreach ($sections as $sectionName => $fields)
+          <div class="card">
+            <h2>{{ $sectionName }}</h2>
+            @foreach ($fields as $field)
+              @include('admin.partials.field', ['field' => $field, 'record' => $record, 'extra' => $extra])
+            @endforeach
+          </div>
+        @endforeach
+      @endif
     </div>
 
     <div>
@@ -49,6 +53,7 @@
       @endif
 
       @if ($mode !== 'create' && $routeBase === 'packages')
+        @include('admin.packages.preview')
         @include('admin.resource.partials.package-items')
       @endif
     </div>
@@ -91,6 +96,13 @@
     <h3>Danger zone</h3>
     <div class="row">
       @if ($routeBase === 'projects')
+        @if ($record->revisions()->exists())
+          <form class="inline" method="POST" action="{{ route('admin.projects.restore', $record) }}"
+                onsubmit="return confirm('Restore this project to its previous saved version?');">
+            @csrf
+            <button class="btn ghost small" type="submit">Restore previous version</button>
+          </form>
+        @endif
         <form class="inline" method="POST" action="{{ route('admin.projects.duplicate', $record) }}">
           @csrf
           <button class="btn ghost small" type="submit">Duplicate as draft</button>

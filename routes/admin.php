@@ -62,6 +62,7 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
         $resourceRoutes('projects', ProjectController::class);
         Route::post('projects/{project}/duplicate', [ProjectController::class, 'duplicate'])->name('projects.duplicate');
         Route::post('projects/{project}/toggle-publish', [ProjectController::class, 'togglePublish'])->name('projects.toggle-publish');
+        Route::post('projects/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
         Route::post('projects/{project}/metrics', [ProjectMetricController::class, 'store'])->name('projects.metrics.store');
         Route::put('projects/{project}/metrics/{metric}', [ProjectMetricController::class, 'update'])->name('projects.metrics.update');
         Route::delete('projects/{project}/metrics/{metric}', [ProjectMetricController::class, 'destroy'])->name('projects.metrics.destroy');
@@ -92,6 +93,7 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
         Route::put('pages/{page}', [PageController::class, 'update'])->name('pages.update');
         Route::post('pages/{page}/restore', [PageController::class, 'restore'])->name('pages.restore');
         Route::put('pages/{page}/sections/{section}', [PageController::class, 'updateSection'])->name('pages.sections.update');
+        Route::post('pages/{page}/sections/{section}/restore', [PageController::class, 'restoreSection'])->name('pages.sections.restore');
         Route::post('pages/{page}/sections/{section}/toggle', [PageController::class, 'toggleSection'])->name('pages.sections.toggle');
 
         // ------------------------------------------------------------ media
@@ -115,6 +117,7 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
             $resourceRoutes('contact-options', ContactOptionController::class);
             Route::get('settings/{group?}', [SettingsController::class, 'edit'])->name('settings.edit');
             Route::put('settings/{group}', [SettingsController::class, 'update'])->name('settings.update');
+            Route::post('settings/restore/{setting}', [SettingsController::class, 'restore'])->name('settings.restore');
         });
 
         // --------------------------------------------------------- security

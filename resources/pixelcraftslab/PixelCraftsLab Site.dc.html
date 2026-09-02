@@ -1126,7 +1126,13 @@
             </div>
             </sc-for>
 
-            <div data-mo="rise" style="margin-top: 20px; font-family: 'Space Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; color: rgba(246,244,240,0.42);">{{ pricingNotes }}</div>
+            <div data-mo="rise" style="margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(246,244,240,0.08); display: flex; flex-direction: column; gap: 9px;">
+              <p style="margin: 0; max-width: 84ch; font-size: 12.5px; line-height: 1.75; color: rgba(246,244,240,0.5);">{{ t.growth.plans.disclaimer }}</p>
+              <p style="margin: 0; display: inline-flex; align-items: baseline; gap: 9px; font-family: 'Space Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; line-height: 1.7; color: rgba(246,244,240,0.56);"><span aria-hidden="true" style="align-self: center; flex: 0 0 auto; width: 5px; height: 5px; background: #FF5F1F;"></span>{{ t.growth.plans.mediaNote }}</p>
+              <sc-if value="{{ hasPricingNotes }}" hint-placeholder-val="{{ true }}">
+                <p style="margin: 0; font-family: 'Space Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; line-height: 1.7; color: rgba(246,244,240,0.38);">{{ pricingNotes }}</p>
+              </sc-if>
+            </div>
           </div>
         </section>
         </sc-if>
@@ -1877,6 +1883,10 @@ const FALLBACK_COPY = {
       body: "Choose a focused strategy project, monthly marketing management, performance growth, or a full growth partnership.",
       engagement1: "Strategy Project", engagement2: "Monthly Marketing Management",
       engagement3: "Performance / Growth", engagement4: "Full Growth Partnership",
+      estimatedLabel: "Estimated",
+      estimatedFromLabel: "Estimated from",
+      disclaimer: "Marketing prices shown are estimated starting rates. Final pricing depends on scope, channels, content volume, campaign requirements and production needs.",
+      mediaNote: "Advertising media spend is separate unless explicitly included.",
       note: "Media spend is billed separately and paid directly to the platform." },
     cases: { eyebrow: "07 — Case studies", heading: "Growth work, documented",
       body: "Marketing case studies are published here once the client has approved the detail.",
@@ -1985,6 +1995,17 @@ const CURSOR_FOR = (p, frame) => {
 };
 
 const num = (n) => String(n).padStart(2, "0");
+
+/* Public prices are anchors, not quotations. Anything with a real figure is
+   labelled "Estimated" (or "Estimated from" when the package is open-ended);
+   "Custom" already reads correctly on its own and takes no qualifier. */
+const PRICE_QUALIFIER = (plan, copy) => {
+  const price = String((plan && plan.price) || "").trim();
+  if (!price || price.toLowerCase() === "custom") return "";
+  return has(plan && plan.startingFrom)
+    ? ((copy && copy.estimatedFromLabel) || "Estimated from")
+    : ((copy && copy.estimatedLabel) || "Estimated");
+};
 const fill = (str, map) => String(str || "").replace(/\{(\w+)\}/g, (m, k) => (has(map[k]) ? map[k] : m));
 
 const FLAVOR = { work: "pixels", services: "columns", growth: "columns", studio: "brush", lab: "scatter", contact: "center", home: "grid", project: "pixels" };
@@ -3085,6 +3106,8 @@ class Component extends DCLogic {
           hasDiscount: has(pl.originalPrice),
           startingFrom: pick(pl.startingFrom, ""),
           hasStartingFrom: has(pl.startingFrom),
+          qualifier: PRICE_QUALIFIER(pl, COPY.growth.plans),
+          hasQualifier: has(PRICE_QUALIFIER(pl, COPY.growth.plans)),
           mediaNote: pick(pl.mediaNote, ""),
           hasMediaNote: has(pl.mediaNote),
           hasIdeal: has(pl.idealFor),
@@ -3097,6 +3120,7 @@ class Component extends DCLogic {
       hasGrowthPlans: GROWTH_PLANS.length > 0,
       engagementWays: [T.growth.plans.engagement1, T.growth.plans.engagement2, T.growth.plans.engagement3, T.growth.plans.engagement4].filter(has),
       pricingNotes: Object.values(PRICING_NOTES).filter(has).join(" · ") || T.growth.plans.note,
+      hasPricingNotes: has(Object.values(PRICING_NOTES).filter(has).join(" · ")),
 
       /* Packages grouped by category, so the same card system renders both the
          headline bundles and individual service packages. A single unnamed
@@ -3140,6 +3164,8 @@ class Component extends DCLogic {
               hasDiscount: has(pl.originalPrice),
               startingFrom: pick(pl.startingFrom, ""),
               hasStartingFrom: has(pl.startingFrom),
+              qualifier: PRICE_QUALIFIER(pl, COPY.growth.plans),
+              hasQualifier: has(PRICE_QUALIFIER(pl, COPY.growth.plans)),
               mediaNote: pick(pl.mediaNote, ""),
               hasMediaNote: has(pl.mediaNote),
               hasIdeal: has(pl.idealFor),

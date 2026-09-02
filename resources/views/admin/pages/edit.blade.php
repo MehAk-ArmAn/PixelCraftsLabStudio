@@ -57,6 +57,13 @@
         @csrf
         <button class="btn ghost small" type="submit">{{ $section->is_enabled ? 'Hide section' : 'Show section' }}</button>
       </form>
+      @if ($section->revisions_exists)
+        <form class="inline" method="POST" action="{{ route('admin.pages.sections.restore', [$page, $section]) }}"
+              onsubmit="return confirm('Restore this section to its previous saved version?');">
+          @csrf
+          <button class="btn ghost small" type="submit">Restore</button>
+        </form>
+      @endif
       <span class="badge {{ $section->is_enabled ? 'on' : 'off' }}">{{ $section->is_enabled ? 'Visible' : 'Hidden' }}</span>
     </div>
 

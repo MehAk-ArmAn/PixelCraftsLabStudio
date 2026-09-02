@@ -20,6 +20,7 @@ class DashboardController extends Controller
     public function __invoke(Request $request): View
     {
         $canManageAdministration = $request->user()?->canManageAdministration() ?? false;
+        $canManageSecurity = $request->user()?->canManageSecurity() ?? false;
         $projects = Project::query()->selectRaw(
             'count(*) as total,'
             .' sum(case when is_published = 1 and is_archived = 0 then 1 else 0 end) as published,'
@@ -49,10 +50,11 @@ class DashboardController extends Controller
         return view('admin.dashboard', [
             'cards' => $cards,
             'recentEnquiries' => $canManageAdministration ? ContactSubmission::query()->latest()->limit(6)->get() : collect(),
-            'recentActivity' => AdminActivityLog::query()->with('user')->latest()->limit(8)->get(),
+            'recentActivity' => $canManageSecurity ? AdminActivityLog::query()->with('user')->latest()->limit(8)->get() : collect(),
             'recentlyUpdated' => Project::query()->latest('updated_at')->limit(5)->get(),
             'needsAttention' => $this->needsAttention($canManageAdministration),
             'canManageAdministration' => $canManageAdministration,
+            'canManageSecurity' => $canManageSecurity,
         ]);
     }
 

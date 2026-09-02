@@ -5,10 +5,13 @@ namespace Tests\Feature\Admin;
 use App\Models\GrowthPlan;
 use App\Models\Project;
 use App\Models\Service;
+use App\Models\SiteSetting;
 use App\Models\SocialLink;
 use App\Models\TeamMember;
 use App\Models\Testimonial;
 use App\Models\User;
+use App\Services\SettingsRepository;
+use Database\Seeders\SiteSettingsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -69,6 +72,27 @@ final class ContentCrudTest extends TestCase
         $this->actingAs($this->admin)
             ->post(route('admin.projects.store'), ['name' => '', 'external_url' => 'not-a-url'])
             ->assertSessionHasErrors(['name', 'category', 'external_url', 'status']);
+    }
+
+    public function test_project_revision_can_restore_the_previous_version(): void
+    {
+        $project = Project::factory()->create(['name' => 'Original Project']);
+
+        $this->actingAs($this->admin)
+            ->put(route('admin.projects.update', $project), [
+                'name' => 'Changed Project',
+                'slug' => $project->slug,
+                'category' => $project->category,
+                'layout_size' => $project->layout_size,
+                'status' => Project::STATUS_PUBLISHED,
+                'is_published' => '1',
+            ])->assertRedirect();
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.projects.restore', $project))
+            ->assertRedirect();
+
+        $this->assertSame('Original Project', $project->fresh()->name);
     }
 
     public function test_service_crud(): void
@@ -175,18 +199,26 @@ final class ContentCrudTest extends TestCase
 
     public function test_settings_update(): void
     {
-        $this->seed(\Database\Seeders\SiteSettingsSeeder::class);
+        $this->seed(SiteSettingsSeeder::class);
 
         $this->actingAs($this->admin)
             ->put(route('admin.settings.update', 'contact'), [
                 'values' => ['studio_phone' => '+44 1234 567890', 'studio_email' => 'hi@pcl.test'],
             ])->assertRedirect();
 
-        $settings = app(\App\Services\SettingsRepository::class);
+        $settings = app(SettingsRepository::class);
         $settings->flush();
 
         $this->assertSame('+44 1234 567890', $settings->string('studio_phone'));
         $this->assertSame('hi@pcl.test', $settings->string('studio_email'));
+
+        $phone = SiteSetting::firstWhere('key', 'studio_phone');
+        $this->actingAs($this->admin)
+            ->post(route('admin.settings.restore', $phone))
+            ->assertRedirect();
+
+        $settings->flush();
+        $this->assertSame('+44 7871 284043', $settings->string('studio_phone'));
     }
 
     public function test_activity_is_logged(): void

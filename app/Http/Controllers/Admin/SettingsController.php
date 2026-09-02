@@ -38,6 +38,7 @@ class SettingsController extends Controller
             'groups' => self::GROUPS,
             'settings' => SiteSetting::query()
                 ->where('group', $group)
+                ->withExists('revisions')
                 ->orderBy('sort_order')
                 ->orderBy('key')
                 ->get(),
@@ -76,11 +77,15 @@ class SettingsController extends Controller
         foreach ($records as $setting) {
             $raw = $values[$setting->key] ?? null;
 
-            $setting->value = $setting->type === 'bool'
+            $value = $setting->type === 'bool'
                 ? ($request->boolean('values.'.$setting->key) ? '1' : '0')
                 : (string) ($raw ?? '');
 
-            $setting->save();
+            if ((string) $setting->value !== $value) {
+                $setting->recordRevision(null, 'Before settings update');
+                $setting->value = $value;
+                $setting->save();
+            }
         }
 
         $this->settings->flush();
@@ -99,5 +104,25 @@ class SettingsController extends Controller
         );
 
         return back()->with('status', self::GROUPS[$group].' settings saved.');
+    }
+
+    public function restore(SiteSetting $setting): RedirectResponse
+    {
+        $this->authorize('update', $setting);
+
+        $revision = $setting->revisions()->first();
+
+        if (! $revision) {
+            return back()->withErrors(['revision' => 'No earlier value is stored for this setting.']);
+        }
+
+        $setting->forceFill([
+            'value' => $revision->payload['value'] ?? '',
+        ])->save();
+        $revision->delete();
+        $this->settings->flush();
+        $this->logger->log('restored', $setting, 'Setting “'.$setting->key.'” restored to its previous value.');
+
+        return back()->with('status', 'Previous setting value restored.');
     }
 }

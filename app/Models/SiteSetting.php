@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use App\Models\Concerns\ClearsSiteCache;
+use App\Models\Concerns\HasRevisions;
 use Illuminate\Database\Eloquent\Model;
 
 class SiteSetting extends Model
 {
-    use ClearsSiteCache;
+    use ClearsSiteCache, HasRevisions;
 
     protected $fillable = ['key', 'group', 'type', 'value', 'label', 'hint', 'sort_order'];
 

@@ -73,6 +73,7 @@
     @endforelse
   </div>
 
+  @if ($canManageSecurity)
   <div class="card">
     <h2>Recent admin activity</h2>
     @forelse ($recentActivity as $log)
@@ -84,5 +85,6 @@
       <p class="small muted">No activity recorded yet.</p>
     @endforelse
   </div>
+  @endif
 </div>
 @endsection

@@ -94,6 +94,24 @@ final class MediaTest extends TestCase
             ->assertJsonStructure(['items' => [['id', 'reference', 'url', 'title']]]);
     }
 
+    public function test_media_can_be_replaced_without_leaving_the_old_file(): void
+    {
+        $this->actingAs($this->admin)->post(route('admin.media.store'), [
+            'files' => [UploadedFile::fake()->image('before.png')],
+        ]);
+
+        $media = Media::first();
+        $oldPath = $media->path;
+
+        $this->actingAs($this->admin)->post(route('admin.media.replace', $media), [
+            'files' => [UploadedFile::fake()->image('after.png')],
+        ])->assertRedirect();
+
+        Storage::disk('public')->assertMissing($oldPath);
+        Storage::disk('public')->assertExists($media->fresh()->path);
+        $this->assertSame(1, Media::count());
+    }
+
     public function test_legacy_public_assets_still_resolve(): void
     {
         $this->assertSame('/assets/pcl-logo.png', MediaResolver::url('assets/pcl-logo.png'));

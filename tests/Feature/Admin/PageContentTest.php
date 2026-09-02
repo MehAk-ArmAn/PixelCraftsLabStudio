@@ -3,8 +3,10 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\Page;
+use App\Models\PageSection;
 use App\Models\User;
 use App\Services\SiteContentService;
+use Database\Seeders\PageContentSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,7 +20,7 @@ final class PageContentTest extends TestCase
     {
         parent::setUp();
         $this->admin = User::factory()->superAdmin()->create();
-        $this->seed(\Database\Seeders\PageContentSeeder::class);
+        $this->seed(PageContentSeeder::class);
     }
 
     public function test_editing_a_section_changes_the_public_payload(): void
@@ -57,6 +59,26 @@ final class PageContentTest extends TestCase
         $this->assertArrayNotHasKey('craft', $copy['home']);
     }
 
+    public function test_section_copy_revision_can_be_restored(): void
+    {
+        $page = Page::firstWhere('key', 'home');
+        $section = $page->section('hero');
+        $original = $section->heading;
+
+        $this->actingAs($this->admin)
+            ->put(route('admin.pages.sections.update', [$page, $section]), [
+                'heading' => 'Temporary heading',
+                'is_enabled' => '1',
+                'settings' => $section->settings,
+            ])->assertRedirect();
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.pages.sections.restore', [$page, $section]))
+            ->assertRedirect();
+
+        $this->assertSame($original, $section->fresh()->heading);
+    }
+
     public function test_page_seo_is_editable_and_revisions_restore(): void
     {
         $page = Page::firstWhere('key', 'growth');
@@ -78,9 +100,9 @@ final class PageContentTest extends TestCase
 
     public function test_seeding_twice_does_not_duplicate_content(): void
     {
-        $before = \App\Models\PageSection::count();
-        $this->seed(\Database\Seeders\PageContentSeeder::class);
+        $before = PageSection::count();
+        $this->seed(PageContentSeeder::class);
 
-        $this->assertSame($before, \App\Models\PageSection::count());
+        $this->assertSame($before, PageSection::count());
     }
 }

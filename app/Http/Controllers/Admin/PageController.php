@@ -32,7 +32,7 @@ class PageController extends Controller
         $this->authorize('update', $page);
 
         return view('admin.pages.edit', [
-            'page' => $page->load('sections'),
+            'page' => $page->load(['sections' => fn ($query) => $query->withExists('revisions')]),
         ]);
     }
 
@@ -88,6 +88,7 @@ class PageController extends Controller
             ->map(fn ($v) => is_string($v) ? trim($v) : $v)
             ->all();
 
+        $section->recordRevision(null, 'Before section update');
         $section->fill($data + [
             'settings' => $settings,
             'is_enabled' => $request->boolean('is_enabled'),
@@ -96,6 +97,24 @@ class PageController extends Controller
         $this->logger->logSaved('updated', $section, 'Section "'.($section->label ?: $section->section_key).'" on '.$page->title.' updated.');
 
         return back()->with('status', 'Section saved.');
+    }
+
+    public function restoreSection(Page $page, PageSection $section): RedirectResponse
+    {
+        $this->authorize('update', $page);
+        abort_unless($section->page_id === $page->id, 404);
+
+        $revision = $section->revisions()->first();
+
+        if (! $revision) {
+            return back()->withErrors(['revision' => 'No earlier section version is stored.']);
+        }
+
+        $section->forceFill(collect($revision->payload)->only($section->getFillable())->all())->save();
+        $revision->delete();
+        $this->logger->log('restored', $section, 'Section “'.($section->label ?: $section->section_key).'” restored.');
+
+        return back()->with('status', 'Previous section version restored.');
     }
 
     public function toggleSection(Page $page, PageSection $section): RedirectResponse

@@ -54,17 +54,24 @@ class MediaLibraryService
         $oldPath = $media->path;
         $oldIsLegacy = $media->is_legacy;
 
-        $media->update([
-            'path' => $fresh->path,
-            'mime_type' => $fresh->mime_type,
-            'size_bytes' => $fresh->size_bytes,
-            'width' => $fresh->width,
-            'height' => $fresh->height,
-            'original_name' => $fresh->original_name,
-            'is_legacy' => false,
-        ]);
+        try {
+            $media->update([
+                'path' => $fresh->path,
+                'mime_type' => $fresh->mime_type,
+                'size_bytes' => $fresh->size_bytes,
+                'width' => $fresh->width,
+                'height' => $fresh->height,
+                'original_name' => $fresh->original_name,
+                'is_legacy' => false,
+            ]);
 
-        $fresh->delete();
+            $fresh->delete();
+        } catch (\Throwable $exception) {
+            Storage::disk($fresh->disk)->delete($fresh->path);
+            $fresh->delete();
+
+            throw $exception;
+        }
 
         if (! $oldIsLegacy && Storage::disk($oldDisk)->exists($oldPath)) {
             Storage::disk($oldDisk)->delete($oldPath);
