@@ -545,7 +545,7 @@
                     <span style="width: 9px; height: 9px; border-radius: 50%; background: rgba(13,11,18,0.2);"></span>
                     <span style="margin-left: 8px; flex: 1; max-width: 420px; height: 18px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 10px; font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ P.host }}</span>
                   </div>
-                  <div data-morph-dest="{{ P.id }}" style="position: relative; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: linear-gradient(150deg, {{ P.tint }}, {{ P.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
+                  <div data-morph-dest="{{ P.id }}" style="position: relative; aspect-ratio: {{ stageHeroRatio }}; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: linear-gradient(150deg, {{ P.tint }}, {{ P.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
                     <sc-if value="{{ P.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ P.icon }}" alt="{{ P.name }} icon" loading="lazy" style="width: clamp(64px, 12%, 132px); height: clamp(64px, 12%, 132px); border-radius: 20%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
                     <sc-if value="{{ P.hasShot }}" hint-placeholder-val="{{ true }}">
                       <img src="{{ stageHero }}" alt="{{ stageHeroAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.9s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.03);" />
@@ -554,20 +554,39 @@
                 </a>
 
                 <!-- responsive view, overlapping the primary frame -->
-                <sc-if value="{{ hasStageMobile }}" hint-placeholder-val="{{ true }}">
+                <sc-if value="{{ showLayeredStage }}" hint-placeholder-val="{{ true }}">
                   <a onClick="{{ openHero }}" href="#view" data-cursor="Mobile" data-tool="flee" data-tool-pull="0.3" style="position: absolute; right: -1%; bottom: -12%; width: clamp(96px, 13%, 168px); border-radius: 22px; overflow: hidden; border: 3px solid #0D0B12; background: #0D0B12; box-shadow: 0 34px 70px -34px rgba(13,11,18,0.85); transform: rotate(-4deg) translate(var(--tx, 0px), var(--ty, 0px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: rotate(-1deg) translateY(-10px);">
                     <img src="{{ stageMobileShot }}" alt="{{ stageMobileAlt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
                   </a>
                 </sc-if>
 
                 <!-- interface detail crop, offset the other way -->
-                <sc-if value="{{ hasStageDetail }}" hint-placeholder-val="{{ true }}">
+                <sc-if value="{{ showLayeredDetail }}" hint-placeholder-val="{{ true }}">
                   <a onClick="{{ openHero }}" href="#view" data-cursor="Detail" data-tool="flee" data-tool-pull="0.22" style="position: absolute; left: -2%; bottom: -16%; width: clamp(150px, 27%, 330px); aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; border: 1px solid rgba(13,11,18,0.16); background: #fff; box-shadow: 0 30px 64px -34px rgba(13,11,18,0.7); transform: rotate(2.5deg) translate(var(--tx, 0px), var(--ty, 0px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: rotate(0deg) translateY(-8px);">
                     <img src="{{ stageDetail }}" alt="{{ stageDetailAlt }}" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;" />
                   </a>
                 </sc-if>
               </div>
-              <div style="height: clamp(56px, 9vw, 110px);"></div>
+              <sc-if value="{{ showLayeredStage }}" hint-placeholder-val="{{ true }}">
+                <div style="height: clamp(56px, 9vw, 110px);"></div>
+              </sc-if>
+
+              <!-- Compact: the same media, stacked and legible, rather than a
+                   shrunken collage with pieces hanging off the frame. -->
+              <sc-if value="{{ stackedStage }}" hint-placeholder-val="{{ false }}">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; align-items: start;">
+                  <sc-if value="{{ hasStageMobile }}" hint-placeholder-val="{{ true }}">
+                    <a onClick="{{ openHero }}" href="#view" data-cursor="Mobile" style="display: block; border-radius: 18px; overflow: hidden; border: 2px solid #0D0B12; background: #0D0B12;">
+                      <img src="{{ stageMobileShot }}" alt="{{ stageMobileAlt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
+                    </a>
+                  </sc-if>
+                  <sc-if value="{{ hasStageDetail }}" hint-placeholder-val="{{ true }}">
+                    <a onClick="{{ openHero }}" href="#view" data-cursor="Detail" style="display: block; border-radius: 12px; overflow: hidden; border: 1px solid rgba(13,11,18,0.16); background: #fff;">
+                      <img src="{{ stageDetail }}" alt="{{ stageDetailAlt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
+                    </a>
+                  </sc-if>
+                </div>
+              </sc-if>
             </sc-if>
 
             <!-- ---------- MOBILE APP STAGE ---------- -->
@@ -575,7 +594,7 @@
               <div data-scrub="flow" style="position: relative; margin-top: clamp(28px, 4vw, 46px); padding: clamp(24px, 5vw, 54px) 0 clamp(10px, 2vw, 24px); display: flex; align-items: flex-start; justify-content: center; min-height: clamp(320px, 46vw, 560px);">
                 <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 44%, {{ P.wash }}, transparent 66%);"></div>
                 <sc-for list="{{ stagePhones }}" as="ph" hint-placeholder-count="3">
-                  <a onClick="{{ ph.openIt }}" href="#view" data-cursor="Enlarge" data-mo="rise" style="position: relative; z-index: {{ ph.z }}; flex: 0 0 auto; width: clamp(112px, 19vw, 210px); margin: 0 clamp(-26px, -2.6vw, -10px); border-radius: 26px; overflow: hidden; border: 3px solid #0D0B12; background: #0D0B12; box-shadow: 0 34px 74px -34px rgba(13,11,18,0.8); transform: translateY({{ ph.y }}) rotate({{ ph.rot }}) scale({{ ph.scale }}); transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.45s ease;" style-hover="transform: translateY(calc({{ ph.y }} - 18px)) rotate(0deg) scale({{ ph.scale }}); box-shadow: 0 46px 92px -30px rgba(91,35,148,0.7); z-index: 4;">
+                  <a onClick="{{ ph.openIt }}" href="#view" data-cursor="Enlarge" data-mo="rise" style="position: relative; z-index: {{ ph.z }}; flex: 0 0 auto; width: clamp(112px, 19vw, 210px); max-width: {{ ph.cap }}; margin: 0 clamp(-26px, -2.6vw, -10px); border-radius: 26px; overflow: hidden; border: 3px solid #0D0B12; background: #0D0B12; box-shadow: 0 34px 74px -34px rgba(13,11,18,0.8); transform: translateY({{ ph.y }}) rotate({{ ph.rot }}) scale({{ ph.scale }}); transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.45s ease;" style-hover="transform: translateY(calc({{ ph.y }} - 18px)) rotate(0deg) scale({{ ph.scale }}); box-shadow: 0 46px 92px -30px rgba(91,35,148,0.7); z-index: 4;">
                     <span aria-hidden="true" style="position: absolute; left: 50%; top: 7px; width: 30%; height: 4px; margin-left: -15%; border-radius: 99px; background: rgba(246,244,240,0.5); z-index: 2;"></span>
                     <img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
                   </a>
@@ -640,9 +659,8 @@
                   <sc-for list="{{ ecosystem }}" as="eco" hint-placeholder-count="6">
                     <a onClick="{{ eco.open }}" href="#project" data-cursor="{{ eco.name }}" data-mo="rise" style="display: block; padding: 12px; border: 1px solid rgba(13,11,18,0.12); border-radius: 16px; background: #fff; color: #0D0B12; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-6px); border-color: {{ eco.tint }};">
                       <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ eco.tint }}, {{ eco.tint2 }});">
-                        <sc-if value="{{ eco.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ eco.icon }}" alt="{{ eco.name }} icon" loading="lazy" style="width: 48%; height: 48%; border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
-                        <sc-if value="{{ eco.hasShot }}" hint-placeholder-val="{{ true }}">
-                          <img src="{{ eco.shot }}" alt="{{ eco.name }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center;" />
+                        <sc-if value="{{ eco.hasIcon }}" hint-placeholder-val="{{ true }}">
+                          <img src="{{ eco.icon }}" alt="{{ eco.name }} icon" loading="lazy" width="256" height="256" style="width: 62%; height: auto; border-radius: 22%; display: block; box-shadow: 0 14px 32px -16px rgba(0,0,0,0.6);" />
                         </sc-if>
                       </div>
                       <div style="margin-top: 9px; font-size: 13px; font-weight: 700; letter-spacing: -0.01em;">{{ eco.name }}</div>
@@ -727,8 +745,16 @@
                 <h2 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(26px, 4vw, 52px); letter-spacing: -0.045em; line-height: 1.02;">{{ nextP.name }}</h2>
                 <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,244,240,0.6);">{{ nextP.kind }}</div>
               </div>
-              <div style="flex: 0 1 260px; min-width: 200px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ nextP.tint }}, {{ nextP.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(10px);">
-                <sc-if value="{{ nextP.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ nextP.icon }}" alt="{{ nextP.name }} icon" loading="lazy" style="width: clamp(40px, 40%, 66px); height: clamp(40px, 40%, 66px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
+              <div style="position: relative; flex: 0 1 320px; min-width: 220px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ nextP.tint }}, {{ nextP.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(10px);">
+                <sc-if value="{{ nextP.hasPreview }}" hint-placeholder-val="{{ true }}">
+                  <img src="{{ nextP.preview }}" alt="{{ nextP.previewAlt }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: {{ nextP.previewFit }}; object-position: top center; display: block; transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.04);" />
+                </sc-if>
+                <sc-if value="{{ nextP.hasSecond }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ nextP.second }}" alt="" aria-hidden="true" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; opacity: 0; transition: opacity 0.55s ease;" style-hover="opacity: 1;" />
+                </sc-if>
+                <sc-if value="{{ nextP.noPreview }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ nextP.icon }}" alt="{{ nextP.name }} icon" loading="lazy" style="width: clamp(40px, 40%, 66px); height: auto; border-radius: 22%; display: block; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" />
+                </sc-if>
               </div>
             </div>
           </a>
@@ -752,6 +778,41 @@
               </sc-for>
             </div>
             <p style="margin: 22px 0 0; max-width: 780px; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.58; letter-spacing: -0.015em; color: #0D0B12; text-wrap: pretty;">{{ stageBody }}</p>
+          </div>
+        </section>
+
+                <!-- ---------- MARKETING & GROWTH ----------
+             A genuine service entry, not a footer link. Deliberately previews
+             the darker Growth environment without importing its whole theme. -->
+        <section data-scrub="flow" style="padding: clamp(50px, 7vw, 90px) clamp(18px, 4vw, 56px) 0;">
+          <div style="position: relative; max-width: 1340px; margin: 0 auto; border-radius: 22px; overflow: hidden; background: #0D0B12; color: #F6F4F0; padding: clamp(28px, 4.4vw, 56px);">
+            <div aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(139,69,255,0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(139,69,255,0.16) 1px, transparent 1px); background-size: 58px 58px; mask-image: radial-gradient(ellipse at 24% 0%, black, transparent 74%); -webkit-mask-image: radial-gradient(ellipse at 24% 0%, black, transparent 74%);"></div>
+            <div aria-hidden="true" style="position: absolute; right: -8%; top: -34%; width: 46%; max-width: 520px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(139,69,255,0.34), transparent 68%); filter: blur(12px); animation: pcl-breathe 12s ease-in-out infinite;"></div>
+
+            <!-- growth line: the Growth page motif, in miniature -->
+            <svg aria-hidden="true" viewBox="0 0 320 90" preserveAspectRatio="none" style="position: absolute; right: 0; bottom: 0; width: min(46%, 420px); height: 90px; opacity: 0.5;">
+              <path d="M4 84 C 60 78, 96 58, 138 44 C 186 28, 232 30, 316 6" pathLength="1" fill="none" stroke="url(#svcGrow)" stroke-width="3" stroke-linecap="round" stroke-dasharray="1" style="stroke-dashoffset: calc(1 - var(--p, 1));" />
+              <defs><linearGradient id="svcGrow" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#5B2394"/><stop offset="60%" stop-color="#8B45FF"/><stop offset="100%" stop-color="#FF5F1F"/></linearGradient></defs>
+            </svg>
+
+            <div style="position: relative; display: flex; flex-wrap: wrap; gap: clamp(22px, 3.4vw, 48px); align-items: center;">
+              <div style="flex: 1 1 400px; min-width: 280px;">
+                <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #FF9166;">
+                  <span aria-hidden="true" style="width: 7px; height: 7px; background: #FF5F1F; animation: pcl-blink 1.7s infinite;"></span>{{ t.services.growth.eyebrow }}
+                </div>
+                <h2 data-mo="rise" style="margin: 16px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(28px, 4.2vw, 54px); line-height: 1.02; letter-spacing: -0.045em;">{{ t.services.growth.heading }}</h2>
+                <p data-mo="rise" style="margin: 18px 0 0; max-width: 58ch; font-size: clamp(15px, 1.3vw, 17.5px); line-height: 1.68; color: rgba(246,244,240,0.72);">{{ t.services.growth.body }}</p>
+                <a onClick="{{ goMarketing }}" href="/marketing" data-cursor="Marketing" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; padding: 16px 25px; border-radius: 12px; background: linear-gradient(96deg, #5B2394, #8B45FF); color: #fff; font-size: 15px; font-weight: 700; overflow: hidden; box-shadow: 0 22px 46px -26px #8B45FF; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), box-shadow 0.3s ease;" style-hover="box-shadow: 0 26px 60px -22px #FF5F1F;">{{ t.services.growth.ctaLabel }}<span style="font-family: 'Space Mono', monospace;">&#8594;</span><span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: 0; width: 42%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.26), transparent); animation: pcl-sheen 3.8s ease-in-out infinite;"></span></a>
+              </div>
+
+              <div style="flex: 1 1 300px; min-width: 250px; display: flex; flex-wrap: wrap; gap: 8px; align-content: center;">
+                <sc-for list="{{ growthDisciplines }}" as="gd" hint-placeholder-count="8">
+                  <span data-mo="rise" data-tool="flee" data-tool-pull="0.35" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 15px; border: 1px solid rgba(246,244,240,0.16); border-radius: 999px; background: rgba(246,244,240,0.04); font-size: 13px; font-weight: 600; transform: translate(var(--tx, 0px), var(--ty, 0px)); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease;" style-hover="border-color: {{ gd.c }};">
+                    <span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 50%; background: {{ gd.c }};"></span>{{ gd.name }}
+                  </span>
+                </sc-for>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -2001,6 +2062,11 @@ const FALLBACK_COPY = {
     header: { eyebrow: "Services — capabilities", heading: "Watch what we do",
       body: "{count} capabilities, end to end. Each one below is running a live miniature of the actual work." },
     closing: { heading: "Tell us which one you need.", ctaLabel: "Start a project", ctaUrl: "#contact" },
+    growth: { eyebrow: "And after launch",
+      heading: "Marketing & Growth",
+      body: "We don’t stop at launch. Strategy, content, acquisition, conversion and measurement, designed to help products and brands grow.",
+      disciplines: "Strategy · Social · Content · Paid Media · Search · Conversion · Lifecycle · Analytics",
+      ctaLabel: "Explore Marketing & Growth" },
   },
   growth: {
     hero: { eyebrow: "Marketing & growth · UK", heading: "Build it.", emphasis: "Then grow it.",
@@ -2163,7 +2229,7 @@ const MEDIA = (src) => {
      square  — icon or near-square feature graphic, never a hero */
   const kind = !d ? "unknown"
     : ratio < 0.78 ? "phone"
-    : ratio > 1.35 ? "wide"
+    : ratio > 1.2 ? "wide"
     : "square";
 
   return {
@@ -3052,6 +3118,10 @@ class Component extends DCLogic {
           stageMobileShot: phones[0] ? phones[0].src : "",
           hasStageMobile: !!phones[0],
           stageMobileAlt: label(phones[0], at(phones[0])),
+          /* The layered composition only works where there's room for it. */
+          showLayeredStage: isDesktop && !!phones[0],
+          showLayeredDetail: isDesktop && !!wides[1],
+          stackedStage: !isDesktop && !!(phones[0] || wides[1]),
 
           pGallery: media.filter(m => !m.isIcon).map((m, i) => ({
             src: m.src, alt: label(m, i), delay: i * 80, openIt: this.openViewer(at(m)),
@@ -3122,8 +3192,23 @@ class Component extends DCLogic {
       nextP: (() => {
         const i = PROJECTS.findIndex(x => x.id === P.id);
         const nx = PROJECTS[(i + 1) % PROJECTS.length];
-        return { name: nx.name, kind: nx.kind, initials: nx.initials, tint: nx.tint, tint2: nx.tint2, url: nx.url,
-          open: (e) => { if (e) e.preventDefault(); this.openProject(nx.id, e); } };
+        /* Media priority: hero, then feature graphic, then the strongest
+           screenshot. The gradient is a last resort, not a default. */
+        const pool = [nx.i].concat(nx.gallery || []).map(MEDIA).filter(m => m && !m.isIcon);
+        const preview = pool.find(m => m.isWide) || pool[0] || null;
+        const second = pool.find(m => m !== preview) || null;
+        return {
+          name: nx.name, kind: nx.kind, tint: nx.tint, tint2: nx.tint2, url: nx.url,
+          icon: nx.icon || "", hasIcon: !!nx.icon,
+          preview: preview ? preview.src : "",
+          hasPreview: !!preview,
+          noPreview: !preview,
+          previewAlt: nx.name + " — " + (nx.kind || "project") + " screen",
+          previewFit: preview && preview.isPhone ? "contain" : "cover",
+          second: second ? second.src : "",
+          hasSecond: !!second,
+          open: (e) => { if (e) e.preventDefault(); this.openProject(nx.id, e); },
+        };
       })(),
       backToWork: (e) => { if (e) e.preventDefault(); this.nav("work"); },
 
@@ -3145,6 +3230,15 @@ class Component extends DCLogic {
         { v: "v1.5.0", s: "In review", c: "#FF5F1F", d: 0.8 },
         { v: "next", s: "Planned", c: "rgba(13,11,18,0.3)", d: 1.2 },
       ],
+      /* Marketing is a first-class service, so it gets a real entry on the
+         Services page that hands off to the /marketing route. */
+      growthDisciplines: (MARKETING_SUBS.length
+        ? [...new Set(MARKETING_SUBS.map(x => x.group).filter(has))]
+        : String(COPY.services.growth.disciplines || "").split("·").map(x => x.trim())
+      ).filter(has).map((name, i) => ({ name, delay: i * 50, c: [PU, OR, PL, "#B94FC0"][i % 4] })),
+      growthCount2: MARKETING_SUBS.length,
+      goMarketing: (e) => { if (e) e.preventDefault(); this.nav("growth"); },
+
       stageServices: (() => {
         const first = (STAGES[0] || {}).name;
         const pool = SERVICES.concat(MARKETING);
