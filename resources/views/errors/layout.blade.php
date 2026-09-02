@@ -1,281 +1,199 @@
+{{--
+    PixelCraftsLab error shell.
+
+    Deliberately self-sufficient: no CMS query, no database read, no Vite
+    manifest, no Google Fonts blocking, no Claude Design runtime. Everything
+    needed to render is inline, so this page still works when the thing that
+    broke is the thing that would normally draw the site.
+
+    JS is optional decoration only — the page is complete without it.
+
+    Variables (all optional except $code/$title):
+      $code, $title, $message, $accent, $tone, $motif, $actions[], $note
+--}}
 @php
-    $status = (int) ($status ?? 500);
-    $title = (string) ($title ?? 'Something went wrong.');
-    $message = (string) ($message ?? 'We could not complete that request. Please try again shortly.');
-    $request = app()->bound('request') ? app('request') : null;
-    $isAuthenticatedAdmin = $request?->attributes->get('pcl.authenticated_admin', false) === true;
+    $code    = $code    ?? 500;
+    $accent  = $accent  ?? '#5B2394';
+    $accent2 = $accent2 ?? '#8B45FF';
+    $tone    = $tone    ?? 'calm';
+    $motif   = $motif   ?? 'blocks';
+    $isAdmin = request()->is('admin') || request()->is('admin/*');
+    $signedIn = auth()->hasUser() && auth()->check();
+
+    $actions = $actions ?? [];
+    if (! $actions) {
+        $actions = $isAdmin && $signedIn
+            ? [['label' => 'Back to dashboard', 'href' => url('/admin'), 'primary' => true],
+               ['label' => 'View website',      'href' => url('/')]]
+            : [['label' => 'Back home',   'href' => url('/'), 'primary' => true],
+               ['label' => 'View our work', 'href' => url('/') . '#work']];
+    }
 @endphp
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="noindex, nofollow">
-    <title>{{ $status }} — PixelCraftsLab</title>
-    <style>
-        :root {
-            color-scheme: light;
-            --paper: #f5f1ea;
-            --ink: #110e17;
-            --muted: #6f6875;
-            --violet: #6731b8;
-            --orange: #ff5f1f;
-            --line: rgba(17, 14, 23, .18);
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>{{ $code }} · {{ $title }} — PixelCraftsLab</title>
+<style>
+  :root{
+    --ink:#0D0B12; --paper:#F6F4F0; --accent:{{ $accent }}; --accent2:{{ $accent2 }};
+    --orange:#FF5F1F; --muted:rgba(13,11,18,.62); --line:rgba(13,11,18,.12);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    min-height:100vh; background:var(--paper); color:var(--ink);
+    font-family:Figtree,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    display:flex; flex-direction:column;
+  }
+  a{color:var(--accent); text-decoration:none}
 
-        * { box-sizing: border-box; }
+  /* Ambient pixel field — pure CSS, no images required. */
+  .field{position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:radial-gradient(circle,rgba(91,35,148,.16) 1.1px,transparent 1.1px);
+    background-size:44px 44px}
+  .glow{position:fixed; z-index:0; pointer-events:none; border-radius:50%;
+    filter:blur(16px); opacity:.5}
+  .glow.a{width:52vw; max-width:640px; aspect-ratio:1; right:-12vw; top:-16vh;
+    background:radial-gradient(circle,var(--accent2),transparent 66%); animation:breathe 12s ease-in-out infinite}
+  .glow.b{width:38vw; max-width:460px; aspect-ratio:1; left:-10vw; bottom:-18vh;
+    background:radial-gradient(circle,rgba(255,95,31,.5),transparent 68%); animation:breathe 15s ease-in-out infinite 3s}
 
-        html, body { min-height: 100%; }
+  header{position:relative; z-index:2; padding:22px clamp(18px,4vw,44px)}
+  .brand{display:inline-flex; align-items:center; gap:11px; color:var(--ink)}
+  .brand .mark{display:block; width:36px; height:36px; flex:0 0 auto; object-fit:contain}
+  .brand .lockup{display:block; line-height:1}
+  .brand .name{font-size:15px; font-weight:800; letter-spacing:-.02em; display:block; line-height:1}
+  .brand .tag{display:block; margin-top:5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted)}
 
-        body {
-            margin: 0;
-            background:
-                radial-gradient(circle at 84% 16%, rgba(103, 49, 184, .13), transparent 26rem),
-                radial-gradient(circle at 10% 88%, rgba(255, 95, 31, .12), transparent 24rem),
-                var(--paper);
-            color: var(--ink);
-            font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
+  main{position:relative; z-index:2; flex:1 1 auto; display:flex; align-items:center;
+    padding:clamp(20px,5vw,60px) clamp(18px,4vw,44px) clamp(40px,7vw,80px)}
+  .wrap{width:100%; max-width:1180px; margin:0 auto; display:flex; flex-wrap:wrap-reverse;
+    gap:clamp(28px,5vw,64px); align-items:center}
+  .copy{flex:1 1 420px; min-width:min(100%,300px)}
 
-        a { color: inherit; }
+  .eyebrow{display:flex; align-items:center; gap:10px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:10px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted)}
+  .eyebrow i{width:7px; height:7px; background:var(--orange); display:block; animation:blink 1.7s infinite}
 
-        .error-shell {
-            min-height: 100vh;
-            min-height: 100svh;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            padding: clamp(1.25rem, 3vw, 2.75rem);
-            overflow: hidden;
-        }
+  h1{margin:18px 0 0; font-family:"Bricolage Grotesque",Figtree,sans-serif; font-weight:800;
+    font-size:clamp(30px,5.2vw,60px); line-height:1.02; letter-spacing:-.045em; text-wrap:balance}
+  h1 em{font-style:italic; font-weight:500; color:var(--accent)}
+  p.lead{margin:18px 0 0; max-width:56ch; font-size:clamp(15px,1.3vw,17.5px); line-height:1.68; color:var(--muted); text-wrap:pretty}
+  .note{margin-top:16px; padding:11px 15px; border-left:3px solid var(--orange);
+    background:rgba(255,95,31,.07); font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:11.5px; line-height:1.75; color:rgba(13,11,18,.7)}
 
-        .error-header,
-        .error-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            position: relative;
-            z-index: 2;
-        }
+  .actions{display:flex; flex-wrap:wrap; gap:11px; margin-top:30px}
+  .btn{display:inline-flex; align-items:center; gap:9px; padding:15px 23px; border-radius:12px;
+    font-size:15px; font-weight:700; border:1px solid var(--line); color:var(--ink); background:transparent;
+    font-family:inherit; cursor:pointer; transition:transform .28s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s,box-shadow .3s}
+  .btn:hover{transform:translateY(-2px); border-color:var(--orange); background:rgba(255,95,31,.07)}
+  .btn.p{background:linear-gradient(96deg,var(--accent),var(--accent2)); border-color:transparent; color:#fff;
+    box-shadow:0 20px 44px -26px var(--accent2)}
+  .btn.p:hover{box-shadow:0 26px 56px -22px var(--orange)}
 
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: .7rem;
-            text-decoration: none;
-            font-size: .82rem;
-            font-weight: 800;
-            letter-spacing: -.02em;
-        }
+  /* ---- status visual ---- */
+  .visual{flex:1 1 380px; min-width:min(100%,280px); position:relative; display:flex;
+    align-items:center; justify-content:center; min-height:clamp(200px,30vw,330px)}
+  .code{font-family:"Bricolage Grotesque",Figtree,sans-serif; font-weight:800;
+    font-size:clamp(110px,20vw,240px); line-height:.82; letter-spacing:-.06em;
+    background-image:linear-gradient(140deg,var(--accent),var(--accent2) 52%,var(--orange));
+    -webkit-background-clip:text; background-clip:text; color:transparent; user-select:none}
 
-        .brand-mark {
-            width: 2rem;
-            aspect-ratio: 1;
-            display: grid;
-            place-items: center;
-            background: var(--ink);
-            color: var(--paper);
-            border-radius: 50%;
-            font-size: .62rem;
-            letter-spacing: -.08em;
-        }
+  /* Motif blocks: the "unfinished build" idea, drawn in CSS only. */
+  .bits{position:absolute; inset:0; pointer-events:none}
+  .bits i{position:absolute; display:block; background:var(--accent); opacity:.85}
+  .bits i:nth-child(1){width:20px;height:20px; left:6%;  top:14%; background:var(--accent);  animation:drift 9s ease-in-out infinite}
+  .bits i:nth-child(2){width:14px;height:14px; right:9%; top:22%; background:var(--orange);  animation:drift 11s ease-in-out infinite 1s}
+  .bits i:nth-child(3){width:26px;height:26px; left:12%; bottom:16%; background:var(--accent2); animation:drift 13s ease-in-out infinite 2s}
+  .bits i:nth-child(4){width:11px;height:11px; right:14%;bottom:12%; background:var(--ink);   animation:drift 10s ease-in-out infinite 3s}
+  /* "escaping" pieces read as something coming apart — used by 404/5xx */
+  .motif-broken .bits i:nth-child(2){animation:escape 6s cubic-bezier(.4,0,.2,1) infinite}
+  .motif-broken .bits i:nth-child(4){animation:escape 7.5s cubic-bezier(.4,0,.2,1) infinite 1.6s}
+  /* a slow sweep reads as waiting — used by 408/429/503/504 */
+  .motif-wait .code{position:relative}
+  .motif-wait .code::after{content:""; position:absolute; left:0; right:0; bottom:-14px; height:4px;
+    border-radius:99px; background:linear-gradient(90deg,var(--accent),var(--orange));
+    transform-origin:left; animation:sweep 2.6s ease-in-out infinite}
+  /* a firm bar reads as a boundary — used by 401/403 */
+  .motif-locked .code{position:relative}
+  .motif-locked .code::after{content:""; position:absolute; left:-4%; right:-4%; top:50%; height:8px;
+    background:var(--ink); transform:translateY(-50%) rotate(-8deg)}
 
-        .system-label,
-        .error-kicker,
-        .error-footer {
-            font-size: .68rem;
-            font-weight: 750;
-            letter-spacing: .14em;
-            text-transform: uppercase;
-        }
+  footer{position:relative; z-index:2; padding:0 clamp(18px,4vw,44px) 26px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:10px;
+    letter-spacing:.14em; text-transform:uppercase; color:rgba(13,11,18,.42)}
 
-        .system-label,
-        .error-footer { color: var(--muted); }
+  @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.15}}
+  @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(7px,-11px)}}
+  @keyframes escape{0%{transform:translate(0,0) rotate(0);opacity:.85}
+    70%{opacity:.85}100%{transform:translate(90px,-70px) rotate(140deg);opacity:0}}
+  @keyframes sweep{0%{transform:scaleX(.06)}50%{transform:scaleX(1)}100%{transform:scaleX(.06)}}
+  @keyframes breathe{0%,100%{opacity:.34;transform:scale(1)}50%{opacity:.6;transform:scale(1.08)}}
 
-        .error-main {
-            width: min(100%, 76rem);
-            margin: auto;
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(17rem, .7fr);
-            gap: clamp(3rem, 8vw, 8rem);
-            align-items: center;
-            padding: 5rem 0;
-        }
-
-        .error-kicker {
-            display: flex;
-            align-items: center;
-            gap: .75rem;
-            margin: 0 0 1.6rem;
-            color: var(--violet);
-        }
-
-        .error-kicker::before {
-            content: "";
-            width: 2.4rem;
-            height: 2px;
-            background: var(--orange);
-        }
-
-        h1 {
-            max-width: 14ch;
-            margin: 0;
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: clamp(3rem, 7vw, 6.8rem);
-            font-weight: 500;
-            letter-spacing: -.065em;
-            line-height: .91;
-        }
-
-        .error-message {
-            max-width: 38rem;
-            margin: 1.7rem 0 0;
-            color: var(--muted);
-            font-size: clamp(1rem, 1.5vw, 1.18rem);
-            line-height: 1.65;
-        }
-
-        .error-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: .75rem;
-            margin-top: 2rem;
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 3rem;
-            padding: .8rem 1.15rem;
-            border: 1px solid var(--ink);
-            border-radius: 999px;
-            font-size: .76rem;
-            font-weight: 800;
-            letter-spacing: .06em;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: transform .18s ease, background-color .18s ease, color .18s ease;
-        }
-
-        .button:hover { transform: translateY(-2px); }
-
-        .button-primary {
-            background: var(--ink);
-            color: var(--paper);
-        }
-
-        .button-secondary:hover {
-            background: rgba(17, 14, 23, .06);
-        }
-
-        .error-art {
-            position: relative;
-            min-height: clamp(18rem, 38vw, 31rem);
-            display: grid;
-            place-items: center;
-            isolation: isolate;
-        }
-
-        .error-number {
-            position: relative;
-            z-index: 2;
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: clamp(7rem, 18vw, 14rem);
-            line-height: 1;
-            letter-spacing: -.1em;
-            text-indent: -.1em;
-        }
-
-        .error-art::before,
-        .error-art::after {
-            content: "";
-            position: absolute;
-            border-radius: 50%;
-        }
-
-        .error-art::before {
-            width: 78%;
-            aspect-ratio: 1;
-            background: var(--orange);
-            transform: translate(8%, -4%);
-            z-index: 0;
-        }
-
-        .error-art::after {
-            width: 58%;
-            aspect-ratio: 1;
-            border: clamp(.75rem, 2vw, 1.6rem) solid var(--violet);
-            transform: translate(-24%, 18%);
-            z-index: 1;
-        }
-
-        .error-footer {
-            padding-top: 1.1rem;
-            border-top: 1px solid var(--line);
-        }
-
-        @media (max-width: 760px) {
-            .system-label { display: none; }
-
-            .error-main {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                padding: 3rem 0;
-            }
-
-            .error-art {
-                grid-row: 1;
-                min-height: 13rem;
-            }
-
-            .error-number { font-size: clamp(7rem, 36vw, 11rem); }
-
-            h1 { font-size: clamp(2.8rem, 14vw, 4.8rem); }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .button { transition: none; }
-        }
-    </style>
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+      transition-duration:.12s!important}
+    .motif-wait .code::after{transform:scaleX(1)}
+  }
+  @media (max-width:720px){
+    .wrap{flex-direction:column-reverse; align-items:flex-start}
+    .visual{min-height:150px; width:100%; justify-content:flex-start}
+    .code{font-size:clamp(88px,30vw,150px)}
+  }
+</style>
 </head>
-<body>
-    <div class="error-shell" data-pcl-error-shell>
-        <header class="error-header">
-            <a class="brand" href="/" aria-label="PixelCraftsLab home">
-                <span class="brand-mark" aria-hidden="true">PCL</span>
-                <span>PixelCraftsLab Studio</span>
-            </a>
-            <span class="system-label">A small interruption</span>
-        </header>
+<body class="motif-{{ $motif }}" data-pcl-error-shell="{{ $code }}">
+  <div class="field" aria-hidden="true"></div>
+  <div class="glow a" aria-hidden="true"></div>
+  <div class="glow b" aria-hidden="true"></div>
 
-        <main class="error-main">
-            <section>
-                <p class="error-kicker">Error {{ $status }}</p>
-                <h1>{{ $title }}</h1>
-                <p class="error-message">{{ $message }}</p>
+  <header>
+    <a class="brand" href="{{ url('/') }}">
+      {{-- The real mark, with an inline SVG fallback if /assets can't be served. --}}
+      <img class="mark" src="{{ url('/assets/pcl-logo.png') }}" alt=""
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <svg class="mark" viewBox="0 0 96 96" fill="none" aria-hidden="true" style="display:none">
+        <rect x="42" y="6" width="12" height="44" rx="3" fill="#0D0B12"/>
+        <rect x="38" y="48" width="20" height="12" rx="3" fill="#8B45FF"/>
+        <path d="M39 60C35 78 41 90 48 96c7-6 13-18 9-36Z" fill="#FF5F1F"/>
+      </svg>
+      <span class="lockup">
+        <span class="name">PixelCraftsLab</span>
+        <span class="tag">Ideas . Build . Launch</span>
+      </span>
+    </a>
+  </header>
 
-                <nav class="error-actions" aria-label="Recovery options">
-                    @if ($isAuthenticatedAdmin)
-                        <a class="button button-primary" href="/admin">Back to dashboard</a>
-                        <a class="button button-secondary" href="/">View website</a>
-                    @else
-                        <a class="button button-primary" href="/">Back home</a>
-                        <a class="button button-secondary" href="/work">View our work</a>
-                        <a class="button button-secondary" href="/contact">Contact the studio</a>
-                    @endif
-                </nav>
-            </section>
+  <main>
+    <div class="wrap">
+      <div class="copy">
+        <div class="eyebrow"><i aria-hidden="true"></i>@yield('eyebrow', 'Error ' . $code)</div>
+        <h1>@yield('headline')</h1>
+        <p class="lead">@yield('body')</p>
+        @hasSection('note')
+          <div class="note">@yield('note')</div>
+        @endif
+        <div class="actions">
+          @foreach ($actions as $a)
+            <a class="btn {{ ($a['primary'] ?? false) ? 'p' : '' }}" href="{{ $a['href'] }}">{{ $a['label'] }}</a>
+          @endforeach
+          @hasSection('extra-action')@yield('extra-action')@endif
+        </div>
+      </div>
 
-            <div class="error-art" aria-hidden="true">
-                <span class="error-number">{{ $status }}</span>
-            </div>
-        </main>
-
-        <footer class="error-footer">
-            <span>Ideas · Build · Launch · Grow</span>
-            <span>PixelCraftsLab</span>
-        </footer>
+      <div class="visual" aria-hidden="true">
+        <div class="bits"><i></i><i></i><i></i><i></i></div>
+        <div class="code">{{ $code }}</div>
+      </div>
     </div>
+  </main>
+
+  <footer>{{ $isAdmin ? 'PixelCraftsLab Studio admin' : 'PixelCraftsLab Studio' }}</footer>
 </body>
 </html>

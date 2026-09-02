@@ -77,8 +77,8 @@
   </sc-if>
 
   <sc-if value="{{ viewerOpen }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ closeViewer }}" style="position: fixed; inset: 0; z-index: 210; background: rgba(13,11,18,0.94); backdrop-filter: blur(8px); display: flex; flex-direction: column; animation: pcl-pop 0.26s cubic-bezier(0.2,1,0.3,1) both;">
-      <div style="display: flex; align-items: center; gap: 14px; padding: clamp(14px, 2.4vw, 24px) clamp(16px, 3vw, 32px); color: rgba(246,244,240,0.72);">
+    <div onClick="{{ backdropClose }}" style="position: fixed; inset: 0; z-index: 210; background: rgba(13,11,18,0.94); backdrop-filter: blur(8px); display: flex; flex-direction: column; animation: pcl-pop 0.26s cubic-bezier(0.2,1,0.3,1) both;">
+      <div onClick="{{ backdropClose }}" style="display: flex; align-items: center; gap: 14px; padding: clamp(14px, 2.4vw, 24px) clamp(16px, 3vw, 32px); color: rgba(246,244,240,0.72);">
         <span style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;">{{ viewerAlt }}</span>
         <sc-if value="{{ viewerMulti }}" hint-placeholder-val="{{ true }}">
           <span style="font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: rgba(246,244,240,0.45);">{{ viewerNo }} / {{ viewerTotal }}</span>
@@ -87,7 +87,7 @@
         <button onClick="{{ closeViewer }}" aria-label="Close" data-cursor="Close" style="width: 42px; height: 42px; border: 1px solid rgba(246,244,240,0.26); border-radius: 12px; background: transparent; color: #F6F4F0; font-size: 19px; cursor: pointer; transition: border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.12);">&#215;</button>
       </div>
 
-      <div style="flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 22px); padding: 0 clamp(10px, 2.4vw, 28px) clamp(18px, 3vw, 34px);">
+      <div onClick="{{ backdropClose }}" style="flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 22px); padding: 0 clamp(10px, 2.4vw, 28px) clamp(18px, 3vw, 34px);">
         <sc-if value="{{ viewerMulti }}" hint-placeholder-val="{{ true }}">
           <button onClick="{{ viewerPrev }}" aria-label="Previous" data-cursor="Prev" style="flex: 0 0 auto; width: clamp(38px, 5vw, 52px); height: clamp(38px, 5vw, 52px); border: 1px solid rgba(246,244,240,0.26); border-radius: 50%; background: transparent; color: #F6F4F0; font-size: 17px; cursor: pointer; transition: border-color 0.25s ease, transform 0.3s cubic-bezier(0.2,0.8,0.2,1);" style-hover="border-color: #FF5F1F; transform: translateX(-4px);">&#8592;</button>
         </sc-if>
@@ -129,7 +129,7 @@
 
   <sc-if value="{{ morph }}" hint-placeholder-val="{{ false }}">
     <div ref="{{ setMorph }}" aria-hidden="true" style="position: fixed; z-index: 170; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 16px; background-image: linear-gradient(150deg, {{ morphTint }}, {{ morphTint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); will-change: left, top, width, height; transition: left 0.66s cubic-bezier(0.65,0,0.15,1), top 0.66s cubic-bezier(0.65,0,0.15,1), width 0.66s cubic-bezier(0.65,0,0.15,1), height 0.66s cubic-bezier(0.65,0,0.15,1), border-radius 0.66s ease, opacity 0.3s ease 0.5s;">
-      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(46px, 7vw, 120px); letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ morphInitials }}</span>
+      <sc-if value="{{ morphHasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ morphIcon }}" alt="" style="width: 46px; height: 46px; border-radius: 22%; display: block; object-fit: cover;" /></sc-if>
     </div>
   </sc-if>
 
@@ -209,7 +209,7 @@
 
             <div style="flex: 1 1 400px; min-width: 280px; position: relative; aspect-ratio: 1 / 1; max-height: 560px;">
               <div style="position: absolute; inset: 6% 8% 10% 4%; border-radius: 999px 999px 999px 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transform: translate(calc(var(--px) * -12px), calc(var(--py) * -10px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
-                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(44px, 7vw, 82px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95);">{{ featuredInitials }}</span>
+                <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ featuredIcon }}" alt="{{ featuredName }} icon" style="width: clamp(56px, 26%, 112px); height: clamp(56px, 26%, 112px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 16px 40px -18px rgba(0,0,0,0.6);" /></sc-if>
               </div>
               <img src="assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0.92; transform: translate(calc(var(--px) * 16px), calc(var(--py) * 13px)) scale(1.18); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
               <img src="assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform: translate(calc(var(--px) * 26px), calc(var(--py) * 20px)) scale(1.1); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
@@ -238,7 +238,7 @@
               <div style="position: relative; aspect-ratio: 16 / 10; border: 2px solid #0D0B12; border-radius: calc(4px + var(--p, 1) * 14px); overflow: hidden; transform: scale(calc(0.24 + var(--p2, 1) * 0.76)); opacity: var(--p2, 1);">
                 <div style="position: absolute; inset: 0; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);"></div>
                 <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: var(--pb, 1);">
-                  <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 8vw, 104px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.95); transform: scale(calc(0.8 + var(--pb, 1) * 0.2));">{{ featuredInitials }}</span>
+                  <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ featuredIcon }}" alt="{{ featuredName }} icon" style="width: clamp(56px, 26%, 112px); height: clamp(56px, 26%, 112px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 16px 40px -18px rgba(0,0,0,0.6);" /></sc-if>
                 </div>
                 <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
               </div>
@@ -283,7 +283,7 @@
                 <a onClick="{{ p.open }}" href="#project" data-cursor="{{ p.cursor }}" data-scrub="flow" style="display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 48px); align-items: center; color: #0D0B12;">
                   <div data-morph-src="{{ p.id }}" style="flex: 1 1 520px; min-width: 280px; order: {{ p.mediaOrder }}; position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; border: 1px solid rgba(13,11,18,0.1);">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0); transition: transform 0.7s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.04);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(40px, 6vw, 76px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                      <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(40px, 24%, 68px); height: clamp(40px, 24%, 68px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
                     <span aria-hidden="true" style="position: absolute; inset: 0; border: 1px dashed rgba(255,255,255,0.55); opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
@@ -438,7 +438,7 @@
                       <span style="margin-left: 6px; flex: 1; height: 14px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 8px; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.06em; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ p.host }}</span>
                     </div>
                     <div style="position: relative; aspect-ratio: 16 / 10; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92); transition: transform 0.6s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.1);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.8s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease;" style-hover="transform: scale(1.05);" /></sc-if><sc-if value="{{ p.hasShot2 }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot2 }}" alt="{{ p.shot2Alt }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; opacity: 0; transition: opacity 0.55s ease;" style-hover="opacity: 1;" /></sc-if>
+                      <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(46px, 22%, 74px); height: clamp(46px, 22%, 74px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.8s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease;" style-hover="transform: scale(1.05);" /></sc-if><sc-if value="{{ p.hasShot2 }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot2 }}" alt="{{ p.shot2Alt }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; opacity: 0; transition: opacity 0.55s ease;" style-hover="opacity: 1;" /></sc-if>
                       <span aria-hidden="true" style="position: absolute; left: 12px; bottom: 12px; width: 22px; height: 22px; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.2,0.8,0.2,1);" style-hover="opacity: 1; transform: none;">
                         <svg viewBox="0 0 22 22" width="22" height="22" fill="none"><path d="M5 4 L5 17 L8.5 13.5 L11 19 L13.5 17.8 L11 12.6 L16 12.6 Z" fill="#fff" stroke="#0D0B12" stroke-width="1.2" /></svg>
                       </span>
@@ -451,7 +451,7 @@
                     <div style="position: relative; width: 68%; max-width: 210px; border: 2px solid #0D0B12; border-radius: 26px; overflow: hidden; background: #fff; padding: 8px 7px; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-8px) rotate(-1.4deg);">
                       <span style="display: block; width: 34%; height: 4px; margin: 0 auto 8px; border-radius: 99px; background: rgba(13,11,18,0.3);"></span>
                       <div style="position: relative; aspect-ratio: 9 / 15; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(160deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 3px, transparent 3px 13px);">
-                        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                        <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(40px, 30%, 62px); height: clamp(40px, 30%, 62px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                         <span aria-hidden="true" style="position: absolute; left: 50%; bottom: 12px; width: 30px; height: 30px; margin-left: -15px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.8); opacity: 0; transform: scale(0.4); transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,1.5,0.4,1);" style-hover="opacity: 1; transform: scale(1);"></span>
                       </div>
                     </div>
@@ -461,7 +461,7 @@
                 <sc-if value="{{ p.isGame }}" hint-placeholder-val="{{ false }}">
                   <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; background: #0D0B12; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-8px) scale(1.01);">
                     <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 4px);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94); transition: letter-spacing 0.5s ease;" style-hover="letter-spacing: 0.04em;">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                      <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(40px, 24%, 68px); height: clamp(40px, 24%, 68px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <span aria-hidden="true" style="position: absolute; left: 10px; top: 10px; width: 16px; height: 16px; border-left: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
                     <span aria-hidden="true" style="position: absolute; right: 10px; top: 10px; width: 16px; height: 16px; border-right: 2px solid #FF5F1F; border-top: 2px solid #FF5F1F;"></span>
@@ -477,7 +477,7 @@
                   <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 4 / 3; border: 2px dashed rgba(91,35,148,0.55); border-radius: 14px; overflow: hidden; background: #fff; transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-8px); border-color: #FF5F1F;">
                     <span aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(to right, rgba(91,35,148,0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(91,35,148,0.16) 1px, transparent 1px); background-size: 26px 26px;"></span>
                     <div style="position: absolute; inset: 16%; display: flex; align-items: center; justify-content: center; border-radius: 10px; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}); opacity: 0.94;">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                      <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(40px, 30%, 62px); height: clamp(40px, 30%, 62px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <span style="position: absolute; left: 10px; top: 10px; padding: 4px 9px; border-radius: 999px; background: #0D0B12; color: #F6F4F0; font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase;">{{ t.work.header.badge }}</span>
                   </div>
@@ -546,7 +546,7 @@
                     <span style="margin-left: 8px; flex: 1; max-width: 420px; height: 18px; border-radius: 999px; background: rgba(13,11,18,0.07); display: flex; align-items: center; padding: 0 10px; font-family: 'Space Mono', monospace; font-size: 9px; color: rgba(13,11,18,0.64); overflow: hidden; white-space: nowrap;">{{ P.host }}</span>
                   </div>
                   <div data-morph-dest="{{ P.id }}" style="position: relative; aspect-ratio: 16 / 9; display: flex; align-items: center; justify-content: center; overflow: hidden; background-image: linear-gradient(150deg, {{ P.tint }}, {{ P.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px);">
-                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: clamp(48px, 9vw, 128px); font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.94);">{{ P.initials }}</span>
+                    <sc-if value="{{ P.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ P.icon }}" alt="{{ P.name }} icon" loading="lazy" style="width: clamp(64px, 12%, 132px); height: clamp(64px, 12%, 132px); border-radius: 20%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
                     <sc-if value="{{ P.hasShot }}" hint-placeholder-val="{{ true }}">
                       <img src="{{ stageHero }}" alt="{{ stageHeroAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.9s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.03);" />
                     </sc-if>
@@ -583,25 +583,53 @@
               </div>
             </sc-if>
 
-            <!-- ---------- GAME / IMMERSIVE STAGE ---------- -->
+            <!-- ---------- GAME STAGE ----------
+                 Cinematic only when the key art genuinely has the pixels for
+                 it. Otherwise the compact stage centres the art at its native
+                 size on the dark ground and lets phone screens carry the UI. -->
             <sc-if value="{{ stageGame }}" hint-placeholder-val="{{ false }}">
               <div style="position: relative; margin-top: clamp(28px, 4vw, 46px); border-radius: 22px; overflow: hidden; background: #0D0B12;">
                 <div aria-hidden="true" style="position: absolute; inset: 0; z-index: 2; pointer-events: none; background: radial-gradient(ellipse at 50% 34%, transparent 34%, rgba(13,11,18,0.62) 88%);"></div>
-                <a onClick="{{ openHero }}" href="#view" data-cursor="Enlarge" data-morph-dest="{{ P.id }}" style="position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden;">
+                <a onClick="{{ openHeroAt }}" href="#view" data-cursor="Enlarge" data-morph-dest="{{ P.id }}" style="position: relative; display: block; aspect-ratio: {{ stageHeroRatio }}; overflow: hidden;">
                   <img src="{{ stageHero }}" alt="{{ stageHeroAlt }}" style="display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: scale(1.09);" />
                 </a>
                 <div aria-hidden="true" style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; height: 42%; background: linear-gradient(to top, #0D0B12, transparent);"></div>
                 <div style="position: absolute; left: clamp(16px, 3vw, 34px); bottom: clamp(16px, 3vw, 30px); z-index: 4; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #FF9166;">{{ P.platform }}</div>
               </div>
-              <sc-if value="{{ hasStageCrops }}" hint-placeholder-val="{{ true }}">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 14px;">
-                  <sc-for list="{{ stageCrops }}" as="cr" hint-placeholder-count="2">
-                    <a onClick="{{ cr.openIt }}" href="#view" data-cursor="Enlarge" data-mo="rise" style="display: block; position: relative; overflow: hidden; border-radius: 14px; background: #0D0B12; transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
-                      <img src="{{ cr.src }}" alt="{{ cr.alt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
-                    </a>
-                  </sc-for>
-                </div>
-              </sc-if>
+            </sc-if>
+
+            <!-- ---------- MOBILE GAME STAGE (compact) ---------- -->
+            <sc-if value="{{ stageGameCompact }}" hint-placeholder-val="{{ false }}">
+              <div data-scrub="flow" style="position: relative; margin-top: clamp(28px, 4vw, 46px); border-radius: 22px; overflow: hidden; background: #0D0B12; padding: clamp(22px, 4vw, 46px) clamp(16px, 3vw, 40px) clamp(26px, 4vw, 50px);">
+                <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 30%, rgba(139,69,255,0.22), transparent 68%);"></div>
+
+                <!-- key art, never wider than its own pixels -->
+                <a onClick="{{ openHeroAt }}" href="#view" data-cursor="Enlarge" data-morph-dest="{{ P.id }}" style="position: relative; display: block; width: {{ stageHeroCap }}; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 34px 74px -36px rgba(0,0,0,0.9); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
+                  <img src="{{ stageHero }}" alt="{{ stageHeroAlt }}" style="display: block; width: 100%; height: auto;" />
+                </a>
+
+                <!-- phone screens carry the real UI -->
+                <sc-if value="{{ hasStagePhones }}" hint-placeholder-val="{{ true }}">
+                  <div style="position: relative; display: flex; align-items: flex-start; justify-content: center; margin-top: clamp(-26px, -2.4vw, -10px);">
+                    <sc-for list="{{ stagePhones }}" as="ph" hint-placeholder-count="2">
+                      <a onClick="{{ ph.openIt }}" href="#view" data-cursor="Enlarge" data-mo="rise" style="position: relative; z-index: {{ ph.z }}; flex: 0 0 auto; width: clamp(104px, 16vw, 178px); max-width: {{ ph.cap }}; margin: 0 clamp(-20px, -2vw, -8px); border-radius: 24px; overflow: hidden; border: 3px solid #0D0B12; background: #0D0B12; box-shadow: 0 30px 66px -32px rgba(0,0,0,0.9); transform: translateY({{ ph.y }}) rotate({{ ph.rot }}) scale({{ ph.scale }}); transition: transform 0.55s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(calc({{ ph.y }} - 16px)) rotate(0deg) scale({{ ph.scale }}); z-index: 4;">
+                        <img src="{{ ph.src }}" alt="{{ ph.alt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
+                      </a>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <!-- supporting landscape captures, each capped to native width -->
+                <sc-if value="{{ hasStageWides }}" hint-placeholder-val="{{ true }}">
+                  <div style="position: relative; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 13px; margin-top: clamp(24px, 3.5vw, 40px); justify-items: center;">
+                    <sc-for list="{{ stageWides }}" as="wd" hint-placeholder-count="1">
+                      <a onClick="{{ wd.openIt }}" href="#view" data-cursor="Enlarge" data-mo="rise" style="display: block; width: 100%; max-width: {{ wd.cap }}; border-radius: 14px; overflow: hidden; box-shadow: 0 26px 58px -32px rgba(0,0,0,0.9); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
+                        <img src="{{ wd.src }}" alt="{{ wd.alt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
+                      </a>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
             </sc-if>
 
             <!-- ---------- PRODUCT ECOSYSTEM SHELF ---------- -->
@@ -612,7 +640,7 @@
                   <sc-for list="{{ ecosystem }}" as="eco" hint-placeholder-count="6">
                     <a onClick="{{ eco.open }}" href="#project" data-cursor="{{ eco.name }}" data-mo="rise" style="display: block; padding: 12px; border: 1px solid rgba(13,11,18,0.12); border-radius: 16px; background: #fff; color: #0D0B12; transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-6px); border-color: {{ eco.tint }};">
                       <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ eco.tint }}, {{ eco.tint2 }});">
-                        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 800; color: rgba(255,255,255,0.94);">{{ eco.initials }}</span>
+                        <sc-if value="{{ eco.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ eco.icon }}" alt="{{ eco.name }} icon" loading="lazy" style="width: 48%; height: 48%; border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
                         <sc-if value="{{ eco.hasShot }}" hint-placeholder-val="{{ true }}">
                           <img src="{{ eco.shot }}" alt="{{ eco.name }}" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center;" />
                         </sc-if>
@@ -700,7 +728,7 @@
                 <div style="margin-top: 12px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(246,244,240,0.6);">{{ nextP.kind }}</div>
               </div>
               <div style="flex: 0 1 260px; min-width: 200px; aspect-ratio: 16 / 10; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ nextP.tint }}, {{ nextP.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateX(10px);">
-                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ nextP.initials }}</span>
+                <sc-if value="{{ nextP.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ nextP.icon }}" alt="{{ nextP.name }} icon" loading="lazy" style="width: clamp(40px, 40%, 66px); height: clamp(40px, 40%, 66px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
               </div>
             </div>
           </a>
@@ -1107,7 +1135,7 @@
             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(28px, 4vw, 44px);">
               <sc-for list="{{ channels }}" as="ch" hint-placeholder-count="11">
                 <div data-mo="rise" data-tool="flee" data-tool-pull="0.42" data-cursor="{{ ch.name }}" style="position: relative; display: inline-flex; align-items: center; gap: 10px; padding: 11px 17px 11px 11px; border: 1px solid rgba(246,244,240,0.14); border-radius: 999px; background: rgba(246,244,240,0.03); font-size: 13.5px; font-weight: 600; transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--tr, 0deg)); transition: transform 0.45s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: {{ ch.c }}; background: rgba(246,244,240,0.07);">
-                  <span aria-hidden="true" style="display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: {{ ch.c }}; font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; color: #fff;">{{ ch.initials }}</span>{{ ch.label }}
+                  <span aria-hidden="true" style="display: inline-flex; flex: 0 0 auto; width: 10px; height: 10px; border-radius: 50%; background: {{ ch.c }};"></span>{{ ch.label }}
                 </div>
               </sc-for>
             </div>
@@ -1259,7 +1287,7 @@
                 <sc-for list="{{ growthCases }}" as="p" hint-placeholder-count="0">
                   <a onClick="{{ p.open }}" href="#project" data-cursor="Read it" data-mo="rise" style="display: block; color: #F6F4F0;">
                     <div data-morph-src="{{ p.id }}" style="position: relative; aspect-ratio: 16 / 10; border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: translateY(-6px);">
-                      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.92);">{{ p.initials }}</span>
+                      <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(46px, 26%, 72px); height: clamp(46px, 26%, 72px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if>
                       <sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     </div>
                     <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.02em;">{{ p.name }}</h3>
@@ -1447,7 +1475,7 @@
               <sc-for list="{{ labProjects }}" as="p" hint-placeholder-count="2">
                 <a onClick="{{ p.open }}" href="#project" data-cursor="Peek" data-mo="rise" style="display: flex; flex-direction: column; color: #F6F4F0;">
                   <div style="position: relative; aspect-ratio: 16 / 10; border-radius: 16px; overflow: hidden; border: 1px dashed rgba(246,244,240,0.28); display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, {{ p.tint }}, {{ p.tint2 }}); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1), border-color 0.3s ease;" style-hover="transform: translateY(-6px); border-color: #FF5F1F;">
-                    <span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 46px; font-weight: 800; letter-spacing: -0.05em; color: rgba(255,255,255,0.9);">{{ p.initials }}</span><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
+                    <sc-if value="{{ p.hasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ p.icon }}" alt="{{ p.name }} icon" loading="lazy" style="width: clamp(40px, 24%, 68px); height: clamp(40px, 24%, 68px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 10px 26px -14px rgba(0,0,0,0.6);" /></sc-if><sc-if value="{{ p.hasShot }}" hint-placeholder-val="{{ false }}"><img src="{{ p.shot }}" alt="{{ p.shotAlt }}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;" /></sc-if>
                     <span style="position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 999px; background: rgba(13,11,18,0.7); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;">{{ t.lab.projects.badge }}</span>
                   </div>
                   <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 19px; letter-spacing: -0.025em;">{{ p.name }}</h3>
@@ -1834,6 +1862,13 @@ const TINTS = [["#5B2394","#8B45FF"],["#0D0B12","#3A3346"],["#FF5F1F","#F2894F"]
 const PROJECTS = list(CMS.projects, ORIGINAL_PROJECTS).map((raw, i) => {
   const p = { ...raw };
   p.i = pick(p.image, p.i);
+  /* The project's real icon / brand mark travels in the gallery array.
+     It is never treated as a screenshot. */
+  const gal = (p.gallery || []).filter(isUrl);
+  p.icon = gal.find(g => /\/icon\./.test(g)) || "";
+  p.hasIcon = !!p.icon;
+  p.noIcon = !p.icon;
+  p.gallery = gal.filter(g => !/\/icon\./.test(g));
   if (!p.initials) p.initials = p.name.replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(s => s[0]).join("");
   if (!p.tint) p.tint = TINTS[i % TINTS.length][0];
   if (!p.tint2) p.tint2 = TINTS[i % TINTS.length][1];
@@ -2107,6 +2142,46 @@ const CURSOR_FOR = (p, frame) => {
   return frame === "game" ? "Play it" : frame === "phone" ? "Open app" : frame === "blueprint" ? "Peek" : "Open site";
 };
 
+/* Real intrinsic dimensions of every shipped project asset, measured at
+   build time. The composition engine uses these so a small screenshot is
+   never blown up past its native resolution. Regenerate when assets change
+   (see docs/project-media-manifest.md). */
+const MEDIA_DIMS = {"/assets/projects/abandoned/hero.webp":[941,588],"/assets/projects/abandoned/icon.webp":[256,256],"/assets/projects/abandoned/screen-01.webp":[675,1200],"/assets/projects/abandoned/screen-02.webp":[675,1200],"/assets/projects/alphablock/feature-01.webp":[1600,1000],"/assets/projects/alphablock/hero.webp":[1600,1000],"/assets/projects/alphablock/icon.webp":[256,256],"/assets/projects/alphablock/mobile-01.webp":[760,1644],"/assets/projects/animal/hero.webp":[1080,1041],"/assets/projects/animal/icon.webp":[256,256],"/assets/projects/animal/screen-01.webp":[838,1200],"/assets/projects/animal/screen-02.webp":[540,1200],"/assets/projects/bangtan/feature-01.webp":[1600,1000],"/assets/projects/bangtan/hero.webp":[1600,1000],"/assets/projects/bangtan/icon.webp":[256,256],"/assets/projects/bangtan/mobile-01.webp":[760,1644],"/assets/projects/bloxabet/hero.webp":[595,1200],"/assets/projects/bloxabet/icon.webp":[256,256],"/assets/projects/bloxabet/screen-01.webp":[565,1200],"/assets/projects/bloxabet/screen-02.webp":[592,1200],"/assets/projects/coloriboo/hero.webp":[673,1200],"/assets/projects/coloriboo/icon.webp":[256,256],"/assets/projects/coloriboo/screen-01.webp":[675,1200],"/assets/projects/coloriboo/screen-02.webp":[674,1200],"/assets/projects/farmcare/feature-01.webp":[1600,1000],"/assets/projects/farmcare/hero.webp":[1600,1000],"/assets/projects/farmcare/icon.webp":[256,256],"/assets/projects/farmcare/mobile-01.webp":[760,1644],"/assets/projects/fikar/feature-01.webp":[1600,1000],"/assets/projects/fikar/hero.webp":[1600,1000],"/assets/projects/fikar/icon.webp":[256,256],"/assets/projects/fikar/mobile-01.webp":[760,1644],"/assets/projects/globepop/hero.webp":[598,1200],"/assets/projects/globepop/icon.webp":[256,256],"/assets/projects/globepop/screen-01.webp":[680,1200],"/assets/projects/globepop/screen-02.webp":[675,1200],"/assets/projects/matchmallow/hero.webp":[1080,632],"/assets/projects/matchmallow/icon.webp":[256,256],"/assets/projects/matchmallow/screen-01.webp":[554,1200],"/assets/projects/matchmallow/screen-02.webp":[1080,853],"/assets/projects/matchmallow/screen-03.webp":[675,1200],"/assets/projects/mathibble/hero.webp":[675,1200],"/assets/projects/mathibble/icon.webp":[256,256],"/assets/projects/mathibble/screen-01.webp":[678,1200],"/assets/projects/mathibble/screen-02.webp":[744,1036],"/assets/projects/pulse/hero.webp":[1600,1000],"/assets/projects/pulse/icon.webp":[256,256],"/assets/projects/studybuddy/feature-01.webp":[1600,1000],"/assets/projects/studybuddy/hero.webp":[1600,1000],"/assets/projects/studybuddy/icon.webp":[256,256],"/assets/projects/studybuddy/mobile-01.webp":[760,1644]};
+
+/* ------------------------------------------------------- MEDIA CLASSIFIER
+   A feature graphic and a screenshot are not interchangeable, and neither may
+   be enlarged past the resolution it actually has. Everything below is
+   measured, not guessed. */
+const MEDIA = (src) => {
+  if (!isUrl(src)) return null;
+  const d = MEDIA_DIMS[src] || null;
+  const w = d ? d[0] : 0, h = d ? d[1] : 0;
+  const ratio = h ? w / h : 1;
+
+  /* phone   — portrait UI capture, belongs in a device frame
+     wide    — landscape promo art / tablet capture, can lead a stage
+     square  — icon or near-square feature graphic, never a hero */
+  const kind = !d ? "unknown"
+    : ratio < 0.78 ? "phone"
+    : ratio > 1.35 ? "wide"
+    : "square";
+
+  return {
+    src, w, h, ratio, kind,
+    isPhone: kind === "phone",
+    isWide: kind === "wide",
+    isSquare: kind === "square",
+    isIcon: /\/icon\./.test(src),
+    /* Never render wider than the pixels we actually have (5% tolerance). */
+    maxW: w ? Math.round(w * 1.05) : 0,
+    /* Only genuinely large landscape art earns a cinematic, edge-to-edge stage. */
+    cinematic: kind === "wide" && w >= 1400,
+  };
+};
+
+/* Renders "min(100%, <native>px)" so a container can never upscale an asset. */
+const CAP = (m, fallback) => (m && m.maxW ? "min(100%, " + m.maxW + "px)" : (fallback || "100%"));
+
 const num = (n) => String(n).padStart(2, "0");
 
 /* ------------------------------------------------------------------ PRICING
@@ -2145,7 +2220,7 @@ const BUDGET_PLAIN = (n) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/
 const PUBLIC_BUDGET = (plan, copy) => {
   const c = copy || {};
   const custom = {
-    range: (plan && (plan.priceLabel || plan.price)) || c.customLabel || "Custom",
+    range: c.customLabel || (plan && (plan.priceLabel || plan.price)) || "Custom estimate",
     note: c.customNote || "Scoped around your channels, output and growth requirements.",
     isCustom: true,
   };
@@ -2656,7 +2731,7 @@ class Component extends DCLogic {
       const r = card.getBoundingClientRect();
       this.setState({
         morph: { left: r.left, top: r.top, width: r.width, height: r.height, radius: 16, opacity: 1 },
-        morphMeta: { tint: p.tint, tint2: p.tint2, initials: p.initials },
+        morphMeta: { tint: p.tint, tint2: p.tint2, icon: p.icon },
       });
       this.morphPending = true;
     }
@@ -2710,7 +2785,8 @@ class Component extends DCLogic {
       morph: !!this.state.morph,
       morphTint: (this.state.morphMeta || {}).tint || PU,
       morphTint2: (this.state.morphMeta || {}).tint2 || PL,
-      morphInitials: (this.state.morphMeta || {}).initials || "",
+      morphIcon: (this.state.morphMeta || {}).icon || "",
+      morphHasIcon: !!(this.state.morphMeta || {}).icon,
 
       isHome: route === "home", isWork: route === "work", isProject: route === "project",
       isServices: route === "services", isStudio: route === "studio",
@@ -2769,7 +2845,8 @@ class Component extends DCLogic {
       openFirst: (e) => { if (e) e.preventDefault(); this.nav("project", featuredProject.id); },
       featuredUrl: featuredProject.url,
       featuredName: featuredProject.name,
-      featuredInitials: featuredProject.initials,
+      featuredIcon: featuredProject.icon || "",
+      featuredHasIcon: !!featuredProject.icon,
       featuredKind: featuredProject.kind,
 
       layers: [
@@ -2878,89 +2955,111 @@ class Component extends DCLogic {
          full-bleed gameplay treatment. Every image is a real capture. */
       ...(() => {
         const shots = [P.i].concat(P.gallery || []).filter(isUrl);
-        const mobileShots = shots.filter(x => /mobile/.test(x));
-        const flatShots = shots.filter(x => !/mobile/.test(x));
-        const label = (src, i) =>
-          P.name + " — " + (/mobile/.test(src) ? "mobile screen"
-            : /icon/.test(src) ? "app icon"
-            : i === 0 ? ((P.kind || "product") + " screen")
-            : "product screen " + num(i));
+        const media = shots.map(MEDIA).filter(Boolean);
 
+        const phones = media.filter(m => m.isPhone);
+        const wides = media.filter(m => m.isWide);
+        const squares = media.filter(m => m.isSquare);
+
+        const label = (m, i) => {
+          if (!m) return P.name;
+          const what = m.isPhone ? "mobile screen"
+            : m.isWide ? (i === 0 ? "key artwork" : "gameplay screen")
+            : "product screen";
+          return P.name + " — " + (i === 0 && !m.isPhone ? ((P.kind || "product") + " screen") : what);
+        };
+
+        /* Composition is chosen from the project type AND what the media can
+           actually carry at its native resolution. */
         const mode =
-          P.cat === "Games" ? "game"
+          P.cat === "Games" ? (wides.some(m => m.cinematic) ? "game" : "gameCompact")
           : P.cat === "Apps" ? "mobile"
-          : mobileShots.length && flatShots.length > 1 ? "mixed"
+          : phones.length && wides.length > 1 ? "mixed"
           : "web";
 
         const viewerIndex = this.state.viewer;
         const open = viewerIndex !== null && viewerIndex !== undefined;
 
-        /* Connected products, shown as one shelf rather than six lookalike
-           cards. Driven by category so the CMS controls membership. */
         const ecosystem = P.id === "studybuddy"
           ? PROJECTS.filter(x => x.cat === "Apps").map((x, i) => ({
               id: x.id, name: x.name, short: x.short,
-              shot: img(x.i), hasShot: !!img(x.i),
-              tint: x.tint, tint2: x.tint2, initials: x.initials,
+              icon: x.icon, hasIcon: !!x.icon,
+              tint: x.tint, tint2: x.tint2,
               delay: i * 60,
               open: (e) => { if (e) e.preventDefault(); this.openProject(x.id, e); },
             }))
           : [];
+
+        const at = (m) => (m ? shots.indexOf(m.src) : 0);
+        const lead = media[0] || null;
+        const leadWide = wides[0] || null;
+        const heroM = mode === "mixed" || mode === "web"
+          ? (wides[0] || media[0])
+          : (mode === "mobile" ? (phones[0] || media[0]) : (leadWide || media[0]));
 
         return {
           stageMode: mode,
           stageWeb: mode === "web",
           stageMobile: mode === "mobile",
           stageGame: mode === "game",
+          stageGameCompact: mode === "gameCompact",
           stageMixed: mode === "mixed",
           stageFlat: mode === "web" || mode === "mixed",
+          stageAnyGame: mode === "game" || mode === "gameCompact",
 
-          /* Named slots each composition draws from. */
-          stageHero: shots[0] || "",
-          stageHeroAlt: label(shots[0] || "", 0),
-          stageDetail: flatShots[1] || "",
-          hasStageDetail: !!flatShots[1],
-          stageDetailAlt: label(flatShots[1] || "", 1),
-          stageMobileShot: mobileShots[0] || "",
-          hasStageMobile: !!mobileShots[0],
-          stageMobileAlt: label(mobileShots[0] || "", 0),
+          /* Hero — capped at its own native width so it can never go soft. */
+          stageHero: heroM ? heroM.src : "",
+          stageHeroAlt: label(heroM, 0),
+          stageHeroCap: CAP(heroM),
+          stageHeroRatio: heroM && heroM.h ? (heroM.w + " / " + heroM.h) : "16 / 9",
+          stageHeroFit: heroM && heroM.isWide ? "cover" : "contain",
+          openHeroAt: this.openViewer(at(heroM)),
 
-          /* Phone trio for app projects: one lead, two offset behind. */
+          /* Supporting landscape art (gameplay, board views, wide captures). */
+          stageWides: wides.filter(m => m !== heroM).map((m, i) => ({
+            src: m.src, alt: label(m, i + 1), cap: CAP(m),
+            ratio: m.h ? (m.w + " / " + m.h) : "16 / 10",
+            delay: i * 90, openIt: this.openViewer(at(m)),
+          })),
+          hasStageWides: wides.filter(m => m !== heroM).length > 0,
+
+          /* Phone frames, sized from the capture rather than the container. */
           stagePhones: (() => {
-            const three = shots.slice(0, 3);
-            /* Lead screen sits in the middle, the other two fall behind it. */
-            const order = three.length === 3 ? [1, 0, 2] : three.map((_, i) => i);
-            return order.map((srcIdx, pos) => {
-              const src = three[srcIdx];
-              const lead = srcIdx === 0;
+            const list = phones.slice(0, 3);
+            const order = list.length === 3 ? [1, 0, 2] : list.map((_, i) => i);
+            return order.map((idx, pos) => {
+              const m = list[idx];
+              const isLead = idx === 0;
               return {
-                src, alt: label(src, srcIdx),
-                lead: lead ? 1 : 0,
-                z: lead ? 3 : 1,
-                rot: lead ? "0deg" : (pos === 0 ? "-8deg" : "8deg"),
-                y: lead ? "0px" : "40px",
-                scale: lead ? 1 : 0.84,
+                src: m.src, alt: label(m, at(m)),
+                cap: CAP(m, "220px"),
+                lead: isLead ? 1 : 0,
+                z: isLead ? 3 : 1,
+                rot: isLead ? "0deg" : (pos === 0 ? "-8deg" : "8deg"),
+                y: isLead ? "0px" : "40px",
+                scale: isLead ? 1 : 0.84,
                 delay: pos * 110,
-                openIt: this.openViewer(shots.indexOf(src)),
+                openIt: this.openViewer(at(m)),
               };
             });
           })(),
+          hasStagePhones: phones.length > 0,
 
-          /* Cinematic crops under a game hero. */
-          stageCrops: flatShots.slice(1, 3).map((src, i) => ({
-            src, alt: label(src, i + 1), delay: i * 90,
-            openIt: this.openViewer(shots.indexOf(src)),
-          })),
-          hasStageCrops: flatShots.slice(1, 3).length > 0,
+          /* Mixed-device slots. */
+          stageDetail: wides[1] ? wides[1].src : "",
+          hasStageDetail: !!wides[1],
+          stageDetailAlt: label(wides[1], 1),
+          stageMobileShot: phones[0] ? phones[0].src : "",
+          hasStageMobile: !!phones[0],
+          stageMobileAlt: label(phones[0], at(phones[0])),
 
-          pGallery: shots.map((src, i) => ({
-            src, alt: label(src, i), delay: i * 80,
-            openIt: this.openViewer(i),
+          pGallery: media.filter(m => !m.isIcon).map((m, i) => ({
+            src: m.src, alt: label(m, i), delay: i * 80, openIt: this.openViewer(at(m)),
           })),
-          hasGallery: shots.length > 0,
-          noGallery: shots.length === 0,
-          pShotAlt: label(shots[0] || "", 0),
-          openHero: this.openViewer(0),
+          hasGallery: media.filter(m => !m.isIcon).length > 0,
+          noGallery: media.filter(m => !m.isIcon).length === 0,
+          pShotAlt: label(heroM, 0),
+          openHero: this.openViewer(at(heroM)),
 
           ecosystem,
           hasEcosystem: ecosystem.length > 0,
@@ -2973,8 +3072,11 @@ class Component extends DCLogic {
           viewerTotal: num(shots.length),
           viewerMulti: shots.length > 1,
           closeViewer: this.closeViewer,
-          viewerNext: (e) => { if (e) e.preventDefault(); this.stepViewer(1); },
-          viewerPrev: (e) => { if (e) e.preventDefault(); this.stepViewer(-1); },
+          viewerNext: (e) => { if (e) { e.preventDefault(); e.stopPropagation(); } this.stepViewer(1); },
+          viewerPrev: (e) => { if (e) { e.preventDefault(); e.stopPropagation(); } this.stepViewer(-1); },
+          /* The backdrop only dismisses when the backdrop itself is clicked —
+             clicks on the controls or the image must not close the viewer. */
+          backdropClose: (e) => { if (e && e.target !== e.currentTarget) return; this.closeViewer(); },
         };
       })(),
 

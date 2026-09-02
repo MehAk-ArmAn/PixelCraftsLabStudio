@@ -91,9 +91,12 @@ final class ErrorPageTest extends TestCase
             ->assertSee('data-pcl-error-shell', false)
             ->assertSeeText('Something went off-grid.')
             ->assertDontSeeText('SQLSTATE')
+            ->assertDontSeeText('RuntimeException')
+            ->assertDontSeeText('Stack trace')
             ->assertDontSeeText('super-secret')
             ->assertDontSeeText('/Users/private/app.php')
-            ->assertDontSeeText('api_token');
+            ->assertDontSeeText('api_token')
+            ->assertDontSeeText('APP_ENV');
     }
 
     public function test_maintenance_mode_renders_the_custom_503_page_and_is_always_disabled_afterward(): void
@@ -228,6 +231,8 @@ final class ErrorPageTest extends TestCase
             ->assertServerError()
             ->assertSee('data-pcl-error-shell', false)
             ->assertSeeText('Something went off-grid.')
+            ->assertDontSeeText('QueryException')
+            ->assertDontSeeText('Illuminate\\Database')
             ->assertDontSeeText('database.sqlite')
             ->assertDontSeeText('/missing/pixelcraftslab');
     }

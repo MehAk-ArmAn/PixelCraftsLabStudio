@@ -1,11 +1,10 @@
 @php
-    $status = isset($exception) && method_exists($exception, 'getStatusCode')
-        ? (int) $exception->getStatusCode()
-        : 400;
+    // Laravel hands the family fallback the exception, not a $code — take the
+    // real status from it so the page never misreports what happened.
+    $code = $code
+        ?? (isset($exception) && method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : 400);
 @endphp
-
-@include('errors.layout', [
-    'status' => $status,
-    'title' => 'That request could not be completed.',
-    'message' => 'The page or action is not available in the way it was requested.',
-])
+@extends('errors.layout', ['code' => $code, 'title' => $title ?? 'Request not completed', 'accent' => '#5B2394'])
+@section('eyebrow', 'Error ' . $code)
+@section('headline')That request could not be <em>completed</em>.@endsection
+@section('body')Something about it was not right, so we stopped before going further. Heading back to a known page is usually the quickest fix.@endsection
