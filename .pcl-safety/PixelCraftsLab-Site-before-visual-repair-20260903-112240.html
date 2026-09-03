@@ -411,13 +411,7 @@
 
             <div style="position: relative; width: 100%; max-width: 760px;">
               <div style="position: relative; aspect-ratio: 16 / 10; border: 2px solid #0D0B12; border-radius: calc(4px + var(--p, 1) * 14px); overflow: hidden; transform: scale(calc(0.24 + var(--p2, 1) * 0.76)); opacity: var(--p2, 1);">
-                <sc-if value="{{ heroHasImg }}" hint-placeholder-val="{{ true }}">
-                  <img src="{{ heroImg }}" alt="{{ featuredName }}"
-                    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;clip-path:inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);" />
-                </sc-if>
-                <sc-if value="{{ heroNoImg }}" hint-placeholder-val="{{ false }}">
-                  <div style="position:absolute;inset:0;background-image:linear-gradient(150deg,#5B2394,#8B45FF),repeating-linear-gradient(135deg,rgba(255,255,255,.07) 0 3px,transparent 3px 14px);clip-path:inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);"></div>
-                </sc-if>
+                <div style="position: absolute; inset: 0; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); clip-path: inset(0 calc((1 - var(--pa, 1)) * 100%) 0 0);"></div>
                 <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: var(--pb, 1);">
                   <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ featuredIcon }}" alt="{{ featuredName }} icon" style="width: clamp(56px, 26%, 112px); height: clamp(56px, 26%, 112px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 16px 40px -18px rgba(0,0,0,0.6);" /></sc-if>
                 </div>
@@ -2127,14 +2121,12 @@ const TINTS = [["#5B2394","#8B45FF"],["#0D0B12","#3A3346"],["#FF5F1F","#F2894F"]
 const PROJECTS = list(CMS.projects, ORIGINAL_PROJECTS).map((raw, i) => {
   const p = { ...raw };
   p.i = pick(p.image, p.i);
-  /* Laravel now sends project icon, hero, feature graphic and gallery
-     separately. Never throw away the explicit CMS icon. */
+  /* The project's real icon / brand mark travels in the gallery array.
+     It is never treated as a screenshot. */
   const gal = (p.gallery || []).filter(isUrl);
-  const galleryIcon = gal.find(g => /\/icon\./.test(g)) || "";
-  p.icon = pick(p.icon, galleryIcon);
-  p.featureImage = pick(p.featureImage, "");
-  p.hasIcon = !!img(p.icon);
-  p.noIcon = !p.hasIcon;
+  p.icon = gal.find(g => /\/icon\./.test(g)) || "";
+  p.hasIcon = !!p.icon;
+  p.noIcon = !p.icon;
   p.gallery = gal.filter(g => !/\/icon\./.test(g));
   if (!p.initials) p.initials = p.name.replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(s => s[0]).join("");
   if (!p.tint) p.tint = TINTS[i % TINTS.length][0];
@@ -2174,24 +2166,11 @@ const ORIGINAL_TEAM = [
 ];
 
 const TEAM = list(CMS.team, ORIGINAL_TEAM).map((raw, i) => {
-  const fallback =
-    ORIGINAL_TEAM.find(x => x.name === raw.name) ||
-    ORIGINAL_TEAM[i] ||
-    {};
-
-  const m = { ...fallback, ...raw };
-
-  /* A CMS row with no uploaded replacement must keep the original
-     real Studio Head photo instead of turning into a purple placeholder. */
-  m.img = pick(raw.image, pick(raw.img, fallback.img));
-
-  if (!m.initials && m.name) {
-    m.initials = m.name.split(" ").map(s => s[0]).join("");
-  }
-
+  const m = { ...raw };
+  m.img = pick(m.image, m.img);
+  if (!m.initials) m.initials = m.name.split(" ").map(s => s[0]).join("");
   if (!m.tint) m.tint = TINTS[i % TINTS.length][0];
   if (!m.tint2) m.tint2 = TINTS[i % TINTS.length][1];
-
   return m;
 });
 
@@ -3109,11 +3088,7 @@ class Component extends DCLogic {
     const route = this.state.route;
     const P = PROJECTS.find(p => p.id === this.state.pid) || PROJECTS[0];
     const counts = { count: PROJECTS.length, projects: PROJECTS.length, services: SERVICES.length, team: TEAM.length };
-    const featuredProject =
-      HOME_FEATURED.find(p => p.primary) ||
-      HOME_FEATURED[0] ||
-      PROJECTS.find(p => p.featured) ||
-      PROJECTS[0];
+    const featuredProject = PROJECTS.find(p => p.featured) || PROJECTS[0];
     const phase = this.state.phase;
     const flavor = this.state.curtain;
     const hidden = HIDDEN[flavor] || "scale(0)";
@@ -3289,9 +3264,7 @@ class Component extends DCLogic {
 
       ambient: flag("ambientEnabled", true) ? AMBIENT : [],
       labTeaser: LABDOTS,
-      heroImg: img(featuredProject.featureImage || featuredProject.i),
-      heroHasImg: !!img(featuredProject.featureImage || featuredProject.i),
-      heroNoImg: !img(featuredProject.featureImage || featuredProject.i),
+      heroImg: img(featuredProject.i),
 
       arc: [
         { n: "01", t: "Ideas", d: "Scope, audience and what it has to do.", c: PU, tc: PU, delay: 0 },
