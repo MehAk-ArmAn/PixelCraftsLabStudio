@@ -5,4 +5,7 @@
 @extends('errors.layout', ['code' => $code, 'title' => $title ?? 'Unexpected issue', 'accent' => '#FF5F1F', 'accent2' => '#8B45FF', 'motif' => 'broken'])
 @section('eyebrow', 'Error ' . $code)
 @section('headline')The studio hit an <em>unexpected issue</em>.@endsection
-@section('body')Not your fault. It has been logged and we will take a look — trying again in a moment often works.@endsection
+@section('body')Not your fault. It has been logged and we will take a look — trying again in a moment often works.
+@include('errors.partials.home-action')
+
+@endsection

@@ -3,5 +3,8 @@
 @section('headline')We are making a <em>careful adjustment</em>.@endsection
 @section('body')The site is briefly unavailable while we finish a change behind the scenes. Nothing is lost — check back shortly and it will be here.@endsection
 @if (! empty($retryAfter))
-@section('note'){{ $retryAfter }}@endsection
+@section('note'){{ $retryAfter }}
+@include('errors.partials.home-action')
+
+@endsection
 @endif

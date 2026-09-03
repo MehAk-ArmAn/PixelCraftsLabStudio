@@ -192,7 +192,10 @@
         <div class="code">{{ $code }}</div>
       </div>
     </div>
-  </main>
+  
+@include('errors.partials.home-action')
+
+</main>
 
   <footer>{{ $isAdmin ? 'PixelCraftsLab Studio admin' : 'PixelCraftsLab Studio' }}</footer>
 </body>
