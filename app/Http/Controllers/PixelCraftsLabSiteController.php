@@ -5,20 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Project;
 use App\Services\SettingsRepository;
-use App\Services\SiteContentService;
+use App\Services\SiteRenderer;
 use App\Support\MediaResolver;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 
 final class PixelCraftsLabSiteController extends Controller
 {
     public function __construct(
-        private readonly SiteContentService $content,
+        private readonly SiteRenderer $renderer,
         private readonly SettingsRepository $settings,
     ) {}
 
     public function __invoke(Request $request, ?Project $project = null): Response
     {
+        abort_unless(File::exists($this->renderer->sourcePath()), 500, 'PixelCraftsLab Design source is missing.');
+
         abort_unless(
             $this->settings->bool('site_enabled', true),
             503,
@@ -53,40 +56,18 @@ final class PixelCraftsLabSiteController extends Controller
             'robotsIndex' => $route === 'project' ? true : ($page?->robots_index ?? true),
             'canonical' => $page?->canonical_url ?: $canonical,
         ];
-        $content = $this->content->payload();
-        $projects = collect($content['projects'] ?? []);
-        $projectData = $route === 'project' ? $projects->firstWhere('id', $project?->slug) : null;
-        $nextProject = null;
 
-        if ($projectData && $projects->isNotEmpty()) {
-            $projectIndex = $projects->search(fn (array $item): bool => $item['id'] === $projectData['id']);
-            $nextProject = $projects->get(((int) $projectIndex + 1) % $projects->count());
-        }
-
-        $view = match ($route) {
-            'work' => 'work.index',
-            'project' => 'work.show',
-            'services' => 'services.index',
-            'marketing' => 'marketing.index',
-            'pricing' => 'pricing.index',
-            'studio' => 'studio',
-            'lab' => 'lab',
-            'contact' => 'contact',
-            default => 'home',
-        };
-
-        return response()->view($view, [
-            'content' => $content,
-            'settings' => $content['settings'] ?? [],
-            'flags' => $content['flags'] ?? [],
-            'navigation' => $content['nav'] ?? [],
-            'projects' => $projects,
-            'project' => $projectData,
-            'nextProject' => $nextProject,
-            'pageCopy' => data_get($content, 'copy.'.$pageKey, []),
-            'routeKey' => $route,
+        // DESIGN LOCK:
+        // Claude Design uses {{ ... }} expressions for its own runtime, so the
+        // document is never compiled through Blade. SiteRenderer only prepends
+        // <head> metadata and the window.PCL_CMS payload.
+        return response($this->renderer->render(context: [
+            'route' => $route,
+            'projectSlug' => $project?->slug,
+            'canonicalUrl' => parse_url($canonical, PHP_URL_PATH) ?: '/',
             'seo' => $seo,
-        ], 200, [
+        ]), 200, [
+            'Content-Type' => 'text/html; charset=UTF-8',
             'Cache-Control' => 'no-cache, private',
         ]);
     }
