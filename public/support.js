@@ -22,7 +22,11 @@
 
   // src/parse.ts
   function parseDcDocument(doc) {
-    const dc = doc.querySelector("x-dc");
+    // The server keeps the raw Claude design inside an inert <template>
+    // so browsers do not request literal paths such as /{{ logo }} before
+    // the DC runtime has evaluated them.
+    const holder = doc.querySelector("template#pcl-dc-source");
+    const dc = holder?.content?.querySelector("x-dc") || doc.querySelector("x-dc");
     if (!dc) return null;
     const scriptEl = doc.querySelector("script[data-dc-script]");
     const { props, preview } = parseDataProps(

@@ -159,6 +159,18 @@ class ProjectController extends AdminResourceController
             ? Str::slug($data['slug'])
             : ($record->slug ?: Str::slug($data['name']));
 
+        // Generate initials for newly-created projects while preserving
+        // any existing/admin-defined initials on established projects.
+        if (blank($record->initials)) {
+            $words = preg_split('/\\s+/', trim((string) ($data['name'] ?? '')));
+
+            $data['initials'] = collect($words)
+                ->filter()
+                ->take(2)
+                ->map(fn ($word) => Str::upper(Str::substr($word, 0, 1)))
+                ->implode('');
+        }
+
         if (($data['is_published'] ?? false) && blank($data['published_at'] ?? null)) {
             $data['published_at'] = now();
         }
