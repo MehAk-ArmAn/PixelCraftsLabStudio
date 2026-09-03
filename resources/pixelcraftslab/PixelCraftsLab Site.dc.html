@@ -6,7 +6,6 @@
 <script src="/support.js"></script>
 </head>
 <body>
-<template id="pcl-dc-source">
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -384,16 +383,138 @@
             </div>
 
             <div style="flex: 1 1 400px; min-width: 280px; position: relative; aspect-ratio: 1 / 1; max-height: 560px;">
-              <div style="position: absolute; inset: 6% 8% 10% 4%; border-radius: 999px 999px 999px 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transform: translate(calc(var(--px) * -12px), calc(var(--py) * -10px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
-                <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ featuredIcon }}" alt="{{ featuredName }} icon" style="width: clamp(56px, 26%, 112px); height: clamp(56px, 26%, 112px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 16px 40px -18px rgba(0,0,0,0.6);" /></sc-if>
+
+              <!-- REAL selected project instead of generic purple blob -->
+              <div
+                data-tool="flee"
+                data-tool-pull="0.28"
+                style="
+                  position:absolute;
+                  inset:7% 5% 10% 4%;
+                  overflow:hidden;
+                  border-radius:31% 69% 41% 59% / 48% 36% 64% 52%;
+                  border:1px solid rgba(13,11,18,.13);
+                  background:#0D0B12;
+                  box-shadow:
+                    0 42px 80px -46px rgba(13,11,18,.62),
+                    0 22px 54px -34px rgba(91,35,148,.46);
+                  transform:
+                    translate(
+                      calc(var(--px) * -12px + var(--tx,0px)),
+                      calc(var(--py) * -10px + var(--ty,0px))
+                    )
+                    rotate(var(--tr,0deg));
+                  transition:transform .55s cubic-bezier(.2,.8,.2,1);
+                "
+              >
+                <img
+                  src="{{ heroImg }}"
+                  alt="{{ featuredName }}"
+                  style="
+                    display:block;
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    object-position:top center;
+                    transform:scale(1.035);
+                  "
+                />
+
+                <div
+                  aria-hidden="true"
+                  style="
+                    position:absolute;
+                    inset:0;
+                    background:
+                      linear-gradient(
+                        145deg,
+                        rgba(91,35,148,.10),
+                        transparent 43%,
+                        rgba(13,11,18,.17)
+                      );
+                    pointer-events:none;
+                  "
+                ></div>
               </div>
-              <img src="/assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0.92; transform: translate(calc(var(--px) * 16px), calc(var(--py) * 13px)) scale(1.18); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
-              <img src="/assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform: translate(calc(var(--px) * 26px), calc(var(--py) * 20px)) scale(1.1); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
-              <div style="position: absolute; right: 2%; bottom: 6%; padding: 12px 14px; border-radius: 12px; background: #fff; border: 1px solid rgba(13,11,18,0.1); box-shadow: 0 18px 40px -24px rgba(13,11,18,0.5); transform: translate(calc(var(--px) * 20px), calc(var(--py) * 16px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
-                <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ t.home.hero.badgeLabel }}</div>
-                <div style="margin-top: 5px; font-weight: 700; font-size: 14px; letter-spacing: -0.01em;">{{ featuredName }}</div>
+
+              <!-- orange construction arc -->
+              <span
+                aria-hidden="true"
+                data-tool="flee"
+                data-tool-pull="0.9"
+                style="
+                  position:absolute;
+                  right:2%;
+                  bottom:18%;
+                  width:138px;
+                  height:138px;
+                  border-radius:50%;
+                  border:15px solid #FF5F1F;
+                  border-left-color:transparent;
+                  border-bottom-color:transparent;
+                  transform:
+                    translate(var(--tx,0px),var(--ty,0px))
+                    rotate(28deg);
+                  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+                  pointer-events:none;
+                "
+              ></span>
+
+              <!-- floating project logo -->
+              <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}">
+                <div
+                  data-tool="flee"
+                  data-tool-pull="0.7"
+                  style="
+                    position:absolute;
+                    right:3%;
+                    top:9%;
+                    width:86px;
+                    height:86px;
+                    padding:10px;
+                    border-radius:24px;
+                    background:rgba(255,255,255,.94);
+                    border:1px solid rgba(13,11,18,.12);
+                    box-shadow:0 24px 52px -30px rgba(13,11,18,.72);
+                    transform:
+                      translate(var(--tx,0px),var(--ty,0px))
+                      rotate(calc(4deg + var(--tr,0deg)));
+                    transition:transform .45s cubic-bezier(.2,.8,.2,1);
+                  "
+                >
+                  <img
+                    src="{{ featuredIcon }}"
+                    alt="{{ featuredName }} icon"
+                    style="
+                      display:block;
+                      width:100%;
+                      height:100%;
+                      object-fit:cover;
+                      border-radius:17px;
+                    "
+                  />
+                </div>
+              </sc-if>
+
+              <!-- floating pixel system -->
+              <span aria-hidden="true" data-tool="flee" data-tool-pull="1.2"
+                style="position:absolute;left:1%;top:15%;width:18px;height:18px;background:#5B2394;animation:pcl-float 8s ease-in-out infinite;transform:translate(var(--tx,0px),var(--ty,0px));"></span>
+
+              <span aria-hidden="true" data-tool="flee" data-tool-pull=".9"
+                style="position:absolute;right:3%;top:34%;width:10px;height:10px;background:#8B45FF;animation:pcl-float2 10s ease-in-out infinite;transform:translate(var(--tx,0px),var(--ty,0px));"></span>
+
+              <span aria-hidden="true" data-tool="flee" data-tool-pull="1.4"
+                style="position:absolute;left:9%;bottom:8%;width:13px;height:13px;background:#FF5F1F;animation:pcl-float 11s ease-in-out infinite -2s;transform:translate(var(--tx,0px),var(--ty,0px));"></span>
+
+              <span aria-hidden="true"
+                style="position:absolute;right:13%;bottom:3%;width:7px;height:7px;background:#5B2394;box-shadow:-38px -60px 0 #8B45FF,-98px 34px 0 #FF5F1F,34px -118px 0 rgba(91,35,148,.38);"></span>
+
+              <!-- Now Live -->
+              <div style="position:absolute;right:0;bottom:6%;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid rgba(13,11,18,.1);box-shadow:0 18px 40px -24px rgba(13,11,18,.5);transform:translate(calc(var(--px) * 20px),calc(var(--py) * 16px));transition:transform .5s cubic-bezier(.2,.8,.2,1);">
+                <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(13,11,18,.64);">{{ t.home.hero.badgeLabel }}</div>
+                <div style="margin-top:5px;font-weight:700;font-size:14px;letter-spacing:-.01em;">{{ featuredName }}</div>
               </div>
-              <span aria-hidden="true" style="position: absolute; left: 12%; bottom: 2%; width: calc(16px + var(--pb, 0) * 26px); height: calc(16px + var(--pb, 0) * 26px); background: #5B2394; box-shadow: 0 0 0 calc(var(--pb, 0) * 12px) rgba(91,35,148,0.16); transform: translateY(calc(var(--pb, 0) * 150px)) rotate(calc(var(--pb, 0) * 135deg));"></span>
+
             </div>
           </div>
         </section>
@@ -2027,7 +2148,6 @@
   </footer>
 </div>
 </x-dc>
-</template>
 <script type="text/x-dc" data-dc-script data-props="{}">
 const PU = "#5B2394", PL = "#8B45FF", OR = "#FF5F1F", INK = "#0D0B12";
 
@@ -2145,6 +2265,27 @@ const PROJECTS = list(CMS.projects, ORIGINAL_PROJECTS).map((raw, i) => {
   p.url = PROJECT_URLS[p.id] || "/work/" + encodeURIComponent(p.id);
   return p;
 });
+
+
+/* Homepage featured projects are controlled by the Laravel admin.
+   Resolve those CMS rows back onto the normalized PROJECTS objects so
+   all existing media, links, tints and project behaviour remain intact. */
+const HOME_FEATURED = list(CMS.homeFeaturedProjects, [])
+  .map((raw) => {
+    const project = PROJECTS.find((p) => p.id === raw.id);
+    if (!project) return null;
+
+    return {
+      ...project,
+      slot: pick(raw.slot, ""),
+      primary: raw.primary === true,
+      displayMode: pick(raw.displayMode, ""),
+      mediaMode: pick(raw.mediaMode, ""),
+      badgeText: pick(raw.badgeText, ""),
+      homeCtaLabel: pick(raw.homeCtaLabel, ""),
+    };
+  })
+  .filter(Boolean);
 
 const ORIGINAL_SERVICES = [
   { title: "Utility App Development", stage: "Engineer", body: "We design and develop practical, lightweight applications focused on solving real-world problems." },
@@ -3310,7 +3451,7 @@ class Component extends DCLogic {
          serious platform gets its interface — so the roles stay portable if an
          admin reorders or swaps them. */
       featured: (() => {
-        const picked = PROJECTS.filter(p => p.featured);
+        const picked = HOME_FEATURED.length ? HOME_FEATURED : PROJECTS.filter(p => p.featured);
         const list = (picked.length ? picked : PROJECTS).slice(0, 3);
 
         return list.map((p, i) => {
