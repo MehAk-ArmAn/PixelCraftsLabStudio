@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
+<script src="/support.js"></script>
 </head>
 <body>
 <x-dc>
@@ -101,21 +101,63 @@
     </div>
   </sc-if>
 
+  <!-- ==================== STATE A — LAUNCH EXPERIENCE ====================
+       Overlays the real homepage, which is already mounted underneath. Leaving
+       scatters this layer outward rather than cutting to a new page, so the
+       opening visibly becomes the site. -->
   <sc-if value="{{ showIntro }}" hint-placeholder-val="{{ false }}">
-    <div onClick="{{ endIntro }}" style="position: fixed; inset: 0; z-index: 300; background: #F6F4F0; display: flex; align-items: center; justify-content: center; animation: pcl-out 0.5s cubic-bezier(0.6,0,0.3,1) 1.55s both;">
-      <div style="position: relative; width: 220px; height: 248px;">
-        <img src="assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.34s cubic-bezier(0.2,1.4,0.4,1) 0.05s both;" />
-        <img src="assets/L-stem.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-stem 0.42s cubic-bezier(0.4,0,0.2,1) 0.26s both;" />
-        <img src="assets/L-bowl.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-bowl 0.46s cubic-bezier(0.4,0,0.2,1) 0.5s both;" />
-        <img src="assets/L-icon.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-trace 0.4s cubic-bezier(0.4,0,0.2,1) 0.78s both;" />
-        <img src="assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-arc 0.42s cubic-bezier(0.4,0,0.2,1) 0.92s both;" />
-        <img src="assets/L-orange2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.28s cubic-bezier(0.2,1.4,0.4,1) 1.16s both;" />
-        <img src="assets/L-black.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-arc 0.36s cubic-bezier(0.4,0,0.2,1) 1.08s both;" />
-        <img src="assets/L-dot1.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.3s both;" />
-        <img src="assets/L-dot3.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.38s both;" />
-        <img src="assets/L-dot2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.44s both;" />
+    <div role="dialog" aria-label="PixelCraftsLab" style="position: fixed; inset: 0; z-index: 300; background: #F6F4F0; overflow: hidden; opacity: {{ introIn }}; transition: opacity 0.75s cubic-bezier(0.6,0,0.3,1);">
+
+      <!-- ground -->
+      <div aria-hidden="true" style="position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(91,35,148,0.16) 1.1px, transparent 1.1px); background-size: 44px 44px; opacity: {{ introIn }}; transform: scale(calc(1 + {{ introOut }} * 0.35)); transition: transform 0.9s cubic-bezier(0.5,0,0.2,1), opacity 0.6s ease;"></div>
+      <div aria-hidden="true" style="position: absolute; left: 62%; top: -18%; width: 62vw; max-width: 760px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(139,69,255,0.30), transparent 66%); filter: blur(14px); animation: pcl-breathe 11s ease-in-out infinite; transform: translate(calc(var(--px) * -22px), calc(var(--py) * -16px));"></div>
+      <div aria-hidden="true" style="position: absolute; left: -14%; bottom: -22%; width: 48vw; max-width: 560px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255,95,31,0.24), transparent 68%); filter: blur(16px); animation: pcl-breathe 14s ease-in-out infinite 3s;"></div>
+
+      <!-- real work, orbiting as proof; the studio stays the subject -->
+      <sc-if value="{{ hasIntroFragments }}" hint-placeholder-val="{{ true }}">
+        <div aria-hidden="true" style="position: absolute; inset: 0;">
+          <sc-for list="{{ introFragments }}" as="fr" hint-placeholder-count="8">
+            <span style="position: absolute; left: {{ fr.x }}%; top: {{ fr.y }}%; width: {{ fr.size }}px; height: {{ fr.size }}px; margin: calc({{ fr.size }}px / -2); border-radius: 24%; overflow: hidden; box-shadow: 0 18px 40px -20px rgba(13,11,18,0.55); opacity: calc({{ introIn }} * 0.92); transform: translate(calc(var(--px) * {{ fr.px }}px + {{ fr.outX }}px * {{ introOut }}), calc(var(--py) * {{ fr.py }}px + {{ fr.outY }}px * {{ introOut }})) rotate(calc({{ fr.rot }}deg + {{ introOut }} * 40deg)) scale(calc(1 - {{ introOut }} * 0.4)); transition: transform 0.85s cubic-bezier(0.5,0,0.2,1), opacity 0.6s ease; animation: pcl-float {{ fr.dur }}s ease-in-out infinite; animation-delay: -{{ fr.delay }}ms;">
+              <img src="{{ fr.src }}" alt="" loading="eager" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+            </span>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- the mark, forged from the brand's own layers -->
+      <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center;">
+        <div style="position: relative; width: clamp(132px, 21vw, 210px); aspect-ratio: 220 / 248; transform: translate(calc(var(--px) * 10px), calc(var(--py) * 8px)) scale(calc(1 + {{ introOut }} * 0.5)); opacity: {{ introIn }}; transition: transform 0.85s cubic-bezier(0.5,0,0.2,1), opacity 0.5s ease;">
+          <img src="/assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.34s cubic-bezier(0.2,1.4,0.4,1) 0.05s both;" />
+          <img src="/assets/L-stem.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-stem 0.42s cubic-bezier(0.4,0,0.2,1) 0.26s both;" />
+          <img src="/assets/L-bowl.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-bowl 0.46s cubic-bezier(0.4,0,0.2,1) 0.5s both;" />
+          <img src="/assets/L-icon.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-trace 0.4s cubic-bezier(0.4,0,0.2,1) 0.78s both;" />
+          <img src="/assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-arc 0.42s cubic-bezier(0.4,0,0.2,1) 0.92s both;" />
+          <img src="/assets/L-orange2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.28s cubic-bezier(0.2,1.4,0.4,1) 1.16s both;" />
+          <img src="/assets/L-black.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-arc 0.36s cubic-bezier(0.4,0,0.2,1) 1.08s both;" />
+          <img src="/assets/L-dot1.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.3s both;" />
+          <img src="/assets/L-dot3.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.38s both;" />
+          <img src="/assets/L-dot2.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; animation: pcl-pop 0.26s cubic-bezier(0.2,1.4,0.4,1) 1.44s both;" />
+        </div>
+
+        <h1 style="margin: clamp(20px, 3vw, 34px) 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(30px, 5.4vw, 62px); letter-spacing: -0.05em; line-height: 1; opacity: {{ introIn }}; transform: translateY(calc({{ introOut }} * -26px)); transition: transform 0.8s cubic-bezier(0.5,0,0.2,1), opacity 0.5s ease; animation: pcl-rise 0.6s cubic-bezier(0.16,1,0.3,1) 1.35s both;">{{ introHeading }}</h1>
+
+        <!-- the studio story, one strip -->
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(7px, 1.4vw, 15px); margin-top: clamp(16px, 2.4vw, 26px); opacity: {{ introIn }}; transform: translateY(calc({{ introOut }} * 22px)); transition: transform 0.8s cubic-bezier(0.5,0,0.2,1), opacity 0.5s ease;">
+          <sc-for list="{{ introBeats }}" as="bt" hint-placeholder-count="5">
+            <span style="display: inline-flex; align-items: center; gap: 7px; font-family: 'Space Mono', monospace; font-size: clamp(9px, 1vw, 11px); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(13,11,18,0.68); animation: pcl-rise 0.5s cubic-bezier(0.16,1,0.3,1) both; animation-delay: {{ bt.delay }}ms;">
+              <span aria-hidden="true" style="width: 7px; height: 7px; background: {{ bt.c }};"></span>{{ bt.label }}
+            </span>
+          </sc-for>
+        </div>
+
+        <p style="margin: clamp(16px, 2.4vw, 26px) auto 0; max-width: 52ch; font-size: clamp(14px, 1.25vw, 16.5px); line-height: 1.66; color: rgba(13,11,18,0.66); opacity: {{ introIn }}; transform: translateY(calc({{ introOut }} * 30px)); transition: transform 0.8s cubic-bezier(0.5,0,0.2,1), opacity 0.5s ease; animation: pcl-rise 0.6s cubic-bezier(0.16,1,0.3,1) 1.6s both;">{{ introSub }}</p>
+
+        <button onClick="{{ endIntro }}" data-cursor="Enter" data-magnet="1" style="position: relative; display: inline-flex; align-items: center; gap: 10px; margin-top: clamp(22px, 3vw, 34px); padding: 15px 26px; border: 0; border-radius: 13px; background: linear-gradient(96deg, #5B2394, #8B45FF 54%, #FF5F1F); color: #fff; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; overflow: hidden; box-shadow: 0 22px 48px -26px #8B45FF; opacity: {{ introIn }}; transform: translate(var(--gx, 0px), var(--gy, 0px)) translateY(calc({{ introOut }} * 34px)); transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease, box-shadow 0.3s ease; animation: pcl-rise 0.6s cubic-bezier(0.16,1,0.3,1) 1.8s both;" style-hover="box-shadow: 0 28px 62px -22px #FF5F1F;">{{ introCta }}<span style="font-family: 'Space Mono', monospace;">&#8594;</span><span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: 0; width: 40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: pcl-sheen 3.4s ease-in-out infinite;"></span></button>
+
+        <sc-if value="{{ introMotion }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top: clamp(18px, 2.6vw, 30px); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.4); opacity: {{ introIn }}; transition: opacity 0.4s ease; animation: pcl-rise 0.6s ease 2.1s both;">{{ introTagline }} &#183; scroll to enter</div>
+        </sc-if>
       </div>
-      <div style="position: absolute; bottom: 42px; left: 0; right: 0; text-align: center; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(13,11,18,0.64); animation: pcl-rise 0.4s ease 0.9s both;">{{ tagline }}</div>
     </div>
   </sc-if>
 
@@ -169,6 +211,7 @@
     <div style="position: fixed; inset: 0; z-index: 160; background: #F6F4F0; padding: 90px 20px 28px; display: flex; flex-direction: column; animation: pcl-rise 0.28s ease both;">
       <button onClick="{{ toggleMenu }}" aria-label="Close" style="position: absolute; top: 24px; right: 20px; width: 44px; height: 44px; border: 1px solid rgba(13,11,18,0.14); border-radius: 12px; background: transparent; font-size: 20px; cursor: pointer;">&#215;</button>
       <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(13,11,18,0.64); padding-bottom: 14px; border-bottom: 1px solid rgba(13,11,18,0.1);">{{ menuLabel }}</div>
+      <a onClick="{{ goHomeClose }}" href="/" style="display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.03em; color: #5B2394;">Home<span style="font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(13,11,18,0.55);">00</span></a>
       <sc-for list="{{ navMobile }}" as="n" hint-placeholder-count="5">
         <a onClick="{{ n.goClose }}" href="{{ n.href }}" style="display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0; border-bottom: 1px solid rgba(13,11,18,0.1); font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.03em; color: {{ n.mcolor }};">{{ n.label }}<span style="font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(13,11,18,0.55);">{{ n.no }}</span></a>
       </sc-for>
@@ -211,8 +254,8 @@
               <div style="position: absolute; inset: 6% 8% 10% 4%; border-radius: 999px 999px 999px 10px; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: linear-gradient(150deg, #5B2394, #8B45FF), repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 3px, transparent 3px 14px); transform: translate(calc(var(--px) * -12px), calc(var(--py) * -10px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
                 <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ featuredIcon }}" alt="{{ featuredName }} icon" style="width: clamp(56px, 26%, 112px); height: clamp(56px, 26%, 112px); border-radius: 22%; display: block; object-fit: cover; box-shadow: 0 16px 40px -18px rgba(0,0,0,0.6);" /></sc-if>
               </div>
-              <img src="assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0.92; transform: translate(calc(var(--px) * 16px), calc(var(--py) * 13px)) scale(1.18); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
-              <img src="assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform: translate(calc(var(--px) * 26px), calc(var(--py) * 20px)) scale(1.1); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
+              <img src="/assets/L-orange.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0.92; transform: translate(calc(var(--px) * 16px), calc(var(--py) * 13px)) scale(1.18); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
+              <img src="/assets/L-pixels.png" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform: translate(calc(var(--px) * 26px), calc(var(--py) * 20px)) scale(1.1); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" />
               <div style="position: absolute; right: 2%; bottom: 6%; padding: 12px 14px; border-radius: 12px; background: #fff; border: 1px solid rgba(13,11,18,0.1); box-shadow: 0 18px 40px -24px rgba(13,11,18,0.5); transform: translate(calc(var(--px) * 20px), calc(var(--py) * 16px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);">
                 <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.64);">{{ t.home.hero.badgeLabel }}</div>
                 <div style="margin-top: 5px; font-weight: 700; font-size: 14px; letter-spacing: -0.01em;">{{ featuredName }}</div>
@@ -287,7 +330,12 @@
                     </div>
                     <span aria-hidden="true" style="position: absolute; top: 0; bottom: 0; left: calc(var(--pa, 1) * 100%); width: 3px; background: #FF5F1F; opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
                     <span aria-hidden="true" style="position: absolute; inset: 0; border: 1px dashed rgba(255,255,255,0.55); opacity: calc(var(--pa, 1) * (1 - var(--pb, 1)));"></span>
-                    <span style="position: absolute; left: 12px; top: 12px; padding: 6px 11px; border-radius: 999px; background: rgba(246,244,240,0.94); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: var(--pb, 1);">{{ p.kind }}</span>
+                    <sc-if value="{{ p.hasPhone }}" hint-placeholder-val="{{ false }}">
+                      <span style="position: absolute; right: 4%; bottom: -9%; width: clamp(58px, 13%, 108px); max-width: {{ p.phoneCap }}; border-radius: 16px; overflow: hidden; border: 3px solid #0D0B12; background: #0D0B12; box-shadow: 0 26px 54px -28px rgba(13,11,18,0.8); transform: rotate(-4deg) translate(calc(var(--px) * 8px), calc(var(--py) * 6px)); transition: transform 0.5s cubic-bezier(0.2,0.8,0.2,1);" style-hover="transform: rotate(-1deg) translateY(-8px);">
+                        <img src="{{ p.phoneShot }}" alt="{{ p.phoneAlt }}" loading="lazy" style="display: block; width: 100%; height: auto;" />
+                      </span>
+                    </sc-if>
+                    <span style="position: absolute; left: 12px; top: 12px; padding: 6px 11px; border-radius: 999px; background: rgba(246,244,240,0.94); font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; opacity: var(--pb, 1);">{{ p.kindTag }}</span>
                   </div>
                   <div style="flex: 1 1 300px; min-width: 250px; order: {{ p.textOrder }};">
                     <div style="display: flex; align-items: center; gap: 10px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #B8380A;">
@@ -295,7 +343,21 @@
                     </div>
                     <h3 style="margin: 14px 0 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); line-height: 1.06; letter-spacing: -0.038em; text-wrap: balance;">{{ p.name }}</h3>
                     <p style="margin: 14px 0 0; font-size: 15.5px; line-height: 1.68; color: rgba(13,11,18,0.7); text-wrap: pretty;">{{ p.blurb }}</p>
-                    <span style="display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B2394; border-bottom: 2px solid rgba(91,35,148,0.35); padding-bottom: 4px;">{{ p.entrance }}</span>
+<sc-if value="{{ p.hasFamily }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(13,11,18,0.1);">
+                        <div style="font-family: 'Space Mono', monospace; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(13,11,18,0.5);">{{ p.familyCount }} connected products</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px;">
+                          <sc-for list="{{ p.family }}" as="fam" hint-placeholder-count="6">
+                            <span style="display: block; width: 38px; height: 38px; border-radius: 22%; overflow: hidden; box-shadow: 0 8px 20px -10px rgba(13,11,18,0.5); transition: transform 0.35s cubic-bezier(0.2,1.5,0.4,1);" style-hover="transform: translateY(-4px) scale(1.08);">
+                              <sc-if value="{{ fam.hasIcon }}" hint-placeholder-val="{{ true }}">
+                                <img src="{{ fam.icon }}" alt="{{ fam.name }} icon" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+                              </sc-if>
+                            </span>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-if>
+                                        <span style="display: inline-flex; align-items: center; gap: 9px; margin-top: 20px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #5B2394; border-bottom: 2px solid rgba(91,35,148,0.35); padding-bottom: 4px;">{{ p.entrance }}</span>
                   </div>
                 </a>
               </sc-for>
@@ -1326,6 +1388,10 @@
             </div>
             </sc-for>
 
+            <div data-mo="rise" style="margin-top: 22px;">
+              <a onClick="{{ goPricing }}" href="/pricing" data-cursor="All packages" data-magnet="1" style="display: inline-flex; align-items: center; gap: 9px; padding: 13px 20px; border: 1px solid rgba(246,244,240,0.24); border-radius: 11px; color: #F6F4F0; font-size: 14px; font-weight: 600; transform: translate(var(--gx, 0px), var(--gy, 0px)); transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1), border-color 0.25s ease, background 0.25s ease;" style-hover="border-color: #FF5F1F; background: rgba(255,95,31,0.09);">{{ t.growth.plans.allLabel }}<span style="font-family: 'Space Mono', monospace;">&#8594;</span></a>
+            </div>
+
             <div data-mo="rise" style="margin-top: 26px; padding-top: 18px; border-top: 1px solid rgba(246,244,240,0.08); display: flex; flex-direction: column; gap: 9px;">
               <p style="margin: 0; max-width: 84ch; font-size: 12.5px; line-height: 1.75; color: rgba(246,244,240,0.5);">{{ t.growth.plans.disclaimer }}</p>
               <p style="margin: 0; display: inline-flex; align-items: baseline; gap: 9px; font-family: 'Space Mono', monospace; font-size: 10.5px; letter-spacing: 0.08em; line-height: 1.7; color: rgba(246,244,240,0.56);"><span aria-hidden="true" style="align-self: center; flex: 0 0 auto; width: 5px; height: 5px; background: #FF5F1F;"></span>{{ t.growth.plans.mediaNote }}</p>
@@ -1390,7 +1456,7 @@
             <div style="font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: #B8380A;">{{ t.studio.header.eyebrow }}</div>
             <h1 style="margin: 20px 0 0; max-width: 20ch; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(36px, 5.8vw, 84px); line-height: 0.95; letter-spacing: -0.048em; text-wrap: balance;">{{ t.studio.header.heading }} <span style="color: #5B2394;">{{ t.studio.header.wordA }}</span> {{ t.studio.header.wordB }} <span style="color: #FF5F1F;">{{ t.studio.header.wordC }}</span>.</h1>
             <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px; padding-top: 22px; border-top: 1px solid rgba(13,11,18,0.12);">
-              <img src="assets/pcl-logo.png" alt="" style="height: 54px; width: auto;" />
+              <img src="/assets/pcl-logo.png" alt="" style="height: 54px; width: auto;" />
               <div style="display: flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(13,11,18,0.6);">
                 <span style="width: 14px; height: 14px; background: #5B2394;"></span>#5B2394
                 <span style="width: 14px; height: 14px; background: #FF5F1F; margin-left: 10px;"></span>#FF5F1F
@@ -2248,6 +2314,25 @@ const MEDIA = (src) => {
 /* Renders "min(100%, <native>px)" so a container can never upscale an asset. */
 const CAP = (m, fallback) => (m && m.maxW ? "min(100%, " + m.maxW + "px)" : (fallback || "100%"));
 
+/* ------------------------------------------------------- HOME EXPERIENCE
+   Every value below is a hook Codex can expose in Admin. Defaults ship the
+   intended experience, so nothing breaks before the settings exist. */
+const INTRO = {
+  enabled: flag("introEnabled", true),
+  replayOnHome: pick(SET.introReplayOnHome, true) !== false,
+  mode: pick(SET.introMode, "forge"),
+  heading: pick(SET.introHeading, "PixelCraftsLab"),
+  subheading: pick(SET.introSubheading, "A creative technology studio. We design it, build it, launch it — then help it grow."),
+  cta: pick(SET.introCta, "Enter the studio"),
+  duration: Math.max(900, Math.min(6000, Number(pick(SET.introDuration, 2600)) || 2600)),
+  intensity: Math.max(0, Math.min(1.6, Number(pick(SET.introIntensity, 1)) || 1)),
+  accent: pick(SET.introAccentPreset, "violet-orange"),
+  showFragments: pick(SET.introShowProjectFragments, true) !== false,
+  interaction: pick(SET.introInteractionPreset, "pointer-parallax"),
+  background: pick(SET.introBackgroundPreset, "paper-grid"),
+  transition: pick(SET.introTransitionPreset, "scatter"),
+};
+
 const num = (n) => String(n).padStart(2, "0");
 
 /* ------------------------------------------------------------------ PRICING
@@ -2348,7 +2433,8 @@ class Component extends DCLogic {
     sending: false, sendError: null,
     stage: (STAGES[0] && STAGES[0].name) || "Imagine", labMode: "pixels",
     growthGroup: null, growthPlan: null,
-    viewer: null, labBoard: null, openProc: 0, morph: null, morphMeta: null,
+    viewer: null,
+    introPhase: "hold", labBoard: null, openProc: 0, morph: null, morphMeta: null,
     toys: null, dragging: null, painting: false,
     reduced: false, hoverKind: null,
   };
@@ -2379,10 +2465,15 @@ class Component extends DCLogic {
     this.onMq = () => this.setState({ reduced: this.mq.matches });
     if (this.mq.addEventListener) this.mq.addEventListener("change", this.onMq);
 
-    let seen = false;
-    try { seen = window.localStorage.getItem("pcl-intro-v1") === "1"; } catch (e) { seen = false; }
-    if (seen || !flag("introEnabled", true)) this.setState({ intro: false });
-    else this.introTimer = setTimeout(() => this.endIntro(), 2050);
+    /* The launch experience is the front door, so it plays on arrival and on
+       every deliberate return Home. Reduced motion gets the static card, which
+       still needs a deliberate entry. */
+    const startOnHome = this.state.route === "home";
+    if (!INTRO.enabled || !startOnHome) this.setState({ intro: false });
+    else {
+      this.setState({ intro: true, introPhase: "hold" });
+      this.armIntro();
+    }
 
     this.onMove = (e) => {
       this.mouse = { x: e.clientX, y: e.clientY };
@@ -2418,11 +2509,19 @@ class Component extends DCLogic {
        the viewer is actually open, so it never competes with the page. */
     this.onKey = (e) => {
       if (this.state.viewer === null) return;
+      if (this.state.intro && (e.key === "Enter" || e.key === " " || e.key === "Escape")) {
+        e.preventDefault(); this.endIntro(); return;
+      }
       if (e.key === "Escape") { e.preventDefault(); this.closeViewer(); }
       else if (e.key === "ArrowRight") { e.preventDefault(); this.stepViewer(1); }
       else if (e.key === "ArrowLeft") { e.preventDefault(); this.stepViewer(-1); }
     };
     document.addEventListener("keydown", this.onKey);
+
+    /* Any intent to move on ends the intro. */
+    this.onIntroWheel = () => { if (this.state.intro) this.endIntro(); };
+    window.addEventListener("wheel", this.onIntroWheel, { passive: true });
+    window.addEventListener("touchmove", this.onIntroWheel, { passive: true });
 
     this.scan();
     this.onScroll = () => {
@@ -2467,6 +2566,9 @@ class Component extends DCLogic {
     window.removeEventListener("scroll", this.onScroll);
     document.removeEventListener("visibilitychange", this.onVis);
     document.removeEventListener("keydown", this.onKey);
+    window.removeEventListener("wheel", this.onIntroWheel);
+    window.removeEventListener("touchmove", this.onIntroWheel);
+    clearTimeout(this.introOut);
     if (this.mq && this.mq.removeEventListener) this.mq.removeEventListener("change", this.onMq);
     clearTimeout(this.introTimer); clearTimeout(this.safety); clearTimeout(this.pricingTimer);
     clearTimeout(this.mt); clearTimeout(this.mt2);
@@ -2737,10 +2839,29 @@ class Component extends DCLogic {
       });
   };
 
-  endIntro = () => {
+  /* Auto-advance is a safety net, not the main path — the visitor can leave
+     at any moment by scrolling, clicking, or pressing a key. */
+  armIntro = () => {
     clearTimeout(this.introTimer);
-    try { window.localStorage.setItem("pcl-intro-v1", "1"); } catch (e) {}
-    this.setState({ intro: false });
+    clearTimeout(this.introOut);
+    if (this.state.reduced) return;               // no auto-exit under reduced motion
+    this.introTimer = setTimeout(() => this.endIntro(), INTRO.duration + 1400);
+  };
+
+  playIntro = () => {
+    if (!INTRO.enabled) return;
+    clearTimeout(this.introTimer); clearTimeout(this.introOut);
+    window.scrollTo(0, 0);
+    this.setState({ intro: true, introPhase: "hold" }, this.armIntro);
+  };
+
+  /* The overlay scatters outward while the homepage — already mounted
+     underneath — is revealed. One continuous move, never a hard cut. */
+  endIntro = () => {
+    if (!this.state.intro || this.state.introPhase === "out") return;
+    clearTimeout(this.introTimer);
+    this.setState({ introPhase: "out" });
+    this.introOut = setTimeout(() => this.setState({ intro: false, introPhase: "hold" }), 900);
   };
 
   routeFromLocation = () => {
@@ -2758,6 +2879,17 @@ class Component extends DCLogic {
 
   nav = (requestedRoute, pid, options = {}) => {
     const route = clientRoute(requestedRoute);
+
+    /* Deliberately choosing Home returns you through the launch experience. */
+    if (route === "home" && INTRO.enabled && INTRO.replayOnHome && options.replay !== false) {
+      if (options.history !== false) {
+        window.history.pushState({ pclRoute: "home", pid: null }, "", routePath("home", null));
+      }
+      this.setState({ route: "home", pid: null, step: 0, menu: false, morph: null, curtain: null, phase: null },
+        this.playIntro);
+      return;
+    }
+
     if (options.history !== false) {
       window.history.pushState(
         { pclRoute: requestedRoute, pid: pid || null },
@@ -2837,8 +2969,62 @@ class Component extends DCLogic {
       full: !this.state.reduced,
       menu: this.state.menu,
       toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
-      showIntro: this.state.intro && flag("introEnabled", true),
+      /* ---------------------------------------------- LAUNCH EXPERIENCE
+         The studio is the hero. Real project media appears only as orbiting
+         proof, never as the subject — which is what made the old opening feel
+         like it was about one arbitrary project. */
+      showIntro: this.state.intro && INTRO.enabled,
       endIntro: this.endIntro,
+      introHeading: INTRO.heading,
+      introSub: INTRO.subheading,
+      introCta: INTRO.cta,
+      introTagline: pick(SET.tagline, "Ideas . Build . Launch"),
+      introOut: this.state.introPhase === "out" ? 1 : 0,
+      introIn: this.state.introPhase === "out" ? 0 : 1,
+      introReduced: this.state.reduced,
+      introMotion: !this.state.reduced,
+      introScatter: this.state.introPhase === "out",
+
+      /* The five-beat studio story, as one continuous strip rather than slides. */
+      introBeats: ["Idea", "Design", "Build", "Launch", "Grow"].map((b, i) => ({
+        label: b, no: num(i + 1),
+        c: ["#5B2394", "#7231C4", "#8B45FF", "#FF5F1F", "#FF9166"][i],
+        delay: 260 + i * 130,
+        t: (i / 5).toFixed(3),
+      })),
+
+      /* Orbiting fragments: real icons and real screen slivers from published
+         work. Positions are deterministic so the composition never jumbles. */
+      introFragments: (() => {
+        if (!INTRO.showFragments) return [];
+        const pool = PROJECTS.filter(p => p.icon || isUrl(p.i));
+        const ring = [
+          { x: 14, y: 22, s: 62, d: 0,   px: -34, py: -22, rot: -9 },
+          { x: 82, y: 18, s: 54, d: 120, px:  40, py: -26, rot: 11 },
+          { x: 8,  y: 66, s: 48, d: 240, px: -44, py:  30, rot: 7  },
+          { x: 88, y: 62, s: 66, d: 180, px:  38, py:  34, rot: -12 },
+          { x: 26, y: 84, s: 44, d: 300, px: -26, py:  40, rot: 14 },
+          { x: 70, y: 86, s: 50, d: 360, px:  30, py:  42, rot: -6 },
+          { x: 46, y: 10, s: 40, d: 420, px:   8, py: -40, rot: 5  },
+          { x: 4,  y: 42, s: 42, d: 480, px: -48, py:   6, rot: -14 },
+        ];
+        return ring.map((slot, i) => {
+          const p = pool[i % Math.max(1, pool.length)] || {};
+          return {
+            src: p.icon || img(p.i), name: p.name || "",
+            x: slot.x, y: slot.y, size: slot.s, delay: slot.d,
+            px: Math.round(slot.px * INTRO.intensity),
+            py: Math.round(slot.py * INTRO.intensity),
+            rot: slot.rot,
+            /* Where the piece flies when the studio opens up. */
+            outX: Math.round((slot.x - 50) * 7),
+            outY: Math.round((slot.y - 50) * 7),
+            dur: (7 + (i % 4) * 1.6).toFixed(1),
+          };
+        }).filter(f => isUrl(f.src));
+      })(),
+      hasIntroFragments: INTRO.showFragments,
+
       setRoot: this.setRoot, setCursor: this.setCursor, setCursorDot: this.setCursorDot,
       setCursorLabel: this.setCursorLabel, setMain: this.setMain, setMorph: this.setMorph,
 
@@ -2897,16 +3083,74 @@ class Component extends DCLogic {
         { n: "04", t: "Launch", d: "Ship it, then keep it healthy.", c: INK, tc: INK, delay: 210 },
       ],
 
-      featured: (PROJECTS.filter(p => p.featured).length ? PROJECTS.filter(p => p.featured) : PROJECTS).slice(0, 3).map((p, i) => ({
-        ...p, delay: i * 90, no: num(i + 1),
-        shot: img(p.i), hasShot: !!img(p.i),
-        shotAlt: p.name + " — " + (p.kind || p.cat || "project") + " screen",
-        mediaOrder: i % 2 === 1 ? 2 : 1,
-        textOrder: i % 2 === 1 ? 1 : 2,
-        cursor: CURSOR_FOR(p, FRAME_FOR(p)),
-        entrance: "Open project \u2197",
-        open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
-      })),
+      /* ------------------------------------------------ FEATURED PROJECTS
+         Which projects appear, and in what order, is CMS data (is_featured +
+         sort_order). Nothing here names a project. Each slot's presentation is
+         inferred from what that project actually is — a product family gets an
+         ecosystem strip, a cross-platform product gets both device frames, a
+         serious platform gets its interface — so the roles stay portable if an
+         admin reorders or swaps them. */
+      featured: (() => {
+        const picked = PROJECTS.filter(p => p.featured);
+        const list = (picked.length ? picked : PROJECTS).slice(0, 3);
+
+        return list.map((p, i) => {
+          const media = [p.i].concat(p.gallery || []).map(MEDIA).filter(m => m && !m.isIcon);
+          const wide = media.find(m => m.isWide) || media[0] || null;
+          const phone = media.find(m => m.isPhone) || null;
+
+          /* Product family.
+             INTERIM SIGNAL — the schema has no parent/child link yet, so the
+             head is identified from authored copy that explicitly references
+             the family, and only one slot may claim it. Codex should replace
+             this with a real `parent_project_id` / `is_ecosystem_head` field;
+             see docs/pcl-experience-contract.md. */
+          const familyCat = "Apps";
+          const family = PROJECTS.filter(x => x.id !== p.id && x.cat === familyCat);
+          const namesFamily = /\bapps?\b/i.test((p.short || "") + " " + (p.blurb || ""));
+          const headId = (picked.length ? picked : PROJECTS).find(x =>
+            x.cat !== familyCat && /\bapps?\b/i.test((x.short || "") + " " + (x.blurb || ""))
+          );
+          const isEcosystem = family.length >= 3 && p.cat !== familyCat && namesFamily
+            && !!headId && headId.id === p.id;
+
+          /* The admin's own `kind` is the most accurate label we have; the
+             inferred shape is only a fallback when it is blank. */
+          const kindTag = isEcosystem ? "Product family"
+            : has(p.kind) ? p.kind
+            : (phone && wide) ? "Web + mobile"
+            : phone ? "Mobile product"
+            : "Platform";
+
+          return {
+            ...p,
+            delay: i * 90, no: num(i + 1),
+            role: i === 0 ? "primary" : i === 1 ? "secondary" : "tertiary",
+            isPrimary: i === 0 ? 1 : 0,
+            shot: wide ? wide.src : img(p.i),
+            hasShot: !!(wide || isUrl(p.i)),
+            shotCap: CAP(wide),
+            shotAlt: p.name + " — " + (p.kind || p.cat || "project") + " screen",
+            phoneShot: phone ? phone.src : "",
+            hasPhone: !!phone,
+            phoneCap: CAP(phone, "200px"),
+            phoneAlt: p.name + " — mobile screen",
+            kindTag,
+            /* Ecosystem strip: real sibling icons, never invented members. */
+            family: isEcosystem ? family.slice(0, 6).map((x, j) => ({
+              id: x.id, name: x.name, icon: x.icon, hasIcon: !!x.icon, delay: j * 55,
+              open: (e) => { if (e) e.preventDefault(); this.openProject(x.id, e); },
+            })) : [],
+            hasFamily: isEcosystem && family.length >= 3,
+            familyCount: num(family.length),
+            mediaOrder: i % 2 === 1 ? 2 : 1,
+            textOrder: i % 2 === 1 ? 1 : 2,
+            cursor: CURSOR_FOR(p, FRAME_FOR(p)),
+            entrance: "Open project ↗",
+            open: (e) => { if (e) e.preventDefault(); this.openProject(p.id, e); },
+          };
+        });
+      })(),
 
       openFirst: (e) => { if (e) e.preventDefault(); this.nav("project", featuredProject.id); },
       featuredUrl: featuredProject.url,
@@ -3238,6 +3482,8 @@ class Component extends DCLogic {
       ).filter(has).map((name, i) => ({ name, delay: i * 50, c: [PU, OR, PL, "#B94FC0"][i % 4] })),
       growthCount2: MARKETING_SUBS.length,
       goMarketing: (e) => { if (e) e.preventDefault(); this.nav("growth"); },
+      goPricing: (e) => { if (e) e.preventDefault(); this.nav("pricing"); },
+      goHomeClose: (e) => { if (e) e.preventDefault(); this.setState({ menu: false }); this.nav("home"); },
 
       stageServices: (() => {
         const first = (STAGES[0] || {}).name;

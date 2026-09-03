@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -104,30 +105,31 @@ class MediaLibraryService
                 continue;
             }
 
-            foreach (scandir($base) ?: [] as $entry) {
-                if ($entry === '.' || $entry === '..' || is_dir($base.'/'.$entry)) {
-                    continue;
-                }
-
-                $ext = Str::lower(pathinfo($entry, PATHINFO_EXTENSION));
+            foreach (File::allFiles($base) as $file) {
+                $ext = Str::lower($file->getExtension());
 
                 if (! in_array($ext, array_merge(self::LEGACY_IMAGE_EXTENSIONS, self::VIDEO_MIMES), true)) {
                     continue;
                 }
 
-                $path = $dir.'/'.$entry;
+                $relativePath = str_replace(DIRECTORY_SEPARATOR, '/', $file->getRelativePathname());
+                $path = trim($dir, '/').'/'.$relativePath;
 
                 if (Media::where('path', $path)->where('is_legacy', true)->exists()) {
                     continue;
                 }
 
+                [$width, $height] = $this->legacyDimensions($file->getPathname());
+
                 Media::create([
                     'disk' => 'public',
                     'path' => $path,
-                    'original_name' => $entry,
-                    'title' => Str::headline(pathinfo($entry, PATHINFO_FILENAME)),
+                    'original_name' => $file->getFilename(),
+                    'title' => Str::headline($file->getFilenameWithoutExtension()),
                     'mime_type' => $this->guessMime($ext),
-                    'size_bytes' => filesize($base.'/'.$entry) ?: 0,
+                    'size_bytes' => $file->getSize(),
+                    'width' => $width,
+                    'height' => $height,
                     'is_legacy' => true,
                 ]);
 
@@ -144,6 +146,18 @@ class MediaLibraryService
         try {
             $full = Storage::disk('public')->path($path);
             $size = @getimagesize($full);
+
+            return $size ? [(int) $size[0], (int) $size[1]] : [null, null];
+        } catch (\Throwable) {
+            return [null, null];
+        }
+    }
+
+    /** @return array{0: ?int, 1: ?int} */
+    private function legacyDimensions(string $path): array
+    {
+        try {
+            $size = @getimagesize($path);
 
             return $size ? [(int) $size[0], (int) $size[1]] : [null, null];
         } catch (\Throwable) {

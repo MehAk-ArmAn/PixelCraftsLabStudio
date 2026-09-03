@@ -71,9 +71,11 @@ class ProjectController extends AdminResourceController
             ['name' => 'campaign_period', 'label' => 'Campaign period', 'type' => 'text', 'section' => 'Marketing'],
             ['name' => 'channel_ids', 'label' => 'Channels', 'type' => 'checkboxes', 'section' => 'Marketing', 'optionsFrom' => 'channels'],
 
-            ['name' => 'primary_image', 'label' => 'Primary image', 'type' => 'media', 'section' => 'Media'],
+            ['name' => 'icon_image', 'label' => 'Project icon', 'type' => 'media', 'section' => 'Media', 'help' => 'Used for compact project marks and ecosystem treatments.'],
+            ['name' => 'primary_image', 'label' => 'Hero image', 'type' => 'media', 'section' => 'Media'],
+            ['name' => 'feature_image', 'label' => 'Feature graphic', 'type' => 'media', 'section' => 'Media', 'help' => 'Wide editorial artwork; kept separate from screenshots.'],
             ['name' => 'gallery', 'label' => 'Gallery', 'type' => 'media-multi', 'section' => 'Media'],
-            ['name' => 'initials', 'label' => 'Initials', 'type' => 'text', 'section' => 'Media', 'help' => 'Used by the card artwork when no image is set.'],
+            ['name' => 'is_ecosystem_head', 'label' => 'Product ecosystem head', 'type' => 'checkbox', 'section' => 'Media', 'help' => 'Explicitly enables the connected-products treatment. No copy heuristics are used.'],
             ['name' => 'primary_tint', 'label' => 'Primary tint', 'type' => 'color', 'section' => 'Media'],
             ['name' => 'secondary_tint', 'label' => 'Secondary tint', 'type' => 'color', 'section' => 'Media'],
 
@@ -127,9 +129,11 @@ class ProjectController extends AdminResourceController
             'channel_ids' => ['nullable', 'array'],
             'channel_ids.*' => ['integer', 'exists:marketing_channels,id'],
             'primary_image' => ['nullable', 'string', 'max:255'],
+            'icon_image' => ['nullable', 'string', 'max:255'],
+            'feature_image' => ['nullable', 'string', 'max:255'],
             'gallery' => ['nullable', 'array'],
             'gallery.*' => ['string', 'max:255'],
-            'initials' => ['nullable', 'string', 'max:8'],
+            'is_ecosystem_head' => ['boolean'],
             'primary_tint' => ['nullable', 'string', 'max:16'],
             'secondary_tint' => ['nullable', 'string', 'max:16'],
             'cta_label' => ['nullable', 'string', 'max:120'],
@@ -154,11 +158,6 @@ class ProjectController extends AdminResourceController
         $data['slug'] = filled($data['slug'] ?? null)
             ? Str::slug($data['slug'])
             : ($record->slug ?: Str::slug($data['name']));
-
-        if (blank($data['initials'] ?? null)) {
-            $data['initials'] = collect(explode(' ', (string) preg_replace('/[^A-Za-z ]/', '', $data['name'])))
-                ->filter()->take(2)->map(fn ($w) => strtoupper($w[0]))->implode('');
-        }
 
         if (($data['is_published'] ?? false) && blank($data['published_at'] ?? null)) {
             $data['published_at'] = now();

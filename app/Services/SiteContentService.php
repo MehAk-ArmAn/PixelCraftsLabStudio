@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\ContactOption;
 use App\Models\GrowthPlan;
+use App\Models\HomepageFeaturedProject;
+use App\Models\InteractiveExperience;
 use App\Models\MarketingCampaign;
 use App\Models\MarketingChannel;
 use App\Models\NavigationItem;
@@ -66,6 +68,7 @@ class SiteContentService
             'nav' => $this->navigation(),
             'projects' => $projects,
             'projectCount' => count($projects),
+            'homeFeaturedProjects' => $this->homepageFeaturedProjects($projects),
             'categories' => $this->categories($projects),
             'services' => $this->services(Service::TRACK_BUILD, $includeDrafts),
             'marketingServices' => $this->services(Service::TRACK_GROWTH, $includeDrafts),
@@ -88,6 +91,7 @@ class SiteContentService
             ],
             'channels' => $this->channels(),
             'campaigns' => $this->campaigns($includeDrafts),
+            'experiences' => $this->experiences($includeDrafts),
             'contactOptions' => $this->contactOptions(),
             'copy' => $this->copy($includeDrafts),
             'pages' => $this->pageVisibility($includeDrafts),
@@ -133,6 +137,18 @@ class SiteContentService
             'footerFollowLabel' => $s->string('footer_follow_label', 'Follow'),
             'footerServices' => $this->footerServices(),
             'contactStrip' => $this->contactStrip(),
+            'introReplayOnHome' => $s->bool('home_intro_replay_on_home', true),
+            'introMode' => $s->string('home_intro_mode', 'forge'),
+            'introHeading' => $s->string('home_intro_heading', 'PixelCraftsLab'),
+            'introSubheading' => $s->string('home_intro_subheading', 'A creative technology studio. We design it, build it, launch it — then help it grow.'),
+            'introCta' => $s->string('home_intro_cta', 'Enter the studio'),
+            'introDuration' => min(6000, max(900, (int) $s->get('home_intro_duration', 2600))),
+            'introIntensity' => min(1.6, max(0, (float) $s->get('home_intro_intensity', 1))),
+            'introAccentPreset' => $s->string('home_intro_accent_preset', 'violet-orange'),
+            'introShowProjectFragments' => $s->bool('home_intro_show_project_fragments', true),
+            'introInteractionPreset' => $s->string('home_intro_interaction_preset', 'pointer-parallax'),
+            'introBackgroundPreset' => $s->string('home_intro_background_preset', 'paper-grid'),
+            'introTransitionPreset' => $s->string('home_intro_transition_preset', 'scatter'),
         ];
     }
 
@@ -165,7 +181,7 @@ class SiteContentService
             ->ordered()
             ->limit(6)
             ->get()
-            ->map(fn (Service $s) => ['label' => $s->title, 'url' => '#services'])
+            ->map(fn (Service $s) => ['label' => $s->title, 'url' => route('services.index', [], false)])
             ->all();
     }
 
@@ -255,8 +271,10 @@ class SiteContentService
                 'blurb' => (string) ($p->full_description ?? $p->short_description ?? ''),
                 'link' => (string) ($p->external_url ?? ''),
                 'image' => $p->imageUrl(),
+                'icon' => $p->iconUrl(),
+                'featureImage' => $p->featureImageUrl(),
                 'gallery' => $p->galleryUrls(),
-                'initials' => (string) ($p->initials ?: $this->initialsFor($p->name)),
+                'ecosystemHead' => (bool) $p->is_ecosystem_head,
                 'tint' => (string) ($p->primary_tint ?? ''),
                 'tint2' => (string) ($p->secondary_tint ?? ''),
                 'ctaLabel' => (string) ($p->cta_label ?? ''),
@@ -278,8 +296,72 @@ class SiteContentService
                 'seoTitle' => (string) ($p->seo_title ?? ''),
                 'seoDescription' => (string) ($p->seo_description ?? ''),
                 'ogImage' => MediaResolver::url($p->og_image),
+                'url' => route('projects.show', $p, false),
             ];
         })->all();
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function homepageFeaturedProjects(array $projects): array
+    {
+        if (! Schema::hasTable('homepage_featured_projects')) {
+            return [];
+        }
+
+        $projectMap = collect($projects)->keyBy('id');
+
+        return HomepageFeaturedProject::query()
+            ->with('project:id,slug')
+            ->enabled()
+            ->ordered()
+            ->get()
+            ->map(function (HomepageFeaturedProject $feature) use ($projectMap): ?array {
+                $project = $projectMap->get($feature->project?->slug ?? '');
+
+                if (! is_array($project)) {
+                    return null;
+                }
+
+                return $project + [
+                    'slot' => $feature->slot,
+                    'primary' => (bool) $feature->is_primary,
+                    'displayMode' => $feature->display_mode,
+                    'mediaMode' => $feature->media_mode,
+                    'badgeText' => (string) ($feature->badge_text ?? ''),
+                    'homeCtaLabel' => (string) ($feature->cta_label ?? ''),
+                ];
+            })
+            ->filter()
+            ->values()
+            ->all();
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function experiences(bool $includeDrafts): array
+    {
+        if (! Schema::hasTable('interactive_experiences')) {
+            return [];
+        }
+
+        $query = InteractiveExperience::query()->ordered();
+
+        if (! $includeDrafts) {
+            $query->enabled();
+        }
+
+        return $query->get()->map(fn (InteractiveExperience $experience) => [
+            'name' => $experience->name,
+            'page' => $experience->page,
+            'section' => $experience->section_key,
+            'type' => $experience->type,
+            'enabled' => (bool) $experience->enabled,
+            'title' => (string) ($experience->title ?? ''),
+            'body' => (string) ($experience->body ?? ''),
+            'ctaLabel' => (string) ($experience->cta_label ?? ''),
+            'ctaUrl' => (string) ($experience->cta_url ?? ''),
+            'accentPreset' => $experience->accent_preset,
+            'intensity' => min(1.6, max(0, (float) $experience->intensity)),
+        ])->all();
     }
 
     /** @return list<string> */
@@ -323,6 +405,8 @@ class SiteContentService
             'longBody' => (string) ($s->long_body ?? ''),
             'caption' => (string) ($s->caption ?? ''),
             'icon' => MediaResolver::url($s->icon),
+            'ctaLabel' => (string) ($s->cta_label ?? ''),
+            'ctaUrl' => (string) ($s->cta_url ?? ''),
             'featured' => (bool) $s->is_featured,
             'onHome' => (bool) $s->show_on_homepage,
             'channels' => $s->channels->pluck('name')->all(),
@@ -333,6 +417,8 @@ class SiteContentService
                     'group' => (string) ($c->group ?? ''),
                     'body' => (string) ($c->body ?? ''),
                     'tag' => (string) ($c->tag ?? ''),
+                    'ctaLabel' => (string) ($c->cta_label ?? ''),
+                    'ctaUrl' => (string) ($c->cta_url ?? ''),
                 ])
                 ->values()
                 ->all(),

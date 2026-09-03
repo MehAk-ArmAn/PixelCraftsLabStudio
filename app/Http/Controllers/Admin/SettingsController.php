@@ -8,12 +8,14 @@ use App\Services\ActivityLogger;
 use App\Services\SettingsRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
     /** Groups rendered as separate admin screens. */
     public const GROUPS = [
+        'home' => 'Home · Landing Experience',
         'studio' => 'Studio',
         'contact' => 'Contact',
         'footer' => 'Footer',
@@ -58,6 +60,13 @@ class SettingsController extends Controller
 
         foreach ($records as $setting) {
             $rules['values.'.$setting->key] = match ($setting->key) {
+                'home_intro_mode' => ['nullable', Rule::in(['forge', 'minimal'])],
+                'home_intro_duration' => ['nullable', 'integer', 'min:900', 'max:6000'],
+                'home_intro_intensity' => ['nullable', 'numeric', 'min:0', 'max:1.6'],
+                'home_intro_accent_preset' => ['nullable', Rule::in(['violet-orange', 'violet', 'orange', 'ink'])],
+                'home_intro_interaction_preset' => ['nullable', Rule::in(['pointer-parallax', 'static'])],
+                'home_intro_background_preset' => ['nullable', Rule::in(['paper-grid', 'quiet'])],
+                'home_intro_transition_preset' => ['nullable', Rule::in(['scatter', 'fade'])],
                 'founding_client_discount_percent' => ['nullable', 'integer', 'min:0', 'max:100'],
                 'founding_client_duration_months' => ['nullable', 'integer', 'min:0', 'max:120'],
                 'founding_client_limit', 'founding_client_claimed_count' => ['nullable', 'integer', 'min:0', 'max:1000000'],

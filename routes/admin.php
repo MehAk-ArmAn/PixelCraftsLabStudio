@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\ContactOptionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\GrowthPlanController;
+use App\Http\Controllers\Admin\HomepageFeaturedProjectController;
+use App\Http\Controllers\Admin\InteractiveExperienceController;
 use App\Http\Controllers\Admin\MarketingCampaignController;
 use App\Http\Controllers\Admin\MarketingChannelController;
 use App\Http\Controllers\Admin\MarketingOverviewController;
@@ -57,6 +59,8 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
     Route::middleware(['auth', 'admin'])->group(function () use ($resourceRoutes) {
         Route::get('/', DashboardController::class)->name('dashboard');
         Route::get('preview', PreviewController::class)->name('preview');
+        Route::get('home/featured-projects', [HomepageFeaturedProjectController::class, 'index'])->name('home.featured-projects.index');
+        Route::put('home/featured-projects', [HomepageFeaturedProjectController::class, 'update'])->name('home.featured-projects.update');
 
         // ---------------------------------------------------------- content
         $resourceRoutes('projects', ProjectController::class);
@@ -72,6 +76,7 @@ Route::prefix('admin')->name('admin.')->group(function () use ($resourceRoutes) 
         $resourceRoutes('team', TeamMemberController::class);
         $resourceRoutes('socials', SocialLinkController::class);
         $resourceRoutes('testimonials', TestimonialController::class);
+        $resourceRoutes('experiences', InteractiveExperienceController::class);
         $resourceRoutes('navigation', NavigationItemController::class);
         // -------------------------------------------------------- marketing
         Route::get('marketing', MarketingOverviewController::class)->name('marketing.overview');

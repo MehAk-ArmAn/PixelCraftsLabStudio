@@ -70,6 +70,8 @@ class ServiceSeeder extends Seeder
                 'caption' => 'Attention turns into measurable growth',
                 'body' => 'Strategy, content, social media and campaigns designed to help digital products and businesses reach the right audience and turn attention into measurable growth.',
                 'long_body' => 'We treat marketing the way we treat engineering: define the problem, choose the channels that fit it, build the work, then measure whether it moved. That means a clear strategy, content people actually want, campaigns with a stated goal, and reporting that shows what happened rather than what we hoped would happen.',
+                'cta_label' => 'Explore marketing & growth',
+                'cta_url' => '/marketing',
                 'sort_order' => 70,
                 'is_published' => true,
                 'is_featured' => true,

@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             ProcessStageSeeder::class,
             ServiceSeeder::class,
             ProjectSeeder::class,
+            HomepageFeaturedProjectSeeder::class,
+            InteractiveExperienceSeeder::class,
             TeamSeeder::class,
             SocialLinkSeeder::class,
             GrowthPlanSeeder::class,

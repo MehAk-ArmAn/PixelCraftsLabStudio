@@ -24,6 +24,21 @@ class SiteSettingsSeeder extends Seeder
     private function definitions(): array
     {
         return [
+            // ------------------------------------------------------------ home
+            ['intro_animation_enabled', true, 'home', 'bool', 'Home intro enabled', 'When disabled, the informational homepage renders immediately.'],
+            ['home_intro_replay_on_home', true, 'home', 'bool', 'Replay on Home click', 'Replay when Home is deliberately selected, including while already on Home.'],
+            ['home_intro_mode', 'forge', 'home', 'string', 'Mode preset', 'Allowed: forge or minimal.'],
+            ['home_intro_heading', 'PixelCraftsLab', 'home', 'string', 'Intro heading', null],
+            ['home_intro_subheading', 'A creative technology studio. We design it, build it, launch it — then help it grow.', 'home', 'text', 'Support text', null],
+            ['home_intro_cta', 'Enter the studio', 'home', 'string', 'Entry CTA', null],
+            ['home_intro_duration', 2600, 'home', 'int', 'Duration', 'Milliseconds; accepted range 900–6000.'],
+            ['home_intro_intensity', '1', 'home', 'string', 'Intensity preset value', 'Motion strength from 0 to 1.6.'],
+            ['home_intro_accent_preset', 'violet-orange', 'home', 'string', 'Accent preset', 'Allowed: violet-orange, violet, orange or ink.'],
+            ['home_intro_show_project_fragments', true, 'home', 'bool', 'Show project fragments', 'Uses real Admin-selected project media.'],
+            ['home_intro_interaction_preset', 'pointer-parallax', 'home', 'string', 'Interaction preset', 'Allowed: pointer-parallax or static.'],
+            ['home_intro_background_preset', 'paper-grid', 'home', 'string', 'Background preset', 'Allowed: paper-grid or quiet.'],
+            ['home_intro_transition_preset', 'scatter', 'home', 'string', 'Transition preset', 'Allowed: scatter or fade.'],
+
             // ---------------------------------------------------------- studio
             ['studio_name', 'PixelCraftsLabStudio', 'studio', 'string', 'Studio name', 'Used in the footer and metadata.'],
             ['studio_short_name', 'PixelCraftsLab', 'studio', 'string', 'Short name', 'Shown in the header lockup.'],
@@ -63,7 +78,6 @@ class SiteSettingsSeeder extends Seeder
             ['contact_form_enabled', true, 'features', 'bool', 'Contact form enabled', null],
             ['lab_page_enabled', true, 'features', 'bool', 'Lab page enabled', null],
             ['growth_page_enabled', true, 'features', 'bool', 'Growth page enabled', null],
-            ['intro_animation_enabled', true, 'features', 'bool', 'Intro animation enabled', null],
             ['custom_cursor_enabled', true, 'features', 'bool', 'Custom cursor enabled', null],
             ['ambient_decoration_enabled', true, 'features', 'bool', 'Ambient decoration enabled', null],
             ['page_transitions_enabled', true, 'features', 'bool', 'Page transition effects enabled', null],

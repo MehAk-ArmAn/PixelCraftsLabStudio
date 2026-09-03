@@ -18,7 +18,7 @@ class Service extends Model
 
     protected $fillable = [
         'slug', 'title', 'stage', 'track', 'group', 'parent_id', 'tag', 'body', 'long_body',
-        'caption', 'icon', 'sort_order', 'is_published', 'is_featured', 'show_on_homepage',
+        'caption', 'icon', 'cta_label', 'cta_url', 'sort_order', 'is_published', 'is_featured', 'show_on_homepage',
         'seo_title', 'seo_description',
     ];
 

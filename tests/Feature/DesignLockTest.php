@@ -20,7 +20,7 @@ final class DesignLockTest extends TestCase
     {
         $html = $this->source();
 
-        foreach (['<x-dc>', '</x-dc>', '<helmet>', 'data-dc-script', 'class Component extends DCLogic', './support.js'] as $hook) {
+        foreach (['<x-dc>', '</x-dc>', '<helmet>', 'data-dc-script', 'class Component extends DCLogic', 'src="/support.js"'] as $hook) {
             $this->assertStringContainsString($hook, $html, "Missing runtime hook: {$hook}");
         }
 

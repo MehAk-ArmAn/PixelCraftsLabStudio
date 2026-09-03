@@ -68,6 +68,8 @@ class ServiceController extends AdminResourceController
             ['name' => 'long_body', 'label' => 'Long body', 'type' => 'textarea', 'section' => 'Content', 'rows' => 5],
             ['name' => 'caption', 'label' => 'Caption', 'type' => 'text', 'section' => 'Content', 'help' => 'Small caption under the animated card.'],
             ['name' => 'icon', 'label' => 'Icon / image', 'type' => 'media', 'section' => 'Content'],
+            ['name' => 'cta_label', 'label' => 'CTA label', 'type' => 'text', 'section' => 'Content'],
+            ['name' => 'cta_url', 'label' => 'CTA destination', 'type' => 'text', 'section' => 'Content', 'help' => 'Use a real path such as /marketing or /contact.'],
             ['name' => 'channel_ids', 'label' => 'Channels', 'type' => 'checkboxes', 'section' => 'Content', 'optionsFrom' => 'channels'],
 
             ['name' => 'is_published', 'label' => 'Published', 'type' => 'checkbox', 'section' => 'Publishing'],
@@ -93,6 +95,8 @@ class ServiceController extends AdminResourceController
             'long_body' => ['nullable', 'string', 'max:8000'],
             'caption' => ['nullable', 'string', 'max:190'],
             'icon' => ['nullable', 'string', 'max:255'],
+            'cta_label' => ['nullable', 'string', 'max:120'],
+            'cta_url' => ['nullable', 'string', 'max:255'],
             'channel_ids' => ['nullable', 'array'],
             'channel_ids.*' => ['integer', 'exists:marketing_channels,id'],
             'is_published' => ['boolean'],

@@ -4,9 +4,16 @@
         ? \App\Models\ContactSubmission::unread()->count()
         : 0;
 
-    $link = function (string $route, string $label, ?int $badge = null) {
+    $link = function (string $route, string $label, ?int $badge = null, array $parameters = []) {
         $active = request()->routeIs($route) || request()->routeIs(str_replace('.index', '.*', $route));
-        return compact('route', 'label', 'badge', 'active');
+
+        if ($parameters !== []) {
+            $active = $active && collect($parameters)->every(
+                fn ($value, $key) => (string) request()->route($key) === (string) $value,
+            );
+        }
+
+        return ['route' => $route, 'label' => $label, 'badge' => $badge, 'active' => $active, 'parameters' => $parameters];
     };
 
     $groups = [
@@ -14,6 +21,8 @@
             $link('admin.dashboard', 'Dashboard'),
         ],
         'Website' => [
+            $link('admin.settings.edit', 'Home · Landing experience', null, ['group' => 'home']),
+            $link('admin.home.featured-projects.index', 'Home · Featured projects'),
             $link('admin.pages.index', 'Pages'),
             $link('admin.projects.index', 'Projects'),
             $link('admin.services.index', 'Services'),
@@ -23,6 +32,7 @@
             $link('admin.navigation.index', 'Navigation'),
             $link('admin.socials.index', 'Social links'),
             $link('admin.media.index', 'Media'),
+            $link('admin.experiences.index', 'Interactive experiences'),
         ],
         'Marketing' => [
             $link('admin.marketing.overview', 'Overview'),
@@ -62,7 +72,7 @@
   @foreach ($groups as $group => $items)
     <div class="group">{{ $group }}</div>
     @foreach ($items as $item)
-      <a class="nav {{ $item['active'] ? 'active' : '' }}" href="{{ route($item['route']) }}">
+      <a class="nav {{ $item['active'] ? 'active' : '' }}" href="{{ route($item['route'], $item['parameters'] ?? []) }}">
         {{ $item['label'] }}
         @if ($item['badge'])<span class="pill">{{ $item['badge'] }}</span>@endif
       </a>

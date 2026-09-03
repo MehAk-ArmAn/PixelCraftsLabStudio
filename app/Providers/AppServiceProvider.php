@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\ContactOption;
 use App\Models\GrowthPlan;
 use App\Models\GrowthPlanItem;
+use App\Models\HomepageFeaturedProject;
+use App\Models\InteractiveExperience;
 use App\Models\MarketingCampaign;
 use App\Models\MarketingChannel;
 use App\Models\Media;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         PageSection::class, NavigationItem::class, Media::class, SiteSetting::class,
         ContactOption::class, MarketingChannel::class, GrowthPlan::class,
         GrowthPlanItem::class, MarketingCampaign::class, Package::class, PackageItem::class,
+        HomepageFeaturedProject::class, InteractiveExperience::class,
     ];
 
     public function register(): void

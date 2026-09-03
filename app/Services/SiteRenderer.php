@@ -180,7 +180,8 @@ class SiteRenderer
      */
     private function injectHead(string $html, string $markup): string
     {
-        $anchor = '<script src="./support.js"></script>';
+        // Root-relative since nested routes (/work/{slug}) resolved "./" wrong.
+        $anchor = '<script src="/support.js"></script>';
 
         if (str_contains($html, $anchor)) {
             return str_replace($anchor, $markup.$anchor, $html);

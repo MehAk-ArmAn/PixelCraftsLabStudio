@@ -25,6 +25,7 @@ class ProjectSeeder extends Seeder
     {
         foreach ($this->projects() as $index => $row) {
             [$tint, $tint2] = self::TINTS[$index % count(self::TINTS)];
+            $media = $this->presentationMedia()[$row['slug']] ?? [];
 
             Project::firstOrCreate(
                 ['slug' => $row['slug']],
@@ -42,7 +43,11 @@ class ProjectSeeder extends Seeder
                     'is_featured' => $index < 3,
                     'is_archived' => false,
                     'sort_order' => ($index + 1) * 10,
-                    'initials' => $this->initials($row['name']),
+                    'primary_image' => $media['hero'] ?? null,
+                    'icon_image' => $media['icon'] ?? null,
+                    'feature_image' => $media['feature'] ?? null,
+                    'gallery' => $media['gallery'] ?? [],
+                    'is_ecosystem_head' => $row['slug'] === 'studybuddy',
                     'primary_tint' => $tint,
                     'secondary_tint' => $tint2,
                     'published_at' => now(),
@@ -51,13 +56,26 @@ class ProjectSeeder extends Seeder
         }
     }
 
-    private function initials(string $name): string
+    /** @return array<string, array<string, mixed>> */
+    private function presentationMedia(): array
     {
-        return collect(explode(' ', (string) preg_replace('/[^A-Za-z ]/', '', $name)))
-            ->filter()
-            ->take(2)
-            ->map(fn ($w) => strtoupper($w[0]))
-            ->implode('');
+        $base = 'assets/projects/';
+
+        return [
+            'fikar' => ['hero' => $base.'fikar/hero.webp', 'icon' => $base.'fikar/icon.webp', 'feature' => $base.'fikar/feature-01.webp', 'gallery' => [$base.'fikar/feature-01.webp', $base.'fikar/mobile-01.webp']],
+            'abandoned' => ['hero' => $base.'abandoned/hero.webp', 'icon' => $base.'abandoned/icon.webp', 'gallery' => [$base.'abandoned/screen-01.webp', $base.'abandoned/screen-02.webp']],
+            'farmcare' => ['hero' => $base.'farmcare/hero.webp', 'icon' => $base.'farmcare/icon.webp', 'feature' => $base.'farmcare/feature-01.webp', 'gallery' => [$base.'farmcare/feature-01.webp', $base.'farmcare/mobile-01.webp']],
+            'studybuddy' => ['hero' => $base.'studybuddy/hero.webp', 'icon' => $base.'studybuddy/icon.webp', 'feature' => $base.'studybuddy/feature-01.webp', 'gallery' => [$base.'studybuddy/feature-01.webp', $base.'studybuddy/mobile-01.webp']],
+            'bangtan' => ['hero' => $base.'bangtan/hero.webp', 'icon' => $base.'bangtan/icon.webp', 'feature' => $base.'bangtan/feature-01.webp', 'gallery' => [$base.'bangtan/feature-01.webp', $base.'bangtan/mobile-01.webp']],
+            'matchmallow' => ['hero' => $base.'matchmallow/hero.webp', 'icon' => $base.'matchmallow/icon.webp', 'gallery' => [$base.'matchmallow/screen-01.webp', $base.'matchmallow/screen-02.webp', $base.'matchmallow/screen-03.webp']],
+            'coloriboo' => ['hero' => $base.'coloriboo/hero.webp', 'icon' => $base.'coloriboo/icon.webp', 'gallery' => [$base.'coloriboo/screen-01.webp', $base.'coloriboo/screen-02.webp']],
+            'mathibble' => ['hero' => $base.'mathibble/hero.webp', 'icon' => $base.'mathibble/icon.webp', 'gallery' => [$base.'mathibble/screen-01.webp', $base.'mathibble/screen-02.webp']],
+            'animal' => ['hero' => $base.'animal/hero.webp', 'icon' => $base.'animal/icon.webp', 'gallery' => [$base.'animal/screen-01.webp', $base.'animal/screen-02.webp']],
+            'bloxabet' => ['hero' => $base.'bloxabet/hero.webp', 'icon' => $base.'bloxabet/icon.webp', 'gallery' => [$base.'bloxabet/screen-01.webp', $base.'bloxabet/screen-02.webp']],
+            'globepop' => ['hero' => $base.'globepop/hero.webp', 'icon' => $base.'globepop/icon.webp', 'gallery' => [$base.'globepop/screen-01.webp', $base.'globepop/screen-02.webp']],
+            'alphablock' => ['hero' => $base.'alphablock/hero.webp', 'icon' => $base.'alphablock/icon.webp', 'feature' => $base.'alphablock/feature-01.webp', 'gallery' => [$base.'alphablock/feature-01.webp', $base.'alphablock/mobile-01.webp']],
+            'pulse' => ['hero' => $base.'pulse/hero.webp', 'icon' => $base.'pulse/icon.webp', 'gallery' => []],
+        ];
     }
 
     /** @return list<array<string, string>> */

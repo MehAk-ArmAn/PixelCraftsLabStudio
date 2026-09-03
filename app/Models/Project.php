@@ -29,7 +29,8 @@ class Project extends Model
         'client_goal', 'challenge', 'audience', 'strategy', 'approach',
         'deliverables', 'results', 'lessons', 'campaign_period',
         'external_url', 'status', 'is_featured', 'is_marketing_case_study',
-        'is_published', 'is_archived', 'sort_order', 'primary_image', 'gallery',
+        'is_published', 'is_archived', 'sort_order', 'primary_image', 'icon_image',
+        'feature_image', 'is_ecosystem_head', 'gallery',
         'initials', 'primary_tint', 'secondary_tint', 'cta_label', 'cta_url',
         'seo_title', 'seo_description', 'og_image', 'published_at',
     ];
@@ -40,6 +41,7 @@ class Project extends Model
             'gallery' => 'array',
             'is_featured' => 'boolean',
             'is_marketing_case_study' => 'boolean',
+            'is_ecosystem_head' => 'boolean',
             'is_published' => 'boolean',
             'is_archived' => 'boolean',
             'published_at' => 'datetime',
@@ -59,6 +61,11 @@ class Project extends Model
     public function campaigns(): HasMany
     {
         return $this->hasMany(MarketingCampaign::class);
+    }
+
+    public function homepageFeatures(): HasMany
+    {
+        return $this->hasMany(HomepageFeaturedProject::class);
     }
 
     public function channels(): MorphToMany
@@ -83,6 +90,16 @@ class Project extends Model
     public function imageUrl(): string
     {
         return MediaResolver::url($this->primary_image);
+    }
+
+    public function iconUrl(): string
+    {
+        return MediaResolver::url($this->icon_image);
+    }
+
+    public function featureImageUrl(): string
+    {
+        return MediaResolver::url($this->feature_image);
     }
 
     public function galleryUrls(): array
