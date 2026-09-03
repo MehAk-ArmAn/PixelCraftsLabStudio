@@ -115,11 +115,143 @@
 
       <!-- real work, orbiting as proof; the studio stays the subject -->
       <sc-if value="{{ hasIntroFragments }}" hint-placeholder-val="{{ true }}">
-        <div aria-hidden="true" style="position: absolute; inset: 0;">
-          <sc-for list="{{ introFragments }}" as="fr" hint-placeholder-count="8">
-            <span style="position: absolute; left: {{ fr.x }}%; top: {{ fr.y }}%; width: {{ fr.size }}px; height: {{ fr.size }}px; margin: calc({{ fr.size }}px / -2); border-radius: 24%; overflow: hidden; box-shadow: 0 18px 40px -20px rgba(13,11,18,0.55); opacity: calc({{ introIn }} * 0.92); transform: translate(calc(var(--px) * {{ fr.px }}px + {{ fr.outX }}px * {{ introOut }}), calc(var(--py) * {{ fr.py }}px + {{ fr.outY }}px * {{ introOut }})) rotate(calc({{ fr.rot }}deg + {{ introOut }} * 40deg)) scale(calc(1 - {{ introOut }} * 0.4)); transition: transform 0.85s cubic-bezier(0.5,0,0.2,1), opacity 0.6s ease; animation: pcl-float {{ fr.dur }}s ease-in-out infinite; animation-delay: -{{ fr.delay }}ms;">
-              <img src="{{ fr.src }}" alt="" loading="eager" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+        <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; perspective: 1200px;">
+          <sc-for list="{{ introFragments }}" as="fr" hint-placeholder-count="6">
+
+            <span
+              data-tool="flee"
+              data-tool-pull="{{ fr.pull }}"
+              style="
+                position: absolute;
+                left: {{ fr.x }}%;
+                top: {{ fr.y }}%;
+                width: {{ fr.w }}px;
+                height: {{ fr.h }}px;
+                opacity: calc({{ introIn }} * 0.96);
+                transform:
+                  translate(
+                    calc(-50% + var(--tx, 0px) + var(--px) * {{ fr.px }}px + {{ fr.outX }}px * {{ introOut }}),
+                    calc(-50% + var(--ty, 0px) + var(--py) * {{ fr.py }}px + {{ fr.outY }}px * {{ introOut }})
+                  )
+                  rotate(calc({{ fr.rot }}deg + var(--tr, 0deg) + {{ introOut }} * 34deg))
+                  scale(calc(1 - {{ introOut }} * 0.34));
+                transition:
+                  transform 0.85s cubic-bezier(0.5,0,0.2,1),
+                  opacity 0.55s ease;
+                z-index: {{ fr.z }};
+              "
+            >
+              <div style="
+                position: relative;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                border-radius: {{ fr.radius }}px;
+                background: #fff;
+                border: 1px solid rgba(13,11,18,0.14);
+                box-shadow:
+                  0 30px 70px -34px rgba(13,11,18,0.58),
+                  0 10px 24px -16px rgba(91,35,148,0.32);
+                animation: pcl-float2 {{ fr.dur }}s ease-in-out infinite;
+                animation-delay: -{{ fr.delay }}ms;
+              ">
+
+                <sc-if value="{{ fr.browser }}" hint-placeholder-val="{{ true }}">
+                  <div style="
+                    height: 21px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 0 9px;
+                    background: rgba(246,244,240,0.97);
+                    border-bottom: 1px solid rgba(13,11,18,0.09);
+                  ">
+                    <span style="width:5px;height:5px;border-radius:50%;background:#FF5F1F;"></span>
+                    <span style="width:5px;height:5px;border-radius:50%;background:#8B45FF;"></span>
+                    <span style="width:5px;height:5px;border-radius:50%;background:#5B2394;"></span>
+                    <span style="
+                      margin-left: 6px;
+                      max-width: 72%;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                      white-space: nowrap;
+                      font-family:'Space Mono',monospace;
+                      font-size:6px;
+                      letter-spacing:.08em;
+                      text-transform:uppercase;
+                      color:rgba(13,11,18,.42);
+                    ">{{ fr.name }}</span>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ fr.phone }}" hint-placeholder-val="{{ false }}">
+                  <span style="
+                    position:absolute;
+                    top:7px;
+                    left:50%;
+                    transform:translateX(-50%);
+                    width:30%;
+                    height:5px;
+                    border-radius:999px;
+                    background:rgba(13,11,18,.72);
+                    z-index:3;
+                  "></span>
+                </sc-if>
+
+                <img
+                  src="{{ fr.src }}"
+                  alt=""
+                  loading="eager"
+                  style="
+                    display:block;
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    object-position:top center;
+                  "
+                />
+
+                <div style="
+                  position:absolute;
+                  left:0;
+                  right:0;
+                  bottom:0;
+                  padding:20px 10px 8px;
+                  background:linear-gradient(to top,rgba(13,11,18,.82),transparent);
+                  color:#fff;
+                ">
+                  <div style="
+                    font-family:'Space Mono',monospace;
+                    font-size:7px;
+                    letter-spacing:.14em;
+                    text-transform:uppercase;
+                    opacity:.7;
+                  ">{{ fr.cat }}</div>
+
+                  <div style="
+                    margin-top:2px;
+                    font-family:'Bricolage Grotesque',sans-serif;
+                    font-size:11px;
+                    font-weight:700;
+                    line-height:1.05;
+                    white-space:nowrap;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                  ">{{ fr.name }}</div>
+                </div>
+
+                <span style="
+                  position:absolute;
+                  top:0;
+                  left:0;
+                  width:100%;
+                  height:3px;
+                  background:linear-gradient(90deg,{{ fr.tint }},{{ fr.tint2 }});
+                "></span>
+
+              </div>
             </span>
+
           </sc-for>
         </div>
       </sc-if>
@@ -2997,31 +3129,89 @@ class Component extends DCLogic {
          work. Positions are deterministic so the composition never jumbles. */
       introFragments: (() => {
         if (!INTRO.showFragments) return [];
-        const pool = PROJECTS.filter(p => p.icon || isUrl(p.i));
+
+        /* Use REAL project screens first. Icons are only the last fallback.
+           The previous intro preferred icons, which made the launch screen
+           feel like a few floating app buttons instead of a studio portfolio. */
+        const visualProjects = PROJECTS.filter(p =>
+          p.i || (Array.isArray(p.gallery) && p.gallery.length) || p.icon
+        );
+
+        const webProjects = visualProjects.filter(p =>
+          /web|lab/i.test(String(p.cat || ""))
+        );
+
+        const appProjects = visualProjects.filter(p =>
+          /app|game/i.test(String(p.cat || ""))
+        );
+
         const ring = [
-          { x: 14, y: 22, s: 62, d: 0,   px: -34, py: -22, rot: -9 },
-          { x: 82, y: 18, s: 54, d: 120, px:  40, py: -26, rot: 11 },
-          { x: 8,  y: 66, s: 48, d: 240, px: -44, py:  30, rot: 7  },
-          { x: 88, y: 62, s: 66, d: 180, px:  38, py:  34, rot: -12 },
-          { x: 26, y: 84, s: 44, d: 300, px: -26, py:  40, rot: 14 },
-          { x: 70, y: 86, s: 50, d: 360, px:  30, py:  42, rot: -6 },
-          { x: 46, y: 10, s: 40, d: 420, px:   8, py: -40, rot: 5  },
-          { x: 4,  y: 42, s: 42, d: 480, px: -48, py:   6, rot: -14 },
+          { x: 13, y: 22, w: 250, h: 156, d:   0, px: -34, py: -22, rot: -5,  phone: false, z: 2 },
+          { x: 84, y: 20, w: 224, h: 140, d: 120, px:  40, py: -27, rot:  6,  phone: false, z: 3 },
+          { x: 10, y: 70, w: 112, h: 192, d: 240, px: -44, py:  30, rot:  5,  phone: true,  z: 4 },
+          { x: 89, y: 69, w: 250, h: 156, d: 180, px:  38, py:  34, rot: -6,  phone: false, z: 2 },
+          { x: 28, y: 88, w: 204, h: 128, d: 300, px: -26, py:  40, rot:  5,  phone: false, z: 1 },
+          { x: 72, y: 87, w: 116, h: 198, d: 360, px:  30, py:  42, rot: -4,  phone: true,  z: 4 },
         ];
-        return ring.map((slot, i) => {
-          const p = pool[i % Math.max(1, pool.length)] || {};
+
+        const activeRing = isDesktop
+          ? ring
+          : [ring[0], ring[1], ring[2], ring[3]];
+
+        return activeRing.map((slot, i) => {
+          const preferred = slot.phone
+            ? (appProjects.length ? appProjects : visualProjects)
+            : (webProjects.length ? webProjects : visualProjects);
+
+          const p = preferred[i % Math.max(1, preferred.length)] || {};
+
+          const rawSrc =
+            p.i ||
+            ((Array.isArray(p.gallery) && p.gallery[0]) || "") ||
+            p.icon ||
+            "";
+
+          /* Intro lives at /, but root-normalise legacy relative asset paths
+             so the same source remains safe if routing changes later. */
+          const src = typeof rawSrc === "string" && rawSrc
+            ? (/^(https?:|\/|data:)/.test(rawSrc)
+                ? rawSrc
+                : "/" + rawSrc.replace(/^\.?\//, ""))
+            : "";
+
+          const scale = isDesktop ? 1 : 0.64;
+
           return {
-            src: p.icon || img(p.i), name: p.name || "",
-            x: slot.x, y: slot.y, size: slot.s, delay: slot.d,
+            src,
+            name: p.name || "Project",
+            cat: p.cat || p.kind || "Project",
+            tint: p.tint || "#5B2394",
+            tint2: p.tint2 || "#FF5F1F",
+
+            x: slot.x,
+            y: slot.y,
+            w: Math.round(slot.w * scale),
+            h: Math.round(slot.h * scale),
+
+            delay: slot.d,
             px: Math.round(slot.px * INTRO.intensity),
             py: Math.round(slot.py * INTRO.intensity),
             rot: slot.rot,
-            /* Where the piece flies when the studio opens up. */
+
+            phone: !!slot.phone,
+            browser: !slot.phone,
+            radius: slot.phone ? 22 : 12,
+            pull: slot.phone ? 0.72 : 0.9,
+            z: slot.z,
+
+            /* Existing launch transition:
+               each window scatters outward when Enter is triggered. */
             outX: Math.round((slot.x - 50) * 7),
             outY: Math.round((slot.y - 50) * 7),
-            dur: (7 + (i % 4) * 1.6).toFixed(1),
+
+            dur: (7.4 + (i % 4) * 1.45).toFixed(1),
           };
-        }).filter(f => isUrl(f.src));
+        }).filter(f => !!f.src);
       })(),
       hasIntroFragments: INTRO.showFragments,
 

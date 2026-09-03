@@ -6,6 +6,7 @@ use App\Http\Requests\ContactSubmissionRequest;
 use App\Services\ContactSubmissionService;
 use App\Services\SettingsRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 final class ContactSubmissionController extends Controller
 {
@@ -14,27 +15,36 @@ final class ContactSubmissionController extends Controller
         private readonly SettingsRepository $settings,
     ) {}
 
-    public function store(ContactSubmissionRequest $request): JsonResponse
+    public function store(ContactSubmissionRequest $request): JsonResponse|RedirectResponse
     {
         if (! $this->settings->bool('contact_form_enabled', true)) {
-            return response()->json([
-                'ok' => false,
-                'message' => $this->settings->string(
-                    'contact_disabled_message',
-                    'The enquiry form is currently closed. Please email us instead.',
-                ),
-            ], 503);
+            $message = $this->settings->string(
+                'contact_disabled_message',
+                'The enquiry form is currently closed. Please email us instead.',
+            );
+
+            if ($request->expectsJson()) {
+                return response()->json(['ok' => false, 'message' => $message], 503);
+            }
+
+            return back()->withInput()->withErrors(['contact' => $message]);
         }
 
         $submission = $this->submissions->record($request->validated(), $request);
 
-        return response()->json([
-            'ok' => true,
-            'id' => $submission->id,
-            'message' => $this->settings->string(
-                'contact_success_message',
-                'Brief received. We will be in touch shortly.',
-            ),
-        ], 201);
+        $message = $this->settings->string(
+            'contact_success_message',
+            'Brief received. We will be in touch shortly.',
+        );
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'ok' => true,
+                'id' => $submission->id,
+                'message' => $message,
+            ], 201);
+        }
+
+        return to_route('contact')->with('contact_status', $message);
     }
 }

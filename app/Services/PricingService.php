@@ -73,6 +73,8 @@ class PricingService
             'discountPercent' => $active ? $this->discountPercent() : 0,
             'durationMonths' => $active ? max(0, (int) $this->settings->get('founding_client_duration_months', 0)) : 0,
             'remaining' => $showRemaining ? max(0, $limit - $claimed) : null,
+            'remainingLabel' => $this->settings->string('pricing_remaining_label', 'places remaining'),
+            'originalPriceLabel' => $this->settings->string('pricing_original_price_label', 'Previously'),
         ];
     }
 

@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Builds the single JSON payload the locked Claude Design frontend reads from
- * `window.PCL_CMS`. Everything the public site can show comes from here.
+ * Builds the public, explicitly shaped CMS data consumed by the Blade views.
+ * Internal-only model fields must never be added to this payload.
  */
 class SiteContentService
 {
@@ -142,6 +142,13 @@ class SiteContentService
             'introHeading' => $s->string('home_intro_heading', 'PixelCraftsLab'),
             'introSubheading' => $s->string('home_intro_subheading', 'A creative technology studio. We design it, build it, launch it — then help it grow.'),
             'introCta' => $s->string('home_intro_cta', 'Enter the studio'),
+            'introBeats' => collect(explode(',', $s->string('home_intro_beats', 'Idea,Design,Build,Launch,Grow')))
+                ->map(fn (string $beat): string => trim($beat))
+                ->filter()
+                ->take(8)
+                ->values()
+                ->all(),
+            'introScrollLabel' => $s->string('home_intro_scroll_label', 'scroll to enter'),
             'introDuration' => min(6000, max(900, (int) $s->get('home_intro_duration', 2600))),
             'introIntensity' => min(1.6, max(0, (float) $s->get('home_intro_intensity', 1))),
             'introAccentPreset' => $s->string('home_intro_accent_preset', 'violet-orange'),
