@@ -37,6 +37,7 @@ class SiteSettingsSeeder extends Seeder
             ['home_intro_intensity', '1', 'home', 'string', 'Intensity preset value', 'Motion strength from 0 to 1.6.'],
             ['home_intro_accent_preset', 'violet-orange', 'home', 'string', 'Accent preset', 'Allowed: violet-orange, violet, orange or ink.'],
             ['home_intro_show_project_fragments', true, 'home', 'bool', 'Show project fragments', 'Uses real Admin-selected project media.'],
+            ['home_hero_showcase_image', 'assets/pcl-hero-showcase.webp', 'home', 'string', 'Homepage showcase artwork', 'Main PixelCraftsLab artwork shown in the homepage hero. Use a public asset or Media Library path.'],
             ['home_intro_interaction_preset', 'pointer-parallax', 'home', 'string', 'Interaction preset', 'Allowed: pointer-parallax or static.'],
             ['home_intro_background_preset', 'paper-grid', 'home', 'string', 'Background preset', 'Allowed: paper-grid or quiet.'],
             ['home_intro_transition_preset', 'scatter', 'home', 'string', 'Transition preset', 'Allowed: scatter or fade.'],

@@ -124,6 +124,7 @@ class SiteContentService
             'location' => $s->string('studio_location', ''),
             'country' => $s->string('studio_country', ''),
             'logo' => $s->mediaUrl('logo', 'assets/pcl-logo.png'),
+            'homeHeroShowcaseImage' => $s->mediaUrl('home_hero_showcase_image', 'assets/pcl-hero-showcase.webp'),
             'logoDark' => $s->mediaUrl('logo_dark', ''),
             'favicon' => $s->mediaUrl('favicon', ''),
             'ctaLabel' => $s->string('default_cta_label', 'Start a project'),

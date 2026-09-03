@@ -382,137 +382,515 @@
               </div>
             </div>
 
-            <div style="flex: 1 1 400px; min-width: 280px; position: relative; aspect-ratio: 1 / 1; max-height: 560px;">
+            <div
+              data-pcl-final-hero="1"
+              style="
+                flex:1 1 400px;
+                min-width:280px;
+                position:relative;
+                aspect-ratio:1 / 1;
+                max-height:560px;
+                isolation:isolate;
+              "
+            >
 
-              <!-- REAL selected project instead of generic purple blob -->
+              <!-- PCL ambient glow -->
               <div
-                data-tool="flee"
-                data-tool-pull="0.28"
+                aria-hidden="true"
                 style="
                   position:absolute;
-                  inset:7% 5% 10% 4%;
-                  overflow:hidden;
-                  border-radius:31% 69% 41% 59% / 48% 36% 64% 52%;
-                  border:1px solid rgba(13,11,18,.13);
-                  background:#0D0B12;
-                  box-shadow:
-                    0 42px 80px -46px rgba(13,11,18,.62),
-                    0 22px 54px -34px rgba(91,35,148,.46);
-                  transform:
-                    translate(
-                      calc(var(--px) * -12px + var(--tx,0px)),
-                      calc(var(--py) * -10px + var(--ty,0px))
-                    )
-                    rotate(var(--tr,0deg));
-                  transition:transform .55s cubic-bezier(.2,.8,.2,1);
+                  left:50%;
+                  top:50%;
+                  width:98%;
+                  height:98%;
+                  transform:translate(-50%,-50%);
+                  border-radius:50%;
+
+                  background:
+                    radial-gradient(
+                      circle at 35% 37%,
+                      rgba(139,69,255,.30),
+                      rgba(91,35,148,.12) 38%,
+                      rgba(255,95,31,.10) 57%,
+                      transparent 75%
+                    );
+
+                  filter:blur(15px);
+
+                  animation:
+                    pcl-breathe
+                    9s
+                    ease-in-out
+                    infinite;
+
+                  pointer-events:none;
+
+                  z-index:0;
                 "
-              >
-                <img
-                  src="{{ heroImg }}"
-                  alt="{{ featuredName }}"
-                  style="
-                    display:block;
-                    width:100%;
-                    height:100%;
-                    object-fit:cover;
-                    object-position:top center;
-                    transform:scale(1.035);
-                  "
-                />
+              ></div>
 
-                <div
-                  aria-hidden="true"
-                  style="
-                    position:absolute;
-                    inset:0;
-                    background:
-                      linear-gradient(
-                        145deg,
-                        rgba(91,35,148,.10),
-                        transparent 43%,
-                        rgba(13,11,18,.17)
-                      );
-                    pointer-events:none;
-                  "
-                ></div>
-              </div>
 
-              <!-- orange construction arc -->
+              <!-- elliptical orbit -->
               <span
                 aria-hidden="true"
-                data-tool="flee"
-                data-tool-pull="0.9"
                 style="
                   position:absolute;
-                  right:2%;
-                  bottom:18%;
-                  width:138px;
-                  height:138px;
-                  border-radius:50%;
-                  border:15px solid #FF5F1F;
-                  border-left-color:transparent;
-                  border-bottom-color:transparent;
+                  left:50%;
+                  top:50%;
+
+                  width:98%;
+                  height:70%;
+
                   transform:
-                    translate(var(--tx,0px),var(--ty,0px))
-                    rotate(28deg);
-                  transition:transform .5s cubic-bezier(.2,.8,.2,1);
+                    translate(-50%,-50%)
+                    rotate(-12deg);
+
+                  border-radius:50%;
+
+                  border:
+                    1px solid
+                    rgba(91,35,148,.25);
+
+                  border-right-color:
+                    rgba(255,95,31,.60);
+
                   pointer-events:none;
+
+                  z-index:1;
                 "
               ></span>
 
-              <!-- floating project logo -->
-              <sc-if value="{{ featuredHasIcon }}" hint-placeholder-val="{{ true }}">
+
+              <!-- cross orbit -->
+              <span
+                aria-hidden="true"
+                style="
+                  position:absolute;
+                  left:50%;
+                  top:50%;
+
+                  width:70%;
+                  height:98%;
+
+                  transform:
+                    translate(-50%,-50%)
+                    rotate(31deg);
+
+                  border-radius:50%;
+
+                  border:
+                    1px solid
+                    rgba(139,69,255,.22);
+
+                  border-top-color:
+                    rgba(255,95,31,.50);
+
+                  pointer-events:none;
+
+                  z-index:1;
+                "
+              ></span>
+
+
+              <!-- =============================================
+                   USER-SUPPLIED PIXELCRAFTSLAB ARTWORK
+                   ============================================= -->
+
+              <div
+                data-tool="flee"
+                data-tool-pull=".16"
+
+                style="
+                  position:absolute;
+
+                  left:50%;
+                  top:50%;
+
+                  width:92%;
+
+                  aspect-ratio:
+                    1650 / 928;
+
+                  transform:
+                    translate(
+                      calc(
+                        -50% +
+                        var(--tx,0px) +
+                        var(--px) * -7px
+                      ),
+                      calc(
+                        -50% +
+                        var(--ty,0px) +
+                        var(--py) * -5px
+                      )
+                    )
+                    rotate(
+                      calc(
+                        -1.6deg +
+                        var(--tr,0deg)
+                      )
+                    );
+
+                  transition:
+                    transform
+                    .55s
+                    cubic-bezier(.2,.8,.2,1);
+
+                  z-index:7;
+                "
+              >
+
                 <div
-                  data-tool="flee"
-                  data-tool-pull="0.7"
                   style="
                     position:absolute;
-                    right:3%;
-                    top:9%;
-                    width:86px;
-                    height:86px;
-                    padding:10px;
-                    border-radius:24px;
-                    background:rgba(255,255,255,.94);
-                    border:1px solid rgba(13,11,18,.12);
-                    box-shadow:0 24px 52px -30px rgba(13,11,18,.72);
-                    transform:
-                      translate(var(--tx,0px),var(--ty,0px))
-                      rotate(calc(4deg + var(--tr,0deg)));
-                    transition:transform .45s cubic-bezier(.2,.8,.2,1);
+                    inset:0;
+
+                    overflow:hidden;
+
+                    border-radius:
+                      24px;
+
+                    background:
+                      #070515;
+
+                    border:
+                      1px solid
+                      rgba(139,69,255,.40);
+
+                    box-shadow:
+                      0 50px 105px -47px rgba(13,11,18,.86),
+                      0 25px 60px -33px rgba(91,35,148,.78),
+                      0 0 40px -20px rgba(255,95,31,.36);
                   "
                 >
+
                   <img
-                    src="{{ featuredIcon }}"
-                    alt="{{ featuredName }} icon"
+                    src="{{ heroShowcaseImage }}"
+                    alt="PixelCraftsLab Studio"
+
                     style="
                       display:block;
+
                       width:100%;
                       height:100%;
-                      object-fit:cover;
-                      border-radius:17px;
+
+                      object-fit:contain;
+                      object-position:center;
+
+                      user-select:none;
                     "
                   />
+
                 </div>
-              </sc-if>
 
-              <!-- floating pixel system -->
-              <span aria-hidden="true" data-tool="flee" data-tool-pull="1.2"
-                style="position:absolute;left:1%;top:15%;width:18px;height:18px;background:#5B2394;animation:pcl-float 8s ease-in-out infinite;transform:translate(var(--tx,0px),var(--ty,0px));"></span>
+              </div>
 
-              <span aria-hidden="true" data-tool="flee" data-tool-pull=".9"
-                style="position:absolute;right:3%;top:34%;width:10px;height:10px;background:#8B45FF;animation:pcl-float2 10s ease-in-out infinite;transform:translate(var(--tx,0px),var(--ty,0px));"></span>
 
-              <span aria-hidden="true" data-tool="flee" data-tool-pull="1.4"
-                style="position:absolute;left:9%;bottom:8%;width:13px;height:13px;background:#FF5F1F;animation:pcl-float 11s ease-in-out infinite -2s;transform:translate(var(--tx,0px),var(--ty,0px));"></span>
+              <!-- =============================================
+                   ADMIN-SELECTED FEATURED PROJECT LOGOS
+                   ============================================= -->
 
-              <span aria-hidden="true"
-                style="position:absolute;right:13%;bottom:3%;width:7px;height:7px;background:#5B2394;box-shadow:-38px -60px 0 #8B45FF,-98px 34px 0 #FF5F1F,34px -118px 0 rgba(91,35,148,.38);"></span>
+              <sc-for
+                list="{{ heroLogoCloud }}"
+                as="app"
+                hint-placeholder-count="4"
+              >
 
-              <!-- Now Live -->
-              <div style="position:absolute;right:0;bottom:6%;padding:12px 14px;border-radius:12px;background:#fff;border:1px solid rgba(13,11,18,.1);box-shadow:0 18px 40px -24px rgba(13,11,18,.5);transform:translate(calc(var(--px) * 20px),calc(var(--py) * 16px));transition:transform .5s cubic-bezier(.2,.8,.2,1);">
-                <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(13,11,18,.64);">{{ t.home.hero.badgeLabel }}</div>
-                <div style="margin-top:5px;font-weight:700;font-size:14px;letter-spacing:-.01em;">{{ featuredName }}</div>
+                <button
+                  onClick="{{ app.open }}"
+
+                  aria-label="{{ app.name }}"
+
+                  data-cursor="{{ app.name }}"
+
+                  data-tool="flee"
+
+                  data-tool-pull="{{ app.pull }}"
+
+                  style="
+                    position:absolute;
+
+                    left:{{ app.x }}%;
+                    top:{{ app.y }}%;
+
+                    width:{{ app.size }}px;
+                    height:{{ app.size }}px;
+
+                    padding:0;
+
+                    border:0;
+
+                    background:transparent;
+
+                    cursor:pointer;
+
+                    z-index:15;
+
+                    transform:
+                      translate(
+                        calc(
+                          -50% +
+                          var(--tx,0px)
+                        ),
+                        calc(
+                          -50% +
+                          var(--ty,0px)
+                        )
+                      )
+                      rotate(
+                        calc(
+                          {{ app.rot }}deg +
+                          var(--tr,0deg)
+                        )
+                      );
+
+                    transition:
+                      transform
+                      .42s
+                      cubic-bezier(.2,.8,.2,1);
+                  "
+                >
+
+                  <div
+                    style="
+                      position:absolute;
+                      inset:0;
+
+                      padding:7px;
+
+                      border-radius:24%;
+
+                      background:
+                        rgba(255,255,255,.97);
+
+                      border:
+                        1px solid
+                        rgba(13,11,18,.13);
+
+                      box-shadow:
+                        0 28px 60px -31px
+                          rgba(13,11,18,.80),
+                        0 16px 42px -27px
+                          {{ app.tint }};
+
+                      animation:
+                        pcl-float2
+                        calc(
+                          7s +
+                          {{ app.delay }} * .7s
+                        )
+                        ease-in-out
+                        infinite;
+
+                      animation-delay:
+                        calc(
+                          {{ app.delay }} * -.75s
+                        );
+                    "
+                  >
+
+                    <img
+                      src="{{ app.icon }}"
+                      alt="{{ app.name }}"
+
+                      style="
+                        display:block;
+
+                        width:100%;
+                        height:100%;
+
+                        object-fit:cover;
+
+                        border-radius:18%;
+                      "
+                    />
+
+                  </div>
+
+                </button>
+
+              </sc-for>
+
+
+              <!-- =============================================
+                   EXTRA PIXELS
+                   ============================================= -->
+
+              <span
+                aria-hidden="true"
+                data-tool="flee"
+                data-tool-pull="1.5"
+
+                style="
+                  position:absolute;
+                  left:18%;
+                  top:8%;
+
+                  width:12px;
+                  height:12px;
+
+                  background:#5B2394;
+
+                  z-index:4;
+                "
+              ></span>
+
+
+              <span
+                aria-hidden="true"
+                data-tool="flee"
+                data-tool-pull="1.25"
+
+                style="
+                  position:absolute;
+                  right:13%;
+                  top:13%;
+
+                  width:8px;
+                  height:8px;
+
+                  background:#FF5F1F;
+
+                  z-index:4;
+                "
+              ></span>
+
+
+              <span
+                aria-hidden="true"
+                data-tool="flee"
+                data-tool-pull="1.7"
+
+                style="
+                  position:absolute;
+                  left:7%;
+                  bottom:20%;
+
+                  width:16px;
+                  height:16px;
+
+                  background:#8B45FF;
+
+                  z-index:4;
+                "
+              ></span>
+
+
+              <span
+                aria-hidden="true"
+                data-tool="flee"
+                data-tool-pull="1.4"
+
+                style="
+                  position:absolute;
+                  right:7%;
+                  bottom:15%;
+
+                  width:13px;
+                  height:13px;
+
+                  background:#0D0B12;
+
+                  z-index:4;
+                "
+              ></span>
+
+
+              <!-- floating micro constellation -->
+              <span
+                aria-hidden="true"
+
+                style="
+                  position:absolute;
+
+                  left:22%;
+                  bottom:2%;
+
+                  width:6px;
+                  height:6px;
+
+                  background:#5B2394;
+
+                  box-shadow:
+                    31px -32px 0 #FF5F1F,
+                    72px 8px 0 #8B45FF,
+                    119px -18px 0 #5B2394,
+                    175px 5px 0 rgba(255,95,31,.75),
+                    232px -39px 0 rgba(139,69,255,.67),
+                    288px -3px 0 rgba(91,35,148,.55);
+
+                  z-index:3;
+                "
+              ></span>
+
+
+              <!-- dynamic count -->
+              <div
+                style="
+                  position:absolute;
+
+                  right:0;
+                  bottom:0;
+
+                  padding:
+                    9px 12px;
+
+                  border-radius:
+                    11px;
+
+                  background:
+                    rgba(255,255,255,.95);
+
+                  border:
+                    1px solid
+                    rgba(13,11,18,.10);
+
+                  box-shadow:
+                    0 20px 45px -29px
+                    rgba(13,11,18,.62);
+
+                  backdrop-filter:
+                    blur(10px);
+
+                  z-index:18;
+                "
+              >
+
+                <div
+                  style="
+                    font-family:
+                      'Space Mono',
+                      monospace;
+
+                    font-size:8px;
+
+                    letter-spacing:.18em;
+
+                    text-transform:uppercase;
+
+                    color:
+                      rgba(13,11,18,.48);
+                  "
+                >
+                  Featured work
+                </div>
+
+                <div
+                  style="
+                    margin-top:3px;
+
+                    font-family:
+                      'Bricolage Grotesque',
+                      sans-serif;
+
+                    font-size:13px;
+
+                    font-weight:800;
+                  "
+                >
+                  {{ heroLogoCount }} projects
+                </div>
+
               </div>
 
             </div>
@@ -3435,6 +3813,113 @@ class Component extends DCLogic {
       heroImg: img(featuredProject.featureImage || featuredProject.i),
       heroHasImg: !!img(featuredProject.featureImage || featuredProject.i),
       heroNoImg: !img(featuredProject.featureImage || featuredProject.i),
+
+      /* =====================================================
+         PCL HERO CONSTELLATION
+
+         CENTER:
+         Admin → Settings → Home → Homepage showcase artwork
+
+         FLOATING LOGOS:
+         Admin → Homepage Featured Projects
+
+         LOGO ART:
+         Admin → Projects → Icon
+         ===================================================== */
+
+      heroShowcaseImage:
+        img(SET.homeHeroShowcaseImage) ||
+        "/assets/pcl-hero-showcase.webp",
+
+      heroLogoCloud: (() => {
+
+        const source =
+          HOME_FEATURED.length
+            ? HOME_FEATURED
+            : PROJECTS.filter((p) => p.featured);
+
+        /*
+         * Deliberately asymmetric.
+         * Featured products should feel like PCL pixels
+         * breaking out of the central artwork.
+         */
+        const positions = [
+
+          { x:  4, y: 14, s: 70, r: -9, p: 1.35, d: 0 },
+          { x: 29, y:  2, s: 48, r:  8, p: 1.05, d: 1 },
+          { x: 71, y:  3, s: 58, r: -5, p: 1.20, d: 2 },
+          { x: 95, y: 24, s: 72, r: 10, p: 1.38, d: 3 },
+
+          { x: 96, y: 68, s: 51, r: -7, p: 1.12, d: 4 },
+          { x: 75, y: 91, s: 66, r:  7, p: 1.27, d: 5 },
+          { x: 39, y: 97, s: 50, r: -9, p: 1.16, d: 6 },
+          { x:  7, y: 79, s: 68, r:  6, p: 1.33, d: 7 },
+
+        ];
+
+        return source
+          .filter((p) => !!img(p.icon))
+          .slice(0, positions.length)
+          .map((p, i) => {
+
+            const slot = positions[i];
+
+            return {
+
+              id: p.id,
+
+              name: p.name,
+
+              icon:
+                img(p.icon),
+
+              tint:
+                p.tint || "#5B2394",
+
+              x: slot.x,
+              y: slot.y,
+
+              size:
+                Math.round(
+                  slot.s *
+                  (isDesktop ? 1 : .74)
+                ),
+
+              rot: slot.r,
+
+              pull: slot.p,
+
+              delay: slot.d,
+
+              open: (e) => {
+
+                if (e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }
+
+                this.openProject(
+                  p.id,
+                  e
+                );
+              },
+
+            };
+
+          });
+
+      })(),
+
+      heroLogoCount:
+        (
+          HOME_FEATURED.length
+            ? HOME_FEATURED
+            : PROJECTS.filter((p) => p.featured)
+        )
+        .filter((p) => !!img(p.icon))
+        .slice(0, 8)
+        .length,
+
 
       arc: [
         { n: "01", t: "Ideas", d: "Scope, audience and what it has to do.", c: PU, tc: PU, delay: 0 },
